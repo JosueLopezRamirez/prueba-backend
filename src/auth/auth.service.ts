@@ -61,7 +61,7 @@ export class AuthService {
 
     //Register new user
     public async register(user: User): Promise<any> {
-        // user.password = await bcrypt.hash(user.password, 10);
+        user.password = await bcrypt.hash(user.password, 10);
         const result = await this.userService.create(user);
         if(result){
             this.logger.debug(`Usuario registrado con exito ${result}`)

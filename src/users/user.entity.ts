@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn,BeforeInsert } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 
 
