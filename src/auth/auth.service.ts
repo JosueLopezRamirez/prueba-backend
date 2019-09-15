@@ -2,6 +2,8 @@ import { Injectable, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../users/user.service';
 import { User } from '../users/user.entity';
+
+import moment from 'moment';
 import * as bcrypt from 'bcryptjs';
 
 @Injectable()
@@ -36,9 +38,12 @@ export class AuthService {
                     data: { error: { message: 'The email or password is incorrect', status: 200, ok: false }}
                 }
             }
-
-            let payload = `${userData.password}`; //Creating payload
-            const accessToken = this.jwtService.sign(payload); //Creating access Token
+            const payload = {
+                sub: result.id,
+                exp: moment().add(15, 'days').unix(),
+                iat: moment().unix()
+              }
+              const accessToken = await this.jwtService.sign(payload)
             this.logger.debug(`Generando Token con Payload ${JSON.stringify(payload)}`);
             //Return properties with tocken
             return {
@@ -49,7 +54,8 @@ export class AuthService {
                     error: [],
                     data: {
                         token: accessToken,
-                        name: `${result.firstname} ${result.lastname}`,
+                        name: result.firstname,
+                        lastname: result.lastname,
                         username: result.user,
                         country: result.country,
                         phone_number: result.phone
@@ -73,7 +79,8 @@ export class AuthService {
                     error: [],
                     data: {
                         // token: accessToken,
-                        name: `${result.firstname} ${result.lastname}`,
+                        name: result.firstname,
+                        lastname: result.lastname,
                         username: result.user,
                         country: result.country,
                         phone_number: result.phone
