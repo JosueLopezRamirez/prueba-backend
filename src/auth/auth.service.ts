@@ -5,7 +5,7 @@ import { User } from '../users/user.entity';
 
 import moment from 'moment';
 import * as bcrypt from 'bcryptjs';
-import { signIn } from './dto/signIn.dto';
+import { signInDto } from './dto/signIn.dto';
 import { UserDto } from 'src/users/dto/user.dto';
 
 @Injectable()
@@ -20,12 +20,12 @@ export class AuthService {
     ) { }
 
     //Validate data of user
-    private async validate(sign: signIn): Promise<User> {
+    private async validate(sign: signInDto): Promise<User> {
         return await this.userService.findByEmail(sign.email);
     }
 
     //Validate info from login from user
-    public async login(sign: signIn): Promise<any | { status: number }> {
+    public async login(sign: signInDto): Promise<any | { status: number }> {
         return this.validate(sign).then(async (result) => {
             console.log(result)
             if (!result) {
@@ -87,19 +87,19 @@ export class AuthService {
             } 
         }
     }
+    
+    //Probando la validacion de las rutas
+    async validateUser(payload: any){
+        return await this.userService.findByPayload(payload);
+    }
 
     async tokenGenerated(newUser: User) {
+
         const payload = {
           sub: newUser.id,
           exp: moment().add(15, 'days').unix(),
           iat: moment().unix()
         }
-        const token = await this.jwtService.sign(payload)
-        return token
-      }
-
-    //Probando la validacion de las rutas
-    async validateUser(payload: any){
-        return await this.userService.findByPayload(payload);
+        return await this.jwtService.sign(payload);;
     }
 }

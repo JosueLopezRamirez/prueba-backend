@@ -1,6 +1,6 @@
-import { IsEmail, IsNotEmpty, IsNumber, IsOptional, IsDateString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional } from 'class-validator';
 
-export class signIn {
+export class signInDto {
 
     @IsEmail()
     @IsNotEmpty()
@@ -8,4 +8,16 @@ export class signIn {
 
     @IsNotEmpty()
     password: string;
+}
+
+export class twilioDto {
+    
+    @IsNotEmpty()
+    phone_number: string;
+    
+    @IsOptional()
+    channel: string;
+
+    @IsOptional()
+    code: string;
 }
