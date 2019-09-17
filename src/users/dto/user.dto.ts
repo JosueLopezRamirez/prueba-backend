@@ -1,6 +1,4 @@
-import { IsEmail, IsNotEmpty, IsNumber, IsOptional, IsDateString } from 'class-validator';
-import { BeforeInsert } from 'typeorm';
-import * as bcrypt from 'bcryptjs';
+import { IsEmail, IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
 
 export class UserDto {
     
@@ -37,8 +35,8 @@ export class UserDto {
     // @IsDateString()
     create_at: string;
 
-    @BeforeInsert()
-    async hashPassword() {
-        this.password = await bcrypt.hash(this.password,10);
-    }
+    // @BeforeInsert()
+    // async hashPassword() {
+    //     this.password = await bcrypt.hash(this.password,10);
+    // }
 }

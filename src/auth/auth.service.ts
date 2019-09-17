@@ -6,6 +6,7 @@ import { User } from '../users/user.entity';
 import moment from 'moment';
 import * as bcrypt from 'bcryptjs';
 import { signIn } from './dto/signIn.dto';
+import { UserDto } from 'src/users/dto/user.dto';
 
 @Injectable()
 export class AuthService {
@@ -26,6 +27,7 @@ export class AuthService {
     //Validate info from login from user
     public async login(sign: signIn): Promise<any | { status: number }> {
         return this.validate(sign).then(async (result) => {
+            console.log(result)
             if (!result) {
                 return {
                     data: { error: { message: 'The email or password is incorrect', status: 200, ok: false }}
@@ -57,8 +59,8 @@ export class AuthService {
         });
     }
     
-    public async register(user: User): Promise<any> {
-        // user.password = await bcrypt.hash(user.password, 10);
+    public async register(user: UserDto): Promise<any> {
+        user.password = await bcrypt.hash(user.password, 10);
         const result = await this.userService.create(user);
         if(result){
             this.logger.debug(`Usuario registrado con exito ${result}`)
