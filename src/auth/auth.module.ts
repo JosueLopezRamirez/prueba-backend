@@ -6,6 +6,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { UsersModule } from 'src/users/users.module';
+import { JwtStrategy } from './jwt.strategy';
 
 @Module({
     imports: [
@@ -15,7 +16,7 @@ import { UsersModule } from 'src/users/users.module';
             privateKey: process.env.PRIVATE_KEY || 'supersecret',
         }),
     ],
-    providers: [UserService, AuthService],
+    providers: [UserService, AuthService,JwtStrategy],
     controllers: [AuthController]
 })
 export class AuthModule {}

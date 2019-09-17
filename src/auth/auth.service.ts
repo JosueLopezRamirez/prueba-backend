@@ -97,4 +97,9 @@ export class AuthService {
         const token = await this.jwtService.sign(payload)
         return token
       }
+
+    //Probando la validacion de las rutas
+    async validateUser(payload: any){
+        return await this.userService.findByPayload(payload);
+    }
 }

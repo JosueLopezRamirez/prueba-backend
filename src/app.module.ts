@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { ChatModule } from './chat/chat.module';
+import { SharedModule } from './shared/shared.module';
 import 'dotenv/config';
 
 @Module({
@@ -23,6 +24,7 @@ import 'dotenv/config';
       // dropSchema: true
     }),
     ChatModule,
+    SharedModule,
   ],
   controllers: [AppController],
   providers: [AppService],

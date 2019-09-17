@@ -64,4 +64,11 @@ export class UserService {
     async delete(user: User) {
         return this.userRepository.delete(user);
     }
+
+
+    //Probando la validacion de las rutas
+    async findByPayload(payload:any){
+        const { user } = payload;
+        return await this.userRepository.findOne({ user })
+    }
 }
