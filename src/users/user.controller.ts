@@ -9,10 +9,10 @@ export class UserController {
     
     constructor(private readonly userService: UserService){}
 
+    
     @Get()
     @UseGuards(AuthGuard('jwt'))
-    @Get()
-    async getAll(): Promise<any | User[]>{
+    async getAll(): Promise<User[]>{
         return await this.userService.getAll();
     }
 
