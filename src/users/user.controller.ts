@@ -1,4 +1,5 @@
-import { Controller, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Put, Delete, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { UserService } from './user.service';
 import { User } from './user.entity';
 import { UserDto } from './dto/user.dto';
@@ -8,6 +9,7 @@ export class UserController {
     
     constructor(private readonly userService: UserService){}
 
+    // @UseGuards(AuthGuard('local'))
     @Get('/')
     async getAll(): Promise<any | User[]>{
         return await this.userService.getAll();
@@ -22,7 +24,7 @@ export class UserController {
     async create(@Body() user: UserDto) {
         return await this.userService.create(user);
     }
-
+    
     @Put('/:id')
     async update(@Param() id: number, @Body() input: UserDto): Promise<any> {
         let userActual =  await this.userService.findById(id);
