@@ -32,11 +32,5 @@ export class UserDto {
     phone: string;
 
     @IsNotEmpty()
-    // @IsDateString()
     create_at: string;
-
-    // @BeforeInsert()
-    // async hashPassword() {
-    //     this.password = await bcrypt.hash(this.password,10);
-    // }
 }

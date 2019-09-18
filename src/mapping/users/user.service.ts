@@ -1,11 +1,11 @@
-import { Injectable, Logger, UseFilters, Inject } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { validate } from 'class-validator';
 
-import { ChatGateway } from 'src/chat/chat.gateway';
+// import { ChatGateway } from 'src/chat/chat.gateway';
 import { User } from './user.entity';
-import { UserDto } from './dto/user.dto';
+import { UserDto } from './user.dto';
 
 
 @Injectable()
@@ -20,7 +20,7 @@ export class UserService {
 
     //Get a all users
     async getAll(): Promise<User[]> {
-        return await this.userRepository.find();
+    return await this.userRepository.find();
     }
 
     //Find user by id
@@ -50,7 +50,6 @@ export class UserService {
                 this.logger.debug("validation succeed");
             }
         })
-        // this.chatGateway.server.emit('newUser',user);
         return this.userRepository.save(user);
         
     }

@@ -1,17 +1,19 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import 'dotenv/config';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UsersModule } from './users/users.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { UsersModule } from './mapping/users/users.module';
+import { SkiperAgentCommerceModule } from './mapping/skiper-agent-commerce/skiper-agent-commerce.module';
+import { SkiperDetailVehicleModule } from './mapping/skiper-detail-vehicle/skiper-detail-vehicle.module';
+import { SkiperAgentDriverModule } from './mapping/skiper-agent-driver/skiper-agent-driver.module';
 import { AuthModule } from './auth/auth.module';
 import { ChatModule } from './chat/chat.module';
 import { SharedModule } from './shared/shared.module';
-import 'dotenv/config';
 
 @Module({
   imports: [
-    UsersModule,
-    AuthModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DATABASE_HOST,
@@ -20,11 +22,16 @@ import 'dotenv/config';
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true
-      // dropSchema: true
+      synchronize: true,
+      dropSchema: true
     }),
     ChatModule,
     SharedModule,
+    UsersModule,
+    AuthModule,
+    SkiperAgentCommerceModule,
+    SkiperDetailVehicleModule,
+    SkiperAgentDriverModule,
   ],
   controllers: [AppController],
   providers: [AppService],

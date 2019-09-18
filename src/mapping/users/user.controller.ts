@@ -2,7 +2,7 @@ import { Controller, Get, Param, Post, Body, Put, Delete, UseGuards } from '@nes
 import { AuthGuard } from '@nestjs/passport';
 import { UserService } from './user.service';
 import { User } from './user.entity';
-import { UserDto } from './dto/user.dto';
+import { UserDto } from './user.dto';
 
 @Controller('user')
 export class UserController {
@@ -11,7 +11,7 @@ export class UserController {
 
     
     @Get()
-    @UseGuards(AuthGuard('jwt'))
+    // @UseGuards(AuthGuard('jwt'))
     async getAll(): Promise<User[]>{
         return await this.userService.getAll();
     }
@@ -36,7 +36,7 @@ export class UserController {
             return userUpdate ? userUpdate : undefined
         }else{
             return {
-                data: { error: { message: 'The email or password is incorrect', status: 200, ok: false }}
+                data: { error: { message: 'The user dont exist in the database', status: 200, ok: false }}
             };
         }
     }
