@@ -10,8 +10,8 @@ export class SkiperAgentDriver {
     @Column({nullable:true})
     state:boolean;
 
-    @Column({length: 50,nullable:false})
-    category: string;
+    // @Column({length: 50,nullable:false})
+    // category: string;
 
     @Column({nullable:true})
     has_reflective_vest: boolean;

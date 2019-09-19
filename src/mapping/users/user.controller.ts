@@ -11,7 +11,7 @@ export class UserController {
 
     
     @Get()
-    // @UseGuards(AuthGuard('jwt'))
+    @UseGuards(AuthGuard('jwt'))
     async getAll(): Promise<User[]>{
         return await this.userService.getAll();
     }

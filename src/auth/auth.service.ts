@@ -22,45 +22,47 @@ export class AuthService {
     //Validate data of user
     private async validate(sign: signInDto): Promise<User | any> {
         const result = await this.userService.findByEmail(sign.email);
-        if(result){
+        // this.logger.debug('El resultado de la busqueda por email es '+result)
+        if(result !== undefined){
             this.logger.log(`Usuario Validado con exito!! ${result}`);
             return result;
         }else{
-            return {
-                data: { error: { message: 'The email or password is incorrect', status: 200, ok: false }}
-            }
+            return result;
         }
     }
 
     //Validate info from login from user
     public async login(sign: signInDto): Promise<any | { status: number }> {
         return this.validate(sign).then(async (result) => {
-            // this.logger.log(result)
-            if (!result) {
-                return {
-                    data: { error: { message: 'The email or password is incorrect', status: 200, ok: false }}
+            if(result === undefined){
+                return {error: {message: 'The email is incorrect' ,status: 404 ,ok:false}}
+            }else{
+                if (!result) {
+                    return {
+                        data: { error: { message: 'The email or password is incorrect', status: 200, ok: false }}
+                    }
                 }
-            }
-            
-            if (!bcrypt.compareSync(sign.password, result.password)) {
-                return {
-                    data: { error: { message: 'The email or password is incorrect', status: 200, ok: false }}
+                
+                if (!bcrypt.compareSync(sign.password, result.password)) {
+                    return {
+                        data: { error: { message: 'The email or password is incorrect', status: 200, ok: false }}
+                    }
                 }
-            }
-            return {
-                data: {
-                    message: 'User logged in correctly',
-                    status: 200,
-                    ok: true, 
-                    error: [],
+                return {
                     data: {
-                        token: await this.tokenGenerated(result),
-                        name: result.firstname,
-                        lastname: result.lastname,
-                        username: result.user,
-                        email:result.email,
-                        country: result.country,
-                        phone_number: result.phone
+                        message: 'User logged in correctly',
+                        status: 200,
+                        ok: true, 
+                        error: [],
+                        data: {
+                            token: await this.tokenGenerated(result),
+                            name: result.firstname,
+                            lastname: result.lastname,
+                            username: result.user,
+                            email:result.email,
+                            country: result.country,
+                            phone_number: result.phone
+                        }
                     }
                 }
             }
@@ -71,7 +73,9 @@ export class AuthService {
         user.password = await bcrypt.hash(user.password, 10);
         const result = await this.userService.create(user);
         if(result){
-            this.logger.debug(`Usuario registrado con exito ${result}`)
+            const token = await this.tokenGenerated(result);
+            this.logger.debug(`Usuario registrado con exito ${result.email}`)
+            // this.logger.debug();
             return {
                 data: {
                     message: 'User register correctly',
@@ -79,7 +83,7 @@ export class AuthService {
                     ok: true, 
                     error: [],
                     data: {
-                        token: await this.tokenGenerated(result),
+                        token: token,
                         name: result.firstname,
                         lastname: result.lastname,
                         username: result.user,
@@ -107,6 +111,8 @@ export class AuthService {
           exp: moment().add(15, 'days').unix(),
           iat: moment().unix()
         }
+        this.logger.debug('Generacion - fecha de inicio: '+payload.iat);
+        this.logger.debug('Generacion - fecha de expiracion: '+payload.exp);
         return await this.jwtService.sign(payload);
     }
 }

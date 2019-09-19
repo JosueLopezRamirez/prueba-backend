@@ -23,7 +23,7 @@ import { SharedModule } from './shared/shared.module';
       database: process.env.DATABASE_NAME,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
-      // dropSchema: true
+      dropSchema: true
     }),
     ChatModule,
     SharedModule,

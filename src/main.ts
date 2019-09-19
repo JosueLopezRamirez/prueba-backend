@@ -1,11 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import * as compression from 'compression';
-// import * as helmet from 'helmet';
-// import * as csurf from 'csurf';
-// import * as rateLimit from 'express-rate-limit';
-import morgan from 'morgan'
+import compression from 'compression';
+import helmet from 'helmet';
+import csurf from 'csurf';
+import rateLimit from 'express-rate-limit';
+import morgan from 'morgan';
 
 async function bootstrap() {
   
@@ -13,7 +13,8 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.setGlobalPrefix('/v1/api');
   app.enableCors();
-  // app.use(csurf());
+  // app.use(helmet())
+  // app.use(csurf({cookie:true}));
   // app.use(
   //   rateLimit({
   //     windowMs: 15 * 60 * 1000,
@@ -22,7 +23,7 @@ async function bootstrap() {
   // );
   app.use(morgan('dev'));
 
-  // app.use(compression());
+  app.use(compression());
 
   await app.listen(process.env.PORT || 3000);
 
