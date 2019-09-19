@@ -64,7 +64,6 @@ export class UserService {
         return this.userRepository.delete(user);
     }
 
-
     //Probando la validacion de las rutas
     async findByPayload(payload:any){
         const { user } = payload;

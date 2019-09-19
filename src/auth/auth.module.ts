@@ -11,7 +11,6 @@ import { TwilioController } from './twilio.controller';
 
 @Module({
     imports: [
-        // UsersModule,
         TypeOrmModule.forFeature([User]),
         JwtModule.register({
             privateKey: process.env.PRIVATE_KEY || 'supersecretamazingkey'

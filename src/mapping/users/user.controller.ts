@@ -1,5 +1,7 @@
 import { Controller, Get, Param, Post, Body, Put, Delete, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import * as bcrypt from 'bcryptjs';
+
 import { UserService } from './user.service';
 import { User } from './user.entity';
 import { UserDto } from './user.dto';
@@ -44,6 +46,28 @@ export class UserController {
     @Delete('/:id')
     async delete(@Param() user: User) {
         return await this.userService.delete(user)
+    }
+
+    @Put('reset_password')
+    async resert_password(@Body() change: any) {
+        const id = change.id;
+        const userUpdate = await this.userService.findById(id);
+        if(userUpdate){
+            const password = change.password;
+            userUpdate.password =  await bcrypt.hash(password,10);
+            const result = await this.userService.update(userUpdate);
+            return {
+                data:{
+                    message: 'Reset password correctly',
+                    status: 200,
+                    ok: true, 
+                    error: [],
+                    data: {
+                        phone_number: result.phone
+                    }    
+                }
+            }
+        }
     }
 
     parseUser(input: UserDto): User{
