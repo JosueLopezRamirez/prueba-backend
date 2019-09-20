@@ -11,6 +11,11 @@ import { SkiperAgentDriverModule } from './mapping/skiper-agent-driver/skiper-ag
 import { AuthModule } from './auth/auth.module';
 import { ChatModule } from './chat/chat.module';
 import { SharedModule } from './shared/shared.module';
+import { UploadSkiperDocModule } from './mapping/upload-skiper-doc/upload-skiper-doc.module';
+import { UploadCommerceDocModule } from './mapping/upload-commerce-doc/upload-commerce-doc.module';
+import { SkiperDetailCommerceModule } from './mapping/skiper-detail-commerce/skiper-detail-commerce.module';
+import { SkiperCatServicesModule } from './mapping/skiper-cat-services/skiper-cat-services.module';
+import { CountriesModule } from './mapping/countries/countries.module';
 
 @Module({
   imports: [
@@ -23,15 +28,20 @@ import { SharedModule } from './shared/shared.module';
       database: process.env.DATABASE_NAME,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
-      // dropSchema: true
+      dropSchema: true
     }),
     ChatModule,
     SharedModule,
     UsersModule,
     AuthModule,
     SkiperAgentCommerceModule,
-    SkiperDetailVehicleModule,
     SkiperAgentDriverModule,
+    UploadSkiperDocModule,
+    UploadCommerceDocModule,
+    SkiperDetailCommerceModule,
+    SkiperDetailVehicleModule,
+    SkiperCatServicesModule,
+    CountriesModule
   ],
   controllers: [AppController],
   providers: [AppService],

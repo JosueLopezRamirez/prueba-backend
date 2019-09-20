@@ -22,9 +22,7 @@ export class AuthService {
     //Validate data of user
     private async validate(sign: signInDto): Promise<User | any> {
         const result = await this.userService.findByEmail(sign.email);
-        // this.logger.debug('El resultado de la busqueda por email es '+result)
         if(result !== undefined){
-            this.logger.log(`Usuario Validado con exito!! ${result}`);
             return result;
         }else{
             return result;
@@ -70,12 +68,8 @@ export class AuthService {
     }
     
     public async register(user: UserDto): Promise<any> {
-        user.password = await bcrypt.hash(user.password, 10);
         const result = await this.userService.create(user);
         if(result){
-            const token = await this.tokenGenerated(result);
-            this.logger.debug(`Usuario registrado con exito ${result.email}`)
-            // this.logger.debug();
             return {
                 data: {
                     message: 'User register correctly',
@@ -83,7 +77,7 @@ export class AuthService {
                     ok: true, 
                     error: [],
                     data: {
-                        token: token,
+                        token: await this.tokenGenerated(result),
                         name: result.firstname,
                         lastname: result.lastname,
                         username: result.user,

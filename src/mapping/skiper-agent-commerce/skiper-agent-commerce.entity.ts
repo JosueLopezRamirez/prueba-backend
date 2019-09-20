@@ -19,6 +19,5 @@ export class SkiperAgentCommerce {
     @Column({nullable:true})
     state: boolean;
 
-    @ManyToOne(type => User, user => user.skiperCommerce,{nullable:false})
-    user: User;
+    @ManyToOne(type => User,{nullable:false}) user: User;
 }

@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { User } from "../users/user.entity";
 
 @Entity({name: 'skiper_agent_driver'})
 export class SkiperAgentDriver {
@@ -36,4 +37,6 @@ export class SkiperAgentDriver {
 
     @Column('text')
     url_doc_driving_record:string;
+
+    @ManyToOne(type => User,{nullable:false}) user: User;
 }

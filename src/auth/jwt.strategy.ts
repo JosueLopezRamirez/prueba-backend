@@ -1,16 +1,15 @@
 import { Injectable, HttpException, HttpStatus, Logger } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
-import { Strategy, ExtractJwt, VerifiedCallback} from "passport-jwt";
+import { Strategy, ExtractJwt, VerifiedCallback } from "passport-jwt";
 import moment from 'moment';
 
 import { AuthService } from "./auth.service";
+import { UserService } from "src/mapping/users/user.service";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
 
-    private logger = new Logger('JwtStrategy');
-
-    constructor(private authService: AuthService){
+    constructor(private authService: AuthService, private userService: UserService) {
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
             ,
@@ -19,20 +18,24 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     }
 
     //Validacion del token
-    async validate(payload:any,done: VerifiedCallback){
-        
-        if(moment().unix() > payload.exp){ //Si el token ya expiro
-            this.logger.debug('Token expiro');
-            return {error: { message: 'El token ha expirado', status: 401, okay: false}}
-        }else{
-            this.logger.debug('Token aun vigente'); //Si el token sigue vigente
-            const user = this.authService.validateUser(payload);
-            if(!user){
-                return done(
-                    new HttpException('Unauthorized access',HttpStatus.UNAUTHORIZED)
-                );
+    async validate(payload: any, done: VerifiedCallback) {
+        let user = await this.userService.findById(payload.sub);
+        if (user!==undefined) {
+            if (moment().unix() > payload.exp) { //Si el token ya expiro
+                return { data: { error: { message: 'El token ha expirado', status: 401, okay: false } } }
+            } else {
+                const user = this.authService.validateUser(payload);
+                if (!user) {
+                    return done(
+                        new HttpException('Unauthorized access', HttpStatus.UNAUTHORIZED)
+                    );
+                }
+                return done(null, user, payload.iat);
             }
-            return done(null,user,payload.iat);
+        } else {
+            return {
+                data: { error: { message: 'The user dont exist', status: 404, ok: false } }
+            }
         }
     }
 }

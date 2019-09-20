@@ -1,40 +1,75 @@
-import { Controller, Get, Param, Post, Body, Put, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Put, Delete, UseGuards, UseFilters, Logger } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import * as bcrypt from 'bcryptjs';
 
 import { UserService } from './user.service';
 import { User } from './user.entity';
 import { UserDto } from './user.dto';
+import { UserRepository } from './user.repository';
+import { validate } from 'class-validator';
 
 @Controller('user')
 export class UserController {
     
-    constructor(private readonly userService: UserService){}
 
-    
+    private logger = new Logger('UserController');
+
+    constructor(private readonly userRepository: UserRepository){}
+
+    // @Get('/prueba_decorador')
+    // @UseFilters(new HttpExcepcionFilter())
+    // async findOne(@UserDecorator() user: UserDto){
+    //     console.log(user);
+
+    //Get a all users
     @Get()
     @UseGuards(AuthGuard('jwt'))
-    async getAll(): Promise<User[]>{
-        return await this.userService.getAll();
+    async getAll(): Promise<User[]> {
+    return await this.userRepository.find();
     }
 
+    //Find user by id
     @Get('/:id')
-    async getById(@Param() id: number) { 
-        return await this.userService.findById(id);
+    async findById(@Param() id): Promise<User> {
+        let user = await this.userRepository.findOne({
+            where: {
+                id: id
+            }
+        });
+        this.logger.log(`Usuario de id ${user}`);
+        return user;
     }
 
-    @Post('/')
-    async create(@Body() user: UserDto) {
-        return await this.userService.create(user);
+    //Find user by email
+    async findByEmail(email: string): Promise<User> {
+        return await this.userRepository.findOne({
+            where: {
+                email: email 
+            }
+        });
     }
-    
+
+    //Create a new user
+    @Post('/')
+    async create(user: UserDto) {
+        await validate(user).then(errors => {
+            if(errors.length > 0){
+                this.logger.debug(`validation failed. errors: ${errors}`);
+            }else{
+                this.logger.debug("validation succeed");
+            }
+        })
+        return this.userRepository.save(user);   
+    }
+
+    //Update a user
     @Put('/:id')
     async update(@Param() id: number, @Body() input: UserDto): Promise<any> {
-        let userActual =  await this.userService.findById(id);
+        let userActual =  await this.userRepository.findOne({id:id});
         if(userActual){
             let user: User = this.parseUser(input);
             user.id = userActual.id;
-            let userUpdate = await this.userService.update(user);
+            let userUpdate = await this.userRepository.save(user);
             return userUpdate ? userUpdate : undefined
         }else{
             return {
@@ -43,31 +78,16 @@ export class UserController {
         }
     }
 
+    //Delete a user
     @Delete('/:id')
-    async delete(@Param() user: User) {
-        return await this.userService.delete(user)
+    async delete(user: User) {
+        return this.userRepository.delete(user);
     }
 
-    @Put('reset_password')
-    async resert_password(@Body() change: any) {
-        const id = change.id;
-        const userUpdate = await this.userService.findById(id);
-        if(userUpdate){
-            const password = change.password;
-            userUpdate.password =  await bcrypt.hash(password,10);
-            const result = await this.userService.update(userUpdate);
-            return {
-                data:{
-                    message: 'Reset password correctly',
-                    status: 200,
-                    ok: true, 
-                    error: [],
-                    data: {
-                        phone_number: result.phone
-                    }    
-                }
-            }
-        }
+    //Probando la validacion de las rutas
+    async findByPayload(payload:any){
+        const { user } = payload;
+        return await this.userRepository.findOne({ user })
     }
 
     parseUser(input: UserDto): User{

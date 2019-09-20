@@ -1,20 +1,23 @@
-import { Controller, Post, Body, Get, UseGuards } from  '@nestjs/common';
+import { Controller, Post, Body, Logger } from  '@nestjs/common';
 import { AuthService } from  '../auth/auth.service';
 import { UserDto } from 'src/mapping/users/user.dto';
 import { signInDto } from './dto/signIn.dto';
+import { UserDecorator } from 'src/mapping/users/user.decorator';
 
 @Controller('auth')
 export class AuthController {
     
-    constructor(private readonly authService: AuthService){}
+  private logger = new Logger('AuthController');
 
-    @Post('signin')
-    async login(@Body() sign :signInDto): Promise<any> {
-      return this.authService.login(sign);
-    }  
+  constructor(private readonly authService: AuthService){}
 
-    @Post('signup')
-    async register(@Body() user: UserDto): Promise<any> {
-      return this.authService.register(user);;
-    }
+  @Post('signin')
+  async login(@Body() sign :signInDto): Promise<any> {
+    return this.authService.login(sign);
+  }  
+
+  @Post('signup')
+  async register(@UserDecorator() user: UserDto): Promise<any> {
+    return this.authService.register(user);;
+  }
 }
