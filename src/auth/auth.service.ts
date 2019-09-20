@@ -105,8 +105,8 @@ export class AuthService {
           exp: moment().add(15, 'days').unix(),
           iat: moment().unix()
         }
-        this.logger.debug('Generacion - fecha de inicio: '+payload.iat);
-        this.logger.debug('Generacion - fecha de expiracion: '+payload.exp);
+        // this.logger.debug('Generacion - fecha de inicio: '+payload.iat);
+        // this.logger.debug('Generacion - fecha de expiracion: '+payload.exp);
         return await this.jwtService.sign(payload);
     }
 }

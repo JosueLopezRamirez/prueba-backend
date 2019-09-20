@@ -17,7 +17,7 @@ export class CountrieService {
     //Obtener unicamente los nombres y los codigos de telefono de los paises
     async getAllCountries(): Promise<any>{
         let result = await this.countrieRepository.find({
-            select:["nicename","phonecode"]
+            select:["id","nicename","phonecode"]
         });
         if (result.length >= 0){
             return { data: { ok:true,status:200, message: 'Petition successfuly', data: result } }
