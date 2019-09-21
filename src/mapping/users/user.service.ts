@@ -1,17 +1,17 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { validate } from 'class-validator';
 
-// import { ChatGateway } from 'src/chat/chat.gateway';
 import { User } from './user.entity';
 import { UserDto } from './user.dto';
-import { UserRepository } from './user.repository';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class UserService {
 
     private logger = new Logger('UserService');
     
-    constructor(private readonly userRepository: UserRepository){}
+    constructor(@InjectRepository(User) private readonly userRepository: Repository<User>){}
 
     //Get a all users
     async getAll(): Promise<User[]> {

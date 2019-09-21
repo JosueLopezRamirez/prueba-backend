@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { SkiperAgentCommerce } from './skiper-agent-commerce.entity';
 import { Repository } from 'typeorm';
-import { UserRepository } from '../users/user.repository';
+import { InjectRepository } from '@nestjs/typeorm';
+import { AgentCommerceDto } from './skiper-agent-commerce.dto';
 
 @Injectable()
 export class SkiperAgentCommerceService {
 
     constructor(
-        @InjectRepository(SkiperAgentCommerce) private readonly repoAgent:Repository<SkiperAgentCommerce>,
+        @InjectRepository(SkiperAgentCommerce)private readonly repoAgent:Repository<SkiperAgentCommerce>,
     ){}
 
     async getAll(){
@@ -25,5 +25,9 @@ export class SkiperAgentCommerceService {
             return {data: {message:'Petition sucsessfuly', ok:true, status:200,data: resultAgent}}
         }
         return { data: { error: { message: 'Bad request', status: 200, ok: false } } }
+    }
+
+    async create(agent: SkiperAgentCommerce){
+        return await this.repoAgent.save(agent);
     }
 }

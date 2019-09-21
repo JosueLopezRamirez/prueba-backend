@@ -3,9 +3,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SkiperAgentCommerceService } from './skiper-agent-commerce.service';
 import { SkiperAgentCommerceController } from './skiper-agent-commerce.controller';
 import { SkiperAgentCommerce } from './skiper-agent-commerce.entity';
+import { UsersModule } from '../users/users.module';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([SkiperAgentCommerce])],
+  imports:[
+    UsersModule,
+    TypeOrmModule.forFeature([SkiperAgentCommerce])],
   providers: [SkiperAgentCommerceService],
   controllers: [SkiperAgentCommerceController]
 })
