@@ -11,23 +11,17 @@ export class SkiperAgentCommerceService {
         @InjectRepository(SkiperAgentCommerce)private readonly repoAgent:Repository<SkiperAgentCommerce>,
     ){}
 
-    async getAll(){
-        let result = await this.repoAgent.find();
-        if(result!==undefined){
-            return {data: {message:'Petition sucsessfuly', ok:true, status:200,data: result}}
-        }
-        return { data: { error: { message: 'Bad request', status: 200, ok: false } } }
+    async getAll(): Promise<SkiperAgentCommerce[]>{
+        return await this.repoAgent.find();
     }
 
-    async getById(_id: number){
-        let resultAgent = await this.repoAgent.findOne({id:_id});
-        if(resultAgent!==undefined){
-            return {data: {message:'Petition sucsessfuly', ok:true, status:200,data: resultAgent}}
-        }
-        return { data: { error: { message: 'Bad request', status: 200, ok: false } } }
+    async getById(_id: number): Promise<SkiperAgentCommerce>{
+        return await this.repoAgent.findOne({
+            where:{id:_id}
+        });
     }
 
-    async create(agent: SkiperAgentCommerce){
+    async create(agent: SkiperAgentCommerce): Promise<SkiperAgentCommerce>{
         return await this.repoAgent.save(agent);
     }
 }

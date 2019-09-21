@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { SkiperAgentCommerce } from '../skiper-agent-commerce/skiper-agent-commerce.entity';
 
 @Entity('users')
@@ -25,6 +25,6 @@ export class User {
 
     @Column({default: Date.now()}) create_at: string;
 
-    @OneToMany(type => SkiperAgentCommerce, skiperAgent => skiperAgent.user)
+    @OneToMany(() => SkiperAgentCommerce, skiperAgent => skiperAgent.user)
     skiperCommerce: SkiperAgentCommerce[];
 }

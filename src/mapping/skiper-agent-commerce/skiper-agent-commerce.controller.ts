@@ -15,18 +15,26 @@ export class SkiperAgentCommerceController {
 
     @Get()
     async getAll() {
-        return await this.skiperAgentService.getAll();
+        let result = await this.skiperAgentService.getAll();
+        if(result!==undefined){
+            return {data: {message:'Petition sucsessfuly', ok:true, status:200,data: result}}
+        }
+        return { data: { error: { message: 'Bad request', status: 200, ok: false } } }
     }
 
     @Get('/:id')
     async getById(@Param() id: number) {
-        return await this.skiperAgentService.getById(id);
+        let resultAgent = await this.skiperAgentService.getById(id);
+        if(resultAgent!==undefined){
+            console.log('Usuario de comercio '+resultAgent.user)
+            return {data: {message:'Petition sucsessfuly', ok:true, status:200,data: resultAgent}}
+        }
+        return { data: { error: { message: 'Bad request', status: 200, ok: false } } }
     }
 
     @Post()
     async create(@Body() agent:AgentCommerceDto){
         let userResult = await this.userService.findById(agent.userId);
-        console.log(userResult)
         if(userResult===undefined){
             return {data: { error: { ok:false, status: 404, message: 'The user_id in the body dont exist in the database'} } }
         }else{
