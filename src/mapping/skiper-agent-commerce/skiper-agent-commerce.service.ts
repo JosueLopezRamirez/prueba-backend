@@ -24,4 +24,8 @@ export class SkiperAgentCommerceService {
     async create(agent: SkiperAgentCommerce): Promise<SkiperAgentCommerce>{
         return await this.repoAgent.save(agent);
     }
+
+    async delete(agent: SkiperAgentCommerce){
+        return await this.repoAgent.delete(agent);
+    }
 }

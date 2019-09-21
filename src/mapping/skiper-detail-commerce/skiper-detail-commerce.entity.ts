@@ -8,11 +8,7 @@ export class SkiperDetailCommerce {
 
     @PrimaryGeneratedColumn() id: number;
 
-    // @Column({nullable: false}) idowner: number; //Representa una llave foranea
-
     @Column({nullable: true,length: 80}) namecommerce: string;
-
-    @Column({nullable: false}) id_cat_service: number; //Representa una llave foranea
 
     @Column({nullable: false,length: 100}) identification_ruc: string;
 

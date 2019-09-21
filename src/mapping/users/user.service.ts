@@ -27,6 +27,15 @@ export class UserService {
         });
     }
 
+    //Prueba store_procedure
+    async SP_USERS_COMMERCE(body){
+        let request = body.email;
+        let query = "CALL SP_PRUEBA('"+request+"')";
+        let result = await this.userRepository.query(query);
+        this.logger.debug(result);
+        return result[0];
+    }
+
     //Find user by email
     async findByEmail(email: string): Promise<User> {
         return await this.userRepository.findOne({

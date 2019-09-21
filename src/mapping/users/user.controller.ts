@@ -1,57 +1,47 @@
-import { Controller, Get, Param, Post, Body, Put, Delete, UseGuards, UseFilters, Logger } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Put, Delete, UseGuards, Logger } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import * as bcrypt from 'bcryptjs';
 
 import { UserService } from './user.service';
 import { User } from './user.entity';
 import { UserDto } from './user.dto';
-import { UserRepository } from './user.repository';
 import { validate } from 'class-validator';
 
 @Controller('user')
 export class UserController {
     
-
     private logger = new Logger('UserController');
 
-    constructor(private readonly userRepository: UserRepository){}
-
-    // @Get('/prueba_decorador')
-    // @UseFilters(new HttpExcepcionFilter())
-    // async findOne(@UserDecorator() user: UserDto){
-    //     console.log(user);
+    constructor(private readonly userService: UserService){}
 
     //Get a all users
     @Get()
     @UseGuards(AuthGuard('jwt'))
     async getAll(): Promise<User[]> {
-    return await this.userRepository.find();
+    return await this.userService.getAll();
+    }
+
+    @Post('/email')
+    async SP_PRUEBA(@Body() body){
+        return this.userService.SP_USERS_COMMERCE(body);
     }
 
     //Find user by id
     @Get('/:id')
     async findById(@Param() id): Promise<User> {
-        let user = await this.userRepository.findOne({
-            where: {
-                id: id
-            }
-        });
+        let user = await this.userService.findById(id);
         this.logger.log(`Usuario de id ${user}`);
         return user;
     }
 
     //Find user by email
-    async findByEmail(email: string): Promise<User> {
-        return await this.userRepository.findOne({
-            where: {
-                email: email 
-            }
-        });
+    @Post('/by_email')
+    async findByEmail(@Body() email: string): Promise<User> {
+        return await this.userService.findByEmail(email);
     }
 
     //Create a new user
     @Post('/')
-    async create(user: UserDto) {
+    async create(@Body() user: UserDto) {
         await validate(user).then(errors => {
             if(errors.length > 0){
                 this.logger.debug(`validation failed. errors: ${errors}`);
@@ -59,17 +49,17 @@ export class UserController {
                 this.logger.debug("validation succeed");
             }
         })
-        return this.userRepository.save(user);   
+        return this.userService.create(user);
     }
 
     //Update a user
     @Put('/:id')
     async update(@Param() id: number, @Body() input: UserDto): Promise<any> {
-        let userActual =  await this.userRepository.findOne({id:id});
+        let userActual =  await this.userService.findById(id);
         if(userActual){
             let user: User = this.parseUser(input);
             user.id = userActual.id;
-            let userUpdate = await this.userRepository.save(user);
+            let userUpdate = await this.userService.update(user);
             return userUpdate ? userUpdate : undefined
         }else{
             return {
@@ -80,14 +70,15 @@ export class UserController {
 
     //Delete a user
     @Delete('/:id')
-    async delete(user: User) {
-        return this.userRepository.delete(user);
+    async delete(@Param() id) {
+        let user = await this.userService.findById(id);
+        return this.userService.delete(user);
     }
 
     //Probando la validacion de las rutas
     async findByPayload(payload:any){
         const { user } = payload;
-        return await this.userRepository.findOne({ user })
+        return await this.userService.findByPayload(user);
     }
 
     parseUser(input: UserDto): User{

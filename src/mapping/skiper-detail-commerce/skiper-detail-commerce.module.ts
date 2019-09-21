@@ -3,9 +3,14 @@ import { SkiperDetailCommcerceController } from './skiper-detail-commerce.contro
 import { SkiperDetailCommcerceService } from './skiper-detail-commerce.service';
 import { SkiperDetailCommerce } from './skiper-detail-commerce.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { SkiperAgentCommerceModule } from '../skiper-agent-commerce/skiper-agent-commerce.module';
+import { SkiperCatServicesModule } from '../skiper-cat-services/skiper-cat-services.module';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([SkiperDetailCommerce])],
+  imports:[
+    SkiperAgentCommerceModule,
+    SkiperCatServicesModule,
+    TypeOrmModule.forFeature([SkiperDetailCommerce])],
   controllers: [SkiperDetailCommcerceController],
   providers: [SkiperDetailCommcerceService]
 })

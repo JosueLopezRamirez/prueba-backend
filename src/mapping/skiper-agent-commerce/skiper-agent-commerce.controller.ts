@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Body, Post } from '@nestjs/common';
+import { Controller, Get, Param, Body, Post, Put, Delete } from '@nestjs/common';
 import { SkiperAgentCommerceService } from './skiper-agent-commerce.service';
 import { UserService } from '../users/user.service';
 import { AgentCommerceDto } from './skiper-agent-commerce.dto';
@@ -48,7 +48,38 @@ export class SkiperAgentCommerceController {
         }   
     }
 
-    parseEntity(agent: AgentCommerceDto, user: User): SkiperAgentCommerce{
+    @Put()
+    async update(@Body() agent:AgentCommerceDto){
+        let resultActual = await this.skiperAgentService.getById(agent.id);
+        if(resultActual===undefined){
+            return {data: { error: { ok:false, status: 404, message: 'The skiperAgentCommerce_Id in the body dont exist in the database'} } }
+        }else{
+            resultActual = this.parseEntity(agent,resultActual.user);
+            resultActual.id = agent.id;
+            resultActual = await this.skiperAgentService.create(resultActual);
+            if(resultActual===undefined){
+                return {data: { error: { ok:false, status: 404, message: 'Bad request'} } }
+            }else{
+                return {data:{error:[],status:200,ok:true,message:'The agent is update successfuly',data: resultActual}}
+            }
+        }   
+    }
+
+    @Delete()
+    async delete(@Body() body){
+        let resultActual = await this.skiperAgentService.getById(body.id);
+        if(resultActual===undefined){
+            return {data: { error: { ok:false, status: 404, message: 'The skiperAgentCommerce_Id in the body dont exist in the database'} } }
+        }else{
+            resultActual.id = body.id;
+            let result = await this.skiperAgentService.delete(resultActual);
+            if(result.affected > 0){
+                return {data: { ok:true,status: 200, message: 'Skiper Agent Commerce is deleted successfuly'}}
+            }
+        }
+    }
+
+    parseEntity(agent: AgentCommerceDto | SkiperAgentCommerce, user?: User): SkiperAgentCommerce{
         let result: SkiperAgentCommerce = new SkiperAgentCommerce();
         result.identity = agent.identity;
         result.name_owner = agent.name_owner;

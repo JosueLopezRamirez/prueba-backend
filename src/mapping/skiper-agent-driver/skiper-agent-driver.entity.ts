@@ -38,5 +38,5 @@ export class SkiperAgentDriver {
     @Column('text')
     url_doc_driving_record:string;
 
-    @ManyToOne(type => User,{nullable:false}) user: User;
+    @ManyToOne(type => User,user => user.SkiperDriver,{nullable:false}) user: User;
 }

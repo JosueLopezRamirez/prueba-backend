@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { SkiperAgentCommerce } from '../skiper-agent-commerce/skiper-agent-commerce.entity';
+import { SkiperAgentDriver } from '../skiper-agent-driver/skiper-agent-driver.entity';
 
 @Entity('users')
 export class User {
@@ -27,4 +28,7 @@ export class User {
 
     @OneToMany(() => SkiperAgentCommerce, skiperAgent => skiperAgent.user)
     skiperCommerce: SkiperAgentCommerce[];
+
+    @OneToMany(() => SkiperAgentDriver, skiperAgent => skiperAgent.user)
+    SkiperDriver: SkiperAgentDriver[];
 }

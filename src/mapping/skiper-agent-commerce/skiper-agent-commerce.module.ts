@@ -10,6 +10,7 @@ import { UsersModule } from '../users/users.module';
     UsersModule,
     TypeOrmModule.forFeature([SkiperAgentCommerce])],
   providers: [SkiperAgentCommerceService],
-  controllers: [SkiperAgentCommerceController]
+  controllers: [SkiperAgentCommerceController],
+  exports:[SkiperAgentCommerceService]
 })
 export class SkiperAgentCommerceModule {}
