@@ -12,6 +12,7 @@ import { SkiperCatServicesModule } from '../skiper-cat-services/skiper-cat-servi
     SkiperCatServicesModule,
     TypeOrmModule.forFeature([SkiperDetailCommerce])],
   controllers: [SkiperDetailCommcerceController],
-  providers: [SkiperDetailCommcerceService]
+  providers: [SkiperDetailCommcerceService],
+  exports:[SkiperDetailCommcerceService]
 })
 export class SkiperDetailCommerceModule {}

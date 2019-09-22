@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Body, Post, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Param, Body, Post, Put, Delete, UseGuards } from '@nestjs/common';
 import { SkiperDetailVehicleService } from './skiper-detail-vehicle.service';
 import { SkiperAgentDriverService } from '../skiper-agent-driver/skiper-agent-driver.service';
 import { SkiperCatServicesService } from '../skiper-cat-services/skiper-cat-services.service';
@@ -6,6 +6,8 @@ import { DetailVehicleDto } from './dto';
 import { SkiperDetailVehicle } from './skiper-detail-vehicle.entity';
 import { SkiperAgentDriver } from '../skiper-agent-driver/skiper-agent-driver.entity';
 import { SkiperCatService } from '../skiper-cat-services/skiper-cat-service.entity';
+import { BaseDecorator } from '../base.decorator';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('skiper-detail-vehicle')
 export class SkiperDetailVehicleController {
@@ -52,6 +54,7 @@ export class SkiperDetailVehicleController {
     }
 
     @Put()
+    @UseGuards(AuthGuard('jwt'))
     async update(@Body() agent: DetailVehicleDto){
         let resultActual = await this.skiper_detail_service.getById(agent.id);
         if(resultActual===undefined){
@@ -69,12 +72,13 @@ export class SkiperDetailVehicleController {
     }
 
     @Delete()
-    async delete(@Body() body){
-        let resultActual = await this.skiper_detail_service.getById(body.id);
+    @UseGuards(AuthGuard('jwt'))
+    async delete(@BaseDecorator() id){
+        let resultActual = await this.skiper_detail_service.getById(id);
         if(resultActual === undefined){
             return {data: { error: { ok:false, status: 404, message: 'The Skiper Detail Vehicle ID in the body dont exist in the database'} } }
         }else{
-            resultActual.id = body.id;
+            resultActual.id = id;
             let result = await this.skiper_detail_service.delete(resultActual);
             if(result.affected > 0){
                 return {data: { ok:true,status: 200, message: 'Skiper Detail Vehicle is deleted successfuly'}}
@@ -82,7 +86,7 @@ export class SkiperDetailVehicleController {
         }
     }
 
-    parseEntity(agent: DetailVehicleDto | SkiperDetailVehicle, skiperAgent: SkiperAgentDriver, skiperCat: SkiperCatService): SkiperDetailVehicle{
+    private parseEntity(agent: DetailVehicleDto | SkiperDetailVehicle, skiperAgent: SkiperAgentDriver, skiperCat: SkiperCatService): SkiperDetailVehicle{
         let result: SkiperDetailVehicle = new SkiperDetailVehicle();
         result.id_type_vehicle = agent.id_type_vehicle;
         result.model = agent.model;

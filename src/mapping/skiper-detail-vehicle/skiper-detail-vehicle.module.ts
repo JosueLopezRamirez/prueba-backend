@@ -13,5 +13,6 @@ import { SkiperAgentDriverModule } from '../skiper-agent-driver/skiper-agent-dri
         TypeOrmModule.forFeature([SkiperDetailVehicle])],
     providers: [SkiperDetailVehicleService],
     controllers: [SkiperDetailVehicleController],
+    exports:[SkiperDetailVehicleService]
 })
 export class SkiperDetailVehicleModule {}

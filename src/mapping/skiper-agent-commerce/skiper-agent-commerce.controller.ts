@@ -79,7 +79,7 @@ export class SkiperAgentCommerceController {
         }
     }
 
-    parseEntity(agent: AgentCommerceDto | SkiperAgentCommerce, user?: User): SkiperAgentCommerce{
+    private parseEntity(agent: AgentCommerceDto | SkiperAgentCommerce, user?: User): SkiperAgentCommerce{
         let result: SkiperAgentCommerce = new SkiperAgentCommerce();
         result.identity = agent.identity;
         result.name_owner = agent.name_owner;

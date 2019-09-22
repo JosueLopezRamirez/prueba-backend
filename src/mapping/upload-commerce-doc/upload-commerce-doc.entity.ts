@@ -6,7 +6,7 @@ export class UploadCommerceDoc {
 
     @PrimaryGeneratedColumn() id: number;
 
-    @Column('text',{nullable: false}) url_doc_identification: string; 
+    @Column('text',{nullable: false}) url_doc_identification_ruc: string; 
 
     @Column('text',{nullable: false}) url_trade_registration: string;
 
@@ -31,4 +31,5 @@ export class UploadCommerceDoc {
     @Column('text',{nullable: false}) url_doc_commerce_inside_four: string;
 
     @ManyToOne(type => SkiperDetailCommerce,{nullable:false}) skiper_detail_commerce: SkiperDetailCommerce;
+
 }
