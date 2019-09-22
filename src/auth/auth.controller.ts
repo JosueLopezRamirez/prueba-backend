@@ -1,8 +1,7 @@
 import { Controller, Post, Body, Logger } from  '@nestjs/common';
 import { AuthService } from  '../auth/auth.service';
-import { UserDto } from 'src/mapping/users/user.dto';
-import { signInDto } from './dto/signIn.dto';
-import { UserDecorator } from 'src/mapping/users/user.decorator';
+import { signInDto, singUpDto } from './dto/signIn.dto';
+import { UserDecorator } from './user.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -17,7 +16,7 @@ export class AuthController {
   }  
 
   @Post('signup')
-  async register(@UserDecorator() user: UserDto): Promise<any> {
+  async register(@UserDecorator() user: singUpDto): Promise<any> {
     return this.authService.register(user);;
   }
 }

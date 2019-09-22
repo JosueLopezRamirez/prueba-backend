@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional, IsNumber } from 'class-validator';
 
 export class signInDto {
 
@@ -20,4 +20,39 @@ export class twilioDto {
 
     @IsOptional()
     code: string;
+}
+
+export class singUpDto {
+    
+    @IsOptional()
+    @IsNumber()
+    id: number;
+
+    @IsNotEmpty()
+    firstname: string;
+    
+    @IsNotEmpty()
+    lastname: string;
+
+    @IsEmail()
+    @IsNotEmpty()
+    email: string;
+
+    @IsNotEmpty()
+    user: string;
+
+    @IsNotEmpty()
+    password: string;
+    
+    @IsOptional()
+    sponsor_id: number;
+
+    @IsNotEmpty()
+    country: string;
+
+    @IsNotEmpty()
+    phone: string;
+
+    @IsNotEmpty()
+    create_at: string;
 }

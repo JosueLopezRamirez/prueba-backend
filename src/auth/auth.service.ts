@@ -5,8 +5,7 @@ import { User } from '../mapping/users/user.entity';
 
 import moment from 'moment';
 import * as bcrypt from 'bcryptjs';
-import { signInDto } from './dto/signIn.dto';
-import { UserDto } from 'src/mapping/users/user.dto';
+import { signInDto, singUpDto } from './dto/signIn.dto';
 
 @Injectable()
 export class AuthService {
@@ -67,7 +66,7 @@ export class AuthService {
         });
     }
     
-    public async register(user: UserDto): Promise<any> {
+    public async register(user: singUpDto): Promise<any> {
         const result = await this.userService.create(user);
         if(result){
             return {
