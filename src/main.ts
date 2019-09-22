@@ -13,14 +13,14 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.setGlobalPrefix('/v1/api');
   app.enableCors();
-  // app.use(helmet())
+  app.use(helmet())
   // app.use(csurf({cookie:true}));
-  // app.use(
-  //   rateLimit({
-  //     windowMs: 15 * 60 * 1000,
-  //     max: 100
-  //   })
-  // );
+  app.use(
+    rateLimit({
+      windowMs: 15 * 60 * 1000,
+      max: 100
+    })
+  );
   app.use(morgan('dev'));
 
   app.use(compression());
