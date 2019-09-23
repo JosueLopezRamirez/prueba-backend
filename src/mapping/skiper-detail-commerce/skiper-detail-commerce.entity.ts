@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 import { SkiperAgentCommerce } from "../skiper-agent-commerce/skiper-agent-commerce.entity";
 import { SkiperCatService } from "../skiper-cat-services/skiper-cat-service.entity";
 
@@ -18,7 +18,11 @@ export class SkiperDetailCommerce {
 
     @Column({nullable: false,length: 80}) manager: string;
 
-    @ManyToOne(type => SkiperAgentCommerce, {nullable: false}) skiper_agent_commerce: SkiperAgentCommerce;
+    @ManyToOne(type => SkiperAgentCommerce, {nullable: false})
+    @JoinColumn({name:'idowner'})
+    skiper_agent_commerce: SkiperAgentCommerce;
 
-    @ManyToOne(type => SkiperCatService, {nullable: false}) skiperCatService: SkiperCatService;
+    @ManyToOne(type => SkiperCatService, {nullable: false})
+    @JoinColumn({name:'id_cat_service'})
+    skiperCatService: SkiperCatService;
 }

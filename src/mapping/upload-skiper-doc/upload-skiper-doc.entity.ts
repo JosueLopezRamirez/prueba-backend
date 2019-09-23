@@ -1,5 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
-import { type } from "os";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 import { SkiperDetailVehicle } from "../skiper-detail-vehicle/skiper-detail-vehicle.entity";
 
 @Entity('upload_skiper_doc')
@@ -33,5 +32,7 @@ export class UploadSkiperDoc {
 
     @Column('text') url_doc_vehicle_inside_four:string;
 
-    @ManyToOne(type => SkiperDetailVehicle,{nullable: false}) skiper_detail_vehicle: SkiperDetailVehicle;
+    @ManyToOne(type => SkiperDetailVehicle,{nullable: false})
+    @JoinColumn({name:'id_detail_vehicle'})
+    skiper_detail_vehicle: SkiperDetailVehicle;
 }

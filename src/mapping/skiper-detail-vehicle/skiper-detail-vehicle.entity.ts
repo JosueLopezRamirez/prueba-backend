@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, ManyToOne, Column, JoinColumn } from "typeorm";
 import { SkiperAgentDriver } from "../skiper-agent-driver/skiper-agent-driver.entity";
 import { SkiperCatService } from "../skiper-cat-services/skiper-cat-service.entity";
 
@@ -15,7 +15,11 @@ export class SkiperDetailVehicle {
 
     @Column('date',{nullable: false}) year: Date;
 
-    @ManyToOne(type => SkiperAgentDriver,{nullable: false}) skiperAgentDriver: SkiperAgentDriver;
+    @ManyToOne(type => SkiperAgentDriver,{nullable: false})
+    @JoinColumn({name:'iddriver'})
+    skiperAgentDriver: SkiperAgentDriver;
 
-    @ManyToOne(type => SkiperCatService,{nullable: false}) skiperCatService: SkiperCatService;
+    @ManyToOne(type => SkiperCatService,{nullable: false})
+    @JoinColumn({name:'id_cat_service'})
+    skiperCatService: SkiperCatService;
 }

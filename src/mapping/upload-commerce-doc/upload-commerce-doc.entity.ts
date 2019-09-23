@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, JoinTable, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, JoinTable, ManyToOne, JoinColumn } from "typeorm";
 import { SkiperDetailCommerce } from "../skiper-detail-commerce/skiper-detail-commerce.entity";
 
 @Entity('upload_commerce_doc')
@@ -30,6 +30,8 @@ export class UploadCommerceDoc {
 
     @Column('text',{nullable: false}) url_doc_commerce_inside_four: string;
 
-    @ManyToOne(type => SkiperDetailCommerce,{nullable:false}) skiper_detail_commerce: SkiperDetailCommerce;
+    @ManyToOne(type => SkiperDetailCommerce,{nullable:false})
+    @JoinColumn({name:'id_detail_commerce'})
+    skiper_detail_commerce: SkiperDetailCommerce;
 
 }

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne, Column} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, ManyToOne, Column, JoinColumn} from "typeorm";
 import { User } from "../users/user.entity";
 
 @Entity({name: 'skiper_agent_commerce'})
@@ -19,5 +19,7 @@ export class SkiperAgentCommerce {
     @Column({nullable:true})
     state: boolean;
 
-    @ManyToOne(type => User,user => user.skiperCommerce,{nullable:false}) user: User;
+    @ManyToOne(type => User,user => user.skiperCommerce,{nullable:false})
+    @JoinColumn({name:'iduser'})
+    user: User;
 }

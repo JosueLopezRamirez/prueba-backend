@@ -3,7 +3,6 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import compression from 'compression';
 import helmet from 'helmet';
-import csurf from 'csurf';
 import rateLimit from 'express-rate-limit';
 import morgan from 'morgan';
 
@@ -14,7 +13,6 @@ async function bootstrap() {
   app.setGlobalPrefix('/v1/api');
   app.enableCors();
   app.use(helmet())
-  // app.use(csurf({cookie:true}));
   app.use(
     rateLimit({
       windowMs: 15 * 60 * 1000,
