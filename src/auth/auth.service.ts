@@ -6,7 +6,7 @@ import { User } from '../mapping/users/user.entity';
 import moment from 'moment';
 import * as bcrypt from 'bcryptjs';
 import { signInDto } from './dto/signIn.dto';
-import { UserDto } from 'src/mapping/users/user.dto';
+import { UserDto } from '../mapping/users/user.dto';
 
 @Injectable()
 export class AuthService {

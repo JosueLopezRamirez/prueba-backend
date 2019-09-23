@@ -1,7 +1,7 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { TwilioService } from './twilio.service';
 import { twilioDto } from './dto/signIn.dto';
-import { UserService } from 'src/mapping/users/user.service';
+import { UserService } from '../mapping/users/user.service';
 
 @Controller('twilio')
 export class TwilioController {

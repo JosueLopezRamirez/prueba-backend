@@ -1,10 +1,10 @@
-import { Injectable, HttpException, HttpStatus, Logger } from "@nestjs/common";
+import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { Strategy, ExtractJwt, VerifiedCallback } from "passport-jwt";
 import moment from 'moment';
 
 import { AuthService } from "./auth.service";
-import { UserService } from "src/mapping/users/user.service";
+import { UserService } from "../mapping/users/user.service";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
