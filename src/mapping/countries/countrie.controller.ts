@@ -40,7 +40,7 @@ export class CountrieController {
                     data: result
                 }
             }
-        }   
+        }
     }
 
     @Delete()

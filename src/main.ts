@@ -12,14 +12,17 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.setGlobalPrefix('/v1/api');
   app.enableCors();
-  app.use(helmet())
-  app.use(
-    rateLimit({
-      windowMs: 15 * 60 * 1000,
-      max: 100
-    })
-  );
-  app.use(morgan('dev'));
+  // app.use(helmet())
+  // app.use(csurf({cookie:true}));
+  // app.use(
+  //   rateLimit({
+  //     windowMs: 15 * 60 * 1000,
+  //     max: 100
+  //   })
+  // );
+  if (process.env.NODE_ENV == 'developement'){
+    app.use(morgan('dev'));
+  }
   app.use(compression());
   await app.listen(process.env.PORT || 3000);
 
