@@ -16,6 +16,7 @@ import { UploadCommerceDocModule } from './mapping/upload-commerce-doc/upload-co
 import { SkiperDetailCommerceModule } from './mapping/skiper-detail-commerce/skiper-detail-commerce.module';
 import { SkiperCatServicesModule } from './mapping/skiper-cat-services/skiper-cat-services.module';
 import { CountriesModule } from './mapping/countries/countries.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
@@ -29,6 +30,9 @@ import { CountriesModule } from './mapping/countries/countries.module';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       // synchronize: true,
       // dropSchema: true
+    }),
+    MulterModule.register({
+      dest:'./uploads'
     }),
     ChatModule,
     SharedModule,
