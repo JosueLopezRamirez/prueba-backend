@@ -20,9 +20,7 @@ async function bootstrap() {
     })
   );
   app.use(morgan('dev'));
-
   app.use(compression());
-
   await app.listen(process.env.PORT || 3000);
 
 }

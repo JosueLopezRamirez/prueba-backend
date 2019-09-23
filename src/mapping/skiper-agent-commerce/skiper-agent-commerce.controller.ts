@@ -1,9 +1,10 @@
-import { Controller, Get, Param, Body, Post, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Param, Body, Post, Put, Delete, UseGuards } from '@nestjs/common';
 import { SkiperAgentCommerceService } from './skiper-agent-commerce.service';
 import { UserService } from '../users/user.service';
 import { AgentCommerceDto } from './skiper-agent-commerce.dto';
 import { SkiperAgentCommerce } from './skiper-agent-commerce.entity';
 import { User } from '../users/user.entity';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('skiper-agent-commerce')
 export class SkiperAgentCommerceController {
@@ -14,6 +15,7 @@ export class SkiperAgentCommerceController {
     ){}
 
     @Get()
+    @UseGuards(AuthGuard('jwt'))
     async getAll() {
         let result = await this.skiperAgentService.getAll();
         if(result!==undefined){
@@ -23,6 +25,7 @@ export class SkiperAgentCommerceController {
     }
 
     @Get('/:id')
+    @UseGuards(AuthGuard('jwt'))
     async getById(@Param() id: number) {
         let resultAgent = await this.skiperAgentService.getById(id);
         if(resultAgent!==undefined){
@@ -33,6 +36,7 @@ export class SkiperAgentCommerceController {
     }
 
     @Post()
+    @UseGuards(AuthGuard('jwt'))
     async create(@Body() agent:AgentCommerceDto){
         let userResult = await this.userService.findById(agent.userId);
         if(userResult===undefined){
@@ -49,6 +53,7 @@ export class SkiperAgentCommerceController {
     }
 
     @Put()
+    @UseGuards(AuthGuard('jwt'))
     async update(@Body() agent:AgentCommerceDto){
         let resultActual = await this.skiperAgentService.getById(agent.id);
         if(resultActual===undefined){
@@ -66,6 +71,7 @@ export class SkiperAgentCommerceController {
     }
 
     @Delete()
+    @UseGuards(AuthGuard('jwt'))
     async delete(@Body() body){
         let resultActual = await this.skiperAgentService.getById(body.id);
         if(resultActual===undefined){

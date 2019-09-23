@@ -20,6 +20,7 @@ export class CountrieController {
     }
 
     @Post()
+    @UseGuards(AuthGuard('jwt'))
     async create(@Body() countrie: countrieDto){
         return await this.countrieService.create(countrie);
     }
