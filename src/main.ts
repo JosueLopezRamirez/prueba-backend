@@ -20,7 +20,7 @@ async function bootstrap() {
   //     max: 100
   //   })
   // );
-  if (process.env.NODE_ENV == 'developement'){
+  if (process.env.NODE_ENV === 'developement'){
     app.use(morgan('dev'));
   }
   app.use(compression());
