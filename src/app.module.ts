@@ -17,6 +17,7 @@ import { SkiperDetailCommerceModule } from './mapping/skiper-detail-commerce/ski
 import { SkiperCatServicesModule } from './mapping/skiper-cat-services/skiper-cat-services.module';
 import { CountriesModule } from './mapping/countries/countries.module';
 import { MulterModule } from '@nestjs/platform-express';
+import { CitiesModule } from './mapping/cities/cities.module';
 
 @Module({
   imports: [
@@ -31,9 +32,9 @@ import { MulterModule } from '@nestjs/platform-express';
       synchronize: true,
       dropSchema: true
     }),
-    MulterModule.register({
-      dest:'./uploads'
-    }),
+    // MulterModule.register({
+    //   dest:'./uploads'
+    // }),
     ChatModule,
     SharedModule,
     UsersModule,
@@ -45,7 +46,8 @@ import { MulterModule } from '@nestjs/platform-express';
     SkiperDetailCommerceModule,
     SkiperDetailVehicleModule,
     SkiperCatServicesModule,
-    CountriesModule
+    CountriesModule,
+    CitiesModule
   ],
   controllers: [AppController],
   providers: [AppService],

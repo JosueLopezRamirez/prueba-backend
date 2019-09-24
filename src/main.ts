@@ -20,9 +20,9 @@ async function bootstrap() {
   //     max: 100
   //   })
   // );
-  // if (process.env.NODE_ENV === 'developement'){
-  //   app.use(morgan('dev'));
-  // }
+  if (process.env.NODE_ENV === 'development'){
+    app.use(morgan('dev'));
+  }
   app.use(compression());
   await app.listen(process.env.PORT || 3000);
 

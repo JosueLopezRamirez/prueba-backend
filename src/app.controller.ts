@@ -6,16 +6,16 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Post()
-  @UseInterceptors(FileInterceptor('image'))
-  async uploadFile(@UploadedFiles() file) {
-    console.log(file);
-  }
+  // @Post()
+  // @UseInterceptors(FileInterceptor('image'))
+  // async uploadFile(@UploadedFiles() file) {
+  //   console.log(file);
+  // }
 
-  @Get(':imgpath')
-  seeUploadedFile(@Param('imgpath') image,@Res() res){
-    return res.sendFile(image,{root: 'uploads'});
-  }
+  // @Get(':imgpath')
+  // seeUploadedFile(@Param('imgpath') image,@Res() res){
+  //   return res.sendFile(image,{root: 'uploads'});
+  // }
 
   // Endpoint de prueba
   @Get('ads')

@@ -1,6 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn, ManyToOne } from 'typeorm';
 import { SkiperAgentCommerce } from '../skiper-agent-commerce/skiper-agent-commerce.entity';
 import { SkiperAgentDriver } from '../skiper-agent-driver/skiper-agent-driver.entity';
+import { Countrie } from '../countries/countrie.entity';
+import { Cities } from '../cities/cities.entity';
 
 @Entity('users')
 export class User {
@@ -31,4 +33,10 @@ export class User {
 
     @OneToMany(() => SkiperAgentDriver, skiperAgent => skiperAgent.user)
     SkiperDriver: SkiperAgentDriver[];
+
+    @ManyToOne(type => Countrie)
+    @JoinColumn({name: 'idcountry'}) countrie:Countrie;
+
+    @ManyToOne(type => Cities)
+    @JoinColumn({name: 'idcity'}) city:Cities;
 }

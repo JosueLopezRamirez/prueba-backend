@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, ManyToOne, Column, JoinColumn } from "t
 import { SkiperAgentDriver } from "../skiper-agent-driver/skiper-agent-driver.entity";
 import { SkiperCatService } from "../skiper-cat-services/skiper-cat-service.entity";
 
-@Entity('skiper_detail_vehicle')
+@Entity('skiper_vehicle')
 export class SkiperDetailVehicle {
 
     @PrimaryGeneratedColumn() id:number;
