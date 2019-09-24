@@ -32,7 +32,7 @@ export class AuthService {
     public async login(sign: signInDto): Promise<any | { status: number }> {
         return this.validate(sign).then(async (result) => {
             if(result === undefined){
-                return {error: {message: 'The email is incorrect' ,status: 404 ,ok:false}}
+                return {data: { error: { message: 'The email or password is incorrect', status: 200, ok: false }}}
             }else{
                 if (!result) {
                     return {

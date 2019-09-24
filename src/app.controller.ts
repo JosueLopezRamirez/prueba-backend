@@ -1,4 +1,4 @@
-import { Controller, Post, UploadedFiles, UseInterceptors, Get } from '@nestjs/common';
+import { Controller, Post, UploadedFiles, UseInterceptors, Get, Res, Param } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AppService } from './app.service';
 
@@ -12,6 +12,12 @@ export class AppController {
     console.log(file);
   }
 
+  @Get(':imgpath')
+  seeUploadedFile(@Param('imgpath') image,@Res() res){
+    return res.sendFile(image,{root: 'uploads'});
+  }
+
+  // Endpoint de prueba
   @Get('ads')
   async sendImages(){
     let array = [
@@ -24,7 +30,6 @@ export class AppController {
         product:'https://uberblogapi.10upcdn.com/wp-content/uploads/sites/354/2016/08/carls-ags-newsroom-960x540.png'
       },
     ];
-
     let normalGet = [
       {
         name:`Carl's Jr.`,
@@ -34,6 +39,7 @@ export class AppController {
         description: 'cheeseburger and french fries'
       }
     ];
+    // Retornando el body de la publicidad
     return {
       data: {
         error:[], ok:true, status: 200,
