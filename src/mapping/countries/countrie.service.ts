@@ -14,11 +14,12 @@ export class CountrieService {
         let result = await this.countrieRepository.find({
             select:["id","nicename","phonecode"]
         });
-        if (result.length > 0){
+        if (result.length >= 0){
             return { data: { ok:true,status:200, message: 'Petition successfuly', data: result } }
-        }else{
-            return { data: { ok:true,status:200, message: 'Petition successfuly', data: 'empty' } }
         }
+        // else{
+        //     return { data: { ok:true,status:200, message: 'Petition successfuly', data: 'empty' } }
+        // }
         return { data: { error: { message: 'Bad request', status: 200, ok: false } } }
     }
 
