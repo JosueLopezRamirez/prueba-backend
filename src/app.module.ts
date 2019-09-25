@@ -29,8 +29,8 @@ import { CitiesModule } from './mapping/cities/cities.module';
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true,
-      dropSchema: true
+      // synchronize: true,
+      // dropSchema: true
     }),
     // MulterModule.register({
     //   dest:'./uploads'
