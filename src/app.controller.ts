@@ -45,7 +45,7 @@ export class AppController {
       )
       .on("finish",res)
     })
-    console.log(`https://storage.cloud.google.com/mi-deposito-backend/${filename}`)
+    return {data:{uri: `https://storage.cloud.google.com/mi-deposito-backend/${filename}`, ok:true, status:200}}
   }
 
   @Get(':imgpath')

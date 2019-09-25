@@ -1,5 +1,6 @@
 import { Controller, Get, Param, Post, Body, Put, Delete, UseGuards, Logger } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import * as bcrypt from 'bcryptjs';
 
 import { UserService } from './user.service';
 import { User } from './user.entity';
@@ -52,6 +53,20 @@ export class UserController {
         return this.userService.create(user);
     }
 
+    @Put('reset_password')
+    async updateByPassword(@Body() input:any):Promise<any>{
+        let userActual = await this.userService.findById(input.id);
+        if(userActual){
+            userActual.password = await bcrypt.hash(input.password,10);
+            let userUpdate = await this.userService.update(userActual);
+            return userUpdate ? userUpdate : undefined
+        }else{
+            return {
+                data: { error: { message: 'The user dont exist in the database', status: 200, ok: false }}
+            };
+        }
+    }
+    
     //Update a user
     @Put('/:id')
     async update(@Param() id: number, @Body() input: UserDto): Promise<any> {

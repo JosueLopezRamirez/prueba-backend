@@ -27,6 +27,14 @@ export class UserService {
         });
     }
 
+    async findByPhone(phone:string):Promise<User>{
+        return await this.userRepository.findOne({
+            where:{
+                phone: phone
+            }
+        });
+    }
+
     //Prueba store_procedure
     async SP_USERS_COMMERCE(body){
         let request = body.email;
