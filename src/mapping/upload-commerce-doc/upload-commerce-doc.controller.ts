@@ -14,7 +14,7 @@ export class UploadCommerceDocController {
         private skiper_detail_commerce_service: SkiperDetailCommcerceService
     ){}
 
-    @Get()
+    @Get('/all')
     async getAll() {
         let result = await this.this_service.getAll();
         if(result!==undefined){

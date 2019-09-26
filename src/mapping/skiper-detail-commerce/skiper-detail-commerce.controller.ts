@@ -7,7 +7,7 @@ import { SkiperDetailCommerce } from './skiper-detail-commerce.entity';
 import { SkiperAgentCommerce } from '../skiper-agent-commerce/skiper-agent-commerce.entity';
 import { SkiperCatService } from '../skiper-cat-services/skiper-cat-service.entity';
 
-@Controller('skiper-detail-commcerce')
+@Controller('skiper-detail-commerce')
 export class SkiperDetailCommcerceController {
     
     constructor(
@@ -16,7 +16,7 @@ export class SkiperDetailCommcerceController {
         private readonly skiperCat: SkiperCatServicesService
     ){}
     
-    @Get()
+    @Get('/all')
     async getAll() {
         let result = await this.skiper_detail_service.getAll();
         if(result!==undefined){

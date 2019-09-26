@@ -13,7 +13,7 @@ export class SkiperAgentDriverController {
         private userService: UserService
     ){}
 
-    @Get()
+    @Get('/all')
     async getAll() {
         let result = await this.skiperAgentService.getAll();
         if(result!==undefined){

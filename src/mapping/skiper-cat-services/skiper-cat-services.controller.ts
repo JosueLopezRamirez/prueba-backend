@@ -14,7 +14,7 @@ export class SkiperCatServicesController {
     constructor(private readonly catService:SkiperCatServicesService){}
 
     //Get a all users
-    @Get()
+    @Get('/all')
     @UseGuards(AuthGuard('jwt'))
     async getAll(): Promise<any> {
         let result = await this.catService.getAll();

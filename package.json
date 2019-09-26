@@ -1,8 +1,8 @@
 {
   "name": "backend-alysystem",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "API REST - Backend AlySkiper",
+  "author": "Josue Ismael Lopez Ramirez",
   "license": "MIT",
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig.build.json",

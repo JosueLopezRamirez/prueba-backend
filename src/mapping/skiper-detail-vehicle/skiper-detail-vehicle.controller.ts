@@ -18,7 +18,7 @@ export class SkiperDetailVehicleController {
         private readonly skiperCat: SkiperCatServicesService
     ){}
 
-    @Get()
+    @Get('/all')
     async getAll() {
         let result = await this.skiper_detail_service.getAll();
         if(result!==undefined){

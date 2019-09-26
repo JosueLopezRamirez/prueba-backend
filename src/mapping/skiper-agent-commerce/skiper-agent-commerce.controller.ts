@@ -14,7 +14,7 @@ export class SkiperAgentCommerceController {
         private userService: UserService
     ){}
 
-    @Get()
+    @Get('/all')
     @UseGuards(AuthGuard('jwt'))
     async getAll() {
         let result = await this.skiperAgentService.getAll();

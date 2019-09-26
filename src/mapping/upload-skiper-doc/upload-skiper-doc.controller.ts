@@ -14,7 +14,7 @@ export class UploadSkiperDocController {
         private skiper_detail_service: SkiperDetailVehicleService
     ){}
 
-    @Get()
+    @Get('/all')
     async getAll() {
         let result = await this.this_service.getAll();
         if(result!==undefined){
