@@ -43,14 +43,16 @@ export class UserController {
     //Create a new user
     @Post('/')
     async create(@Body() user: UserDto) {
+        let userCreate: User;
         await validate(user).then(errors => {
             if(errors.length > 0){
                 this.logger.debug(`validation failed. errors: ${errors}`);
             }else{
                 this.logger.debug("validation succeed");
+                userCreate = this.parseUser(user);
             }
         })
-        return this.userService.create(user);
+        return this.userService.create(userCreate);
     }
 
     @Put('reset_password')
@@ -106,7 +108,6 @@ export class UserController {
         user.phone = input.phone;
         user.sponsor_id = input.sponsor_id;
         user.create_at = input.create_at;
-        user.country = input.country;
         return user;
     }
 }

@@ -54,16 +54,8 @@ export class UserService {
     }
 
     //Create a new user
-    async create(user: UserDto) {
-        await validate(user).then(errors => {
-            if(errors.length > 0){
-                this.logger.debug(`validation failed. errors: ${errors}`);
-            }else{
-                this.logger.debug("validation succeed");
-            }
-        })
+    async create(user: User|UserDto) {
         return this.userRepository.save(user);
-        
     }
 
     //Update a user

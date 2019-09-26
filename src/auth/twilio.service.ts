@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import Twilio from 'twilio';
-import { twilioDto } from './dto/signIn.dto';
+import { twilioDto } from './input/signIn.dto';
 
 @Injectable()
 export class TwilioService {

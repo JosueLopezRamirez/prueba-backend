@@ -50,8 +50,7 @@ import { CitiesModule } from './mapping/cities/cities.module';
       dest:'./uploads'
     }),
     GraphQLModule.forRoot({
-      typePaths: ['./**/*.graphql'],
-      installSubscriptionHandlers: true,
+      autoSchemaFile: './schema.gql'
     }),
     // GraphQLModule.forRoot({
 		// 	typePaths: ['./**/*.graphql'],

@@ -22,8 +22,6 @@ export class User {
     
     @Column({nullable:true, default: 0}) sponsor_id: number;
 
-    @Column() country: string;
-
     @Column({length: 100}) phone: string;
 
     @Column({default: Date.now()}) create_at: string;
