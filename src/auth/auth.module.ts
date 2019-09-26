@@ -9,6 +9,7 @@ import { JwtStrategy } from './jwt.strategy';
 import { TwilioService } from './twilio.service';
 import { TwilioController } from './twilio.controller';
 import { UsersModule } from '../mapping/users/users.module';
+import { AuthResolver } from './auth.resolver';
 
 @Module({
     imports: [
@@ -18,7 +19,7 @@ import { UsersModule } from '../mapping/users/users.module';
             privateKey: process.env.PRIVATE_KEY || 'supersecretamazingkey'
         }),
     ],
-    providers: [UserService, AuthService,JwtStrategy, TwilioService],
+    providers: [UserService, AuthService,JwtStrategy, TwilioService, AuthResolver],
     controllers: [AuthController, TwilioController]
 })
 export class AuthModule {}

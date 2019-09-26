@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { GraphQLModule } from '@nestjs/graphql';
 import 'dotenv/config';
 
 import { AppController } from './app.controller';
@@ -19,9 +20,21 @@ import { CountriesModule } from './mapping/countries/countries.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { CitiesModule } from './mapping/cities/cities.module';
 
-
 @Module({
   imports: [
+    ChatModule,
+    SharedModule,
+    UsersModule,
+    AuthModule,
+    SkiperAgentCommerceModule,
+    SkiperAgentDriverModule,
+    UploadSkiperDocModule,
+    UploadCommerceDocModule,
+    SkiperDetailCommerceModule,
+    SkiperDetailVehicleModule,
+    SkiperCatServicesModule,
+    CountriesModule,
+    CitiesModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DATABASE_HOST,
@@ -36,19 +49,20 @@ import { CitiesModule } from './mapping/cities/cities.module';
     MulterModule.register({
       dest:'./uploads'
     }),
-    ChatModule,
-    SharedModule,
-    UsersModule,
-    AuthModule,
-    SkiperAgentCommerceModule,
-    SkiperAgentDriverModule,
-    UploadSkiperDocModule,
-    UploadCommerceDocModule,
-    SkiperDetailCommerceModule,
-    SkiperDetailVehicleModule,
-    SkiperCatServicesModule,
-    CountriesModule,
-    CitiesModule,
+    GraphQLModule.forRoot({
+      autoSchemaFile: './schema.gql',
+      playground: true
+    }),
+    // GraphQLModule.forRoot({
+		// 	typePaths: ['./**/*.graphql'],
+		// 	installSubscriptionHandlers: false,
+		// 	debug: true,
+		// 	playground: true,
+		// 	definitions: {
+		// 	path: join(process.cwd(), 'src/graphql.schema.ts'),
+		// 	outputAs: 'class',
+		// 	},
+		// }),
   ],
   controllers: [AppController],
   providers: [AppService],

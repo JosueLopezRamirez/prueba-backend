@@ -5,7 +5,9 @@ import { User } from '../mapping/users/user.entity';
 
 import moment from 'moment';
 import * as bcrypt from 'bcryptjs';
-import { signInDto, singUpDto } from './dto/signIn.dto';
+import { signInDto } from './input/signIn.dto';
+import { UserDto } from '../mapping/users/user.dto';
+import { SignInResponse } from './dto/auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -45,28 +47,37 @@ export class AuthService {
                         data: { error: { message: 'The email or password is incorrect', status: 200, ok: false }}
                     }
                 }
-                return {
-                    data: {
-                        message: 'User logged in correctly',
-                        status: 200,
-                        ok: true, 
-                        error: [],
-                        data: {
-                            token: await this.tokenGenerated(result),
-                            name: result.firstname,
-                            lastname: result.lastname,
-                            username: result.user,
-                            email:result.email,
-                            country: result.country,
-                            phone_number: result.phone
-                        }
-                    }
-                }
+                let respuesta:SignInResponse = new SignInResponse(
+                        await this.tokenGenerated(result),
+                        result.firstname,
+                        result.lastname,
+                        result.user,
+                        result.email,
+                        result.phone
+                    );
+                return respuesta;
+                // {
+                    // data: {
+                        // message: 'User logged in correctly',
+                        // status: 200,
+                        // ok: true, 
+                        // error: [],
+                        // data: {
+                            // token: await this.tokenGenerated(result),
+                            // name: result.firstname,
+                            // lastname: result.lastname,
+                            // username: result.user,
+                            // email:result.email,
+                            // country: result.country,
+                            // phone_number: result.phone
+                        // }
+                    // }
+                // }
             }
         });
     }
     
-    public async register(user: singUpDto): Promise<any> {
+    public async register(user: UserDto): Promise<any> {
         const result = await this.userService.create(user);
         if(result){
             return {
@@ -81,7 +92,7 @@ export class AuthService {
                         lastname: result.lastname,
                         username: result.user,
                         email:result.email,
-                        country: result.country,
+                        // country: result.countrie.nicename,
                         phone_number: result.phone
                     }
                 }
