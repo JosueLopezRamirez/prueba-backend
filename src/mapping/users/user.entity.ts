@@ -1,8 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn, ManyToOne, Tree, TreeChildren } from 'typeorm';
 import { SkiperAgentCommerce } from '../skiper-agent-commerce/skiper-agent-commerce.entity';
 import { SkiperAgentDriver } from '../skiper-agent-driver/skiper-agent-driver.entity';
 import { Countrie } from '../countries/countrie.entity';
 import { Cities } from '../cities/cities.entity';
+import { ObjectType } from 'type-graphql';
 
 @Entity('users')
 export class User {

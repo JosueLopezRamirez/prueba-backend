@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne, Column, JoinColumn} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, ManyToOne, Column, JoinColumn, TreeParent, Tree} from "typeorm";
 import { User } from "../users/user.entity";
 
 @Entity({name: 'skiper_agent_commerce'})

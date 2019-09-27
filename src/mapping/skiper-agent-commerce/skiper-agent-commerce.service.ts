@@ -17,16 +17,8 @@ export class SkiperAgentCommerceService {
         private userService: UserService
     ){}
 
-    async getAll(): Promise<[CommerceOut]>{
-        let lista:[CommerceOut];
-        let result = await this.repoAgent.find();
-        console.log(result.length)
-        if(result.length > 0){
-            result.forEach(item => {
-                lista.push(new CommerceOut(item.id,item.name_owner,item.state,item.url_doc_identity,item.state))
-            })
-        }
-        return lista;
+    async getAll(): Promise<SkiperAgentCommerce[]>{
+        return await this.repoAgent.find({ relations: ["user"] });
     }
 
     async getById(_id: number): Promise<SkiperAgentCommerce>{
@@ -49,7 +41,7 @@ export class SkiperAgentCommerceService {
                 return new CommerceResponse(
                     new CommerceOut(
                         res.id,res.name_owner,res.identity,
-                        res.url_doc_identity,res.state
+                        res.url_doc_identity,res.state,res.user
                     )
                     ,null
                 );

@@ -1,6 +1,8 @@
 import { IsOptional, IsNotEmpty, IsString, Max, IsBoolean, IsNumber, MaxLength } from "class-validator";
-import { ObjectType, Field, InputType, Int } from "type-graphql";
+import { ObjectType, Field, InputType, Int, ID } from "type-graphql";
 import { ErrorResponse } from "../../global.dto";
+import { CreateUserDto } from "../users/dto/create-user.dto";
+import { User } from "../users/user.entity";
 
 export class AgentCommerceDto {
 
@@ -31,19 +33,21 @@ export class AgentCommerceDto {
 @ObjectType()
 export class CommerceOut {
 
-    constructor(id,name_owner,identity,url,state){
+    constructor(id,name_owner,identity,url,state,user){
         this.id = id;
         this.identity = identity;
         this.name_owner = name_owner;
         this.state = state;
         this.url_doc_identity = url;
+        this.user = user;
     }
 
-    @Field(() => Int) readonly id: number;
-    @Field({nullable:true}) name_owner:string;
+    @Field(() => ID) readonly id: number;
+    @Field({nullable:true}) name_owner?:string;
     @Field({nullable:true}) identity?:string;
     @Field({nullable:true}) url_doc_identity?:string;
     @Field({nullable:true}) state?:boolean;
+    @Field({nullable:false}) user: CreateUserDto;
 }
 
 @ObjectType()

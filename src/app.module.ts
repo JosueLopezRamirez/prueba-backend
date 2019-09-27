@@ -51,11 +51,10 @@ import { join } from 'path';
       dest:'./uploads'
     }),
     GraphQLModule.forRoot({
-      typePaths: ['./**/*.graphql'],
-      installSubscriptionHandlers: true,
+      autoSchemaFile: './schema.gql',
       playground: true,
-      // debug: true,
-      introspection: true
+      introspection: true,
+      debug:true
     }),
   ],
   controllers: [AppController],

@@ -10,47 +10,47 @@ export class UserResolver {
 
     constructor(private readonly usersService: UserService){}
 
-    @Query(() => [User])
+    @Query(() => [CreateUserDto])
     async users() {
         return this.usersService.getAll();
     }
 
-    @Mutation(() => User)
+    @Mutation(() => CreateUserDto)
     async createUser(@Args('input') input: UserInput) {
         let user: User = this.parseUser(input);
         let createUser = await this.usersService.create(user);
         return createUser;
     }
 
-    // @Mutation(() => CreateUserDto)
-    // async updateUser(@Args('input') input: UserInput) {
-    //     let _id: number = input.id.valueOf();
-    //     let userActual = await this.usersService.findById(_id);
-    //     try {
-    //         if(userActual[0]!== undefined){
-    //             let user: User = this.parseUser(input);
-    //             user.id = userActual[0].id;
-    //             let userUpdate = await this.usersService.update(user);
-    //             return userUpdate ? userUpdate : undefined
-    //         }else{
-    //             return new CreateUserDto();
-    //         }
-    //     } catch (error) {
-    //         return error;
-    //     }
-    // }
+    @Mutation(() => CreateUserDto)
+    async updateUser(@Args('input') input: UserInput) {
+        let _id: number = input.id.valueOf();
+        let userActual = await this.usersService.findById(_id);
+        try {
+            if(userActual[0]!== undefined){
+                let user: User = this.parseUser(input);
+                user.id = userActual[0].id;
+                let userUpdate = await this.usersService.update(user);
+                return userUpdate ? userUpdate : undefined
+            }else{
+                return new CreateUserDto();
+            }
+        } catch (error) {
+            return error;
+        }
+    }
 
-    // @Mutation(() => String)
-    // async deleteUser(@Args('input') input: UserInput) {
-    //     let userEliminar = await this.usersService.findById(input.id);
-    //     if(userEliminar[0]!== undefined){
-    //         let user: User = userEliminar[0];
-    //         let userDelete = await this.usersService.delete(user);
-    //         return userDelete ? 'Usuario Eliminado' : ''; 
-    //     }else{
-    //         return 'El usuario no existe';
-    //     }
-    // }
+    @Mutation(() => String)
+    async deleteUser(@Args('input') input: UserInput) {
+        let userEliminar = await this.usersService.findById(input.id);
+        if(userEliminar[0]!== undefined){
+            let user: User = userEliminar[0];
+            let userDelete = await this.usersService.delete(user);
+            return userDelete ? 'Usuario Eliminado' : ''; 
+        }else{
+            return 'El usuario no existe';
+        }
+    }
 
     // @Subscription('userCreated')
     // userCreated() {
