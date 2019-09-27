@@ -10,7 +10,7 @@ import { SkiperAgentCommerceModule } from './mapping/skiper-agent-commerce/skipe
 import { SkiperDetailVehicleModule } from './mapping/skiper-detail-vehicle/skiper-detail-vehicle.module';
 import { SkiperAgentDriverModule } from './mapping/skiper-agent-driver/skiper-agent-driver.module';
 import { AuthModule } from './auth/auth.module';
-import { ChatModule } from './chat/chat.module';
+// import { ChatModule } from './chat/chat.module';
 import { SharedModule } from './shared/shared.module';
 import { UploadSkiperDocModule } from './mapping/upload-skiper-doc/upload-skiper-doc.module';
 import { UploadCommerceDocModule } from './mapping/upload-commerce-doc/upload-commerce-doc.module';
@@ -19,10 +19,11 @@ import { SkiperCatServicesModule } from './mapping/skiper-cat-services/skiper-ca
 import { CountriesModule } from './mapping/countries/countries.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { CitiesModule } from './mapping/cities/cities.module';
+import { join } from 'path';
 
 @Module({
   imports: [
-    ChatModule,
+    // ChatModule,
     SharedModule,
     UsersModule,
     AuthModule,
@@ -51,18 +52,14 @@ import { CitiesModule } from './mapping/cities/cities.module';
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: './schema.gql',
-      playground: true
+      playground: true,
+      // debug: true,
+			// definitions: {
+			//   path: join(process.cwd(), 'dist/graphql.schema.js'),
+      //   outputAs: 'class',
+      // },
+      introspection: true
     }),
-    // GraphQLModule.forRoot({
-		// 	typePaths: ['./**/*.graphql'],
-		// 	installSubscriptionHandlers: false,
-		// 	debug: true,
-		// 	playground: true,
-		// 	definitions: {
-		// 	path: join(process.cwd(), 'src/graphql.schema.ts'),
-		// 	outputAs: 'class',
-		// 	},
-		// }),
   ],
   controllers: [AppController],
   providers: [AppService],

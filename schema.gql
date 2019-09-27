@@ -17,16 +17,27 @@ type CreateUserDto {
   category: Float
 }
 
+type ErrorResponse {
+  message: String!
+  status: Float!
+  ok: Boolean!
+}
+
 type Mutation {
   createUser(input: UserInput!): CreateUserDto!
   updateUser(input: UserInput!): CreateUserDto!
   deleteUser(input: UserInput!): String!
-  signin(input: signInDto!): SignInResponse!
-  signup(input: singUpDto!): String!
+  signin(input: signInDto!): ResponseSignIn!
+  signup(input: signUpDto!): ResponseSignIn!
 }
 
 type Query {
   users: [CreateUserDto!]!
+}
+
+type ResponseSignIn {
+  data: SignInResponse
+  error: ErrorResponse
 }
 
 input signInDto {
@@ -43,8 +54,7 @@ type SignInResponse {
   phone_number: String
 }
 
-input singUpDto {
-  id: Float
+input signUpDto {
   firstname: String!
   lastname: String!
   email: String!

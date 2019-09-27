@@ -8,6 +8,7 @@ import * as bcrypt from 'bcryptjs';
 import { signInDto } from './input/signIn.dto';
 import { UserDto } from '../mapping/users/user.dto';
 import { SignInResponse } from './dto/auth.dto';
+import { ErrorResponse, ResponseSignIn } from '../global.dto';
 
 @Injectable()
 export class AuthService {
@@ -21,86 +22,46 @@ export class AuthService {
     ){}
 
     //Validate data of user
-    private async validate(sign: signInDto): Promise<User | any> {
+    private async validate(sign: signInDto): Promise<User> {
         const result = await this.userService.findByEmail(sign.email);
         if(result !== undefined){
             return result;
         }else{
-            return result;
+            return undefined;
+            // throw new AuthenticationError('You must be logged in');
         }
     }
 
     //Validate info from login from user
-    public async login(sign: signInDto): Promise<any | { status: number }> {
+    public async login(sign: signInDto): Promise<ResponseSignIn> {
         return this.validate(sign).then(async (result) => {
-            if(result === undefined){
-                return {data: { error: { message: 'The email or password is incorrect', status: 200, ok: false }}}
+            if(result == undefined){
+                return new ResponseSignIn(null,new ErrorResponse('The email or password is incorrect',400,false));
             }else{
-                if (!result) {
-                    return {
-                        data: { error: { message: 'The email or password is incorrect', status: 200, ok: false }}
-                    }
-                }
                 
                 if (!bcrypt.compareSync(sign.password, result.password)) {
-                    return {
-                        data: { error: { message: 'The email or password is incorrect', status: 200, ok: false }}
-                    }
+                    return new ResponseSignIn(null,new ErrorResponse('The email or password is incorrect',400,false));
                 }
-                let respuesta:SignInResponse = new SignInResponse(
-                        await this.tokenGenerated(result),
-                        result.firstname,
-                        result.lastname,
-                        result.user,
-                        result.email,
-                        result.phone
-                    );
-                return respuesta;
-                // {
-                    // data: {
-                        // message: 'User logged in correctly',
-                        // status: 200,
-                        // ok: true, 
-                        // error: [],
-                        // data: {
-                            // token: await this.tokenGenerated(result),
-                            // name: result.firstname,
-                            // lastname: result.lastname,
-                            // username: result.user,
-                            // email:result.email,
-                            // country: result.country,
-                            // phone_number: result.phone
-                        // }
-                    // }
-                // }
+                return new ResponseSignIn(new SignInResponse(
+                    await this.tokenGenerated(result),result.firstname,
+                    result.lastname,result.user,
+                    result.email,result.phone
+                ),null);
             }
         });
     }
     
-    public async register(user: UserDto): Promise<any> {
-        const result = await this.userService.create(user);
-        if(result){
-            return {
-                data: {
-                    message: 'User register correctly',
-                    status: 200,
-                    ok: true, 
-                    error: [],
-                    data: {
-                        token: await this.tokenGenerated(result),
-                        name: result.firstname,
-                        lastname: result.lastname,
-                        username: result.user,
-                        email:result.email,
-                        // country: result.countrie.nicename,
-                        phone_number: result.phone
-                    }
-                }
-            }
-        }else{
-            return {
-                data: { error: { message: 'The email or password is incorrect', status: 200, ok: false }}
-            } 
+    public async register(user: UserDto): Promise<ResponseSignIn> {
+        let result;
+        try {
+            result = await this.userService.create(user);
+            return new ResponseSignIn(new SignInResponse(
+                await this.tokenGenerated(result),result.firstname,
+                result.lastname,result.user,
+                result.email,result.phone
+            ),null);
+        } catch (error) {
+            return new ResponseSignIn(null,new ErrorResponse('Error to create a user or user already exist!',400,false)); 
         }
     }
     
@@ -115,8 +76,8 @@ export class AuthService {
           exp: moment().add(15, 'days').unix(),
           iat: moment().unix()
         }
-        // this.logger.debug('Generacion - fecha de inicio: '+payload.iat);
-        // this.logger.debug('Generacion - fecha de expiracion: '+payload.exp);
         return await this.jwtService.sign(payload);
     }
 }
+
+// 1957

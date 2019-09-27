@@ -1,10 +1,10 @@
-import { IsEmail, IsNotEmpty, IsOptional, IsNumber } from 'class-validator';
+import { IsEmail, IsNumber, IsString } from 'class-validator';
 import { InputType, Field } from 'type-graphql';
 
 @InputType()
 export class signInDto {
 
-    @IsEmail()
+    // @IsEmail()
     @Field({nullable:false}) email: string;
 
     @Field({nullable:false}) password: string;
@@ -21,30 +21,33 @@ export class twilioDto {
 }
 
 @InputType()
-export class singUpDto {
-    
-    @IsNumber()
-    @Field({nullable:true}) id?: number;
+export class signUpDto {
 
+    // @IsString()
     @Field({nullable:false})
     firstname: string;
     
+    // @IsString()
     @Field({nullable:false})
     lastname: string;
 
-    @IsEmail()
+    // @IsEmail()
     @Field({nullable:false})
     email: string;
 
+    // @IsString()
     @Field({nullable:false})
     user: string;
 
+    // @IsString()
     @Field({nullable:false})
     password: string;
     
+    // @IsNumber()
     @Field({nullable:true})
     sponsor_id: number;
 
+    // @IsString()
     @Field({nullable:false})
     phone: string;
 
