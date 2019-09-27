@@ -51,13 +51,10 @@ import { join } from 'path';
       dest:'./uploads'
     }),
     GraphQLModule.forRoot({
-      autoSchemaFile: './schema.gql',
+      typePaths: ['./**/*.graphql'],
+      installSubscriptionHandlers: true,
       playground: true,
       // debug: true,
-			// definitions: {
-			//   path: join(process.cwd(), 'dist/graphql.schema.js'),
-      //   outputAs: 'class',
-      // },
       introspection: true
     }),
   ],

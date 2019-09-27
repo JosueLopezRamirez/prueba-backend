@@ -15,7 +15,7 @@ export class SkiperAgentCommerceController {
     ){}
 
     @Get('/all')
-    @UseGuards(AuthGuard('jwt'))
+    // @UseGuards(AuthGuard('jwt'))
     async getAll() {
         let result = await this.skiperAgentService.getAll();
         if(result!==undefined){
@@ -35,40 +35,40 @@ export class SkiperAgentCommerceController {
         return { data: { error: { message: 'Bad request', status: 200, ok: false } } }
     }
 
-    @Post()
-    @UseGuards(AuthGuard('jwt'))
-    async create(@Body() agent:AgentCommerceDto){
-        let userResult = await this.userService.findById(agent.userId);
-        if(userResult===undefined){
-            return {data: { error: { ok:false, status: 404, message: 'The user_id in the body dont exist in the database'} } }
-        }else{
-            let resultAgent = await this.parseEntity(agent,userResult);
-            resultAgent = await this.skiperAgentService.create(resultAgent);
-            if(resultAgent===undefined){
-                return {data: { error: { ok:false, status: 404, message: 'Bad request'} } }
-            }else{
-                return {data:{error:[],status:200,ok:true,message:'The agent is register successfuly',data: resultAgent}}
-            }
-        }   
-    }
+    // @Post()
+    // @UseGuards(AuthGuard('jwt'))
+    // async create(@Body() agent:AgentCommerceDto){
+    //     let userResult = await this.userService.findById(agent.userId);
+    //     if(userResult===undefined){
+    //         return {data: { error: { ok:false, status: 404, message: 'The user_id in the body dont exist in the database'} } }
+    //     }else{
+    //         let resultAgent = await this.parseEntity(agent,userResult);
+    //         resultAgent = await this.skiperAgentService.create(resultAgent);
+    //         if(resultAgent===undefined){
+    //             return {data: { error: { ok:false, status: 404, message: 'Bad request'} } }
+    //         }else{
+    //             return {data:{error:[],status:200,ok:true,message:'The agent is register successfuly',data: resultAgent}}
+    //         }
+    //     }   
+    // }
 
-    @Put()
-    @UseGuards(AuthGuard('jwt'))
-    async update(@Body() agent:AgentCommerceDto){
-        let resultActual = await this.skiperAgentService.getById(agent.id);
-        if(resultActual===undefined){
-            return {data: { error: { ok:false, status: 404, message: 'The skiperAgentCommerce_Id in the body dont exist in the database'} } }
-        }else{
-            resultActual = this.parseEntity(agent,resultActual.user);
-            resultActual.id = agent.id;
-            resultActual = await this.skiperAgentService.create(resultActual);
-            if(resultActual===undefined){
-                return {data: { error: { ok:false, status: 404, message: 'Bad request'} } }
-            }else{
-                return {data:{error:[],status:200,ok:true,message:'The agent is update successfuly',data: resultActual}}
-            }
-        }   
-    }
+    // @Put()
+    // @UseGuards(AuthGuard('jwt'))
+    // async update(@Body() agent:AgentCommerceDto){
+    //     let resultActual = await this.skiperAgentService.getById(agent.id);
+    //     if(resultActual===undefined){
+    //         return {data: { error: { ok:false, status: 404, message: 'The skiperAgentCommerce_Id in the body dont exist in the database'} } }
+    //     }else{
+    //         resultActual = this.parseEntity(agent,resultActual.user);
+    //         resultActual.id = agent.id;
+    //         resultActual = await this.skiperAgentService.create(resultActual);
+    //         if(resultActual===undefined){
+    //             return {data: { error: { ok:false, status: 404, message: 'Bad request'} } }
+    //         }else{
+    //             return {data:{error:[],status:200,ok:true,message:'The agent is update successfuly',data: resultActual}}
+    //         }
+    //     }   
+    // }
 
     @Delete()
     @UseGuards(AuthGuard('jwt'))

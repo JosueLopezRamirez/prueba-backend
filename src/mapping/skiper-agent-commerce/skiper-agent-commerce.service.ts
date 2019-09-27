@@ -1,18 +1,32 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { SkiperAgentCommerce } from './skiper-agent-commerce.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AgentCommerceDto } from './skiper-agent-commerce.dto';
+import { AgentCommerceDto, CommerceInput, CommerceOut, CommerceResponse, CommercesOut } from './skiper-agent-commerce.dto';
+import { UserService } from '../users/user.service';
+import { ErrorResponse } from '../../global.dto';
+import { User } from '../users/user.entity';
 
 @Injectable()
 export class SkiperAgentCommerceService {
 
+    private logger = new Logger('SkiperAgentCommerceService')
+
     constructor(
         @InjectRepository(SkiperAgentCommerce)private readonly repoAgent:Repository<SkiperAgentCommerce>,
+        private userService: UserService
     ){}
 
-    async getAll(): Promise<SkiperAgentCommerce[]>{
-        return await this.repoAgent.find();
+    async getAll(): Promise<[CommerceOut]>{
+        let lista:[CommerceOut];
+        let result = await this.repoAgent.find();
+        console.log(result.length)
+        if(result.length > 0){
+            result.forEach(item => {
+                lista.push(new CommerceOut(item.id,item.name_owner,item.state,item.url_doc_identity,item.state))
+            })
+        }
+        return lista;
     }
 
     async getById(_id: number): Promise<SkiperAgentCommerce>{
@@ -21,11 +35,39 @@ export class SkiperAgentCommerceService {
         });
     }
 
-    async create(agent: SkiperAgentCommerce): Promise<SkiperAgentCommerce>{
-        return await this.repoAgent.save(agent);
+    async create(agent: AgentCommerceDto): Promise<CommerceResponse>{
+        let userResult = await this.userService.findById(agent.userId);
+        if(userResult===undefined){
+            return new CommerceResponse(null,new ErrorResponse('The User id dont exist in the database',404,false));
+            // return {data: { error: { ok:false, status: 404, message: 'The user_id in the body dont exist in the database'} } }
+        }else{
+            let res = await this.parseEntity(agent,userResult);
+            res = await this.repoAgent.save(res);
+            if(res===undefined){
+                return new CommerceResponse(null,new ErrorResponse('The User id dont exist in the database',404,false));
+            }else{
+                return new CommerceResponse(
+                    new CommerceOut(
+                        res.id,res.name_owner,res.identity,
+                        res.url_doc_identity,res.state
+                    )
+                    ,null
+                );
+            }
+        }
     }
 
     async delete(agent: SkiperAgentCommerce){
         return await this.repoAgent.delete(agent);
+    }
+
+    private parseEntity(agent: CommerceInput | SkiperAgentCommerce, user?: User): SkiperAgentCommerce{
+        let result: SkiperAgentCommerce = new SkiperAgentCommerce();
+        result.identity = agent.identity;
+        result.name_owner = agent.name_owner;
+        result.state = agent.state;
+        result.url_doc_identity = agent.url_doc_identity;
+        result.user = user;
+        return result;
     }
 }

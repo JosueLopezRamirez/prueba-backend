@@ -4,12 +4,13 @@ import { SkiperAgentCommerceService } from './skiper-agent-commerce.service';
 import { SkiperAgentCommerceController } from './skiper-agent-commerce.controller';
 import { SkiperAgentCommerce } from './skiper-agent-commerce.entity';
 import { UsersModule } from '../users/users.module';
+import { SkiperAgentCommerceResolver } from './skiper-agent-commerce.resolver';
 
 @Module({
   imports:[
     UsersModule,
     TypeOrmModule.forFeature([SkiperAgentCommerce])],
-  providers: [SkiperAgentCommerceService],
+  providers: [SkiperAgentCommerceService, SkiperAgentCommerceResolver],
   controllers: [SkiperAgentCommerceController],
   exports:[SkiperAgentCommerceService]
 })
