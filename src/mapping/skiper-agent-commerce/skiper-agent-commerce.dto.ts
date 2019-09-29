@@ -33,7 +33,7 @@ export class AgentCommerceDto {
 @ObjectType()
 export class CommerceOut {
 
-    constructor(id,name_owner,identity,url,state,user){
+    constructor(id,name_owner,identity,url,state,user?){
         this.id = id;
         this.identity = identity;
         this.name_owner = name_owner;
@@ -47,7 +47,7 @@ export class CommerceOut {
     @Field({nullable:true}) identity?:string;
     @Field({nullable:true}) url_doc_identity?:string;
     @Field({nullable:true}) state?:boolean;
-    @Field({nullable:false}) user: CreateUserDto;
+    @Field({nullable:true}) user?: CreateUserDto;
 }
 
 @ObjectType()
@@ -65,6 +65,7 @@ export class CommercesOut {
 @InputType()
 export class CommerceInput {
     
+    @Field({nullable:true}) id?:number;
     @Field({nullable:false}) name_owner:string;
     @Field({nullable:false}) identity:string;
     @Field({nullable:false}) url_doc_identity:string;

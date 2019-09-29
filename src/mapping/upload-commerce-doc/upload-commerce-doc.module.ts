@@ -9,7 +9,7 @@ import { SkiperDetailCommerceModule } from '../skiper-detail-commerce/skiper-det
   imports:[
     SkiperDetailCommerceModule,
     TypeOrmModule.forFeature([UploadCommerceDoc])],
-  controllers: [UploadCommerceDocController],
+  // controllers: [UploadCommerceDocController],
   providers: [UploadCommerceDocService]
 })
 export class UploadCommerceDocModule {}

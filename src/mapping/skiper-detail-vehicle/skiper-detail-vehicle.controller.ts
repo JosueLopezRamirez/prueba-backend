@@ -18,7 +18,7 @@ export class SkiperDetailVehicleController {
         private readonly skiperCat: SkiperCatServicesService
     ){}
 
-    @Get('/all')
+    // @Get('/all')
     async getAll() {
         let result = await this.skiper_detail_service.getAll();
         if(result!==undefined){
@@ -27,7 +27,7 @@ export class SkiperDetailVehicleController {
         return { data: { error: { message: 'Bad request', status: 200, ok: false } } }
     }
 
-    @Get('/:id')
+    // @Get('/:id')
     async getById(@Param() id: number) {
         let result = await this.skiper_detail_service.getById(id);
         if(result!==undefined){
@@ -36,7 +36,7 @@ export class SkiperDetailVehicleController {
         return { data: { error: { message: 'Bad request', status: 200, ok: false } } }
     }
 
-    @Post()
+    // @Post()
     async create(@Body() agent: DetailVehicleDto){
         let resultAgent = await this.skiperAgent.getById(agent.skiperAgentDriver);
         let resultCat = await this.skiperCat.getById(agent.skiperCatService)
@@ -53,8 +53,8 @@ export class SkiperDetailVehicleController {
         }   
     }
 
-    @Put()
-    @UseGuards(AuthGuard('jwt'))
+    // @Put()
+    // @UseGuards(AuthGuard('jwt'))
     async update(@Body() agent: DetailVehicleDto){
         let resultActual = await this.skiper_detail_service.getById(agent.id);
         if(resultActual===undefined){
@@ -71,8 +71,8 @@ export class SkiperDetailVehicleController {
         }   
     }
 
-    @Delete()
-    @UseGuards(AuthGuard('jwt'))
+    // @Delete()
+    // @UseGuards(AuthGuard('jwt'))
     async delete(@BaseDecorator() id){
         let resultActual = await this.skiper_detail_service.getById(id);
         if(resultActual === undefined){

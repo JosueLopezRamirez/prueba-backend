@@ -20,6 +20,6 @@ import { AuthResolver } from './auth.resolver';
         }),
     ],
     providers: [UserService, AuthService,JwtStrategy, TwilioService, AuthResolver],
-    controllers: [AuthController, TwilioController]
+    // controllers: [AuthController, TwilioController]
 })
 export class AuthModule {}

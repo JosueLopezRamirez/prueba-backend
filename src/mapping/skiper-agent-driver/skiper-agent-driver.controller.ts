@@ -13,7 +13,7 @@ export class SkiperAgentDriverController {
         private userService: UserService
     ){}
 
-    @Get('/all')
+    // @Get('/all')
     async getAll() {
         let result = await this.skiperAgentService.getAll();
         if(result!==undefined){
@@ -22,7 +22,7 @@ export class SkiperAgentDriverController {
         return { data: { error: { message: 'Bad request', status: 200, ok: false } } }
     }
 
-    @Get('/:id')
+    // @Get('/:id')
     async getById(@Param() id: number) {
         let resultAgent = await this.skiperAgentService.getById(id);
         if(resultAgent!==undefined){
@@ -32,7 +32,7 @@ export class SkiperAgentDriverController {
         return { data: { error: { message: 'Bad request', status: 200, ok: false } } }
     }
 
-    @Post()
+    // @Post()
     async create(@Body() agent:AgentDriverDto){
         let userResult = await this.userService.findById(agent.userId);
         if(userResult===undefined){
@@ -48,7 +48,7 @@ export class SkiperAgentDriverController {
         }   
     }
 
-    @Put()
+    // @Put()
     async update(@Body() agent:AgentDriverDto){
         let resultActual = await this.skiperAgentService.getById(agent.id);
         if(resultActual===undefined){
@@ -65,7 +65,7 @@ export class SkiperAgentDriverController {
         }   
     }
 
-    @Delete()
+    // @Delete()
     async delete(@Body() body){
         let resultActual = await this.skiperAgentService.getById(body.id);
         if(resultActual===undefined){

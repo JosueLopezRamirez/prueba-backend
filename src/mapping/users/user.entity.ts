@@ -8,8 +8,7 @@ import { ObjectType } from 'type-graphql';
 @Entity('users')
 export class User {
     
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryGeneratedColumn() id: number;
 
     @Column() firstname: string;
 
@@ -23,19 +22,15 @@ export class User {
     
     @Column({nullable:true, default: 0}) sponsor_id: number;
 
+    @Column({length: 255}) addres: string;
+    
     @Column({length: 100}) phone: string;
 
-    @Column({default: Date.now()}) create_at: string;
-
-    @OneToMany(() => SkiperAgentCommerce, skiperAgent => skiperAgent.user)
-    skiperCommerce: SkiperAgentCommerce[];
-
-    @OneToMany(() => SkiperAgentDriver, skiperAgent => skiperAgent.user)
-    SkiperDriver: SkiperAgentDriver[];
-
-    @ManyToOne(type => Countrie)
+    @Column() create_at: Date;
+    
+    @ManyToOne(type => Countrie,{nullable:false})
     @JoinColumn({name: 'idcountry'}) countrie:Countrie;
 
-    @ManyToOne(type => Cities)
+    @ManyToOne(type => Cities,{nullable:false})
     @JoinColumn({name: 'idcity'}) city:Cities;
 }

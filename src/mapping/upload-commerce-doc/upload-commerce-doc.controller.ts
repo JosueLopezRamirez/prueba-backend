@@ -14,7 +14,7 @@ export class UploadCommerceDocController {
         private skiper_detail_commerce_service: SkiperDetailCommcerceService
     ){}
 
-    @Get('/all')
+    // @Get('/all')
     async getAll() {
         let result = await this.this_service.getAll();
         if(result!==undefined){
@@ -23,7 +23,7 @@ export class UploadCommerceDocController {
         return { data: { error: { message: 'Bad request', status: 200, ok: false } } }
     }
 
-    @Get('/:id')
+    // @Get('/:id')
     async getById(@Param() id: number) {
         let resultAgent = await this.this_service.getById(id);
         if(resultAgent!==undefined){
@@ -32,7 +32,7 @@ export class UploadCommerceDocController {
         return { data: { error: { message: 'Bad request', status: 200, ok: false } } }
     }
 
-    @Post()
+    // @Post()
     async create(@Body() upload: UploadDocCommerceDto){
         let result = await this.skiper_detail_commerce_service.getById(upload.skiper_detail_commerce_id);
         if(result===undefined){
@@ -48,7 +48,7 @@ export class UploadCommerceDocController {
         }   
     }
 
-    @Put()
+    // @Put()
     async update(@Body() agent: UploadDocCommerceDto){
         let resultActual = await this.this_service.getById(agent.id);
         if(resultActual===undefined){
@@ -65,7 +65,7 @@ export class UploadCommerceDocController {
         }   
     }
 
-    @Delete()
+    // @Delete()
     async delete(@BaseDecorator() id){
         let resultActual = await this.this_service.getById(id);
         if(resultActual===undefined){

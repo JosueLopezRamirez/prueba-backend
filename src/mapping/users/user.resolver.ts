@@ -1,14 +1,22 @@
-import { Resolver, Query, Mutation, Args, Subscription } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserInput } from './inputs/user.input';
 import { User } from './user.entity';
-import { PubSub } from 'graphql-subscriptions';
+import { Countrie } from '../countries/countrie.entity';
+import { Cities } from '../cities/cities.entity';
+import { CountrieService } from '../countries/countrie.service';
+import { CitiesService } from '../cities/cities.service';
+import * as bcrypt from 'bcryptjs';
 
 @Resolver('User')
 export class UserResolver {
 
-    constructor(private readonly usersService: UserService){}
+    constructor(
+        private readonly usersService: UserService,
+        private readonly countrieService: CountrieService,
+        private readonly citiesService:CitiesService
+    ){}
 
     @Query(() => [CreateUserDto])
     async users() {
@@ -17,9 +25,15 @@ export class UserResolver {
 
     @Mutation(() => CreateUserDto)
     async createUser(@Args('input') input: UserInput) {
-        let user: User = this.parseUser(input);
-        let createUser = await this.usersService.create(user);
-        return createUser;
+        let city = await this.citiesService.getById(input.city_id);
+        let countrie = await this.countrieService.getById(input.country_id);
+        if(city!==undefined && countrie!==undefined){
+            let user: User = this.parseUser(input,countrie,city);
+            user.password = await bcrypt.hash(user.password,10)
+            let createUser = await this.usersService.create(user);
+            return createUser;
+        }
+        
     }
 
     @Mutation(() => CreateUserDto)
@@ -28,10 +42,14 @@ export class UserResolver {
         let userActual = await this.usersService.findById(_id);
         try {
             if(userActual[0]!== undefined){
-                let user: User = this.parseUser(input);
-                user.id = userActual[0].id;
-                let userUpdate = await this.usersService.update(user);
-                return userUpdate ? userUpdate : undefined
+                let city = await this.citiesService.getById(input.city_id);
+                let countrie = await this.countrieService.getById(input.country_id);
+                if(city!==undefined && countrie!==undefined){
+                    let user: User = this.parseUser(input,countrie,city);
+                    user.id = userActual[0].id;
+                    let userUpdate = await this.usersService.update(user);
+                    return userUpdate ? userUpdate : undefined
+                }
             }else{
                 return new CreateUserDto();
             }
@@ -60,7 +78,7 @@ export class UserResolver {
     // }
 
     //Metodo para parsear el input con la entity
-    parseUser(input: UserInput): User{
+    parseUser(input: UserInput,countrie:Countrie,city:Cities): User{
         let user: User = new User();
         user.firstname = input.firstname;
         user.lastname = input.lastname;
@@ -70,6 +88,9 @@ export class UserResolver {
         user.phone = input.phone;
         user.sponsor_id = input.sponsor_id;
         user.create_at = input.create_at;
+        user.addres = input.addres;
+        user.countrie = countrie;
+        user.city = city;
         return user;
     }
 }

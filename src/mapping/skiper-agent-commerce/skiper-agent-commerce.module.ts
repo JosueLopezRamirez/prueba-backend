@@ -11,7 +11,7 @@ import { SkiperAgentCommerceResolver } from './skiper-agent-commerce.resolver';
     UsersModule,
     TypeOrmModule.forFeature([SkiperAgentCommerce])],
   providers: [SkiperAgentCommerceService, SkiperAgentCommerceResolver],
-  controllers: [SkiperAgentCommerceController],
+  // controllers: [SkiperAgentCommerceController],
   exports:[SkiperAgentCommerceService]
 })
 export class SkiperAgentCommerceModule {}

@@ -7,7 +7,7 @@ import { SkiperCatService } from './skiper-cat-service.entity';
 @Module({
   imports:[TypeOrmModule.forFeature([SkiperCatService])],
   providers: [SkiperCatServicesService],
-  controllers: [SkiperCatServicesController],
+  // controllers: [SkiperCatServicesController],
   exports:[SkiperCatServicesService]
 })
 export class SkiperCatServicesModule {}

@@ -5,6 +5,6 @@ import { SkiperMenuCommerce } from './skiper-menu-commerce.entity';
 
 @Module({
     imports:[TypeOrmModule.forFeature([SkiperMenuCommerce])],
-    controllers: [SkiperMenuCommerceController]
+    // controllers: [SkiperMenuCommerceController]
 })
 export class SkiperMenuCommerceModule {}

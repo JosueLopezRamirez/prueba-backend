@@ -9,7 +9,7 @@ import { UsersModule } from '../users/users.module';
     imports:[
         UsersModule,
         TypeOrmModule.forFeature([SkiperAgentDriver])],
-    controllers: [SkiperAgentDriverController],
+    // controllers: [SkiperAgentDriverController],
     providers: [SkiperAgentDriverService],
     exports:[SkiperAgentDriverService]
 })

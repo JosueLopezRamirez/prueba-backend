@@ -15,19 +15,19 @@ export class UserController {
     constructor(private readonly userService: UserService){}
 
     //Get a all users
-    @Get('/all')
-    @UseGuards(AuthGuard('jwt'))
+    // @Get('/all')
+    // @UseGuards(AuthGuard('jwt'))
     async getAll(): Promise<User[]> {
     return await this.userService.getAll();
     }
 
-    @Post('/email')
+    // @Post('/email')
     async SP_PRUEBA(@Body() body){
         return this.userService.SP_USERS_COMMERCE(body);
     }
 
     //Find user by id
-    @Get('/:id')
+    // @Get('/:id')
     async findById(@Param() id): Promise<User> {
         let user = await this.userService.findById(id);
         this.logger.log(`Usuario de id ${user}`);
@@ -35,27 +35,27 @@ export class UserController {
     }
 
     //Find user by email
-    @Post('/by_email')
+    // @Post('/by_email')
     async findByEmail(@Body() email: string): Promise<User> {
         return await this.userService.findByEmail(email);
     }
 
     //Create a new user
-    @Post('/')
-    async create(@Body() user: UserDto) {
-        let userCreate: User;
-        await validate(user).then(errors => {
-            if(errors.length > 0){
-                this.logger.debug(`validation failed. errors: ${errors}`);
-            }else{
-                this.logger.debug("validation succeed");
-                userCreate = this.parseUser(user);
-            }
-        })
-        return this.userService.create(userCreate);
-    }
+    // @Post('/')
+    // async create(@Body() user: UserDto) {
+    //     let userCreate: User;
+    //     await validate(user).then(errors => {
+    //         if(errors.length > 0){
+    //             this.logger.debug(`validation failed. errors: ${errors}`);
+    //         }else{
+    //             this.logger.debug("validation succeed");
+    //             userCreate = this.parseUser(user);
+    //         }
+    //     })
+    //     return this.userService.create(userCreate);
+    // }
 
-    @Put('reset_password')
+    // @Put('reset_password')
     async updateByPassword(@Body() input:any):Promise<any>{
         let userActual = await this.userService.findById(input.id);
         if(userActual){
@@ -70,23 +70,23 @@ export class UserController {
     }
     
     //Update a user
-    @Put('/:id')
-    async update(@Param() id: number, @Body() input: UserDto): Promise<any> {
-        let userActual =  await this.userService.findById(id);
-        if(userActual){
-            let user: User = this.parseUser(input);
-            user.id = userActual.id;
-            let userUpdate = await this.userService.update(user);
-            return userUpdate ? userUpdate : undefined
-        }else{
-            return {
-                data: { error: { message: 'The user dont exist in the database', status: 200, ok: false }}
-            };
-        }
-    }
+    // @Put('/:id')
+    // async update(@Param() id: number, @Body() input: UserDto): Promise<any> {
+    //     let userActual =  await this.userService.findById(id);
+    //     if(userActual){
+    //         let user: User = this.parseUser(input);
+    //         user.id = userActual.id;
+    //         let userUpdate = await this.userService.update(user);
+    //         return userUpdate ? userUpdate : undefined
+    //     }else{
+    //         return {
+    //             data: { error: { message: 'The user dont exist in the database', status: 200, ok: false }}
+    //         };
+    //     }
+    // }
 
     //Delete a user
-    @Delete('/:id')
+    // @Delete('/:id')
     async delete(@Param() id) {
         let user = await this.userService.findById(id);
         return this.userService.delete(user);
@@ -107,7 +107,7 @@ export class UserController {
         user.email = input.email;
         user.phone = input.phone;
         user.sponsor_id = input.sponsor_id;
-        user.create_at = input.create_at;
+        // user.create_at = input.create_at;
         return user;
     }
 }

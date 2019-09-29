@@ -9,7 +9,7 @@ export class CountrieController {
     
     constructor(private countrieService: CountrieService){}
 
-    @Get('/list')
+    // @Get('/list')
     // @UseGuards(AuthGuard('jwt'))
     async getAllCountries(){
         return await this.countrieService.getAllCountries();

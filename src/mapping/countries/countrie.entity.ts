@@ -16,13 +16,13 @@ export class Countrie {
     @Column({length: 80})
     nicename: string;
 
-    @Column({length: 3})
+    @Column({length: 3,nullable:true})
     iso3: string;
 
-    @Column({type: "smallint"})
+    @Column({type: "smallint",nullable:true})
     numcode: number;
 
-    @Column({type: "int"})
+    @Column({type: "int",nullable:true})
     phonecode: number;
 
 

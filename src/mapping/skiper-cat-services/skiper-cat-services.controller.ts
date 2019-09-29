@@ -14,8 +14,8 @@ export class SkiperCatServicesController {
     constructor(private readonly catService:SkiperCatServicesService){}
 
     //Get a all users
-    @Get('/all')
-    @UseGuards(AuthGuard('jwt'))
+    // @Get('/all')
+    // @UseGuards(AuthGuard('jwt'))
     async getAll(): Promise<any> {
         let result = await this.catService.getAll();
         if(result===undefined){
@@ -26,7 +26,7 @@ export class SkiperCatServicesController {
     }
 
     //Find user by id
-    @Get('/:id')
+    // @Get('/:id')
     async findById(@Param() id): Promise<any> {
         let catService = await this.catService.getById(id);
         if(catService===undefined){
@@ -37,7 +37,7 @@ export class SkiperCatServicesController {
     }
 
     //Create a new user
-    @Post()
+    // @Post()
     async create(@Body() service: SkiperCatDto) {
         try {
             let skiperCatService: SkiperCatService = this.parseCatService(service);
@@ -52,7 +52,7 @@ export class SkiperCatServicesController {
     }
 
     //Update a user
-    @Put()
+    // @Put()
     async update(@Body() input: SkiperCatDto): Promise<any> {
         let skiperCatActual =  await this.catService.getById(input.id);
         if(skiperCatActual){
@@ -68,7 +68,7 @@ export class SkiperCatServicesController {
     }
 
     //Delete a user
-    @Delete()
+    // @Delete()
     async delete(@Body() body) {
         let resultActual = await this.catService.getById(body.id);
         if(resultActual===undefined){

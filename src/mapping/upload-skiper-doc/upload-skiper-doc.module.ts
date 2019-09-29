@@ -9,7 +9,7 @@ import { SkiperDetailVehicleModule } from '../skiper-detail-vehicle/skiper-detai
   imports:[
     SkiperDetailVehicleModule,
     TypeOrmModule.forFeature([UploadSkiperDoc])],
-  controllers: [UploadSkiperDocController],
+  // controllers: [UploadSkiperDocController],
   providers: [UploadSkiperDocService]
 })
 export class UploadSkiperDocModule {}

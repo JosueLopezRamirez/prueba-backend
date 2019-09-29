@@ -17,10 +17,13 @@ export class CountrieService {
         if (result.length >= 0){
             return { data: { ok:true,status:200, message: 'Petition successfuly', data: result } }
         }
-        // else{
-        //     return { data: { ok:true,status:200, message: 'Petition successfuly', data: 'empty' } }
-        // }
         return { data: { error: { message: 'Bad request', status: 200, ok: false } } }
+    }
+
+    async getById(id:number){
+        return await this.countrieRepository.findOne({
+            where:{id:id}
+        })
     }
 
 }

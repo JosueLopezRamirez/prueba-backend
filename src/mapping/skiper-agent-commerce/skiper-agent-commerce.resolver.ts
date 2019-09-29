@@ -13,14 +13,25 @@ export class SkiperAgentCommerceResolver {
     ){}
 
     @Query(() => [CommerceOut])
-    async comercios() {
+    async commerce() {
         return this.skiperAgentService.getAll();
+    }
+
+    @Query(() => CommerceOut)
+    async commerceById(@Args('id') id: number){
+        return this.skiperAgentService.getById(id);
     }
 
     @Mutation(() => CommerceResponse)
     async createCommerce(@Args('input') input: CommerceInput) {
         let commerce: AgentCommerceDto = this.parseCommerce(input);
         return await this.skiperAgentService.create(commerce);    
+    }
+
+    @Mutation(() => CommerceResponse)
+    async updateCommerce(@Args('input') input: CommerceInput) {
+        let commerce: AgentCommerceDto = this.parseCommerce(input);
+        return await this.skiperAgentService.update(input.id,commerce);    
     }
 
     parseCommerce(input: CommerceInput): AgentCommerceDto{

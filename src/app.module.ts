@@ -57,7 +57,7 @@ import { join } from 'path';
       debug:true
     }),
   ],
-  controllers: [AppController],
+  // controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}

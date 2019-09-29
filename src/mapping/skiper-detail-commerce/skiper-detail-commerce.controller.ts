@@ -16,7 +16,7 @@ export class SkiperDetailCommcerceController {
         private readonly skiperCat: SkiperCatServicesService
     ){}
     
-    @Get('/all')
+    // @Get('/all')
     async getAll() {
         let result = await this.skiper_detail_service.getAll();
         if(result!==undefined){
@@ -25,7 +25,7 @@ export class SkiperDetailCommcerceController {
         return { data: { error: { message: 'Bad request', status: 200, ok: false } } }
     }
 
-    @Get('/:id')
+    // @Get('/:id')
     async getById(@Param() id: number) {
         let result = await this.skiper_detail_service.getById(id);
         if(result!==undefined){
@@ -34,7 +34,7 @@ export class SkiperDetailCommcerceController {
         return { data: { error: { message: 'Bad request', status: 200, ok: false } } }
     }
 
-    @Post()
+    // @Post()
     async create(@Body() agent: DetailCommerceDto){
         let resultAgent = await this.skiperAgent.getById(agent.skiper_agent_commerce_id);
         let resultCat = await this.skiperCat.getById(agent.skiper_cat_service_id)
@@ -51,7 +51,7 @@ export class SkiperDetailCommcerceController {
         }   
     }
 
-    @Put()
+    // @Put()
     async update(@Body() agent:DetailCommerceDto){
         let resultActual = await this.skiper_detail_service.getById(agent.id);
         if(resultActual===undefined){
@@ -68,7 +68,7 @@ export class SkiperDetailCommcerceController {
         }   
     }
 
-    @Delete()
+    // @Delete()
     async delete(@Body() body){
         let resultActual = await this.skiper_detail_service.getById(body.id);
         if(resultActual === undefined){

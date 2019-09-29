@@ -23,6 +23,7 @@ export class SkiperAgentCommerceService {
 
     async getById(_id: number): Promise<SkiperAgentCommerce>{
         return await this.repoAgent.findOne({
+            relations:["user"],
             where:{id:_id}
         });
     }
@@ -31,7 +32,6 @@ export class SkiperAgentCommerceService {
         let userResult = await this.userService.findById(agent.userId);
         if(userResult===undefined){
             return new CommerceResponse(null,new ErrorResponse('The User id dont exist in the database',404,false));
-            // return {data: { error: { ok:false, status: 404, message: 'The user_id in the body dont exist in the database'} } }
         }else{
             let res = await this.parseEntity(agent,userResult);
             res = await this.repoAgent.save(res);
@@ -42,6 +42,27 @@ export class SkiperAgentCommerceService {
                     new CommerceOut(
                         res.id,res.name_owner,res.identity,
                         res.url_doc_identity,res.state,res.user
+                    )
+                    ,null
+                );
+            }
+        }
+    }
+
+    async update(id:number,agent: AgentCommerceDto): Promise<CommerceResponse>{
+        let result = await this.getById(id);
+        if(result === undefined){
+            return new CommerceResponse(null,new ErrorResponse('The commerce dont exist!!',404,false));
+        }else{
+            agent.id = id;
+            let res = await this.repoAgent.save(agent);
+            if(res === undefined){
+                return new CommerceResponse(null,new ErrorResponse('The User id dont exist in the database',404,false));
+            }else{
+                return new CommerceResponse(
+                    new CommerceOut(
+                        res.id,res.name_owner,res.identity,
+                        res.url_doc_identity,res.state
                     )
                     ,null
                 );

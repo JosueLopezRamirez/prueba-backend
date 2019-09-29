@@ -4,6 +4,7 @@
 # -----------------------------------------------
 
 input CommerceInput {
+  id: Float
   name_owner: String!
   identity: String!
   url_doc_identity: String!
@@ -17,7 +18,7 @@ type CommerceOut {
   identity: String
   url_doc_identity: String
   state: Boolean
-  user: CreateUserDto!
+  user: CreateUserDto
 }
 
 type CommerceResponse {
@@ -41,11 +42,15 @@ type CreateUserDto {
   user: String
   password: String
   sponsor_id: Float
-  country: String
   phone: String
-  create_at: String
-  category: Float
+  addres: String
+  create_at: DateTime
 }
+
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
 
 type ErrorResponse {
   message: String!
@@ -58,13 +63,15 @@ type Mutation {
   updateUser(input: UserInput!): CreateUserDto!
   deleteUser(input: UserInput!): String!
   createCommerce(input: CommerceInput!): CommerceResponse!
+  updateCommerce(input: CommerceInput!): CommerceResponse!
   signin(input: signInDto!): ResponseSignIn!
   signup(input: signUpDto!): ResponseSignIn!
 }
 
 type Query {
   users: [CreateUserDto!]!
-  comercios: [CommerceOut!]!
+  commerce: [CommerceOut!]!
+  commerceById(id: Float!): CommerceOut!
 }
 
 type ResponseSignIn {
@@ -111,7 +118,9 @@ input UserInput {
   user: String
   password: String
   sponsor_id: Float
-  country: String
+  addres: String
   phone: String
-  create_at: String
+  create_at: DateTime
+  country_id: Float!
+  city_id: Float!
 }

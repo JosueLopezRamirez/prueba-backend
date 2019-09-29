@@ -17,9 +17,14 @@ export class UserInput {
 
     @Field({nullable:true}) readonly sponsor_id?: number;
 
-    @Field({nullable:true}) readonly country?: string;
+    @Field({nullable:true}) readonly addres?: string;
 
     @Field({nullable:true}) readonly phone?: string;
 
-    @Field({nullable:true}) readonly create_at?: string;
+    @Field({nullable:true}) readonly create_at?: Date;
+
+    @Field({nullable:false}) readonly country_id: number;
+
+    @Field({nullable:false}) readonly city_id: number;
+
 }
