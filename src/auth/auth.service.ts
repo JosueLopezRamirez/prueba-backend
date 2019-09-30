@@ -5,16 +5,16 @@ import { User } from '../mapping/users/user.entity';
 
 import moment from 'moment';
 import * as bcrypt from 'bcryptjs';
-import { signInDto } from './input/signIn.dto';
-import { UserDto } from '../mapping/users/user.dto';
-import { SignInResponse } from './dto/auth.dto';
+import { signInDto, twilioDto } from './input/signIn.dto';
+import { SignInResponse } from './input/signIn.dto';
 import { ErrorResponse, ResponseSignIn } from '../global.dto';
+import Twilio from 'twilio';
 
 @Injectable()
 export class AuthService {
 
     private logger = new Logger('AuthService');
-
+    private twilio = Twilio('AC025109cb3b97652dd56c78f6ba82217a', '6ae100725be88eab8310b19c07600c76');
     //Dependencies Injection from constructor in AuthService
     constructor(
         private readonly userService: UserService,
@@ -77,6 +77,37 @@ export class AuthService {
           iat: moment().unix()
         }
         return await this.jwtService.sign(payload);
+    }
+
+    // ----------------------------------------------------------------------------
+    // ----------------- Metodos twilio -------------------------------------------
+    // ----------------------------------------------------------------------------
+
+    async sendCode(body: twilioDto):Promise<ErrorResponse>{
+        let sendCode
+        try {
+          sendCode = await this.twilio.verify.services('VA95d62cf85a1cb3fc48ce6cc0551a6701')
+            .verifications
+            .create({ to: body.phone_number, channel: body.channel })
+
+            return new ErrorResponse('Code verification send successfully',200,true)
+        } catch (error) {
+          return new ErrorResponse('Could not send verification code',200,true)
+        }
+    }
+
+    async verifyCode(body: twilioDto):Promise<ErrorResponse>{
+        let verifyCode
+        try {
+          verifyCode = await this.twilio.verify.services('VA95d62cf85a1cb3fc48ce6cc0551a6701')
+            .verificationChecks
+            .create({ code: body.code, to: body.phone_number })
+          if (verifyCode.status === 'approved') {
+            return new ErrorResponse('Code successfully verify',200,true)
+          }
+        } catch (error) {
+          return new ErrorResponse('Could not send verification code',200,false)
+        }
     }
 }
 

@@ -1,15 +1,16 @@
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
-import { signInDto, signUpDto } from './input/signIn.dto';
+import { signInDto, signUpDto, twilioDto } from './input/signIn.dto';
 import { UserDto } from '../mapping/users/user.dto';
 import { Logger } from '@nestjs/common';
-import { ResponseSignIn } from '../global.dto';
+import { ResponseSignIn, ErrorResponse } from '../global.dto';
 import * as bcrypt from 'bcryptjs';
 import { Cities } from '../mapping/cities/cities.entity';
 import { Countrie } from '../mapping/countries/countrie.entity';
 import { CitiesService } from '../mapping/cities/cities.service';
 import { CountrieService } from '../mapping/countries/countrie.service';
 import { User } from '../mapping/users/user.entity';
+import Twilio from 'twilio';
 
 @Resolver('Auth')
 export class AuthResolver {
@@ -33,9 +34,20 @@ export class AuthResolver {
         let country = await this.countrieService.getById(input.country_id);
         if(city!==undefined && country!==undefined){
             let user: User = await this.parseUser(input,country,city);
+            console.log(user)
             let userCreate = await this.authService.register(user);
             return userCreate;
         }
+    }
+
+    @Mutation(() => ErrorResponse)
+    async send_code(@Args('sendcode') sendcode:twilioDto){
+        return this.authService.sendCode(sendcode);
+    }
+
+    @Mutation(() => ErrorResponse)
+    async verify_code(@Args('verifycode') verifycode:twilioDto){
+        return this.authService.verifyCode(verifycode);
     }
 
     async parseUser(input: signUpDto,country:Countrie,city:Cities): Promise<User>{

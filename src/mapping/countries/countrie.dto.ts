@@ -1,27 +1,19 @@
-import { IsOptional, IsNumber, IsNotEmpty } from "class-validator";
+import { ObjectType, Field } from "type-graphql";
 
+@ObjectType()
 export class countrieDto {
 
-    @IsOptional()
-    @IsNumber()
-    id:number;
+    @Field({nullable:true}) id:number;
 
-    @IsNotEmpty()
-    iso: string;
+    @Field({nullable:true}) iso: string;
 
-    @IsNotEmpty()
-    name: string;
+    @Field({nullable:true}) name: string;
 
-    @IsNotEmpty()
-    nicename: string;
+    @Field({nullable:true}) nicename: string;
 
-    @IsNotEmpty()
-    iso3: string;
+    @Field({nullable:true}) iso3: string;
 
-    @IsNotEmpty()
-    @IsNumber()
-    numcode: number;
+    @Field({nullable:true}) numcode: number;
 
-    @IsNotEmpty()
-    phonecode: number;
+    @Field({nullable:true}) phonecode: number;
 }

@@ -29,9 +29,13 @@ export class UserResolver {
         let countrie = await this.countrieService.getById(input.country_id);
         if(city!==undefined && countrie!==undefined){
             let user: User = this.parseUser(input,countrie,city);
-            user.password = await bcrypt.hash(user.password,10)
-            let createUser = await this.usersService.create(user);
-            return createUser;
+            user.password = await bcrypt.hash(user.password,10);
+            try {
+                let createUser = await this.usersService.create(user);
+                return createUser;    
+            } catch (error) {
+                console.log(error)
+            }
         }
         
     }

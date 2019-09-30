@@ -3,14 +3,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import 'dotenv/config';
 
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './mapping/users/users.module';
 import { SkiperAgentCommerceModule } from './mapping/skiper-agent-commerce/skiper-agent-commerce.module';
 import { SkiperDetailVehicleModule } from './mapping/skiper-detail-vehicle/skiper-detail-vehicle.module';
 import { SkiperAgentDriverModule } from './mapping/skiper-agent-driver/skiper-agent-driver.module';
 import { AuthModule } from './auth/auth.module';
-// import { ChatModule } from './chat/chat.module';
 import { SharedModule } from './shared/shared.module';
 import { UploadSkiperDocModule } from './mapping/upload-skiper-doc/upload-skiper-doc.module';
 import { UploadCommerceDocModule } from './mapping/upload-commerce-doc/upload-commerce-doc.module';
@@ -19,11 +17,10 @@ import { SkiperCatServicesModule } from './mapping/skiper-cat-services/skiper-ca
 import { CountriesModule } from './mapping/countries/countries.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { CitiesModule } from './mapping/cities/cities.module';
-import { join } from 'path';
+import { MenuModule } from './mapping/menu/menu.module';
 
 @Module({
   imports: [
-    // ChatModule,
     SharedModule,
     UsersModule,
     AuthModule,
@@ -36,6 +33,7 @@ import { join } from 'path';
     SkiperCatServicesModule,
     CountriesModule,
     CitiesModule,
+    MenuModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DATABASE_HOST,

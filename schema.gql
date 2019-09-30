@@ -34,15 +34,25 @@ type CommercesOut {
   state: Boolean!
 }
 
+type countrieDto {
+  id: Float
+  iso: String
+  name: String
+  nicename: String
+  iso3: String
+  numcode: Float
+  phonecode: Float
+}
+
 type CreateUserDto {
   id: Int!
-  firstname: String
-  lastname: String
-  email: String
-  user: String
-  password: String
-  sponsor_id: Float
-  phone: String
+  firstname: String!
+  lastname: String!
+  email: String!
+  user: String!
+  password: String!
+  sponsor_id: Int
+  phone: String!
   address: String
   create_at: DateTime
 }
@@ -66,10 +76,13 @@ type Mutation {
   updateCommerce(input: CommerceInput!): CommerceResponse!
   signin(input: signInDto!): ResponseSignIn!
   signup(input: signUpDto!): ResponseSignIn!
+  send_code(sendcode: twilioDto!): ErrorResponse!
+  verify_code(verifycode: twilioDto!): ErrorResponse!
 }
 
 type Query {
   users: [CreateUserDto!]!
+  countries: [countrieDto!]!
   commerce: [CommerceOut!]!
   commerceById(id: Float!): CommerceOut!
 }

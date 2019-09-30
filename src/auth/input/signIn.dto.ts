@@ -1,5 +1,5 @@
 import { IsEmail } from 'class-validator';
-import { InputType, Field } from 'type-graphql';
+import { InputType, Field, ObjectType } from 'type-graphql';
 
 @InputType()
 export class signInDto {
@@ -44,4 +44,30 @@ export class signUpDto {
     @Field({nullable:false}) readonly country_id: number;
 
     @Field({nullable:false}) readonly city_id: number;
+}
+
+@ObjectType()
+export class SignInResponse {
+
+    
+    constructor(token,firstname,lastname,username,email,phone_number){
+        this.token = token;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.username = username;
+        this.email = email;
+        this.phone_number = phone_number;
+    }
+
+    @Field({nullable:true}) token: string;
+
+    @Field({nullable:true}) readonly firstname: string;
+
+    @Field({nullable:true}) readonly lastname: string;
+
+    @Field({nullable:true}) readonly username: string;
+
+    @Field({nullable:true}) readonly email: string;
+
+    @Field({nullable:true}) readonly phone_number: string;
 }

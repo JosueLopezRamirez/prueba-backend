@@ -7,19 +7,19 @@ export class CreateUserDto {
     
     @Field(() => Int) readonly id: number;
 
-    @Field({nullable:true}) readonly firstname?: string;
+    @Field({nullable:false}) readonly firstname!: string;
 
-    @Field({nullable:true}) readonly lastname?: string;
+    @Field({nullable:false}) readonly lastname!: string;
 
-    @Field({nullable:true}) readonly email?: string;
+    @Field({nullable:false}) readonly email!: string;
 
-    @Field({nullable:true}) readonly user?: string;
+    @Field({nullable:false}) readonly user!: string;
 
-    @Field({nullable:true}) readonly password?: string;
+    @Field({nullable:false}) readonly password!: string;
 
-    @Field({nullable:true}) readonly sponsor_id?: number;
+    @Field(() => Int,{nullable:true}) readonly sponsor_id?: number;
 
-    @Field({nullable:true}) readonly phone?: string;
+    @Field({nullable:false}) readonly phone!: string;
 
     @Field({nullable:true}) readonly address?:string;
 

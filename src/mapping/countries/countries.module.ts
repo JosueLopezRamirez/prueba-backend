@@ -3,10 +3,11 @@ import { CountrieController } from './countrie.controller';
 import { CountrieService } from './countrie.service';
 import { Countrie } from './countrie.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CountriesResolver } from './countries.resolver';
 
 @Module({
   imports:[TypeOrmModule.forFeature([Countrie])],
-  providers: [CountrieService],
+  providers: [CountrieService, CountriesResolver],
   exports:[CountrieService]
   // controllers: [CountrieController]
 })

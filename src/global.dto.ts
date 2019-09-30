@@ -1,6 +1,6 @@
 import { ObjectType, Field } from "type-graphql";
 import { IsNotEmpty, IsString, IsNumber } from "class-validator";
-import { SignInResponse } from "./auth/dto/auth.dto";
+import { SignInResponse } from "./auth/input/signIn.dto";
 
 @ObjectType()
 export class ErrorResponse {

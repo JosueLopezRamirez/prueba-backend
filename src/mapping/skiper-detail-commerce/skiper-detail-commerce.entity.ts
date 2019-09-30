@@ -18,6 +18,10 @@ export class SkiperDetailCommerce {
 
     @Column({nullable: false,length: 80}) manager: string;
 
+    @Column({nullable: true}) lat: string;
+
+    @Column({nullable: true}) lon: string;
+
     @Column('text',{nullable: true}) url_art: string;
 
     @Column('text',{nullable: true}) url_logo: string;
