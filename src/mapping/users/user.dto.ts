@@ -1,4 +1,6 @@
 import { IsEmail, IsNotEmpty, IsNumber, IsOptional} from 'class-validator';
+import { Cities } from '../cities/cities.entity';
+import { Countrie } from '../countries/countrie.entity';
 
 export class UserDto {
     
@@ -24,13 +26,17 @@ export class UserDto {
     
     @IsOptional()
     sponsor_id: number;
-
+    
     @IsNotEmpty()
-    country: string;
+    addres: string;
 
     @IsNotEmpty()
     phone: string;
 
     @IsNotEmpty()
-    create_at: string;
+    create_at: Date;
+
+    @IsNotEmpty() country:Countrie;
+
+    @IsNotEmpty() city:Cities;
 }

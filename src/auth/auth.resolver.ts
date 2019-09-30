@@ -5,6 +5,11 @@ import { UserDto } from '../mapping/users/user.dto';
 import { Logger } from '@nestjs/common';
 import { ResponseSignIn } from '../global.dto';
 import * as bcrypt from 'bcryptjs';
+import { Cities } from '../mapping/cities/cities.entity';
+import { Countrie } from '../mapping/countries/countrie.entity';
+import { CitiesService } from '../mapping/cities/cities.service';
+import { CountrieService } from '../mapping/countries/countrie.service';
+import { User } from '../mapping/users/user.entity';
 
 @Resolver('Auth')
 export class AuthResolver {
@@ -12,7 +17,9 @@ export class AuthResolver {
     private logger = new Logger('AuthResolver');
 
     constructor(
-        private readonly authService: AuthService
+        private readonly authService: AuthService,
+        private readonly countrieService: CountrieService,
+        private readonly citiesService:CitiesService
     ){}
 
     @Mutation(() => ResponseSignIn)
@@ -22,13 +29,17 @@ export class AuthResolver {
 
     @Mutation(() => ResponseSignIn)
     async signup(@Args('input') input: signUpDto) {
-        let user: UserDto = await this.parseUser(input);
-        return await this.authService.register(user);   
+        let city = await this.citiesService.getById(input.city_id);
+        let country = await this.countrieService.getById(input.country_id);
+        if(city!==undefined && country!==undefined){
+            let user: User = await this.parseUser(input,country,city);
+            let userCreate = await this.authService.register(user);
+            return userCreate;
+        }
     }
 
-    async parseUser(input: signUpDto): Promise<UserDto>{
-        // console.log(input)
-        let user: UserDto = new UserDto();
+    async parseUser(input: signUpDto,country:Countrie,city:Cities): Promise<User>{
+        let user: User = new User();
         user.firstname = input.firstname;
         user.lastname = input.lastname;
         user.email = input.email;
@@ -36,7 +47,10 @@ export class AuthResolver {
         user.password = await bcrypt.hash(input.password,10);
         user.phone = input.phone;
         user.sponsor_id = input.sponsor_id;
+        user.address = input.address;
         user.create_at = input.create_at;
+        user.countrie = country;
+        user.city=city;
         return user;
     }
 }

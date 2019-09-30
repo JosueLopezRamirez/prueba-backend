@@ -43,7 +43,7 @@ type CreateUserDto {
   password: String
   sponsor_id: Float
   phone: String
-  addres: String
+  address: String
   create_at: DateTime
 }
 
@@ -100,8 +100,11 @@ input signUpDto {
   user: String!
   password: String!
   sponsor_id: Float
+  address: String!
   phone: String!
-  create_at: String!
+  create_at: DateTime!
+  country_id: Float!
+  city_id: Float!
 }
 
 input twilioDto {
@@ -118,7 +121,7 @@ input UserInput {
   user: String
   password: String
   sponsor_id: Float
-  addres: String
+  address: String
   phone: String
   create_at: DateTime
   country_id: Float!

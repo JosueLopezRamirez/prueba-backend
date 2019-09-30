@@ -51,7 +51,7 @@ export class AuthService {
         });
     }
     
-    public async register(user: UserDto): Promise<ResponseSignIn> {
+    public async register(user: User): Promise<ResponseSignIn> {
         let result;
         try {
             result = await this.userService.create(user);

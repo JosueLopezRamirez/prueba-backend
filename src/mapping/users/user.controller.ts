@@ -22,9 +22,9 @@ export class UserController {
     }
 
     // @Post('/email')
-    async SP_PRUEBA(@Body() body){
-        return this.userService.SP_USERS_COMMERCE(body);
-    }
+    // async SP_PRUEBA(@Body() body){
+    //     return this.userService.SP_USERS_COMMERCE(body);
+    // }
 
     //Find user by id
     // @Get('/:id')

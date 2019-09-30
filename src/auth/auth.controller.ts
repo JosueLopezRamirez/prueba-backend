@@ -3,6 +3,7 @@ import { AuthService } from  '../auth/auth.service';
 import { signInDto } from './input/signIn.dto';
 import { UserDecorator } from './user.decorator';
 import { UserDto } from '../mapping/users/user.dto';
+import { User } from 'src/mapping/users/user.entity';
 
 @Controller('auth')
 export class AuthController {
@@ -17,7 +18,7 @@ export class AuthController {
   }  
 
   @Post('signup')
-  async register(@UserDecorator() user: UserDto): Promise<any> {
-    return this.authService.register(user);;
+  async register(@UserDecorator() user: User): Promise<any> {
+    return this.authService.register(user);
   }
 }

@@ -21,7 +21,7 @@ export class CreateUserDto {
 
     @Field({nullable:true}) readonly phone?: string;
 
-    @Field({nullable:true}) readonly addres?:string;
+    @Field({nullable:true}) readonly address?:string;
 
     @Field({nullable:true}) readonly create_at?: Date;
 

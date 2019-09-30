@@ -13,12 +13,10 @@ export class UserService {
     
     constructor(@InjectRepository(User) private readonly userRepository: Repository<User>){}
 
-    //Get a all users
     async getAll(): Promise<User[]> {
     return await this.userRepository.find();
     }
 
-    //Find user by id
     async findById(id: number): Promise<User> {
         return await this.userRepository.findOne({
             where: {
@@ -35,16 +33,6 @@ export class UserService {
         });
     }
 
-    //Prueba store_procedure
-    async SP_USERS_COMMERCE(body){
-        let request = body.email;
-        let query = "CALL SP_PRUEBA('"+request+"')";
-        let result = await this.userRepository.query(query);
-        this.logger.debug(result);
-        return result[0];
-    }
-
-    //Find user by email
     async findByEmail(email: string): Promise<User> {
         return await this.userRepository.findOne({
             where: {
@@ -68,7 +56,6 @@ export class UserService {
         return this.userRepository.delete(user);
     }
 
-    //Probando la validacion de las rutas
     async findByPayload(payload:any){
         const { user } = payload;
         return await this.userRepository.findOne({ user })

@@ -17,7 +17,7 @@ export class UserInput {
 
     @Field({nullable:true}) readonly sponsor_id?: number;
 
-    @Field({nullable:true}) readonly addres?: string;
+    @Field({nullable:true}) readonly address?: string;
 
     @Field({nullable:true}) readonly phone?: string;
 

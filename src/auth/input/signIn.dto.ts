@@ -1,10 +1,10 @@
-import { IsEmail, IsNumber, IsString } from 'class-validator';
+import { IsEmail } from 'class-validator';
 import { InputType, Field } from 'type-graphql';
 
 @InputType()
 export class signInDto {
 
-    // @IsEmail()
+    @IsEmail()
     @Field({nullable:false}) email: string;
 
     @Field({nullable:false}) password: string;
@@ -23,34 +23,25 @@ export class twilioDto {
 @InputType()
 export class signUpDto {
 
-    // @IsString()
-    @Field({nullable:false})
-    firstname: string;
-    
-    // @IsString()
-    @Field({nullable:false})
-    lastname: string;
+    @Field({nullable:false}) readonly firstname: string;
 
-    // @IsEmail()
-    @Field({nullable:false})
-    email: string;
+    @Field({nullable:false}) readonly lastname: string;
 
-    // @IsString()
-    @Field({nullable:false})
-    user: string;
+    @Field({nullable:false}) readonly email: string;
 
-    // @IsString()
-    @Field({nullable:false})
-    password: string;
-    
-    // @IsNumber()
-    @Field({nullable:true})
-    sponsor_id: number;
+    @Field({nullable:false}) readonly user: string;
 
-    // @IsString()
-    @Field({nullable:false})
-    phone: string;
+    @Field({nullable:false}) readonly password: string;
 
-    @Field({nullable:false})
-    create_at: string;
+    @Field({nullable:true}) readonly sponsor_id?: number;
+
+    @Field({nullable:false}) readonly address: string;
+
+    @Field({nullable:false}) readonly phone: string;
+
+    @Field({nullable:false}) readonly create_at: Date;
+
+    @Field({nullable:false}) readonly country_id: number;
+
+    @Field({nullable:false}) readonly city_id: number;
 }

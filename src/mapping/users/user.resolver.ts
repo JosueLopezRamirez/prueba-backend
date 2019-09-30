@@ -88,7 +88,7 @@ export class UserResolver {
         user.phone = input.phone;
         user.sponsor_id = input.sponsor_id;
         user.create_at = input.create_at;
-        user.addres = input.addres;
+        user.address = input.address;
         user.countrie = countrie;
         user.city = city;
         return user;

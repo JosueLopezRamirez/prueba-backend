@@ -22,7 +22,7 @@ export class User {
     
     @Column({nullable:true, default: 0}) sponsor_id: number;
 
-    @Column({length: 255}) addres: string;
+    @Column({length: 255}) address: string;
     
     @Column({length: 100}) phone: string;
 
