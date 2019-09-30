@@ -8,6 +8,7 @@ import { Cities } from '../cities/cities.entity';
 import { CountrieService } from '../countries/countrie.service';
 import { CitiesService } from '../cities/cities.service';
 import * as bcrypt from 'bcryptjs';
+import { InputType, Field } from 'type-graphql';
 
 @Resolver('User')
 export class UserResolver {
@@ -63,12 +64,11 @@ export class UserResolver {
     }
 
     @Mutation(() => String)
-    async deleteUser(@Args('input') input: UserInput) {
-        let userEliminar = await this.usersService.findById(input.id);
-        if(userEliminar[0]!== undefined){
-            let user: User = userEliminar[0];
-            let userDelete = await this.usersService.delete(user);
-            return userDelete ? 'Usuario Eliminado' : ''; 
+    async deleteUser(@Args('id') id: number) {
+        let userEliminar = await this.usersService.findById(id);
+        if(userEliminar!== undefined){
+            let userDelete = await this.usersService.delete(userEliminar);
+            return 'Usuario Eliminado'; 
         }else{
             return 'El usuario no existe';
         }

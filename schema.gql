@@ -71,7 +71,7 @@ type ErrorResponse {
 type Mutation {
   createUser(input: UserInput!): CreateUserDto!
   updateUser(input: UserInput!): CreateUserDto!
-  deleteUser(input: UserInput!): String!
+  deleteUser(id: Float!): String!
   createCommerce(input: CommerceInput!): CommerceResponse!
   updateCommerce(input: CommerceInput!): CommerceResponse!
   signin(input: signInDto!): ResponseSignIn!
