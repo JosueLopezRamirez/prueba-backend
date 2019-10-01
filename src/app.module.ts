@@ -50,8 +50,8 @@ import { AppResolver } from './app.resolver';
       dest:'./uploads'
     }),
     GraphQLModule.forRoot({
-      // autoSchemaFile: './schema.gql',
-      typePaths: ['./**/*.graphql'],
+      autoSchemaFile: './schema.gql',
+      // typePaths: ['./**/*.graphql'],
       playground: true,
       introspection: true,
       debug:true,

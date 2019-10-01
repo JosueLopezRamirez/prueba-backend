@@ -10,6 +10,11 @@ type ErrorResponse {
   ok: Boolean!
 }
 
+type SignInReturn {
+  data: SignInResponse
+  error: ErrorResponse
+}
+
 type ResponseSignIn {
   data: SignInResponse
   error: ErrorResponse
@@ -59,4 +64,13 @@ type Mutation {
   send_code(sendcode: twilioDto!): ErrorResponse!
   verify_code(verifycode: twilioDto!): ErrorResponse!
   reset_password(email: String!): ErrorResponse!
+}
+
+type CommerceOut {
+  id: ID!
+  name_owner: String
+  identity: String
+  url_doc_identity: String
+  state: Boolean
+  user: CreateUserDto
 }

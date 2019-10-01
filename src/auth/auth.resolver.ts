@@ -89,8 +89,8 @@ export class AuthResolver {
         }  
     }
 
-    @Subscription('userLogged')
-    userLogged() {
-        return pubSub.asyncIterator('userLogged');
-    }
+    // @Subscription('userLogged')
+    // userLogged() {
+    //     return pubSub.asyncIterator('userLogged');
+    // }
 }

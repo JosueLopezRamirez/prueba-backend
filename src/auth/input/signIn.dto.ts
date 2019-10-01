@@ -1,5 +1,5 @@
 import { IsEmail } from 'class-validator';
-import { InputType, Field, ObjectType } from 'type-graphql';
+import { InputType, Field, ObjectType, ID } from 'type-graphql';
 
 @InputType()
 export class signInDto {
@@ -47,16 +47,37 @@ export class signUpDto {
 }
 
 @ObjectType()
+export class MyCommerceOut {
+
+    constructor(id,name_owner,identity,url,state,user?){
+        this.id = id;
+        this.identity = identity;
+        this.name_owner = name_owner;
+        this.state = state;
+        this.url_doc_identity = url;
+        // this.user = user;
+    }
+
+    @Field(() => ID) readonly id: number;
+    @Field({nullable:true}) name_owner?:string;
+    @Field({nullable:true}) identity?:string;
+    @Field({nullable:true}) url_doc_identity?:string;
+    @Field({nullable:true}) state?:boolean;
+    // @Field({nullable:true}) user?: CreateUserDto;
+}
+
+@ObjectType()
 export class SignInResponse {
 
     
-    constructor(token,firstname,lastname,username,email,phone_number){
+    constructor(token,firstname,lastname,username,email,phone_number,commerce?){
         this.token = token;
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;
         this.email = email;
         this.phone_number = phone_number;
+        this.commerce = commerce || null;
     }
 
     @Field({nullable:true}) token: string;
@@ -70,4 +91,6 @@ export class SignInResponse {
     @Field({nullable:true}) readonly email: string;
 
     @Field({nullable:true}) readonly phone_number: string;
+
+    @Field({nullable:true}) readonly commerce: MyCommerceOut;
 }
