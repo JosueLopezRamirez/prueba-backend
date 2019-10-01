@@ -1,4 +1,6 @@
 import { ObjectType, Field, Int} from 'type-graphql';
+import { countrieDto } from '../../countries/countrie.dto';
+import { citiesDto } from '../../cities/cities.dto';
 
 @ObjectType()
 export class CreateUserDto {
@@ -25,7 +27,7 @@ export class CreateUserDto {
 
     @Field({nullable:true}) readonly create_at?: Date;
 
-    // @Field({nullable:true}) countrie_id: ;
+    @Field({nullable:true}) countrie: countrieDto;
 
-    // @Field({nullable:true}) city_id: number;
+    @Field({nullable:true}) city: citiesDto;
 }

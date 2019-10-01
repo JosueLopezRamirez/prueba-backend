@@ -1,6 +1,4 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { validate } from 'class-validator';
-
 import { User } from './user.entity';
 import { UserDto } from './user.dto';
 import { Repository } from 'typeorm';
@@ -14,14 +12,12 @@ export class UserService {
     constructor(@InjectRepository(User) private readonly userRepository: Repository<User>){}
 
     async getAll(): Promise<User[]> {
-    return await this.userRepository.find();
+        return await this.userRepository.find({relations:["countrie","city"]});
     }
 
     async findById(id: number): Promise<User> {
         return await this.userRepository.findOne({
-            where: {
-                id: id
-            }
+            where: {id:id}
         });
     }
 

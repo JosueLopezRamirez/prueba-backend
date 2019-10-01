@@ -13,7 +13,6 @@ export class AppController {
   private storage = new Storage({
     keyFilename: path.join(__dirname,'../My_Project-e93f8f887af3.json'),
     projectId: 'prueba-de-storage-254017'
-    // projectId: 'backend-alysystem'
   });
 
   private imgAppSkiperCommerceBucket = this.storage.bucket('mi-deposito-backend');

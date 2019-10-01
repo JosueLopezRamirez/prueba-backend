@@ -1,8 +1,6 @@
-import { Resolver, Query } from '@nestjs/graphql';
+import { Resolver, Query, Args } from '@nestjs/graphql';
 import { CountrieService } from './countrie.service';
 import { countrieDto } from './countrie.dto';
-import { Args, Int } from 'type-graphql';
-import { GraphQLScalarType } from 'graphql';
 
 @Resolver('Countries')
 export class CountriesResolver {
@@ -12,6 +10,11 @@ export class CountriesResolver {
     @Query(() => [countrieDto])
     async countries(){
         return await this.countrieService.getAllCountries();
+    }
+
+    @Query(() => countrieDto)
+    async searchCountrie(@Args('id') id:number){
+        return await this.countrieService.getById(id);
     }
 
     // @Query(() => [countrieDto])

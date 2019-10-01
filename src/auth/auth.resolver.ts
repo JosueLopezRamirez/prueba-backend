@@ -1,7 +1,6 @@
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 import { signInDto, signUpDto, twilioDto } from './input/signIn.dto';
-import { UserDto } from '../mapping/users/user.dto';
 import { Logger } from '@nestjs/common';
 import { ResponseSignIn, ErrorResponse } from '../global.dto';
 import * as bcrypt from 'bcryptjs';
@@ -10,7 +9,7 @@ import { Countrie } from '../mapping/countries/countrie.entity';
 import { CitiesService } from '../mapping/cities/cities.service';
 import { CountrieService } from '../mapping/countries/countrie.service';
 import { User } from '../mapping/users/user.entity';
-import Twilio from 'twilio';
+import { UserService } from '../mapping/users/user.service';
 
 @Resolver('Auth')
 export class AuthResolver {
@@ -20,7 +19,8 @@ export class AuthResolver {
     constructor(
         private readonly authService: AuthService,
         private readonly countrieService: CountrieService,
-        private readonly citiesService:CitiesService
+        private readonly citiesService:CitiesService,
+        private readonly userService:UserService
     ){}
 
     @Mutation(() => ResponseSignIn)
@@ -34,7 +34,6 @@ export class AuthResolver {
         let country = await this.countrieService.getById(input.country_id);
         if(city!==undefined && country!==undefined){
             let user: User = await this.parseUser(input,country,city);
-            console.log(user)
             let userCreate = await this.authService.register(user);
             return userCreate;
         }
@@ -50,6 +49,12 @@ export class AuthResolver {
         return this.authService.verifyCode(verifycode);
     }
 
+    @Mutation(() => ErrorResponse)
+    async reset_password(@Args('email') email:string){
+        return this.reset(email);
+    }
+
+
     async parseUser(input: signUpDto,country:Countrie,city:Cities): Promise<User>{
         let user: User = new User();
         user.firstname = input.firstname;
@@ -64,5 +69,18 @@ export class AuthResolver {
         user.countrie = country;
         user.city=city;
         return user;
+    }
+
+    // Reset password
+    async reset(email:string){
+        try {
+            let result = await this.userService.findByEmail(email);
+            if(result !== undefined){
+                let body = {phone_number: result.phone, channel: 'sms'}
+                return await this.send_code(body);
+            }
+        } catch (error) {
+            return new ErrorResponse('Could not send verification code',200,true)
+        }  
     }
 }

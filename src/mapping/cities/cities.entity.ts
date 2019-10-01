@@ -1,5 +1,4 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
-import { type } from "os";
 import { Countrie } from "../countries/countrie.entity";
 
 @Entity('cities')

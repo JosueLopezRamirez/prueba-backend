@@ -3,6 +3,12 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type citiesDto {
+  id: Float
+  name: String
+  countrie: countrieDto
+}
+
 input CommerceInput {
   id: Float
   name_owner: String!
@@ -55,6 +61,8 @@ type CreateUserDto {
   phone: String!
   address: String
   create_at: DateTime
+  countrie: countrieDto
+  city: citiesDto
 }
 
 """
@@ -78,11 +86,15 @@ type Mutation {
   signup(input: signUpDto!): ResponseSignIn!
   send_code(sendcode: twilioDto!): ErrorResponse!
   verify_code(verifycode: twilioDto!): ErrorResponse!
+  reset_password(email: String!): ErrorResponse!
 }
 
 type Query {
   users: [CreateUserDto!]!
   countries: [countrieDto!]!
+  searchCountrie(id: Float!): countrieDto!
+  cities: [citiesDto!]!
+  searchCity(id: Float!): citiesDto!
   commerce: [CommerceOut!]!
   commerceById(id: Float!): CommerceOut!
 }

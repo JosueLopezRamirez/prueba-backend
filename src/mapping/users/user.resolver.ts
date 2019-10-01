@@ -8,7 +8,6 @@ import { Cities } from '../cities/cities.entity';
 import { CountrieService } from '../countries/countrie.service';
 import { CitiesService } from '../cities/cities.service';
 import * as bcrypt from 'bcryptjs';
-import { InputType, Field } from 'type-graphql';
 
 @Resolver('User')
 export class UserResolver {

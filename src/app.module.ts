@@ -18,6 +18,7 @@ import { CountriesModule } from './mapping/countries/countries.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { CitiesModule } from './mapping/cities/cities.module';
 import { MenuModule } from './mapping/menu/menu.module';
+import { AppResolver } from './app.resolver';
 
 @Module({
   imports: [
@@ -55,7 +56,6 @@ import { MenuModule } from './mapping/menu/menu.module';
       debug:true
     }),
   ],
-  // controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AppResolver],
 })
 export class AppModule {}
