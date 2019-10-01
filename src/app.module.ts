@@ -50,10 +50,12 @@ import { AppResolver } from './app.resolver';
       dest:'./uploads'
     }),
     GraphQLModule.forRoot({
-      autoSchemaFile: './schema.gql',
+      // autoSchemaFile: './schema.gql',
+      typePaths: ['./**/*.graphql'],
       playground: true,
       introspection: true,
-      debug:true
+      debug:true,
+      installSubscriptionHandlers: true,
     }),
   ],
   providers: [AppService, AppResolver],

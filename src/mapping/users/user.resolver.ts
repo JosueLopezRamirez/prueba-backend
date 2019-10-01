@@ -23,6 +23,11 @@ export class UserResolver {
         return this.usersService.getAll();
     }
 
+    @Query(() => CreateUserDto)
+    async searchUser(@Args('id') id: number) {
+        return this.usersService.findById(id);
+    }
+
     @Mutation(() => CreateUserDto)
     async createUser(@Args('input') input: UserInput) {
         let city = await this.citiesService.getById(input.city_id);
@@ -37,7 +42,6 @@ export class UserResolver {
                 console.log(error)
             }
         }
-        
     }
 
     @Mutation(() => CreateUserDto)

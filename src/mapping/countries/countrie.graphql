@@ -1,0 +1,15 @@
+type countrieDto {
+  id: Float
+  iso: String
+  name: String
+  nicename: String
+  iso3: String
+  numcode: Float
+  phonecode: Float
+}
+
+type Query {
+  countries: [countrieDto!]!
+  searchCountrie(id: Float!): countrieDto!
+  showCountries(page: Float!): [countrieDto!]!
+}

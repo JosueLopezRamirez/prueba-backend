@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Subscription } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 import { signInDto, signUpDto, twilioDto } from './input/signIn.dto';
 import { Logger } from '@nestjs/common';
@@ -10,6 +10,9 @@ import { CitiesService } from '../mapping/cities/cities.service';
 import { CountrieService } from '../mapping/countries/countrie.service';
 import { User } from '../mapping/users/user.entity';
 import { UserService } from '../mapping/users/user.service';
+import { PubSub } from 'graphql-subscriptions';
+
+const pubSub = new PubSub();
 
 @Resolver('Auth')
 export class AuthResolver {
@@ -25,7 +28,9 @@ export class AuthResolver {
 
     @Mutation(() => ResponseSignIn)
     async signin(@Args('input') sign: signInDto) {
-        return await this.authService.login(sign);
+        const loggedUser = await this.authService.login(sign);
+        pubSub.publish('userLogged', { userLogged: loggedUser });
+        return loggedUser;
     }
 
     @Mutation(() => ResponseSignIn)
@@ -82,5 +87,10 @@ export class AuthResolver {
         } catch (error) {
             return new ErrorResponse('Could not send verification code',200,true)
         }  
+    }
+
+    @Subscription('userLogged')
+    userLogged() {
+        return pubSub.asyncIterator('userLogged');
     }
 }

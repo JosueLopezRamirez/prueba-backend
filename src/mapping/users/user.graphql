@@ -1,0 +1,43 @@
+
+type CreateUserDto {
+  id: Int!
+  firstname: String!
+  lastname: String!
+  email: String!
+  user: String!
+  password: String!
+  sponsor_id: Int
+  phone: String!
+  address: String
+  create_at: DateTime
+  countrie: countrieDto
+  city: citiesDto
+}
+
+type Mutation {
+  createUser(input: UserInput!): CreateUserDto!
+  updateUser(input: UserInput!): CreateUserDto!
+  deleteUser(id: Float!): String!
+}
+
+type Query {
+  users: [CreateUserDto!]!
+  searchUser(id: Float!): CreateUserDto!
+}
+
+
+
+input UserInput {
+  id: ID
+  firstname: String
+  lastname: String
+  email: String
+  user: String
+  password: String
+  sponsor_id: Float
+  address: String
+  phone: String
+  create_at: DateTime
+  country_id: Float!
+  city_id: Float!
+}

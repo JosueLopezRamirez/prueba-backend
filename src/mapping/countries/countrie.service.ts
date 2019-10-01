@@ -23,4 +23,13 @@ export class CountrieService {
     async paginate(options: IPaginationOptions): Promise<Pagination<Countrie>> {
         return await paginate<Countrie>(this.countrieRepository, options);
     }
+
+    async showAll(page: number = 1): Promise<Countrie[]> {
+        const countries = await this.countrieRepository.find({
+          take: 25,
+          skip: 25 * (page - 1),
+          order: { id: 'ASC' }
+        });
+        return countries;
+      }
 }

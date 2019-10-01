@@ -1,0 +1,11 @@
+
+type citiesDto {
+  id: Float
+  name: String
+  countrie: countrieDto
+}
+
+type Query {
+  cities: [citiesDto!]!
+  searchCity(id: Float!): citiesDto!
+}

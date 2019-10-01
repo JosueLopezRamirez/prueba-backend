@@ -5,16 +5,21 @@ import { countrieDto } from './countrie.dto';
 @Resolver('Countries')
 export class CountriesResolver {
 
-    constructor(private countrieService: CountrieService){}
+    constructor(private countrieService: CountrieService) { }
 
     @Query(() => [countrieDto])
-    async countries(){
+    async countries() {
         return await this.countrieService.getAllCountries();
     }
 
     @Query(() => countrieDto)
-    async searchCountrie(@Args('id') id:number){
+    async searchCountrie(@Args('id') id: number) {
         return await this.countrieService.getById(id);
+    }
+
+    @Query(() => [countrieDto])
+    async showCountries(@Args('page') page: number) {
+        return await this.countrieService.showAll(page);
     }
 
     // @Query(() => [countrieDto])

@@ -17,7 +17,8 @@ export class UserService {
 
     async findById(id: number): Promise<User> {
         return await this.userRepository.findOne({
-            where: {id:id}
+            where: {id:id},
+            relations:["countrie","city"]
         });
     }
 

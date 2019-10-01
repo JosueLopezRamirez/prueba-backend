@@ -1,0 +1,40 @@
+input CommerceInput {
+  id: Float
+  name_owner: String!
+  identity: String!
+  url_doc_identity: String!
+  state: Boolean!
+  userId: Float!
+}
+
+type CommerceOut {
+  id: ID!
+  name_owner: String
+  identity: String
+  url_doc_identity: String
+  state: Boolean
+  user: CreateUserDto
+}
+
+type CommerceResponse {
+  data: CommerceOut
+  error: ErrorResponse
+}
+
+type CommercesOut {
+  id: Int!
+  name_owner: String!
+  identity: String!
+  url_doc_identity: String!
+  state: Boolean!
+}
+
+type Mutation {
+  createCommerce(input: CommerceInput!): CommerceResponse!
+  updateCommerce(input: CommerceInput!): CommerceResponse!
+}
+
+type Query {
+  commerce: [CommerceOut!]!
+  commerceById(id: Float!): CommerceOut!
+}
