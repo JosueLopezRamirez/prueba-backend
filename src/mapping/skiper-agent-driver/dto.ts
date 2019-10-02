@@ -1,34 +1,28 @@
 import { IsOptional, IsBoolean, IsString, IsNotEmpty, IsNumber } from "class-validator";
+import { ObjectType, Field } from "type-graphql";
 
+@ObjectType()
 export class AgentDriverDto {
 
-    @IsOptional() id: number;
+    @Field({nullable:true}) id: number;
 
-    @IsOptional()
-    @IsBoolean() state:boolean;
+    @Field({nullable:true}) state:boolean;
 
-    @IsOptional() has_reflective_vest: boolean;
+    @Field({nullable:true}) has_reflective_vest: boolean;
 
-    @IsNotEmpty()
-    @IsString() url_doc_identity:string;
+    @Field({nullable:true}) url_doc_identity:string;
 
-    @IsNotEmpty()
-    @IsString() url_doc_letterone_recomendation:string;
+    @Field({nullable:true}) url_doc_letterone_recomendation:string;
 
-    @IsNotEmpty()
-    @IsString() url_doc_lettertwo_recomendation:string;
+    @Field({nullable:true}) url_doc_lettertwo_recomendation:string;
 
-    @IsNotEmpty()
-    @IsString() url_doc_verify_identity:string;
+    @Field({nullable:true}) url_doc_verify_identity:string;
 
-    @IsString()
-    @IsOptional() url_doc_driver_licence:string;
+    @Field({nullable:true}) url_doc_driver_licence:string;
 
-    @IsNotEmpty()
-    @IsString() url_doc_police_record:string;
+    @Field({nullable:true}) url_doc_police_record:string;
 
-    @IsNotEmpty()
-    @IsString() url_doc_driving_record:string;
+    @Field({nullable:true}) url_doc_driving_record:string;
 
-    @IsNumber() userId: number;
+    @Field({nullable:true}) userId: number;
 }

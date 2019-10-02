@@ -3,6 +3,20 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type AgentDriverDto {
+  id: Float
+  state: Boolean
+  has_reflective_vest: Boolean
+  url_doc_identity: String
+  url_doc_letterone_recomendation: String
+  url_doc_lettertwo_recomendation: String
+  url_doc_verify_identity: String
+  url_doc_driver_licence: String
+  url_doc_police_record: String
+  url_doc_driving_record: String
+  userId: Float
+}
+
 type citiesDto {
   id: Float
   name: String
@@ -100,6 +114,7 @@ type MyCommerceOut {
 type Query {
   users: [CreateUserDto!]!
   searchUser(id: Float!): CreateUserDto!
+  userPages(page: Float!): [CreateUserDto!]!
   countries: [countrieDto!]!
   searchCountrie(id: Float!): countrieDto!
   showCountries(page: Float!): [countrieDto!]!
@@ -107,6 +122,7 @@ type Query {
   searchCity(id: Float!): citiesDto!
   commerce: [CommerceOut!]!
   commerceById(id: Float!): CommerceOut!
+  drivers: [AgentDriverDto!]!
 }
 
 type ResponseSignIn {

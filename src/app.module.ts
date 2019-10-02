@@ -24,9 +24,9 @@ import { AppResolver } from './app.resolver';
   imports: [
     SharedModule,
     UsersModule,
-    AuthModule,
     SkiperAgentCommerceModule,
     SkiperAgentDriverModule,
+    AuthModule,
     UploadSkiperDocModule,
     UploadCommerceDocModule,
     SkiperDetailCommerceModule,

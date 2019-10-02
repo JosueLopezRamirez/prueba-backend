@@ -28,6 +28,11 @@ export class UserResolver {
         return this.usersService.findById(id);
     }
 
+    @Query(() => [CreateUserDto])
+    async userPages(@Args('page') page: number) {
+        return await this.usersService.userPages(page);
+    }
+
     @Mutation(() => CreateUserDto)
     async createUser(@Args('input') input: UserInput) {
         let city = await this.citiesService.getById(input.city_id);

@@ -22,6 +22,15 @@ export class UserService {
         });
     }
 
+    async userPages(page: number = 1): Promise<User[]> {
+        const countries = await this.userRepository.find({
+            take: 25,
+            skip: 25 * (page - 1),
+            order: { id: 'ASC' }
+        });
+        return countries;
+    }
+
     async findByPhone(phone:string):Promise<User>{
         return await this.userRepository.findOne({
             where:{

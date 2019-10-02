@@ -19,6 +19,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@apollographql/apollo-upload-server": "^5.0.3",
     "@google-cloud/storage": "^3.3.0",
     "@nestjs/common": "^6.7.1",
     "@nestjs/core": "^6.7.1",
@@ -31,6 +32,7 @@
     "@nestjs/websockets": "^6.8.0",
     "@types/graphql": "^14.0.7",
     "apollo-server-express": "^2.9.4",
+    "apollo-upload-server": "^7.1.0",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.10.0",
