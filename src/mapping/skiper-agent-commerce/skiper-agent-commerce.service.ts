@@ -55,8 +55,12 @@ export class SkiperAgentCommerceService {
             return new CommerceResponse(null,new ErrorResponse('The commerce dont exist!!',404,false));
         }else{
             agent.id = id;
+            result.identity = agent.identity;
+            result.name_owner = agent.name_owner;
+            result.state = agent.state;
+            result.url_doc_identity = agent.url_doc_identity;
             result.user = await this.userService.findById(agent.userId);
-            let res = await this.repoAgent.save(result);
+            let res = await this.repoAgent.save(result)
             if(res === undefined){
                 return new CommerceResponse(null,new ErrorResponse('The User id dont exist in the database',404,false));
             }else{
