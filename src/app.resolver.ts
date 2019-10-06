@@ -4,7 +4,6 @@ import path, { extname } from 'path';
 import { diskStorage } from 'multer'
 import { createReadStream } from 'fs';
 import { Resolver, Mutation } from '@nestjs/graphql';
-import { ErrorResponse } from './global.dto';
 import { UseInterceptors, UploadedFile } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 
@@ -53,6 +52,6 @@ export class AppResolver {
     }catch(error){
       console.error(error);
     }
-    return new ErrorResponse(`https://storage.cloud.google.com/mi-deposito-backend/${filename}`,200,true)
+    // return new ErrorResponse(`https://storage.cloud.google.com/mi-deposito-backend/${filename}`,200,true)
   }
 }

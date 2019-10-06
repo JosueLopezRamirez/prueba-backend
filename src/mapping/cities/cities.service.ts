@@ -9,13 +9,13 @@ export class CitiesService {
     constructor(@InjectRepository(Cities) private countrieRepository: Repository<Cities>) { }
 
     async getAll(): Promise<Cities[]> {
-        return await this.countrieRepository.find({relations:["countrie"]});
+        return await this.countrieRepository.find({relations:["country"]});
     }
 
     async getById(id:number):Promise<Cities>{
         return await this.countrieRepository.findOne({
             where:{id:id},
-            relations:["countrie"]
+            relations:["country"]
         })
     }
 }

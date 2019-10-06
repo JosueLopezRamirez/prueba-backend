@@ -5,8 +5,6 @@ import { countrieDto } from "../countries/countrie.dto";
 export class citiesDto {
 
     @Field({nullable:true}) id:number;
-
     @Field({nullable:true}) name: string;
-
     @Field({nullable:true}) countrie: countrieDto;
 }

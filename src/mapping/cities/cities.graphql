@@ -2,7 +2,7 @@
 type citiesDto {
   id: Float
   name: String
-  countrie: countrieDto
+  country: countrieDto
 }
 
 type Query {

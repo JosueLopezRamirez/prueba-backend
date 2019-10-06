@@ -1,0 +1,9 @@
+
+type categoryDto {
+    id: Int
+    name: String
+}
+
+type Query {
+  categoriesAgents: [categoryDto!]!
+}

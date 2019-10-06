@@ -5,6 +5,7 @@ import moment from 'moment';
 
 import { AuthService } from "./auth.service";
 import { UserService } from "../mapping/users/user.service";
+import { ErrorResponse } from "./auth.dto";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -22,10 +23,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         let user = await this.userService.findById(payload.sub);
         if (user!==undefined) {
             if (moment().unix() > payload.exp) { //Si el token ya expiro
-                return { data: { error: { message: 'El token ha expirado', status: 401, okay: false } } }
+                return new ErrorResponse('El token ha expirado',401,false)
             } else {
                 const user = this.authService.validateUser(payload);
-                if (!user) {
+                if (!user) {// modificar luego
                     return done(
                         new HttpException('Unauthorized access', HttpStatus.UNAUTHORIZED)
                     );
@@ -33,9 +34,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
                 return done(null, user, payload.iat);
             }
         } else {
-            return {
-                data: { error: { message: 'The user dont exist', status: 404, ok: false } }
-            }
+            return new ErrorResponse('The user dont exist',404,false);
         }
     }
 }

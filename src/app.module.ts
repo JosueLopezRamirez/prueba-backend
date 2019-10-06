@@ -4,37 +4,39 @@ import { GraphQLModule } from '@nestjs/graphql';
 import 'dotenv/config';
 
 import { AppService } from './app.service';
+import { AppResolver } from './app.resolver';
+
+//Modulos
+import { CategoryAgentModule } from './mapping/category-agent/category-agent.module';
+import { SkiperAgentModule } from './mapping/skiper-agent/skiper-agent.module';
+import { SkiperCommerceModule } from './mapping/skiper-commerce/skiper-commerce.module';
 import { UsersModule } from './mapping/users/users.module';
-import { SkiperAgentCommerceModule } from './mapping/skiper-agent-commerce/skiper-agent-commerce.module';
-import { SkiperDetailVehicleModule } from './mapping/skiper-detail-vehicle/skiper-detail-vehicle.module';
-import { SkiperAgentDriverModule } from './mapping/skiper-agent-driver/skiper-agent-driver.module';
 import { AuthModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
-import { UploadSkiperDocModule } from './mapping/upload-skiper-doc/upload-skiper-doc.module';
-import { UploadCommerceDocModule } from './mapping/upload-commerce-doc/upload-commerce-doc.module';
-import { SkiperDetailCommerceModule } from './mapping/skiper-detail-commerce/skiper-detail-commerce.module';
-import { SkiperCatServicesModule } from './mapping/skiper-cat-services/skiper-cat-services.module';
 import { CountriesModule } from './mapping/countries/countries.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { CitiesModule } from './mapping/cities/cities.module';
-import { MenuModule } from './mapping/menu/menu.module';
-import { AppResolver } from './app.resolver';
+import { SkiperCatCommerceModule } from './mapping/skiper-cat-commerce/skiper-cat-commerce.module';
+import { SkiperCatProductCommerceModule } from './mapping/skiper-cat-product-commerce/skiper-cat-product-commerce.module';
+import { SkiperProductCommerceModule } from './mapping/skiper-product-commerce/skiper-product-commerce.module';
+import { SizeProductModule } from './mapping/size-product/size-product.module';
+import { OptionAddonModule } from './mapping/option-addon/option-addon.module';
 
 @Module({
   imports: [
     SharedModule,
     UsersModule,
-    SkiperAgentCommerceModule,
-    SkiperAgentDriverModule,
     AuthModule,
-    UploadSkiperDocModule,
-    UploadCommerceDocModule,
-    SkiperDetailCommerceModule,
-    SkiperDetailVehicleModule,
-    SkiperCatServicesModule,
     CountriesModule,
     CitiesModule,
-    MenuModule,
+    CategoryAgentModule,
+    SkiperAgentModule,
+    SkiperCommerceModule,
+    SkiperCatCommerceModule,
+    SkiperCatProductCommerceModule,
+    SkiperProductCommerceModule,
+    SizeProductModule,
+    OptionAddonModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DATABASE_HOST,
@@ -43,19 +45,19 @@ import { AppResolver } from './app.resolver';
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      // synchronize: true,
-      // dropSchema: true
+      synchronize: true,
+      dropSchema: true
     }),
     MulterModule.register({
       dest:'./uploads'
     }),
     GraphQLModule.forRoot({
-      autoSchemaFile: './schema.gql',
-      // typePaths: ['./**/*.graphql'],
+      // autoSchemaFile: './schema.gql',
+      typePaths: ['./**/*.graphql'],
       playground: true,
       introspection: true,
-      debug:true,
-      installSubscriptionHandlers: true,
+      // debug:true,
+      installSubscriptionHandlers: true
     }),
   ],
   providers: [AppService, AppResolver],

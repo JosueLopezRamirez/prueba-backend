@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { CountrieController } from './countrie.controller';
 import { CountrieService } from './countrie.service';
 import { Countrie } from './countrie.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -9,6 +8,5 @@ import { CountriesResolver } from './countries.resolver';
   imports:[TypeOrmModule.forFeature([Countrie])],
   providers: [CountrieService, CountriesResolver],
   exports:[CountrieService]
-  // controllers: [CountrieController]
 })
 export class CountriesModule {}

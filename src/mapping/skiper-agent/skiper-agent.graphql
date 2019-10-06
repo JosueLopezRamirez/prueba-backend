@@ -1,0 +1,25 @@
+type SkiperAgentDto {
+    id: Int
+    state:Boolean
+    identity:String
+    create_at:DateTime
+    categoryAgent: categoryDto
+    user: UserDto
+}
+
+type Query {
+  agents: [SkiperAgentDto!]!
+}
+
+type Mutation{
+  registerAgent(input: AgentInput!): SkiperAgentDto!
+}
+
+input AgentInput {
+    id: Int
+    state: Boolean
+    identity: String
+    create_at: DateTime
+    categoryAgent_id: Int
+    user_id: Int
+}

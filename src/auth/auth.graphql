@@ -4,19 +4,24 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 """
 scalar DateTime
 
+type CommerceOut {
+  id: ID!
+  name_owner: String
+  identity: String
+  url_doc_identity: String
+  state: Boolean
+  user: UserDto
+}
+
+
 type ErrorResponse {
-  message: String!
-  status: Float!
-  ok: Boolean!
+  message: String
+  status: Int
+  ok: Boolean
 }
 
-type SignInReturn {
-  data: SignInResponse
-  error: ErrorResponse
-}
-
-type ResponseSignIn {
-  data: SignInResponse
+type SignResponse {
+  data: SignInOk
   error: ErrorResponse
 }
 
@@ -25,7 +30,7 @@ input signInDto {
   password: String!
 }
 
-type SignInResponse {
+type SignInOk {
   token: String
   firstname: String
   lastname: String
@@ -34,19 +39,19 @@ type SignInResponse {
   phone_number: String
 }
 
-input signUpDto {
-  firstname: String!
-  lastname: String!
-  email: String!
-  user: String!
-  password: String!
-  sponsor_id: Float
-  address: String!
-  phone: String!
-  create_at: DateTime!
-  country_id: Float!
-  city_id: Float!
-}
+# input signUpDto {
+#   firstname: String!
+#   lastname: String!
+#   email: String!
+#   user: String!
+#   password: String!
+#   sponsor_id: Float
+#   address: String!
+#   phone: String!
+#   create_at: DateTime!
+#   country_id: Float!
+#   city_id: Float!
+# }
 
 input twilioDto {
   phone_number: String!
@@ -55,22 +60,13 @@ input twilioDto {
 }
 
 type Subscription {
-  userLogged: ResponseSignIn
+  userLogged: SignResponse
 }
 
 type Mutation {
-  signin(input: signInDto!): ResponseSignIn!
-  signup(input: signUpDto!): ResponseSignIn!
+  signin(input: signInDto!): SignResponse!
+  signup(user: UserInput!): SignResponse!
   send_code(sendcode: twilioDto!): ErrorResponse!
   verify_code(verifycode: twilioDto!): ErrorResponse!
   reset_password(email: String!): ErrorResponse!
-}
-
-type CommerceOut {
-  id: ID!
-  name_owner: String
-  identity: String
-  url_doc_identity: String
-  state: Boolean
-  user: CreateUserDto
 }

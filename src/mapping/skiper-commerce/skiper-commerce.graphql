@@ -1,0 +1,39 @@
+input CommerceInput {
+    id: Int
+    namecommerce: String!
+    identification_ruc: String!
+    phone: String
+    address: String!
+    manager: String!
+    lat: String!
+    lon: String!
+    url_art: String
+    url_logo: String
+    skiperAgentID: Int!
+    catCommerceID: Int!
+    countryID:Int!
+}
+
+type CommerceDto{
+    id: Int
+    namecommerce: String!
+    identification_ruc: String!
+    phone: String
+    address: String!
+    manager: String!
+    lat: String!
+    lon: String!
+    url_art: String
+    url_logo: String
+    skiperAgent: SkiperAgentDto!
+    catCommerce: SkiperCatCommerceDto!
+    country:countrieDto!
+}
+
+type Query{
+    commerces:[CommerceDto!]!
+}
+
+type Mutation {
+    registerCommerce(input: CommerceInput):CommerceDto!
+ }
