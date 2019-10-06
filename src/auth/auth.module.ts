@@ -9,12 +9,14 @@ import { UsersModule } from '../mapping/users/users.module';
 import { AuthResolver } from './auth.resolver';
 import { CountriesModule } from '../mapping/countries/countries.module';
 import { CitiesModule } from '../mapping/cities/cities.module';
+import { SkiperAgentModule } from '../mapping/skiper-agent/skiper-agent.module';
 
 @Module({
     imports: [
         UsersModule,
         CitiesModule,
         CountriesModule,
+        SkiperAgentModule,
         TypeOrmModule.forFeature([User]),
         JwtModule.register({
             privateKey: process.env.PRIVATE_KEY || 'supersecretamazingkey'

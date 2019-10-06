@@ -37,21 +37,8 @@ type SignInOk {
   username: String
   email: String
   phone_number: String
+  commerce: CommerceDto
 }
-
-# input signUpDto {
-#   firstname: String!
-#   lastname: String!
-#   email: String!
-#   user: String!
-#   password: String!
-#   sponsor_id: Float
-#   address: String!
-#   phone: String!
-#   create_at: DateTime!
-#   country_id: Float!
-#   city_id: Float!
-# }
 
 input twilioDto {
   phone_number: String!

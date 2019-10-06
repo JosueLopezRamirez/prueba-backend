@@ -9,6 +9,7 @@ import Twilio from 'twilio';
 import { createQueryBuilder } from 'typeorm';
 import { signInDto, ErrorResponse, SignResponse, SignInOk, twilioDto } from './auth.dto';
 import { UserInput } from '../mapping/users/user.dto';
+import { SkiperAgentService } from '../mapping/skiper-agent/skiper-agent.service';
 
 @Injectable()
 export class AuthService {
@@ -18,6 +19,7 @@ export class AuthService {
     
     constructor(
         private readonly userService: UserService,
+        private readonly agentService: SkiperAgentService,
         private readonly jwtService: JwtService
     ) { }
 
@@ -29,21 +31,23 @@ export class AuthService {
             if (!bcrypt.compareSync(sign.input.password, result.password)) {
                 return new SignResponse(null, new ErrorResponse('The email or password is incorrect', 400, false));
             }
-            // try {
-            //     const co: any = await createQueryBuilder("SkiperAgent")
-            //     .innerJoin("SkiperAgent.user","User")
-            //     .innerJoin("SkiperCommerce","SkiperAgent")
-            //     .where("SkiperAgent.iduser = :userId", { userId: result.id })
-            //     .where("SkiperCommerce.id_agent = :agentId",{agentId:1})
-            //     .getOne();
-            //     console.log(co)
-            // } catch (error) {
-            //     console.log(error)
-            // }
+            let co
+            try {
+                let agent = await this.agentService.getByUser(result);
+                co = await createQueryBuilder("SkiperCommerce")
+                    .innerJoin("SkiperCommerce.skiperAgent","SkiperAgent")
+                    .innerJoin("SkiperAgent.user","User")
+                    .where("SkiperAgent.iduser = :userId", { userId: result.id })
+                    .where("SkiperCommerce.id_agent = :agentId",{ agentId: agent.id })
+                    .getOne();
+                console.log(co)
+            } catch (error) {
+                console.log(error)
+            }
             return new SignResponse(new SignInOk(
                 await this.tokenGenerated(result), result.firstname,
                 result.lastname, result.user,
-                result.email, result.phone
+                result.email, result.phone,co
             ), null);
         }
     }
@@ -115,6 +119,7 @@ export class AuthService {
 
     // ------------------------------------------------------------------------------------------
     // Reset password
+    // ------------------------------------------------------------------------------------------
     async reset(email:string){
         try {
             let result = await this.validate(email);

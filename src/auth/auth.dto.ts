@@ -1,4 +1,5 @@
 import { ObjectType, InputType } from "type-graphql";
+import { CommerceDto } from "src/mapping/skiper-commerce/skiper-commerce.dto";
 
 @InputType()
 export class signInDto {
@@ -24,13 +25,14 @@ export class signInDto {
 @ObjectType()
 export class SignInOk {
 
-    constructor(token,firstname,lastname,username,email,phone_number){
+    constructor(token,firstname,lastname,username,email,phone_number,commerce?){
         this.token = token;
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;
         this.email = email;
         this.phone_number = phone_number;
+        this.commerce = commerce || null;
     }
 
     token: string
@@ -39,7 +41,7 @@ export class SignInOk {
     username: string
     email: string
     phone_number: string
-    // commerce:CommerceOut
+    commerce: CommerceDto
 }
 
 @ObjectType()
