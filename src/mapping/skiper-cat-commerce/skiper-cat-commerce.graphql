@@ -3,3 +3,13 @@ type SkiperCatCommerceDto {
     name: String
     url_img_category: String
 }
+
+input CatCommerceInput {
+    id: Int
+    name: String!
+    url_img_category: String!
+}
+
+type Query {
+    categoriesCommerce:[SkiperCatCommerceDto]!
+}

@@ -7,7 +7,7 @@ import moment from 'moment';
 import * as bcrypt from 'bcryptjs';
 import Twilio from 'twilio';
 import { createQueryBuilder } from 'typeorm';
-import { signInDto, ErrorResponse, SignResponse, SignInOk, twilioDto } from './auth.dto';
+import { ErrorResponse, SignResponse, SignInOk, twilioDto } from './auth.dto';
 import { UserInput } from '../mapping/users/user.dto';
 import { SkiperAgentService } from '../mapping/skiper-agent/skiper-agent.service';
 

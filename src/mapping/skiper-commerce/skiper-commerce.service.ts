@@ -18,7 +18,11 @@ export class SkiperCommerceService {
     ){}
 
     async getAll():Promise<SkiperCommerce[]>{
-        return await this.repository.find({relations:["skiperAgent","catCommerce","country"]});
+        try {
+            return await this.repository.find({relations:["skiperAgent","catCommerce","country"]});
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     async getById(id:number):Promise<SkiperCommerce>{

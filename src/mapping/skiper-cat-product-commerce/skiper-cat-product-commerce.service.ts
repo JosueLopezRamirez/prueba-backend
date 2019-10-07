@@ -43,7 +43,7 @@ export class SkiperCatProductCommerceService {
     async create(input: SkiperCatProductInput): Promise<SkiperCatProductsCommerce>{
         try {
             let commerce = await this.skiperCommerceService.getById(input.skiperCommerceID);
-            if(commerce !== undefined){
+            if(commerce !== undefined){ // verificar si el comercio existe
                 let catProducts = this.parseCatProducts(input,commerce);
                 return this.repository.save(catProducts);
             }
