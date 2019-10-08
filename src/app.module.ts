@@ -21,6 +21,7 @@ import { SkiperCatProductCommerceModule } from './mapping/skiper-cat-product-com
 import { SkiperProductCommerceModule } from './mapping/skiper-product-commerce/skiper-product-commerce.module';
 import { SizeProductModule } from './mapping/size-product/size-product.module';
 import { OptionAddonModule } from './mapping/option-addon/option-addon.module';
+import { CommerceRolModule } from './mapping/commerce-rol/commerce-rol.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { OptionAddonModule } from './mapping/option-addon/option-addon.module';
     SkiperProductCommerceModule,
     SizeProductModule,
     OptionAddonModule,
+    CommerceRolModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DATABASE_HOST,
@@ -45,8 +47,8 @@ import { OptionAddonModule } from './mapping/option-addon/option-addon.module';
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      // synchronize: true,
-      // dropSchema: true
+      synchronize: true,
+      dropSchema: true
     }),
     MulterModule.register({
       dest:'./uploads'
