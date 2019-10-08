@@ -6,7 +6,7 @@ import { CommerceInput } from './skiper-commerce.dto';
 export class SkiperCommerceResolver {
     
     constructor(
-        private readonly skiperCommerceService:SkiperCommerceService
+        private readonly skiperCommerceService: SkiperCommerceService
     ){}
 
     @Query('commerces')

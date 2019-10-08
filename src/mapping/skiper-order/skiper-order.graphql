@@ -1,0 +1,33 @@
+input SkiperOrderInput {
+    id: Int
+    userphone: String!
+    username: String!
+    useraddress: String!
+    orderstatus: String!
+    orderdate: DateTime!
+    total_price: Int!
+    num_item: Int!
+    userID: Int!
+    commerceID: Int!
+}
+
+type SkiperOrderDto {
+    id: Int
+    userphone: String
+    username: String
+    useraddress: String
+    orderstatus: String
+    orderdate: DateTime
+    total_price: Int
+    num_item: Int
+    user: UserDto
+    commerce: CommerceDto
+}
+
+type Query {
+    skiperorders:[SkiperOrderDto!]!
+}
+
+type Mutation {
+    registerSkiperOrder(input: SkiperOrderInput): SkiperOrderDto!
+}

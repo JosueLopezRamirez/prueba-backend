@@ -14,7 +14,7 @@ input CommerceInput {
     countryID:Int!
 }
 
-type CommerceDto{
+type CommerceDto {
     id: Int
     namecommerce: String!
     identification_ruc: String!
@@ -30,10 +30,10 @@ type CommerceDto{
     country:countrieDto!
 }
 
-type Query{
-    commerces:[CommerceDto!]!
+type Query {
+    commerces: [CommerceDto!]!
 }
 
 type Mutation {
-    registerCommerce(input: CommerceInput):CommerceDto!
+    registerCommerce(input: CommerceInput): CommerceDto!
  }
