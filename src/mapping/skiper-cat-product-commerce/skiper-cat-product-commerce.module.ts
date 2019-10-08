@@ -9,6 +9,7 @@ import { SkiperCommerceModule } from '../skiper-commerce/skiper-commerce.module'
     imports:[
         SkiperCommerceModule,
         TypeOrmModule.forFeature([SkiperCatProductsCommerce])],
-    providers: [SkiperCatProductCommerceService, SkiperCatProductCommerceResolver]
+    providers: [SkiperCatProductCommerceService, SkiperCatProductCommerceResolver],
+    exports:[SkiperCatProductCommerceService]
 })
 export class SkiperCatProductCommerceModule {}

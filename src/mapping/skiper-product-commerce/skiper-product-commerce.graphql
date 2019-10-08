@@ -1,0 +1,31 @@
+type SkiperProductCommerceDto {
+    id: Int
+    name: String
+    description: String
+    url_img_product: String
+    price: Int
+    isSize: Boolean
+    isAddon: Boolean
+    discount: Int
+    skiperCommerce: CommerceDto!
+    skiperProducts: SkiperCatProductDto!
+}
+
+input ProductCommerceInput {
+    id: Int
+    name: String
+    description: String
+    url_img_product: String
+    price: Int
+    isSize: Boolean
+    isAddon: Boolean
+    discount: Int
+    skiperCommerce: Int!
+    skiperProducts: Int!
+}
+
+type Query {
+    productsCommerce: [SkiperProductCommerceDto!]!
+    productsCommerceWithPagination(page: Int): [SkiperProductCommerceDto!]!
+    productsCommerceById(id: Int): SkiperProductCommerceDto
+}
