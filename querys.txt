@@ -1,0 +1,6 @@
+Query para pedro
+
+Productos de cada comercio
+    -> Se recibe el ID del comercion, en base a eso se devuelve la data
+    -> con su categoria, para diferenciar los productos
+

@@ -10,4 +10,8 @@ export class CommerceRolService {
     async getAll():Promise<CommerceRol[]> {
         return await this.repository.find();
     }
+
+    async getById(id:number):Promise<CommerceRol> {
+        return await this.repository.findOneOrFail({id});
+    }
 }

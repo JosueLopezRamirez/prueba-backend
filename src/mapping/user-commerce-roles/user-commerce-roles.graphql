@@ -15,3 +15,7 @@ input UserCommerceRolesInput {
 type Query {
     allUserCommerceRoles:[UserCommerceRolesDto!]!
 }
+
+type Mutation {
+    registerUserCommerceRol(input: UserCommerceRolesInput): UserCommerceRolesDto!
+}
