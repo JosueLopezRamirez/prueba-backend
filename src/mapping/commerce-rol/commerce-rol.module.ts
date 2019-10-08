@@ -6,6 +6,7 @@ import { CommerceRol } from './commerce-rol.entity';
 
 @Module({
   imports:[TypeOrmModule.forFeature([CommerceRol])],
-  providers: [CommerceRolService, CommerceRolResolver]
+  providers: [CommerceRolService, CommerceRolResolver],
+  exports:[CommerceRolService]
 })
 export class CommerceRolModule {}
