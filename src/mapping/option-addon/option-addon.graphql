@@ -17,5 +17,5 @@ type OptionAddonDto {
 
 type Query {
     optionsAddons:[OptionAddonDto!]!
-    optionAddonById:OptionAddonDto!
+    optionAddonById(id:Int) :OptionAddonDto!
 }

@@ -1,0 +1,8 @@
+type CommerceRolDto {
+    id: Int
+    name: String
+}
+
+type Query {
+    getAllCommerceRoles:[CommerceRolDto!]!
+}
