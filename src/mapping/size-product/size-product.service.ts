@@ -37,7 +37,7 @@ export class SizeProductService {
         });
     }
 
-    async registerOptionAddon(input: SizeProductInput): Promise<SizeProduct> {
+    async registerSizeProduct(input: SizeProductInput): Promise<SizeProduct> {
         try {
             let product = await this.productService.getById(input.skiperProductsID);
             if (product !== undefined) {

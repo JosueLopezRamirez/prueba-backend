@@ -7,5 +7,6 @@ type citiesDto {
 
 type Query {
   cities: [citiesDto!]!
-  searchCity(id: Float!): citiesDto!
+  searchCityByCountryId(id: Int!): [citiesDto!]!
+  searchCity(id: Int!): citiesDto!
 }

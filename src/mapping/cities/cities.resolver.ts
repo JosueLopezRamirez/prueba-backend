@@ -17,5 +17,10 @@ export class CitiesResolver {
         return await this.citiesService.getById(id);
     }
 
+    @Query()
+    async searchCityByCountryId(@Args('id') id: number){
+        return await this.citiesService.getCitiesByCountryId(id);
+    }
+
 
 }

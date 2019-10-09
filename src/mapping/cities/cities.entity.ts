@@ -8,8 +8,7 @@ export class Cities {
     @PrimaryGeneratedColumn() id:number;
 
     @Max(80)
-    @Length(80)
-    @Column({nullable:false})
+    @Column({nullable:false,length:80})
     name:string;
     
     @ManyToOne(type => Countrie,{nullable:false})
