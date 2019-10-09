@@ -23,7 +23,6 @@ import { SizeProductModule } from './mapping/size-product/size-product.module';
 import { OptionAddonModule } from './mapping/option-addon/option-addon.module';
 import { CommerceRolModule } from './mapping/commerce-rol/commerce-rol.module';
 import { UserCommerceRolesModule } from './mapping/user-commerce-roles/user-commerce-roles.module';
-
 @Module({
   imports: [
     SharedModule,
@@ -62,7 +61,7 @@ import { UserCommerceRolesModule } from './mapping/user-commerce-roles/user-comm
       introspection: true,
       // debug:true,
       installSubscriptionHandlers: true
-    }),
+    })
   ],
   providers: [AppService, AppResolver],
 })

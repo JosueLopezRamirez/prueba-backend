@@ -1,0 +1,17 @@
+input TicketCategoryInput {
+    id: Int
+    name: String!
+}
+
+type TicketCategoryDto {
+    id: Int
+    name: String!
+}
+
+type Query {
+    ticketcategories: [TicketCategoryDto!]!
+}
+
+type Mutation {
+    registerTicketCategory(input: TicketCategoryInput): TicketCategoryDto!
+ }
