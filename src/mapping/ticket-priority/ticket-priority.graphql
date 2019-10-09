@@ -1,0 +1,17 @@
+input TicketPriorityInput {
+    id: Int
+    name: String!
+}
+
+type TicketPriorityDto {
+    id: Int
+    name: String!
+}
+
+type Query {
+    ticketpriorities: [TicketPriorityDto!]!
+}
+
+type Mutation {
+    registerTicketPriority(input: TicketPriorityInput): TicketPriorityDto!
+ }

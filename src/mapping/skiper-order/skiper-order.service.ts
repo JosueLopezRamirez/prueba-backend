@@ -2,39 +2,35 @@ import { Injectable } from '@nestjs/common';
 import { SkiperOrder } from './skiper-order.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-
 import { UserService } from '../users/user.service';
 import { SkiperCommerceService } from '../skiper-commerce/skiper-commerce.service';
-
 import { SkiperOrderInput } from './skiper-order.dto';
 
 @Injectable()
 export class SkiperOrderService {
 
-    constructor (
-        @InjectRepository(SkiperOrder) 
-        private readonly repository: Repository<SkiperOrder>,
+    constructor(
+        @InjectRepository(SkiperOrder) private readonly repository: Repository<SkiperOrder>,
         private readonly userService: UserService,
         private readonly skiperCommerceService: SkiperCommerceService
-    ) {}
+    ) { }
 
-    async getAll():Promise<SkiperOrder[]>{
-        return await this.repository.find({relations:["user","skiperCommerce"]});
+    async getAll(): Promise<SkiperOrder[]> {
+        return await this.repository.find({ relations: ["user", "skiperCommerce"] });
     }
 
-    async getById(id:number):Promise<SkiperOrder> {
+    async getById(id: number): Promise<SkiperOrder> {
         return await this.repository.findOne({
-            relations:["user","skiperCommerce"],
-            where:{ id }
+            relations: ["user", "skiperCommerce"],
+            where: { id: id }
         });
     }
 
     async registerSkiperOrder(input: SkiperOrderInput): Promise<SkiperOrder> {
-        try
-        {
+        try {
             let user = await this.userService.findById(input.userID);
             let skipercommerce = await this.skiperCommerceService.getById(input.commerceID);
-            if(user !== undefined && skipercommerce !== undefined) {
+            if (user !== undefined && skipercommerce !== undefined) {
                 let skiperorder = this.parseSkiperOder(input, user, skipercommerce);
                 console.log(skiperorder);
                 return this.repository.save(skiperorder);
@@ -46,7 +42,7 @@ export class SkiperOrderService {
         return null;
     }
 
-    private parseSkiperOder (input:SkiperOrderInput, user?, skipercommerce?):SkiperOrder {
+    private parseSkiperOder(input: SkiperOrderInput, user?, skipercommerce?): SkiperOrder {
         let skiperorder: SkiperOrder = new SkiperOrder();
         skiperorder.userphone = input.userphone;
         skiperorder.username = input.username;

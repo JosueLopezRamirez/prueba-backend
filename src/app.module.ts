@@ -21,6 +21,7 @@ import { SkiperCatProductCommerceModule } from './mapping/skiper-cat-product-com
 import { SkiperProductCommerceModule } from './mapping/skiper-product-commerce/skiper-product-commerce.module';
 import { SizeProductModule } from './mapping/size-product/size-product.module';
 import { OptionAddonModule } from './mapping/option-addon/option-addon.module';
+import { CommerceModulesModule } from './mapping/commerce-modules/commerce-modules.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { OptionAddonModule } from './mapping/option-addon/option-addon.module';
     SkiperProductCommerceModule,
     SizeProductModule,
     OptionAddonModule,
+    CommerceModulesModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DATABASE_HOST,
@@ -58,7 +60,7 @@ import { OptionAddonModule } from './mapping/option-addon/option-addon.module';
       introspection: true,
       // debug:true,
       installSubscriptionHandlers: true
-    }),
+    })
   ],
   providers: [AppService, AppResolver],
 })

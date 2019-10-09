@@ -1,0 +1,17 @@
+input commerceModuleInput {
+    id: Int
+    name: String!
+}
+
+type commerceModuleDto {
+  id: Int
+  name: String
+}
+
+type Query {
+  commercemodule: [commerceModuleDto!]!
+}
+
+type Mutation {
+    registerCommerceModules(input: commerceModuleInput): commerceModuleDto!
+ }
