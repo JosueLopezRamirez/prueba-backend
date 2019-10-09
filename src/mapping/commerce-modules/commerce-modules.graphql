@@ -1,0 +1,10 @@
+type CommerceModulesDto {
+    id: Int
+    name: String
+}
+
+type Query {
+    getAllCommerceModules: [CommerceModulesDto!]!
+    getCommerceModulesWithPages(page:Int): [CommerceModulesDto!]!
+    getCommerceModuleById(id:Int): CommerceModulesDto!
+}

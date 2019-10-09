@@ -1,7 +1,6 @@
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { UserInput } from './user.dto';
-import { ParseIntPipe } from '@nestjs/common';
 
 @Resolver('User')
 export class UserResolver {

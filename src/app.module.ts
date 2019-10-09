@@ -23,6 +23,9 @@ import { SizeProductModule } from './mapping/size-product/size-product.module';
 import { OptionAddonModule } from './mapping/option-addon/option-addon.module';
 import { CommerceRolModule } from './mapping/commerce-rol/commerce-rol.module';
 import { UserCommerceRolesModule } from './mapping/user-commerce-roles/user-commerce-roles.module';
+import { CommerceModulesModule } from './mapping/commerce-modules/commerce-modules.module';
+import { CommerceOperationsModule } from './mapping/commerce-operations/commerce-operations.module';
+import { RolOperationModule } from './mapping/rol-operation/rol-operation.module';
 
 @Module({
   imports: [
@@ -41,6 +44,9 @@ import { UserCommerceRolesModule } from './mapping/user-commerce-roles/user-comm
     OptionAddonModule,
     CommerceRolModule,
     UserCommerceRolesModule,
+    CommerceModulesModule,
+    CommerceOperationsModule,
+    RolOperationModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DATABASE_HOST,
@@ -49,11 +55,11 @@ import { UserCommerceRolesModule } from './mapping/user-commerce-roles/user-comm
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      // synchronize: true,
-      // dropSchema: true
+      synchronize: true,
+      dropSchema: true
     }),
     MulterModule.register({
-      dest:'./uploads'
+      dest: './uploads'
     }),
     GraphQLModule.forRoot({
       // autoSchemaFile: './schema.gql',
@@ -66,4 +72,4 @@ import { UserCommerceRolesModule } from './mapping/user-commerce-roles/user-comm
   ],
   providers: [AppService, AppResolver],
 })
-export class AppModule {}
+export class AppModule { }

@@ -5,7 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CommerceRol } from './commerce-rol.entity';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([CommerceRol])],
+  imports:[
+    TypeOrmModule.forFeature([CommerceRol])],
   providers: [CommerceRolService, CommerceRolResolver],
   exports:[CommerceRolService]
 })
