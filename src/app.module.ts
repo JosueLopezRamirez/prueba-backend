@@ -68,7 +68,7 @@ import { RolOperationModule } from './mapping/rol-operation/rol-operation.module
       introspection: true,
       // debug:true,
       installSubscriptionHandlers: true
-    }),
+    })
   ],
   providers: [AppService, AppResolver],
 })

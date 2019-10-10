@@ -9,12 +9,12 @@ export class SkiperOrderResolver {
         private readonly skiperOrderService: SkiperOrderService
     ) { }
 
-    @Query()
+    @Query('skiperorders')
     async skiperorders() {
         return this.skiperOrderService.getAll();
     }
 
-    @Mutation()
+    @Mutation('registerSkiperOrder')
     async registerSkiperOrder(@Args('input') input: SkiperOrderInput) {
         return this.skiperOrderService.registerSkiperOrder(input);
     }
