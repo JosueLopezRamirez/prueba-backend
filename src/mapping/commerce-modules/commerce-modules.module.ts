@@ -5,8 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CommerceModules } from './commerce-modules.entity';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([CommerceModules])],
+  imports: [TypeOrmModule.forFeature([CommerceModules])],
   providers: [CommerceModulesService, CommerceModulesResolver],
-  exports:[CommerceModulesService]
+  exports: [CommerceModulesService]
 })
-export class CommerceModulesModule {}
+export class CommerceModulesModule { }

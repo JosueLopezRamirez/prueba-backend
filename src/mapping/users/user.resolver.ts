@@ -1,18 +1,23 @@
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { UserInput } from './user.dto';
+import { ParseIntPipe } from '@nestjs/common';
 
 @Resolver('User')
 export class UserResolver {
 
     constructor(
         private readonly userService: UserService
-    ){}
-    
-    // @UseGuards(AuthGuard('jwt'))
-    @Query('users')
-    async users(){
+    ) { }
+
+    @Query()
+    async users() {
         return await this.userService.getAll();
+    }
+    
+    @Query()
+    searchUser(@Args('id', ParseIntPipe) id: number) {
+        return this.userService.findById(id);
     }
 
     @Mutation(() => String)

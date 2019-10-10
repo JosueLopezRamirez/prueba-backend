@@ -15,7 +15,7 @@ export class CommerceOperationsService {
 
     async getAll(): Promise<CommerceOperations[]> {
         try {
-            return await this.repository.find({ relations: ["commerceModule"] });    
+            return await this.repository.find({ relations: ["commerceModule"] });
         } catch (error) {
             console.error(error);
         }
@@ -46,7 +46,27 @@ export class CommerceOperationsService {
             }
         } catch (error) {
             console.error(error);
-            return null;
+        }
+    }
+
+    async update(input: CommerceOperationsInput): Promise<CommerceOperations> {
+        let commerceOperationUpdate;
+        try {
+            commerceOperationUpdate = this.getById(input.id);
+            if (commerceOperationUpdate) {
+                commerceOperationUpdate = this.parseCommerceOperation(input, commerceOperationUpdate.commerceModule);
+                return await this.repository.save(commerceOperationUpdate);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async delete(id: number) {
+        let commerceOperation = await this.getById(id);
+        if (commerceOperation) {
+            let result = await this.repository.delete(commerceOperation);
+            return (result) ? true : false;
         }
     }
 
@@ -55,6 +75,6 @@ export class CommerceOperationsService {
         let commerceOp: CommerceOperations = new CommerceOperations();
         commerceOp.name = input.name;
         commerceOp.commerceModule = commerceModule;
-        return null;
+        return commerceOp;
     }
 }
