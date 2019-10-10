@@ -43,5 +43,12 @@ export class CommerceModulesService {
         }
     }
 
+    async delete(id:number){
+        let commerceModule = await this.getById(id);
+        if(commerceModule){
+            return await this.repository.delete(commerceModule);
+        }
+    }
+
 
 }
