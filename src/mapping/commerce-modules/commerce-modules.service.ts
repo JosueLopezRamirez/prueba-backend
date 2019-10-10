@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CommerceModules } from './commerce-modules.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { CommerceModulesDto, CommerceModulesInput } from './commerce-modules.dto';
 
 @Injectable()
 export class CommerceModulesService {
@@ -23,4 +24,24 @@ export class CommerceModulesService {
     async getById(id: number): Promise<CommerceModules> {
         return await this.repository.findOneOrFail({ id });
     }
+
+    async create(input: CommerceModulesInput): Promise<CommerceModules> {
+        let commerceModule: CommerceModules = new CommerceModules();
+        commerceModule.name = input.name;
+        return await this.repository.save(commerceModule);
+    }
+
+    async update(input: CommerceModulesInput): Promise<CommerceModules> {
+        try {
+            let commerceModule = await this.getById(input.id);
+            if (commerceModule !== undefined) {
+                commerceModule.name = input.name;
+                return await this.repository.save(commerceModule);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
 }
