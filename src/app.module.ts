@@ -7,7 +7,6 @@ import { AppService } from './app.service';
 import { AppResolver } from './app.resolver';
 
 //Modulos
-import { AppsModule } from './mapping/apps/apps.module';
 import { KindTicketModule } from './mapping/kind-ticket/kind-ticket.module';
 import { TicketCategoryModule } from './mapping/ticket-category/ticket-category.module';
 import { TicketPriorityModule } from './mapping/ticket-priority/ticket-priority.module';
@@ -35,6 +34,7 @@ import { UserCommerceRolesModule } from './mapping/user-commerce-roles/user-comm
 import { CommerceModulesModule } from './mapping/commerce-modules/commerce-modules.module';
 import { CommerceOperationsModule } from './mapping/commerce-operations/commerce-operations.module';
 import { RolOperationModule } from './mapping/rol-operation/rol-operation.module';
+import { AppsModule } from './mapping/apps/apps.module';
 
 @Module({
   imports: [
@@ -65,6 +65,7 @@ import { RolOperationModule } from './mapping/rol-operation/rol-operation.module
     CommerceModulesModule,
     CommerceOperationsModule,
     RolOperationModule,
+    AppsModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DATABASE_HOST,

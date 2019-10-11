@@ -43,5 +43,11 @@ export class CommerceModulesService {
         }
     }
 
-
+    async delete(id: number): Promise<boolean> {
+        let commerceModule = await this.getById(id);
+        if (commerceModule) {
+            let result = await this.repository.delete(commerceModule);
+            return (result) ? true : false;
+        }
+    }
 }

@@ -6,10 +6,10 @@ import { CommerceOperations } from './commerce-operations.entity';
 import { CommerceModulesModule } from '../commerce-modules/commerce-modules.module';
 
 @Module({
-  imports:[
+  imports: [
     CommerceModulesModule,
     TypeOrmModule.forFeature([CommerceOperations])],
   providers: [CommerceOperationsService, CommerceOperationsResolver],
-  exports:[CommerceOperationsService]
+  exports: [CommerceOperationsService]
 })
-export class CommerceOperationsModule {}
+export class CommerceOperationsModule { }

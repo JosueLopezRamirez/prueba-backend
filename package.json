@@ -20,7 +20,6 @@
     "generate-typings": "ts-node src/generate-typings"
   },
   "dependencies": {
-    "@apollographql/apollo-upload-server": "^5.0.3",
     "@google-cloud/storage": "^3.3.0",
     "@nestjs/common": "^6.7.1",
     "@nestjs/core": "^6.7.1",
@@ -33,7 +32,6 @@
     "@nestjs/websockets": "^6.8.0",
     "@types/graphql": "^14.0.7",
     "apollo-server-express": "^2.9.4",
-    "apollo-upload-server": "^7.1.0",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.10.0",
@@ -50,7 +48,6 @@
     "moment": "^2.24.0",
     "multer": "^1.4.2",
     "mysql": "^2.17.1",
-    "nestjs-typeorm-paginate": "^1.0.2",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",

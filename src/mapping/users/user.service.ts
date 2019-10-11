@@ -10,21 +10,21 @@ import { CountrieService } from '../countries/countrie.service';
 export class UserService {
 
     private logger = new Logger('UserService');
-    
+
     constructor(
         @InjectRepository(User) private readonly userRepository: Repository<User>,
         private readonly city: CitiesService,
         private readonly country: CountrieService
-        ){}
+    ) { }
 
     async getAll(): Promise<User[]> {
-        return await this.userRepository.find({relations:["country","city"]});
+        return await this.userRepository.find({ relations: ["country", "city"] });
     }
 
     async findById(id: number): Promise<User> {
         return await this.userRepository.findOne({
-            where: {id:id},
-            relations:["country","city"]
+            where: { id: id },
+            relations: ["country", "city"]
         });
     }
 
@@ -38,7 +38,7 @@ export class UserService {
         return countries;
     }
 
-    async findByPhone(phone:string):Promise<User>{
+    async findByPhone(phone: string): Promise<User> {
         return await this.userRepository.findOne({ phone });
     }
 
@@ -51,12 +51,12 @@ export class UserService {
     }
 
     //Create a new user
-    async create(input: UserInput): Promise<User>{
+    async create(input: UserInput): Promise<User> {
         try {
             let city = await this.city.getById(input.city_id);
             let country = await this.country.getById(input.country_id);
-            if(city !== undefined && country !== undefined){
-                let user: User = this.parseUser(input,city,country);
+            if (city !== undefined && country !== undefined) {
+                let user: User = this.parseUser(input, city, country);
                 return await this.userRepository.save(user);
             }
         } catch (error) {
@@ -65,7 +65,7 @@ export class UserService {
     }
 
     //Update a user
-    async update(input: UserInput): Promise<User>{
+    async update(input: UserInput): Promise<User> {
         try {
             let userUpdate = await this.findById(input.id);
             userUpdate.firstname = input.firstname;
@@ -93,14 +93,14 @@ export class UserService {
         return this.userRepository.delete(user);
     }
 
-    async findByPayload(payload:any){
+    async findByPayload(payload: any) {
         const { user } = payload;
         return await this.userRepository.findOne({ user })
     }
 
     // Metodo para parsear de UserInput a User
-    parseUser(input:UserInput,city?,country?): User{
-        let user:User = new User();
+    parseUser(input: UserInput, city?, country?): User {
+        let user: User = new User();
         user.firstname = input.firstname;
         user.lastname = input.lastname;
         user.sponsor_id = input.sponsor_id;

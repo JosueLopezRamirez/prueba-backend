@@ -18,4 +18,6 @@ type Query {
 
 type Mutation {
     registerCommerceOperation(input: CommerceOperationsInput!): CommerceOperationsDto!
+    updateCommerceOperation(input: CommerceOperationsInput!): CommerceOperationsDto!
+    deleteCommerceOperation(id: Int!): Boolean!
 }
