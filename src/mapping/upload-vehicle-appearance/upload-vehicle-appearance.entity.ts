@@ -4,7 +4,6 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 export class UploadVehicleAppearance {
 
     @PrimaryGeneratedColumn() id: number;
-
     @Column('longtext', { nullable: true }) url_img_vehicle_front: string;
     @Column('longtext', { nullable: true }) url_img_vehicle_behind: string;
     @Column('longtext', { nullable: true }) url_img_vehicle_side_right: string;
