@@ -1,0 +1,21 @@
+input SkiperCatTravelInput {
+    id: Int
+    name: String!
+    url_img_category: String!
+}
+
+type SkiperCatTravelDto {
+    id: Int!
+    name: String
+    url_img_category: String
+}
+
+type Query {
+    skipercattravels: [SkiperCatTravelDto!]!
+    searchSkiperCatTravel(id: Int): AppsDto
+}
+
+type Mutation {
+    registerSkiperCatTravel(input: SkiperCatTravelInput): SkiperCatTravelDto!
+    updateSkiperCatTravel(input: SkiperCatTravelInput!): SkiperCatTravelDto
+ }
