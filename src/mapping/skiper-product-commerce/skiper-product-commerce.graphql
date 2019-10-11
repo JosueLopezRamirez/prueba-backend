@@ -8,7 +8,7 @@ type SkiperProductCommerceDto {
     isAddon: Boolean
     discount: Int
     skiperCommerce: CommerceDto!
-    skiperProducts: SkiperCatProductDto!
+    skiperCatProducts: SkiperCatProductDto!
 }
 
 input ProductCommerceInput {
@@ -20,12 +20,13 @@ input ProductCommerceInput {
     isSize: Boolean
     isAddon: Boolean
     discount: Int
-    skiperCommerce: Int!
-    skiperProducts: Int!
+    skiperCommerceID: Int!
+    skiperCatProductsID: Int!
 }
 
 type Query {
     productsCommerce: [SkiperProductCommerceDto!]!
     productsCommerceWithPagination(page: Int): [SkiperProductCommerceDto!]!
     productsCommerceById(id: Int): SkiperProductCommerceDto
+    # productsByCommerceId
 }

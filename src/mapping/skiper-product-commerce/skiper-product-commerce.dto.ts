@@ -13,7 +13,7 @@ export class ProductCommerceInput {
     isAddon:boolean;
     discount:number;
     skiperCommerceID: number;
-    skiperProductsID: number;
+    skiperCatProductsID: number;
 }
 
 @ObjectType()
@@ -27,6 +27,6 @@ export class SkiperProductCommerceDto {
     isAddon:boolean;
     discount:number;
     skiperCommerce: CommerceDto;
-    skiperProducts: SkiperCatProductDto;
+    skiperCatProducts: SkiperCatProductDto;
 }
 

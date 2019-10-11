@@ -42,7 +42,7 @@ export class SkiperProductCommerceService {
     async registerProductCommerce(input: ProductCommerceInput):Promise<SkiperProductCommerce>{
         try {
             let commerce = await this.commerceService.getById(input.skiperCommerceID);
-            let categoryProduct = await this.catProductService.getById(input.skiperProductsID);
+            let categoryProduct = await this.catProductService.getById(input.skiperCatProductsID);
             if (commerce === undefined && categoryProduct === undefined){
                 let product = this.parseProduct(input,commerce,categoryProduct); 
                 product = await this.repository.save(input);
