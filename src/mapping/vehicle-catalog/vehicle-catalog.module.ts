@@ -6,6 +6,7 @@ import { VehicleCatalog } from './vehicle-catalog.entity';
 
 @Module({
   imports:[TypeOrmModule.forFeature([VehicleCatalog])],
-  providers: [VehicleCatalogService, VehicleCatalogResolver]
+  providers: [VehicleCatalogService, VehicleCatalogResolver],
+  exports:[VehicleCatalogService]
 })
 export class VehicleCatalogModule {}

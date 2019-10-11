@@ -6,6 +6,7 @@ import { UploadVehicleAppearance } from './upload-vehicle-appearance.entity';
 
 @Module({
   imports:[TypeOrmModule.forFeature([UploadVehicleAppearance])],
-  providers: [UploadVehicleAppearanceService, UploadVehicleAppearanceResolver]
+  providers: [UploadVehicleAppearanceService, UploadVehicleAppearanceResolver],
+  exports:[UploadVehicleAppearanceService]
 })
 export class UploadVehicleAppearanceModule {}
