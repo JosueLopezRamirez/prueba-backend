@@ -7,6 +7,15 @@ import { AppService } from './app.service';
 import { AppResolver } from './app.resolver';
 
 //Modulos
+import { AppsModule } from './mapping/apps/apps.module';
+import { KindTicketModule } from './mapping/kind-ticket/kind-ticket.module';
+import { TicketCategoryModule } from './mapping/ticket-category/ticket-category.module';
+import { TicketPriorityModule } from './mapping/ticket-priority/ticket-priority.module';
+import { TicketStatusModule } from './mapping/ticket-status/ticket-status.module';
+import { SupportTicketModule } from './mapping/support-ticket/support-ticket.module';
+import { SkiperOrderModule } from './mapping/skiper-order/skiper-order.module';
+import { SkiperOrderDetailModule } from './mapping/skiper-order-detail/skiper-order-detail.module';
+
 import { CategoryAgentModule } from './mapping/category-agent/category-agent.module';
 import { SkiperAgentModule } from './mapping/skiper-agent/skiper-agent.module';
 import { SkiperCommerceModule } from './mapping/skiper-commerce/skiper-commerce.module';
@@ -29,6 +38,15 @@ import { RolOperationModule } from './mapping/rol-operation/rol-operation.module
 
 @Module({
   imports: [
+    AppsModule,
+    KindTicketModule,
+    TicketCategoryModule,
+    TicketPriorityModule,
+    TicketStatusModule,
+    SupportTicketModule,
+    SkiperOrderModule,
+    SkiperOrderDetailModule,
+
     SharedModule,
     UsersModule,
     AuthModule,
@@ -55,8 +73,8 @@ import { RolOperationModule } from './mapping/rol-operation/rol-operation.module
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      // synchronize: true,
-      // dropSchema: true
+      synchronize: true,
+      dropSchema: true
     }),
     MulterModule.register({
       dest: './uploads'

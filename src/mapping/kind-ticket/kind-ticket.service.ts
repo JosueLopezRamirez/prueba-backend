@@ -25,6 +25,18 @@ export class KindTicketService {
         });
     }
 
+    async update(input: KindTicketInput): Promise<KindTicket>{
+        //console.log(input);
+        try {
+            let kindTicketUpdate = await this.getById(input.id);
+            kindTicketUpdate.name = input.name;
+            //console.log(kindTicketUpdate);
+            return await this.repository.save(kindTicketUpdate);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     async registerKindTicket(input: KindTicketInput): Promise<KindTicket>{
         try
         {

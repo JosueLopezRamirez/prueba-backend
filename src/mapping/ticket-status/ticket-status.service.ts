@@ -25,6 +25,16 @@ export class TicketStatusService {
         });
     }
 
+    async update(input: TicketStatusInput): Promise<TicketStatus>{
+        try {
+            let ticketStatusUpdate = await this.getById(input.id);
+            ticketStatusUpdate.name = input.name;
+            return await this.repository.save(ticketStatusUpdate);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     async registerTicketStatus(input: TicketStatusInput): Promise<TicketStatus>{
         try
         {

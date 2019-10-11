@@ -1,5 +1,5 @@
 input SupportTicketInput {
-    id: Int!
+    id: Int
     title: String!
     description: String!
     update_at: DateTime
@@ -14,24 +14,26 @@ input SupportTicketInput {
 }
 
 type SupportTicketDto {
-    id: Int
+    id: Int!
     title: String
     description: String
     update_at: DateTime
     created_at: DateTime
     asigned_id: Int
-    category: TicketCategoryDto
-    kind: KindTicketDto
-    user: UserDto
-    app: AppsDto
-    priority: TicketPriorityDto
-    status: TicketStatusDto
+    category: TicketCategoryDto!
+    kind: KindTicketDto!
+    user: UserDto!
+    app: AppsDto!
+    priority: TicketPriorityDto!
+    status: TicketStatusDto!
 }
 
 type Query {
     supporttickets: [SupportTicketDto!]!
+    searchSupportTicket(id: Int): SupportTicketDto
 }
 
 type Mutation {
     registerSupportTicket(input: SupportTicketInput!): SupportTicketDto!
+    updateSupportTicket(input: SupportTicketInput!): SupportTicketDto
 }

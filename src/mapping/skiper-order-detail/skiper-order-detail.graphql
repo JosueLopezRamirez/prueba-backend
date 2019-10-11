@@ -11,21 +11,23 @@ input SkiperOrderDetailInput {
 }
 
 type SkiperOrderDetailDto {
-    id: Int
-    quantity: Int!
-    price: Int!
-    discount: Int!
-    size: String!
-    addon: String!
-    extraPrice: Int!
-    order: SkiperOrderDto
-    item: SkiperProductCommerceDto
+    id: Int!
+    quantity: Int
+    price: Int
+    discount: Int
+    size: String
+    addon: String
+    extraPrice: Int
+    order: SkiperOrderDto!
+    item: SkiperProductCommerceDto!
 }
 
 type Query {
     skiperorderdetail: [SkiperOrderDetailDto!]!
+    searchSkiperOrderDetail(id: Int): SkiperOrderDetailDto
 }
 
 type Mutation {
     registerSkiperOrderDetail(input: SkiperOrderDetailInput): SkiperOrderDetailDto!
+    updateSkiperOrderDetail(input: SkiperOrderDetailInput!): SkiperOrderDetailDto
 }

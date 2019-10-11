@@ -28,6 +28,26 @@ export class SkiperOrderDetailService {
         });
     }
 
+    async update(input: SkiperOrderDetailInput): Promise<SkiperOrderDetail>{
+        //console.log(input);
+        try {
+            let skiperorderdetailUpdate = await this.getById(input.id);
+            skiperorderdetailUpdate.quantity = input.quantity;
+            skiperorderdetailUpdate.price = input.price;
+            skiperorderdetailUpdate.discount = input.discount;
+            skiperorderdetailUpdate.size = input.size;
+            skiperorderdetailUpdate.addon = input.addon;
+            skiperorderdetailUpdate.extraPrice = input.extraPrice;
+            
+            skiperorderdetailUpdate.skiperOrder = await this.skiperOrderService.getById(input.orderID);
+            skiperorderdetailUpdate.skiperProductCommerce = await this.skiperProductCommerceService.getById(input.itemID);
+            //console.log(appUpdate);
+            return await this.repository.save(skiperorderdetailUpdate);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     async registerSkiperOrderDetail(input: SkiperOrderDetailInput): Promise<SkiperOrderDetail> {
         try
         {

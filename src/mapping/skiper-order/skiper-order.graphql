@@ -12,7 +12,7 @@ input SkiperOrderInput {
 }
 
 type SkiperOrderDto {
-    id: Int
+    id: Int!
     userphone: String
     username: String
     useraddress: String
@@ -20,14 +20,16 @@ type SkiperOrderDto {
     orderdate: DateTime
     total_price: Int
     num_item: Int
-    user: UserDto
-    commerce: CommerceDto
+    user: UserDto!
+    commerce: CommerceDto!
 }
 
 type Query {
     skiperorders:[SkiperOrderDto!]!
+    searchSkiperOrder(id: Int): SkiperOrderDto
 }
 
 type Mutation {
     registerSkiperOrder(input: SkiperOrderInput): SkiperOrderDto!
+    updateSkiperOrder(input: SkiperOrderInput!): SkiperOrderDto
 }

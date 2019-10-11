@@ -4,14 +4,16 @@ input KindTicketInput {
 }
 
 type KindTicketDto {
-    id: Int
-    name: String!
+    id: Int!
+    name: String
 }
 
 type Query {
     kindtickets: [KindTicketDto!]!
+    searchKindTickets(id: Int): KindTicketDto
 }
 
 type Mutation {
     registerKindTicket(input: KindTicketInput): KindTicketDto!
+    updateKindTicket(input: KindTicketInput!): KindTicketDto
  }

@@ -4,14 +4,16 @@ input TicketPriorityInput {
 }
 
 type TicketPriorityDto {
-    id: Int
-    name: String!
+    id: Int!
+    name: String
 }
 
 type Query {
     ticketpriorities: [TicketPriorityDto!]!
+    searchTicketPriority(id: Int): TicketPriorityDto
 }
 
 type Mutation {
     registerTicketPriority(input: TicketPriorityInput): TicketPriorityDto!
+    updateTicketPriority(input: TicketPriorityInput!): TicketPriorityDto
  }

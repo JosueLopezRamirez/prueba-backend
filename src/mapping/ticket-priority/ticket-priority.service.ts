@@ -25,6 +25,18 @@ export class TicketPriorityService {
         });
     }
 
+    async update(input: TicketPriorityInput): Promise<TicketPriority>{
+        //console.log(input);
+        try {
+            let ticketpriorityUpdate = await this.getById(input.id);
+            ticketpriorityUpdate.name = input.name;
+            //console.log(appUpdate);
+            return await this.repository.save(ticketpriorityUpdate);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     async registerTicketPriority(input: TicketPriorityInput): Promise<TicketPriority>{
         try
         {

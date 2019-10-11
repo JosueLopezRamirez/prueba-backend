@@ -25,6 +25,18 @@ export class TicketCategoryService {
         });
     }
 
+    async update(input: TicketCategoryInput): Promise<TicketCategory>{
+        //console.log(input);
+        try {
+            let ticketcategoryUpdate = await this.getById(input.id);
+            ticketcategoryUpdate.name = input.name;
+            //console.log(appUpdate);
+            return await this.repository.save(ticketcategoryUpdate);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     async registerTicketCategory(input: TicketCategoryInput): Promise<TicketCategory>{
         try
         {

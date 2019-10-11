@@ -10,8 +10,10 @@ type TicketStatusDto {
 
 type Query {
     ticketstatus: [TicketStatusDto!]!
+    searchTicketStatus(id: Int): TicketStatusDto
 }
 
 type Mutation {
     registerTicketStatus(input: TicketStatusInput): TicketStatusDto!
+    updateTicketStatus(input: TicketStatusInput!): TicketStatusDto!
  }

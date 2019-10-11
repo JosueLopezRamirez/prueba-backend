@@ -25,6 +25,19 @@ export class AppsService {
         });
     }
 
+    async update(input: AppsInput): Promise<Apps>{
+        console.log(input);
+        try {
+            let appUpdate = await this.getById(input.id);
+            appUpdate.name = input.name;
+            appUpdate.description = input.description;
+            console.log(appUpdate);
+            return await this.repository.save(appUpdate);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     async registerApp(input:AppsInput):Promise<Apps>{
         try 
         {

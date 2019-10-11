@@ -1,6 +1,7 @@
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { AppsService } from './apps.service';
 import { AppsInput } from './apps.dto';
+import { ParseIntPipe } from '@nestjs/common';
 
 @Resolver('Apps')
 export class AppsResolver {
@@ -13,8 +14,24 @@ export class AppsResolver {
         return this.appsService.getAll();
     }
 
-    @Mutation('registerApp')
+    @Query()
+    searchApp(@Args('id', ParseIntPipe) id: number) {
+        return this.appsService.getById(id);
+    }
+
+    @Mutation()
     async registerApp(@Args('input') input: AppsInput){
-        return this.appsService.registerApp(input);
+        try {
+            return this.appsService.registerApp(input);
+        }
+        catch (error) 
+        {
+            console.error(error);
+        }
+    }
+
+    @Mutation()
+    async updateApp(@Args('input') input: AppsInput) {
+        return await this.appsService.update(input);
     }
 }

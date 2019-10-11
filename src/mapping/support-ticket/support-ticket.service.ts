@@ -37,6 +37,28 @@ export class SupportTicketService {
         });
     }
 
+    async update(input: SupportTicketInput): Promise<SupportTicket>{
+        //console.log(input);
+        try {
+            let supportTicketUpdate = await this.getById(input.id);
+            supportTicketUpdate.title = input.title;
+            supportTicketUpdate.description = input.description;
+            supportTicketUpdate.update_at = input.update_at;
+            supportTicketUpdate.created_at = input.created_at   ;
+            supportTicketUpdate.asigned_id = input.asigned_id;
+            supportTicketUpdate.categoryID = await this.ticketCategoryService.getById(input.categoryID);
+            supportTicketUpdate.kindID = await this.kindTicketService.getById(input.kindID);
+            supportTicketUpdate.userID = await this.userService.findById(input.userID);
+            supportTicketUpdate.appID = await this.appsService.getById(input.appID);
+            supportTicketUpdate.priorityID = await this.ticketPriorityService.getById(input.priorityID);
+            supportTicketUpdate.statusID = await this.ticketStatusService.getById(input.statusID);
+            //console.log(appUpdate);
+            return await this.repository.save(supportTicketUpdate);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     async registerSupportTicket(input: SupportTicketInput): Promise<SupportTicket> {
         try
         {

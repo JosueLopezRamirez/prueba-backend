@@ -5,15 +5,17 @@ input AppsInput {
 }
 
 type AppsDto {
-    id: Int
-    name: String!
-    description: String!
+    id: Int!
+    name: String
+    description: String
 }
 
 type Query {
     apps: [AppsDto!]!
+    searchApp(id: Int): AppsDto
 }
 
 type Mutation {
     registerApp(input: AppsInput): AppsDto!
+    updateApp(input: AppsInput!): AppsDto
  }
