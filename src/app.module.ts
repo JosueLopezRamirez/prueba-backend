@@ -35,10 +35,10 @@ import { CommerceModulesModule } from './mapping/commerce-modules/commerce-modul
 import { CommerceOperationsModule } from './mapping/commerce-operations/commerce-operations.module';
 import { RolOperationModule } from './mapping/rol-operation/rol-operation.module';
 import { AppsModule } from './mapping/apps/apps.module';
+import { SkiperDriverScheduleModule } from './mapping/skiper-driver-schedule/skiper-driver-schedule.module';
 
 @Module({
   imports: [
-    AppsModule,
     KindTicketModule,
     TicketCategoryModule,
     TicketPriorityModule,
@@ -66,6 +66,7 @@ import { AppsModule } from './mapping/apps/apps.module';
     CommerceOperationsModule,
     RolOperationModule,
     AppsModule,
+    SkiperDriverScheduleModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DATABASE_HOST,

@@ -19,7 +19,6 @@ export class VehicleModelsResolver {
         return this.vehihcleModelsService.getById(id);
     }
 
-    
     @Mutation()
     async registerVehicleModel(@Args('input') input: VehicleModelsInput){
         try {

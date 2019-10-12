@@ -6,6 +6,7 @@ import { VehicleTrademark } from './vehicle-trademark.entity';
 
 @Module({
   imports:[TypeOrmModule.forFeature([VehicleTrademark])],
-  providers: [VehicleTrademarksService, VehicleTrademarksResolver]
+  providers: [VehicleTrademarksService, VehicleTrademarksResolver],
+  exports:[VehicleTrademarksService]
 })
 export class VehicleTrademarksModule {}
