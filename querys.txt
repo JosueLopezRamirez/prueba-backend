@@ -1,6 +1,20 @@
 Query para pedro
 
 Productos de cada comercio
-    -> Se recibe el ID del comercion, en base a eso se devuelve la data
+    -> Se recibe el ID del comercio, en base a eso se devuelve la data
     -> con su categoria, para diferenciar los productos
+
+
+categoryByCommerceId(id:Int){
+    category{
+        id
+        name
+        products{
+            id
+            name
+        }
+    }    
+}
+
+
 

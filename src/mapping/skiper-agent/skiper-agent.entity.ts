@@ -24,7 +24,7 @@ export class SkiperAgent {
     create_at:Date;
 
     @ManyToOne(type => CategoryAgent,{nullable:false})
-    @JoinColumn({name: 'id_category_agent'}) categoryAgent:CategoryAgent;
+    @JoinColumn({name: 'idcategory_agent'}) categoryAgent:CategoryAgent;
 
     @ManyToOne(type => User,{nullable:false})
     @JoinColumn({name:'iduser'}) user:User;

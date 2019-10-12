@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 
-@Entity()
+@Entity('skiper_cat_commerces')
 export class SkiperCatCommerce {
     
     @PrimaryGeneratedColumn() id: number;
