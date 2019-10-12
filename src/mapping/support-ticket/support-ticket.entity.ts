@@ -12,7 +12,7 @@ export class SupportTicket {
 
     @PrimaryGeneratedColumn() id: number;
 
-    @Column({ nullable: true,length: 80 }) title: string;
+    @Column('varchar', { nullable: false, length: 80 }) title: string;
 
     @Column('longtext', { nullable: false }) description: string;
 
@@ -20,24 +20,24 @@ export class SupportTicket {
 
     @Column('date', {nullable: false }) created_at: Date;
 
+    @ManyToOne(type => TicketCategory, {nullable: false })
+    @JoinColumn({ name:'category_id' }) categoryID: TicketCategory;
+
+    @ManyToOne(type => KindTicket, {nullable: false })
+    @JoinColumn({name:'kind_id'}) kindID: KindTicket;
+
+    @ManyToOne(type => User, {nullable:false })
+    @JoinColumn({name: 'user_id'}) userID: User;
+
     @Column({ nullable: false }) asigned_id: number;
 
-    @ManyToOne(type => TicketCategory, {nullable: false})
-    @JoinColumn({ name:'id_category' }) categoryID: TicketCategory;
-
-    @ManyToOne(type => KindTicket, {nullable: false})
-    @JoinColumn({name:'id_kind'}) kindID: KindTicket;
-
-    @ManyToOne(type => User, {nullable:false})
-    @JoinColumn({name: 'id_user'}) userID: User;
-
     @ManyToOne(type => Apps, {nullable: false})
-    @JoinColumn({name:'id_app'}) appID: Apps;
+    @JoinColumn({name:'app_id'}) appID: Apps;
 
     @ManyToOne(type => TicketPriority, {nullable: false})
-    @JoinColumn({name:'id_priority'}) priorityID: TicketPriority;
+    @JoinColumn({name:'priority_id'}) priorityID: TicketPriority;
 
     @ManyToOne(type => TicketStatus,{nullable:false})
-    @JoinColumn({name: 'id_status'}) statusID: TicketStatus;
+    @JoinColumn({name: 'status_id'}) statusID: TicketStatus;
 
 }
