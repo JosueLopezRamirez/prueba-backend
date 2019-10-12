@@ -13,6 +13,7 @@ export class TicketStatusService {
 
     async getAll(): Promise<TicketStatus[]>{
         try {
+            console.log('en el ser')
             return await this.repository.find();
         } catch (error) {
             console.error(error)

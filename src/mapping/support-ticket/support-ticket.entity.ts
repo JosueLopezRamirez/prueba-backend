@@ -7,7 +7,7 @@ import { Apps } from "../apps/apps.entity";
 import { TicketPriority } from "../ticket-priority/ticket-priority.entity";
 import { TicketStatus } from "../ticket-status/ticket-status.entity";
 
-@Entity()
+@Entity('support_ticket')
 export class SupportTicket {
 
     @PrimaryGeneratedColumn() id: number;
