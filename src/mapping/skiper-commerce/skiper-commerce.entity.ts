@@ -3,7 +3,7 @@ import { Countrie } from "../countries/countrie.entity";
 import { SkiperAgent } from "../skiper-agent/skiper-agent.entity";
 import { SkiperCatCommerce } from "../skiper-cat-commerce/skiper-cat-commerce.entity";
 
-@Entity()
+@Entity('skiper_commerces')
 export class SkiperCommerce {
 
     @PrimaryGeneratedColumn() id: number;
@@ -27,11 +27,11 @@ export class SkiperCommerce {
     @Column('text', { nullable: true }) url_logo: string;
 
     @ManyToOne(type => SkiperAgent, { nullable: false })
-    @JoinColumn({ name: 'id_agent' }) skiperAgent: SkiperAgent;
+    @JoinColumn({ name: 'idagent' }) skiperAgent: SkiperAgent;
 
     @ManyToOne(type => SkiperCatCommerce, { nullable: false })
     @JoinColumn({ name: 'id_cat_commerce' }) catCommerce: SkiperCatCommerce;
 
     @ManyToOne(type => Countrie, { nullable: false })
-    @JoinColumn({ name: 'id_country' }) country: Countrie;
+    @JoinColumn({ name: 'idcountry' }) country: Countrie;
 }

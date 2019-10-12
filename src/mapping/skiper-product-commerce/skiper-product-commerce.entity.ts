@@ -3,7 +3,7 @@ import { SkiperCommerce } from "../skiper-commerce/skiper-commerce.entity";
 import { SkiperCatProductsCommerce } from "../skiper-cat-product-commerce/skiper-cat-products-commerce.entity";
 
 
-@Entity()
+@Entity('skiper_products_commerces')
 export class SkiperProductCommerce {
     
     @PrimaryGeneratedColumn() id:number;

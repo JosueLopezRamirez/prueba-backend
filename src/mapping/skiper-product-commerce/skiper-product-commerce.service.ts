@@ -16,7 +16,12 @@ export class SkiperProductCommerceService {
     ){}
 
     async getAll():Promise<SkiperProductCommerce[]>{
-        return await this.repository.find({relations:["skiperCommerce","skiperProducts"]});
+        try {
+            return await this.repository.find({relations:["skiperCommerce","skiperProducts"]});    
+        } catch (error) {
+            console.log(error)
+        }
+        
     }
 
     async getById(id:number):Promise<SkiperProductCommerce>{

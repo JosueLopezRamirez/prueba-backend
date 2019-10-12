@@ -3,7 +3,7 @@ import { SkiperCommerce } from "../skiper-commerce/skiper-commerce.entity";
 import { SkiperProductCommerce } from '../skiper-product-commerce/skiper-product-commerce.entity';
 
 
-@Entity()
+@Entity('skiper_cat_products_commerces')
 export class SkiperCatProductsCommerce {
 
     @PrimaryGeneratedColumn() id:number;
@@ -15,7 +15,7 @@ export class SkiperCatProductsCommerce {
     @Column('longtext',{nullable:false}) url_img_product:string;
 
     @ManyToOne(type => SkiperCommerce, {nullable: false})
-    @JoinColumn({name:'id_commerce'}) skiperCommerce: SkiperCommerce;
+    @JoinColumn({name:'idcommerce'}) skiperCommerce: SkiperCommerce;
 
     @OneToMany(type => SkiperProductCommerce, x => x.skiperProducts)
     SkiperProductCommerce: SkiperProductCommerce[];
