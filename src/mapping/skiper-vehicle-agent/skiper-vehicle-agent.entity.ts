@@ -5,11 +5,11 @@ import { SkiperVehicle } from "../skiper-vehicle/skiper-vehicle.entity";
 @Entity()
 export class SkiperVehicleAgent {
 
-    @PrimaryGeneratedColumn() id:number;
+    @PrimaryGeneratedColumn() id: number;
 
-    @ManyToOne(type => SkiperAgent, {nullable: false})
-    @JoinColumn({name:'idagent'}) skiperAgent: SkiperAgent;
+    @ManyToOne(type => SkiperAgent, { nullable: false })
+    @JoinColumn({ name: 'idagent' }) skiperAgent: SkiperAgent;
 
-    @ManyToOne(type => SkiperVehicle, {nullable: false})
-    @JoinColumn({name:'idvehicle'}) skiperVehicle: SkiperVehicle;
+    @ManyToOne(type => SkiperVehicle, { nullable: false })
+    @JoinColumn({ name: 'idvehicle' }) skiperVehicle: SkiperVehicle;
 }

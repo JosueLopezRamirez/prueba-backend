@@ -15,6 +15,6 @@ export class UploadVehicleAppearance {
     @Column('longtext', { nullable: true }) url_img_vehicle_inside_four: string;
 
     //Falta el Objeto de tipo skiper_vehicle
-    @ManyToOne(type => SkiperVehicle, {nullable: false})
-    @JoinColumn({name:'idvehicle'}) skiperVehicle: SkiperVehicle;
+    @ManyToOne(type => SkiperVehicle, { nullable: false })
+    @JoinColumn({ name: 'idvehicle' }) skiperVehicle: SkiperVehicle;
 }

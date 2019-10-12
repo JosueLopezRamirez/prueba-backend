@@ -7,10 +7,12 @@ import { UsersModule } from '../users/users.module';
 import { SkiperCommerceModule } from '../skiper-commerce/skiper-commerce.module'
 
 import { TypeOrmModule} from '@nestjs/typeorm';
+import { SkiperOrdersStatusModule } from '../skiper-orders-status/skiper-orders-status.module';
 
 @Module({
   imports: [
     UsersModule,
+    SkiperOrdersStatusModule,
     SkiperCommerceModule,
     TypeOrmModule.forFeature([SkiperOrder])
   ],

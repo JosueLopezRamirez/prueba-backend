@@ -5,6 +5,8 @@ import { Repository } from 'typeorm';
 import { UserService } from '../users/user.service';
 import { SkiperCommerceService } from '../skiper-commerce/skiper-commerce.service';
 import { SkiperOrderInput } from './skiper-order.dto';
+import { SkiperOrdersStatus } from '../skiper-orders-status/skiper-orders-status.dto';
+import { SkiperOrdersStatusService } from '../skiper-orders-status/skiper-orders-status.service';
 
 @Injectable()
 export class SkiperOrderService {
@@ -12,7 +14,8 @@ export class SkiperOrderService {
     constructor(
         @InjectRepository(SkiperOrder) private readonly repository: Repository<SkiperOrder>,
         private readonly userService: UserService,
-        private readonly skiperCommerceService: SkiperCommerceService
+        private readonly skiperCommerceService: SkiperCommerceService,
+        private readonly skiperOrderStatus:SkiperOrdersStatusService
     ) { }
 
     async getAll(): Promise<SkiperOrder[]> {
