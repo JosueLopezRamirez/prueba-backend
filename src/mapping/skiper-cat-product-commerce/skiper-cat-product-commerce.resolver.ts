@@ -20,6 +20,11 @@ export class SkiperCatProductCommerceResolver {
     }
 
     @Query()
+    async searchCategoryProduct(@Args('id') id: number){
+        return this.service.getByIdComerce(id);
+    }
+
+    @Query()
     async categoryProductsWithPagination(@Args('pages') page: number){
         return this.service.getWithPagination(page);
     }

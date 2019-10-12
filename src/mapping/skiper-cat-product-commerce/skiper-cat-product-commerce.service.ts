@@ -5,6 +5,8 @@ import { Repository } from 'typeorm';
 import { SkiperCommerceService } from '../skiper-commerce/skiper-commerce.service';
 import { SkiperCatProductsCommerce } from './skiper-cat-products-commerce.entity';
 
+// import { SkiperProductCommerceService } from '../skiper-product-commerce/skiper-product-commerce.service';
+
 @Injectable()
 export class SkiperCatProductCommerceService {
 
@@ -14,7 +16,7 @@ export class SkiperCatProductCommerceService {
     ){}
 
     async getAll():Promise<SkiperCatProductsCommerce[]> {
-        return await this.repository.find({relations:["skiperCommerce"]});
+        return await this.repository.find({relations:["skiperCommerce", "SkiperProductCommerce"]});
     }
 
     async getById(id:number) :Promise<SkiperCatProductsCommerce>{
@@ -22,6 +24,21 @@ export class SkiperCatProductCommerceService {
             let result = await this.repository.findOne({
                 relations:["skiperCommerce"],
                 where:{id}
+            });
+            console.log(result)
+            return result;
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    async getByIdComerce(id:number) :Promise<SkiperCatProductsCommerce>{
+        try {
+            let resultcommerce = await this.skiperCommerceService.getById(id);
+            console.log(resultcommerce);
+            let result = await this.repository.findOne({
+                relations:["skiperCommerce"],
+                where:{ id }
             });
             console.log(result)
             return result;
