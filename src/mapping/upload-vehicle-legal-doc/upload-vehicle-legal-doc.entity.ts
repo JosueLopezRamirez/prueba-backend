@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { SkiperVehicle } from "../skiper-vehicle/skiper-vehicle.entity";
 
 
 @Entity()
@@ -12,5 +13,7 @@ export class UploadVehicleLegalDoc {
     @Column('longtext', { nullable: true }) url_img_license_plate: string;
 
     //Esperando a la llave foranea de skiper_vehicle
+    @ManyToOne(type => SkiperVehicle, {nullable: false})
+    @JoinColumn({name:'idvehicle'}) skiperVehicle: SkiperVehicle;
 
 }

@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne } from "typeorm";
 import { SkiperAgent } from "../skiper-agent/skiper-agent.entity";
+import { SkiperVehicle } from "../skiper-vehicle/skiper-vehicle.entity";
 
 @Entity()
 export class SkiperVehicleAgent {
@@ -8,4 +9,7 @@ export class SkiperVehicleAgent {
 
     @ManyToOne(type => SkiperAgent, {nullable: false})
     @JoinColumn({name:'idagent'}) skiperAgent: SkiperAgent;
+
+    @ManyToOne(type => SkiperVehicle, {nullable: false})
+    @JoinColumn({name:'idvehicle'}) skiperVehicle: SkiperVehicle;
 }
