@@ -75,7 +75,7 @@ import { AppsModule } from './mapping/apps/apps.module';
       database: process.env.DATABASE_NAME,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
-      dropSchema: true
+      // dropSchema: true
     }),
     MulterModule.register({
       dest: './uploads'

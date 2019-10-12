@@ -6,18 +6,34 @@ input SkiperCatProductInput {
     skiperCommerceID: Int!
 }
 
+type SkiperProductCommerceDto {
+    id: Int
+    name: String
+    description: String
+    url_img_product: String
+    price: Int
+    isSize: Boolean
+    isAddon: Boolean
+    discount: Int
+    skiperCommerce: CommerceDto!
+}
+
 type SkiperCatProductDto {
     id: ID
     name: String
     description: String
     url_img_product: String
     skiperCommerce: CommerceDto
+    SkiperProductCommerce: [SkiperProductCommerceDto!]
 }
+
+
 
 type Query {
   categoriesProduct: [SkiperCatProductDto!]!
   categoryProductById(id: Int!): SkiperCatProductDto
   categoryProductsWithPagination(page: Int!): [SkiperCatProductDto!]!
+  searchCategoryProduct(id: Int): SkiperCatProductDto
 }
 
 type Mutation {

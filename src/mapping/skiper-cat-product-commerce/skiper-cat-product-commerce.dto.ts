@@ -1,5 +1,6 @@
 import { InputType, ObjectType } from "type-graphql";
 import { CommerceDto } from "../skiper-commerce/skiper-commerce.dto";
+import { SkiperProductCommerceDto } from '../skiper-product-commerce/skiper-product-commerce.dto';
 
 @InputType()
 export class SkiperCatProductInput {
@@ -17,4 +18,5 @@ export class SkiperCatProductDto {
     description:string;
     url_img_product:string;
     skiperCommerce: CommerceDto;
+    SkiperProductCommerceDto: SkiperProductCommerceDto;
 }
