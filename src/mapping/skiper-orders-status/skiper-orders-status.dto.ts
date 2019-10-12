@@ -1,1 +1,1 @@
-export class SkiperOrdersStatus.Dto {}
+export class SkiperOrdersStatusDto {}

@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { UserService } from '../users/user.service';
 import { SkiperCommerceService } from '../skiper-commerce/skiper-commerce.service';
 import { SkiperOrderInput } from './skiper-order.dto';
-import { SkiperOrdersStatus } from '../skiper-orders-status/skiper-orders-status.dto';
+import { SkiperOrdersStatus } from '../skiper-orders-status/skiper-orders-status.entity';
 import { SkiperOrdersStatusService } from '../skiper-orders-status/skiper-orders-status.service';
 
 @Injectable()

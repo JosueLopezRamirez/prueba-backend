@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne } from "typeorm";
 import { User } from "../users/user.entity";
 import { SkiperCommerce } from "../skiper-commerce/skiper-commerce.entity";
-import { SkiperOrdersStatus } from "../skiper-orders-status/skiper-orders-status.dto";
+import { SkiperOrdersStatus } from "../skiper-orders-status/skiper-orders-status.entity";
 
 @Entity()
 export class SkiperOrder {
