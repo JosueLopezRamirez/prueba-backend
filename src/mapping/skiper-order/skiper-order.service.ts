@@ -5,8 +5,6 @@ import { Repository } from 'typeorm';
 import { UserService } from '../users/user.service';
 import { SkiperCommerceService } from '../skiper-commerce/skiper-commerce.service';
 import { SkiperOrderInput } from './skiper-order.dto';
-import { SkiperOrdersStatus } from '../skiper-orders-status/skiper-orders-status.entity';
-import { SkiperOrdersStatusService } from '../skiper-orders-status/skiper-orders-status.service';
 
 @Injectable()
 export class SkiperOrderService {
@@ -15,7 +13,6 @@ export class SkiperOrderService {
         @InjectRepository(SkiperOrder) private readonly repository: Repository<SkiperOrder>,
         private readonly userService: UserService,
         private readonly skiperCommerceService: SkiperCommerceService,
-        private readonly skiperOrderStatus:SkiperOrdersStatusService
     ) { }
 
     async getAll(): Promise<SkiperOrder[]> {
@@ -34,12 +31,10 @@ export class SkiperOrderService {
         try {
             let skiperorderUpdate = await this.getById(input.id);
             skiperorderUpdate.userphone = input.userphone;
-            skiperorderUpdate.username = input.username;
             skiperorderUpdate.useraddress = input.useraddress;
-            skiperorderUpdate.orderstatus = input.orderstatus;
             skiperorderUpdate.orderdate = input.orderdate;
-            skiperorderUpdate.total_price = input.total_price;
-            skiperorderUpdate.num_item = input.num_item;
+            skiperorderUpdate.totalprice = input.totalprice;
+            skiperorderUpdate.numitem = input.numitem;
             skiperorderUpdate.user = await this.userService.findById(input.userID);
             skiperorderUpdate.skiperCommerce = await this.skiperCommerceService.getById(input.commerceID);
             
@@ -69,12 +64,10 @@ export class SkiperOrderService {
     private parseSkiperOder(input: SkiperOrderInput, user?, skipercommerce?): SkiperOrder {
         let skiperorder: SkiperOrder = new SkiperOrder();
         skiperorder.userphone = input.userphone;
-        skiperorder.username = input.username;
         skiperorder.useraddress = input.useraddress;
-        skiperorder.orderstatus = input.orderstatus;
         skiperorder.orderdate = input.orderdate;
-        skiperorder.total_price = input.total_price;
-        skiperorder.num_item = input.num_item;
+        skiperorder.totalprice = input.totalprice;
+        skiperorder.numitem = input.numitem;
         skiperorder.user = user;
         skiperorder.skiperCommerce = skipercommerce;
         return skiperorder;

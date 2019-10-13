@@ -7,12 +7,10 @@ import { CommerceDto } from '../skiper-commerce/skiper-commerce.dto';
 export class SkiperOrderInput {
     id: number;
     userphone: string;
-    username: string;
     useraddress: string;
-    orderstatus: string;
     orderdate: Date;
-    total_price: number;
-    num_item: number;
+    totalprice: number;
+    numitem: number;
     userID: number;
     commerceID: number;
 }
@@ -21,12 +19,10 @@ export class SkiperOrderInput {
 export class SkiperOrderDto {
     id: number;
     userphone: string;
-    username: string;
     useraddress: string;
-    orderstatus: string;
     orderdate: Date;
-    total_price: number;
-    num_item: number;
+    totalprice: number;
+    numitem: number;
     user: UserDto;
     commerce: CommerceDto;
 }

@@ -9,20 +9,14 @@ export class SkiperOrder {
     @PrimaryGeneratedColumn() id: number;
 
     @Column('varchar', { nullable: true, length: 50 }) userphone: string;
-    @Column('varchar', { nullable: true, length: 50 }) username: string;
     @Column('varchar', { nullable: true, length: 50 }) useraddress: string;
-    @Column({ nullable: true, length: 11 }) orderstatus: string;
-    @Column('date', { nullable: true }) orderdate: Date;
-    @Column('double', { nullable: true }) total_price: number;
-    @Column('int', { nullable: true }) num_item: number;
+    @Column('datetime', { nullable: true }) orderdate: Date;
+    @Column('double', { nullable: true }) totalprice: number;
+    @Column('int', { nullable: true }) numitem: number;
 
     @ManyToOne(type => User, { nullable: false })
-    @JoinColumn({ name: 'id_user' }) user: User;
+    @JoinColumn({ name: 'iduser' }) user: User;
 
     @ManyToOne(type => SkiperCommerce, { nullable: false })
-    @JoinColumn({ name: 'id_commerce' }) skiperCommerce: SkiperCommerce;
-
-    @ManyToOne(type => SkiperOrdersStatus, { nullable: false })
-    @JoinColumn({ name: 'idorderstatus' }) skiperOrderStatus: SkiperOrdersStatus;
-
+    @JoinColumn({ name: 'idcommerce' }) skiperCommerce: SkiperCommerce;
 }

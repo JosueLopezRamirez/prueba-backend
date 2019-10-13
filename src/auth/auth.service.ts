@@ -31,14 +31,26 @@ export class AuthService {
             if (!bcrypt.compareSync(sign.input.password, result.password)) {
                 return new SignResponse(null, new ErrorResponse('The email or password is incorrect', 400, false));
             }
-            let co
+            let co; //Definimos la variable commercio
             try {
+                /**
+                 * buscamos el agente por medio de el objeto usuario que corresponde a la llave foranea
+                 */
                 let agent = await this.agentService.getByUser(result);
+                /**
+                 * usamos queryBuilder
+                 * Obtenermos el objeto de tipo entity SkiperCommerce
+                 * */
                 co = await createQueryBuilder("SkiperCommerce")
+                    // Hacemos el join con la tabla skiperAgent    
                     .innerJoin("SkiperCommerce.skiperAgent","SkiperAgent")
+                    // Hacemos el join con la tabla user
                     .innerJoin("SkiperAgent.user","User")
+                    // condicion con el result.id correspondiente al usuario
                     .where("SkiperAgent.iduser = :userId", { userId: result.id })
+                    // usamos el agent.id resultado del servicio getByUser
                     .where("SkiperCommerce.id_agent = :agentId",{ agentId: agent.id })
+                    //Obtenemos uno
                     .getOne();
                 console.log(co)
             } catch (error) {

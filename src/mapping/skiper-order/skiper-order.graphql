@@ -1,12 +1,10 @@
 input SkiperOrderInput {
     id: Int
     userphone: String!
-    username: String!
     useraddress: String!
-    orderstatus: String!
     orderdate: DateTime!
-    total_price: Int!
-    num_item: Int!
+    totalprice: Int!
+    numitem: Int!
     userID: Int!
     commerceID: Int!
 }
@@ -14,12 +12,10 @@ input SkiperOrderInput {
 type SkiperOrderDto {
     id: Int!
     userphone: String
-    username: String
     useraddress: String
-    orderstatus: String
     orderdate: DateTime
-    total_price: Int
-    num_item: Int
+    totalprice: Int
+    numitem: Int
     user: UserDto!
     commerce: CommerceDto!
 }
