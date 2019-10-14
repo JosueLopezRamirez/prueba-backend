@@ -13,6 +13,13 @@ export class CountrieService {
         return await this.countrieRepository.find();
     }
 
+    async getAllCitiesByCountryId(id: number) {
+        return await this.countrieRepository.find({
+            relations: ["cities"],
+            where: { id }
+        })
+    }
+
     async getById(id: number) {
         return await this.countrieRepository.findOne({
             where: { id: id }

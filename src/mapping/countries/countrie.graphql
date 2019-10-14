@@ -6,10 +6,12 @@ type countrieDto {
   iso3: String
   numcode: Float
   phonecode: Float
+  cities: [citiesDto]
 }
 
 type Query {
   countries: [countrieDto!]!
-  searchCountrie(id: Float!): countrieDto!
+  searchCountrie(id: Int!): countrieDto!
   showCountries(page: Float!): [countrieDto!]!
+  getAllCitiesByCountryId(id: Int!): [countrieDto!]!
 }

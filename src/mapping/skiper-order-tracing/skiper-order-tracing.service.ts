@@ -14,7 +14,7 @@ export class SkiperOrderTracingService {
         private readonly orderStatusService: SkiperOrdersStatusService
     ) { }
 
-    async getAll(){
-        return await this.repository.find({relations:["orderStatus","order"]});
+    async getAll() {
+        return await this.repository.find({ relations: ["orderStatus", "order"] });
     }
 }

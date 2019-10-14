@@ -12,6 +12,11 @@ export class CountriesResolver {
         return await this.countrieService.getAllCountries();
     }
 
+    @Query()
+    getAllCitiesByCountryId(@Args('id') id: number){
+        return this.countrieService.getAllCitiesByCountryId(id);
+    }
+
     @Query(() => countrieDto)
     async searchCountrie(@Args('id') id: number) {
         return await this.countrieService.getById(id);
