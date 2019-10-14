@@ -1,0 +1,9 @@
+type SkiperOrderTracingDto {
+    id: Int
+    orderStatus: SkiperOrdersStatusDto!
+    order: SkiperOrderDto!
+}
+
+type Query {
+    getAllOrderTracing: [SkiperOrderTracingDto!]!
+}

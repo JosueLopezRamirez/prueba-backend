@@ -1,1 +1,7 @@
-export class SkiperOrdersStatusDto {}
+import { ObjectType } from "type-graphql";
+
+@ObjectType()
+export class SkiperOrdersStatusDto {
+    id: number;
+    name: string;
+}
