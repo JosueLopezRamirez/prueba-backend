@@ -1,5 +1,6 @@
 type SkiperOrderTracingDto {
     id: Int
+    datetracing: DateTime
     orderStatus: SkiperOrdersStatusDto!
     order: SkiperOrderDto!
 }

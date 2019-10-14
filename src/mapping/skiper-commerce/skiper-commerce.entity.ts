@@ -1,8 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 import { Countrie } from "../countries/countrie.entity";
 import { SkiperAgent } from "../skiper-agent/skiper-agent.entity";
 import { SkiperCatCommerce } from "../skiper-cat-commerce/skiper-cat-commerce.entity";
 import { Cities } from "../cities/cities.entity";
+import { SkiperOrder } from "../skiper-order/skiper-order.entity";
 
 @Entity('skiper_commerces')
 export class SkiperCommerce {

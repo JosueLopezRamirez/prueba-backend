@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { UserService } from '../users/user.service';
 import { SkiperCommerceService } from '../skiper-commerce/skiper-commerce.service';
 import { SkiperOrderInput } from './skiper-order.dto';
+import { SkiperOrderTracing } from '../skiper-order-tracing/skiper-order-tracing.entity';
 
 @Injectable()
 export class SkiperOrderService {
@@ -16,7 +17,22 @@ export class SkiperOrderService {
     ) { }
 
     async getAll(): Promise<SkiperOrder[]> {
-        return await this.repository.find({ relations: ["user", "skiperCommerce"] });
+        return await this.repository.find({ relations: ["user", "skiperCommerce", "skiperOrderTracing"] });
+    }
+
+    async getByCommerceIdByIdStatus(idcommerce: number, idstatus: number): Promise<SkiperOrder[]> {
+        return await this.repository.createQueryBuilder("SkiperOrder")
+        .innerJoinAndSelect("SkiperOrder.user", "User")
+        .innerJoinAndSelect("SkiperOrder.skiperCommerce", "SkiperCommerce","SkiperCommerce.id = :idcommerce", { idcommerce })
+        .innerJoinAndSelect("SkiperOrder.skiperOrderTracing", "SkiperOrderTracing","SkiperOrderTracing.orderStatus = :idstatus", { idstatus })
+        .innerJoinAndSelect(subQuery => {
+            return subQuery
+            .select("skiperOrderTracing.idorder", "idorder").addSelect("MAX(skiperOrderTracing.datetracing)", "fecha")
+            .from(SkiperOrderTracing, "skiperOrderTracing")
+            .groupBy("skiperOrderTracing.idorder")
+        }, "d", "SkiperOrderTracing.idorder = d.idorder and SkiperOrderTracing.datetracing = d.fecha")
+        .innerJoinAndSelect("SkiperOrderTracing.orderStatus", "SkiperOrdersStatus")
+        .getMany();
     }
 
     async getById(id: number): Promise<SkiperOrder> {
