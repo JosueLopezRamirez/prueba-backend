@@ -152,8 +152,6 @@ export class AuthService {
     }
 
     private async vehicleByQueryBuilder(result, agent) {
-        console.log(result.id)
-        console.log(agent.id)
         let ve = await createQueryBuilder("SkiperVehicleAgent").select(["SkiperVehicleAgent.skiperAgent","SkiperVehicleAgent.skiperVehicle"])
             // Hacemos el join con la tabla skiperAgent    
             .innerJoinAndSelect("SkiperVehicleAgent.skiperAgent", "SkiperAgent")

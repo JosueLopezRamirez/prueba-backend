@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne } from "typeorm";
 import { SkiperAgent } from "../skiper-agent/skiper-agent.entity";
 import { SkiperVehicle } from "../skiper-vehicle/skiper-vehicle.entity";
 
-@Entity('skiper_vehicle_agente')
+@Entity('skiper_vehicle_agent')
 export class SkiperVehicleAgent {
 
     @PrimaryGeneratedColumn() id: number;
