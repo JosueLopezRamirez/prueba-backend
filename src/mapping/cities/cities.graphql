@@ -1,8 +1,9 @@
 
 type citiesDto {
-  id: Float
+  id: Int
   name: String
   country: countrieDto
+  users:[UserDto]
 }
 
 type Query {

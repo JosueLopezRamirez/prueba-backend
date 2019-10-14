@@ -2,8 +2,10 @@
 type categoryDto {
     id: Int
     name: String
+    agents: [SkiperAgentDto!]!
 }
 
 type Query {
   categoriesAgents: [categoryDto!]!
+  getByCategoryAgentIdAndCityId(id:Int!,idcity:Int!): [categoryDto!]!
 }

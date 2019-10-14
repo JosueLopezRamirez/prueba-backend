@@ -2,6 +2,7 @@ import { InputType, ObjectType } from "type-graphql";
 import { SkiperAgentDto } from "../skiper-agent/skiper-agent.dto";
 import { countrieDto } from "../countries/countrie.dto";
 import { SkiperCatCommerceDto } from "../skiper-cat-commerce/skiper-cat-commerce.dto";
+import { citiesDto } from "../cities/cities.dto";
 
 @InputType()
 export class CommerceInput {
@@ -18,6 +19,7 @@ export class CommerceInput {
     skiperAgentID: number;
     catCommerceID: number;
     countryID:number;
+    cityID:number;
 }
 
 @ObjectType()
@@ -35,4 +37,5 @@ export class CommerceDto{
     skiperAgent: SkiperAgentDto;
     catCommerce: SkiperCatCommerceDto;
     country:countrieDto;
+    city:citiesDto;
 }

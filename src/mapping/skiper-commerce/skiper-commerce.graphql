@@ -12,6 +12,7 @@ input CommerceInput {
     skiperAgentID: Int!
     catCommerceID: Int!
     countryID:Int!
+    cityID:Int!
 }
 
 type CommerceDto {
@@ -28,6 +29,7 @@ type CommerceDto {
     skiperAgent: SkiperAgentDto!
     catCommerce: SkiperCatCommerceDto!
     country:countrieDto!
+    city:citiesDto!
 }
 
 type Query {
