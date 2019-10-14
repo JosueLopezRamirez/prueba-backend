@@ -23,8 +23,6 @@ export class CategoryAgentService {
             .where("CategoryAgent.id = :id",{id})
             .andWhere("User.idcity = :idcity",{idcity})
             .getMany();
-            result.forEach(item => console.log(item))
-            // console.log(result);
             return result;
         } catch (error) {
             console.log(error)
