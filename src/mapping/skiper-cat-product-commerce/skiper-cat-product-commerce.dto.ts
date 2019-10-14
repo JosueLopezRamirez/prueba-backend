@@ -18,5 +18,5 @@ export class SkiperCatProductDto {
     description:string;
     url_img_product:string;
     skiperCommerce: CommerceDto;
-    SkiperProductCommerceDto: SkiperProductCommerceDto;
+    skiperProductCommerce: SkiperProductCommerceDto;
 }

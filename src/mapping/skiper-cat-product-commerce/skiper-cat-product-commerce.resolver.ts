@@ -15,6 +15,11 @@ export class SkiperCatProductCommerceResolver {
     }
 
     @Query()
+    async CategoryProductByCommerceId(@Args('idcommerce') idcommerce: number){
+        return this.service.getByCommerceId(idcommerce);
+    }
+
+    @Query()
     async categoryProductById(@Args('id') id: number){
         return this.service.getById(id);
     }

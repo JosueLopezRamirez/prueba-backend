@@ -18,11 +18,14 @@ type SkiperOrderDto {
     numitem: Int
     user: UserDto!
     skiperCommerce: CommerceDto!
+    skiperOrderTracing: [SkiperOrderTracingDto]
 }
+
 
 type Query {
     skiperorders:[SkiperOrderDto!]!
     searchSkiperOrder(id: Int): SkiperOrderDto
+    skiperOrderByCommerceIdByIdStatus(idcommerce: Int!, idstatus: Int!): [SkiperOrderDto]
 }
 
 type Mutation {
