@@ -1,0 +1,4 @@
+type VehicleTrademarkDto {
+    id: Int
+    name: String
+}

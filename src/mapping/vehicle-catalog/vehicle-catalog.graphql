@@ -1,0 +1,5 @@
+type VehicleCatalogDto {
+    id: Int
+    name: String
+    url_img_vehicle: String
+}

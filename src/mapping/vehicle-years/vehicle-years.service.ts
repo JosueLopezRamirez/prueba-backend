@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { VehicleYearInput} from './vehicle-years.dto';
+import { VehicleYearsInput} from './vehicle-years.dto';
 import { VehicleYears } from './vehicle-years.entity';
 
 @Injectable()
@@ -25,7 +25,7 @@ export class VehicleYearsService {
         });
     }
 
-    async update(input: VehicleYearInput): Promise<VehicleYears>{
+    async update(input: VehicleYearsInput): Promise<VehicleYears>{
         //console.log(input);
         try {
             let VehicleYearUpdate = await this.getById(input.id);
@@ -37,7 +37,7 @@ export class VehicleYearsService {
         }
     }
 
-    async registerVehicleYear(input:VehicleYearInput):Promise<VehicleYears>{
+    async registerVehicleYear(input:VehicleYearsInput):Promise<VehicleYears>{
         try 
         {
             let vehicleyear = this.parseVehicleYear(input);
@@ -49,7 +49,7 @@ export class VehicleYearsService {
         return null;
     }
 
-    private parseVehicleYear(input:VehicleYearInput):VehicleYears {
+    private parseVehicleYear(input:VehicleYearsInput):VehicleYears {
         let vehicleyear:VehicleYears = new VehicleYears();
         vehicleyear.year = input.year;
         return vehicleyear;

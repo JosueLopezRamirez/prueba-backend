@@ -1,0 +1,5 @@
+type SkiperVehicleAgentDto {
+    id: Int
+    skiperAgent: SkiperAgentDto
+    skiperVehicle: SkiperVehicleDto
+}

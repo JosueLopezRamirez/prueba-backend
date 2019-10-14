@@ -4,16 +4,6 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 """
 scalar DateTime
 
-type CommerceOut {
-  id: ID!
-  name_owner: String
-  identity: String
-  url_doc_identity: String
-  state: Boolean
-  user: UserDto
-}
-
-
 type ErrorResponse {
   message: String
   status: Int
@@ -38,6 +28,7 @@ type SignInOk {
   email: String
   phone_number: String
   commerce: CommerceDto
+  vehicle: SkiperVehicleAgentDto
 }
 
 input twilioDto {

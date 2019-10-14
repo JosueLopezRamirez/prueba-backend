@@ -1,5 +1,6 @@
 import { ObjectType, InputType } from "type-graphql";
 import { CommerceDto } from "src/mapping/skiper-commerce/skiper-commerce.dto";
+import { SkiperVehicleAgentDto } from "src/mapping/skiper-vehicle-agent/skiper-vehicle-agent.dto";
 
 @InputType()
 export class signInDto {
@@ -7,25 +8,10 @@ export class signInDto {
     password:string;
 }
 
-// export class CommerceOut {
-
-//     constructor(id,){
-
-//     }
-
-//     id: number;
-//     name_owner: string
-//     identity: string
-//     url_doc_identity: string
-//     state: boolean
-//     // user: UserDto
-// }
-
-
 @ObjectType()
 export class SignInOk {
 
-    constructor(token,firstname,lastname,username,email,phone_number,commerce?){
+    constructor(token,firstname,lastname,username,email,phone_number,commerce?,vehicle?){
         this.token = token;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -33,6 +19,7 @@ export class SignInOk {
         this.email = email;
         this.phone_number = phone_number;
         this.commerce = commerce || null;
+        this.vehicle = vehicle || null;
     }
 
     token: string
@@ -42,6 +29,7 @@ export class SignInOk {
     email: string
     phone_number: string
     commerce: CommerceDto
+    vehicle: SkiperVehicleAgentDto
 }
 
 @ObjectType()

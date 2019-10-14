@@ -1,0 +1,11 @@
+type SkiperVehicleDto {
+    id: Int
+    license_plate: String
+    lat: String
+    lon: String
+    skiperCatTravel: SkiperCatTravelDto
+    vehicleCatalog: VehicleCatalogDto
+    vehicleTrademark: VehicleTrademarkDto
+    vehicleModel: VehicleModelsDto
+    vehicleYear: VehicleYearsDto
+}

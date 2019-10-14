@@ -8,7 +8,7 @@ export class SkiperCatTravelsInput {
 }
 
 @ObjectType()
-export class SkiperCatTravelsDto {
+export class SkiperCatTravelDto {
     id: number;
     name: string;
     url_img_category: string;

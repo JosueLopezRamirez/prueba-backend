@@ -16,7 +16,7 @@ export class AuthService {
 
     private logger = new Logger('AuthService');
     private twilio = Twilio('AC025109cb3b97652dd56c78f6ba82217a', '6ae100725be88eab8310b19c07600c76');
-    
+
     constructor(
         private readonly userService: UserService,
         private readonly agentService: SkiperAgentService,
@@ -31,7 +31,7 @@ export class AuthService {
             if (!bcrypt.compareSync(sign.input.password, result.password)) {
                 return new SignResponse(null, new ErrorResponse('The email or password is incorrect', 400, false));
             }
-            let co; //Definimos la variable commercio
+            let co, ve; //Definimos la variable commercio
             try {
                 /**
                  * buscamos el agente por medio de el objeto usuario que corresponde a la llave foranea
@@ -41,26 +41,16 @@ export class AuthService {
                  * usamos queryBuilder
                  * Obtenermos el objeto de tipo entity SkiperCommerce
                  * */
-                console.log(agent)
-                co = await createQueryBuilder("SkiperCommerce")
-                    // Hacemos el join con la tabla skiperAgent    
-                    .innerJoin("SkiperCommerce.skiperAgent","SkiperAgent")
-                    // Hacemos el join con la tabla user
-                    .innerJoin("SkiperAgent.user","User")
-                    // condicion con el result.id correspondiente al usuario
-                    .where("SkiperAgent.iduser = :userId", { userId: result.id })
-                    // usamos el agent.id resultado del servicio getByUser
-                    .where("SkiperCommerce.idagent = :agentId",{ agentId: agent.id })
-                    //Obtenemos uno
-                    .getOne();
-                console.log(co)
+                co = this.commerceByQueryBuilder(result, agent);
+                ve = this.vehicleByQueryBuilder(result, agent);
+                // console.log(ve)
             } catch (error) {
                 console.log(error)
             }
             return new SignResponse(new SignInOk(
                 await this.tokenGenerated(result), result.firstname,
                 result.lastname, result.user,
-                result.email, result.phone,co
+                result.email, result.phone, co
             ), null);
         }
     }
@@ -134,15 +124,48 @@ export class AuthService {
     // ------------------------------------------------------------------------------------------
     // Reset password
     // ------------------------------------------------------------------------------------------
-    async reset(email:string){
+    async reset(email: string) {
         try {
             let result = await this.validate(email);
-            if(result !== undefined){
-                let body = {phone_number: result.phone, channel: 'sms'}
+            if (result !== undefined) {
+                let body = { phone_number: result.phone, channel: 'sms' }
                 return await this.sendCode(body);
             }
         } catch (error) {
-            return new ErrorResponse('Could not send verification code',200,true)
-        }  
+            return new ErrorResponse('Could not send verification code', 200, true)
+        }
+    }
+
+    private async commerceByQueryBuilder(result, agent) {
+        let co = await createQueryBuilder("SkiperCommerce")
+            // Hacemos el join con la tabla skiperAgent    
+            .innerJoin("SkiperCommerce.skiperAgent", "SkiperAgent")
+            // Hacemos el join con la tabla user
+            .innerJoin("SkiperAgent.user", "User")
+            // condicion con el result.id correspondiente al usuario
+            .where("SkiperAgent.iduser = :userId", { userId: result.id })
+            // usamos el agent.id resultado del servicio getByUser
+            .andWhere("SkiperCommerce.idagent = :agentId", { agentId: agent.id })
+            //Obtenemos uno
+            .getOne();
+        return co;
+    }
+
+    private async vehicleByQueryBuilder(result, agent) {
+        console.log(result.id)
+        console.log(agent.id)
+        let ve = await createQueryBuilder("SkiperVehicleAgent").select(["SkiperVehicleAgent.skiperAgent","SkiperVehicleAgent.skiperVehicle"])
+            // Hacemos el join con la tabla skiperAgent    
+            .innerJoinAndSelect("SkiperVehicleAgent.skiperAgent", "SkiperAgent")
+            // Hacemos el join con la tabla user
+            .innerJoinAndSelect("SkiperAgent.user", "User")
+            // condicion con el result.id correspondiente al usuario
+            .where("SkiperAgent.iduser = :userId", { userId: result.id })
+            // usamos el agent.id resultado del servicio getByUser
+            .andWhere("SkiperVehicleAgent.idagent = :agentId", { agentId: agent.id })
+            //Obtenemos uno
+            .getSql();
+            console.log(ve);
+        return ve;
     }
 }

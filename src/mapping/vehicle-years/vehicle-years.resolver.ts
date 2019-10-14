@@ -1,6 +1,6 @@
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { VehicleYearsService } from './vehicle-years.service';
-import { VehicleYearInput } from './vehicle-years.dto';
+import { VehicleYearsInput } from './vehicle-years.dto';
 import { ParseIntPipe } from '@nestjs/common';
 
 @Resolver('VehicleYears')
@@ -20,7 +20,7 @@ export class VehicleYearsResolver {
     }
 
     @Mutation()
-    async registerVehicleYear(@Args('input') input: VehicleYearInput){
+    async registerVehicleYear(@Args('input') input: VehicleYearsInput){
         try {
             return this.vehicleYearsService.registerVehicleYear(input);
         }
@@ -31,7 +31,7 @@ export class VehicleYearsResolver {
     }
 
     @Mutation()
-    async updateVehicleYear(@Args('input') input: VehicleYearInput) {
+    async updateVehicleYear(@Args('input') input: VehicleYearsInput) {
         return await this.vehicleYearsService.update(input);
     }
 }
