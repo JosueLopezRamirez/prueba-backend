@@ -48,10 +48,8 @@ export class User {
     @Column('date',{nullable:true}) create_at: Date;
     
     @ManyToOne(type => Countrie,{nullable:false})
-    @JoinColumn({name: 'idcountry'})
-    @ValidateNested() country:Countrie;
+    @JoinColumn({name: 'idcountry'}) country:Countrie;
 
     @ManyToOne(type => Cities,{nullable:false})
-    @JoinColumn({name: 'idcity'})
-    @ValidateNested() city:Cities;
+    @JoinColumn({name: 'idcity'}) city:Cities;
 }

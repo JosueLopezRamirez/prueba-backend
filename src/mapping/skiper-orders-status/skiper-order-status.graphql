@@ -1,4 +1,0 @@
-type SkiperOrdersStatusDto {
-    id: Int
-    name: String
-}

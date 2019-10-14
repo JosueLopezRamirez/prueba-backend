@@ -17,7 +17,7 @@ type SkiperOrderDto {
     totalprice: Int
     numitem: Int
     user: UserDto!
-    commerce: CommerceDto!
+    skiperCommerce: CommerceDto!
 }
 
 type Query {

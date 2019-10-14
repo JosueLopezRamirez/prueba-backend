@@ -41,6 +41,7 @@ export class AuthService {
                  * usamos queryBuilder
                  * Obtenermos el objeto de tipo entity SkiperCommerce
                  * */
+                console.log(agent)
                 co = await createQueryBuilder("SkiperCommerce")
                     // Hacemos el join con la tabla skiperAgent    
                     .innerJoin("SkiperCommerce.skiperAgent","SkiperAgent")
@@ -49,7 +50,7 @@ export class AuthService {
                     // condicion con el result.id correspondiente al usuario
                     .where("SkiperAgent.iduser = :userId", { userId: result.id })
                     // usamos el agent.id resultado del servicio getByUser
-                    .where("SkiperCommerce.id_agent = :agentId",{ agentId: agent.id })
+                    .where("SkiperCommerce.idagent = :agentId",{ agentId: agent.id })
                     //Obtenemos uno
                     .getOne();
                 console.log(co)

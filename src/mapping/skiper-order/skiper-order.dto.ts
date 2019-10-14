@@ -24,5 +24,5 @@ export class SkiperOrderDto {
     totalprice: number;
     numitem: number;
     user: UserDto;
-    commerce: CommerceDto;
+    skiperCommerce: CommerceDto;
 }

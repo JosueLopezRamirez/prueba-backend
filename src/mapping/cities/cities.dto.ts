@@ -1,10 +1,12 @@
 import { ObjectType, Field } from "type-graphql";
 import { countrieDto } from "../countries/countrie.dto";
+import { UserDto } from "../users/user.dto";
 
 @ObjectType()
 export class citiesDto {
 
-    @Field({nullable:true}) id:number;
-    @Field({nullable:true}) name: string;
-    @Field({nullable:true}) countrie: countrieDto;
+    id:number;
+    name: string;
+    countrie: countrieDto;
+    users:UserDto[];
 }
