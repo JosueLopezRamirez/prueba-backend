@@ -1,6 +1,7 @@
 import { InputType, ObjectType } from 'type-graphql';
 import { UserDto } from '../users/user.dto';
 import { CommerceDto } from '../skiper-commerce/skiper-commerce.dto';
+import { SkiperOrderTracingDto } from '../skiper-order-tracing/skiper-order-tracing.dto';
 
 
 @InputType() 
@@ -25,4 +26,5 @@ export class SkiperOrderDto {
     numitem: number;
     user: UserDto;
     skiperCommerce: CommerceDto;
+    skiperOrderTracing: SkiperOrderTracingDto;
 }

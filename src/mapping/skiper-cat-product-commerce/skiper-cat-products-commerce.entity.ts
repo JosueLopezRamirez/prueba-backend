@@ -18,6 +18,6 @@ export class SkiperCatProductsCommerce {
     @JoinColumn({name:'idcommerce'}) skiperCommerce: SkiperCommerce;
 
     @OneToMany(type => SkiperProductCommerce, x => x.skiperProducts)
-    SkiperProductCommerce: SkiperProductCommerce[];
+    skiperProductCommerce: SkiperProductCommerce[];
 
 }

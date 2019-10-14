@@ -16,7 +16,14 @@ export class SkiperCatProductCommerceService {
     ){}
 
     async getAll():Promise<SkiperCatProductsCommerce[]> {
-        return await this.repository.find({relations:["skiperCommerce", "SkiperProductCommerce"]});
+        return await this.repository.find({relations:["skiperCommerce", "skiperProductCommerce"]});
+    }
+
+    async getByCommerceId(idcommerce: number): Promise<SkiperCatProductsCommerce[]> {
+        return await this.repository.createQueryBuilder("SkiperCatProductsCommerce")
+        .innerJoinAndSelect("SkiperCatProductsCommerce.skiperCommerce", "SkiperCommerce","SkiperCommerce.id = :idcommerce", { idcommerce })
+        .innerJoinAndSelect("SkiperCatProductsCommerce.skiperProductCommerce", "SkiperProductCommerce")
+        .getMany()
     }
 
     async getById(id:number) :Promise<SkiperCatProductsCommerce>{
