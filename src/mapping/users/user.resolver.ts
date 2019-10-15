@@ -20,7 +20,7 @@ export class UserResolver {
     }
 
     @Mutation(() => String)
-    async createUser(@Args('user') input: UserInput) {
+    async createUser(@Args('input') input: UserInput) {
         try {
             let result = await this.userService.create(input);
             return 'Usuario registrado con exito!!';
@@ -30,7 +30,7 @@ export class UserResolver {
     }
 
     @Mutation(() => String)
-    async updateUser(@Args('user') input: UserInput) {
+    async updateUser(@Args('input') input: UserInput) {
         try {
             let result = await this.userService.update(input);
             return 'Usuario actualizado con exito!!';

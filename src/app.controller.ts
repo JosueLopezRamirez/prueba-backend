@@ -7,7 +7,7 @@ import { Storage } from '@google-cloud/storage';
 import { AppService } from './app.service';
 import { ErrorResponse } from './auth/auth.dto';
 
-@Controller()
+@Controller('app')
 export class AppController {
 
     constructor(private readonly appService: AppService) { }
@@ -20,7 +20,7 @@ export class AppController {
 
     private imgAppSkiperCommerceBucket = this.storage.bucket('mi-deposito-backend');
 
-    @Post('/image/upload')//Subida de imagen
+    @Post('/image/upload')
     @UseInterceptors(FileInterceptor('file', {
         storage: diskStorage({
             destination: './uploads'
