@@ -20,7 +20,7 @@ export class AppController {
 
     private imgAppSkiperCommerceBucket = this.storage.bucket('mi-deposito-backend');
 
-    @Post('/image/upload')
+    @Post('/image/upload')//Subida de imagen
     @UseInterceptors(FileInterceptor('file', {
         storage: diskStorage({
             destination: './uploads'
