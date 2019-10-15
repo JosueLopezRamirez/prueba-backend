@@ -31,7 +31,7 @@ export class SkiperOrderDetailService {
     async update(input: SkiperOrderDetailInput): Promise<SkiperOrderDetail>{
         //console.log(input);
         try {
-            let skiperorderdetailUpdate = await this.getById(input.id);
+            let skiperorderdetailUpdate = await this.getById(input.orderID);
             skiperorderdetailUpdate.quantity = input.quantity;
             skiperorderdetailUpdate.price = input.price;
             skiperorderdetailUpdate.discount = input.discount;

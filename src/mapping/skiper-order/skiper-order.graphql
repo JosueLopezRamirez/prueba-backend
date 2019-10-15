@@ -19,6 +19,7 @@ type SkiperOrderDto {
     user: UserDto!
     skiperCommerce: CommerceDto!
     skiperOrderTracing: [SkiperOrderTracingDto]
+    skiperOrderDetail: [SkiperOrderDetailDto]
 }
 
 
