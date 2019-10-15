@@ -37,6 +37,7 @@ import { RolOperationModule } from './mapping/rol-operation/rol-operation.module
 import { AppsModule } from './mapping/apps/apps.module';
 import { SkiperDriverScheduleModule } from './mapping/skiper-driver-schedule/skiper-driver-schedule.module';
 import { SkiperOrderTracingModule } from './mapping/skiper-order-tracing/skiper-order-tracing.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -93,5 +94,6 @@ import { SkiperOrderTracingModule } from './mapping/skiper-order-tracing/skiper-
     })
   ],
   providers: [AppService, AppResolver],
+  controllers: [AppController],
 })
 export class AppModule { }
