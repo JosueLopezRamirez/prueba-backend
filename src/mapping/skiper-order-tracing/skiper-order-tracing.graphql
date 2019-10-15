@@ -6,8 +6,8 @@ type SkiperOrderTracingDto {
 }
 
 input SkiperOrderTracingInput {
-    orderStatus: Int!
-    order: Int!
+    orderStatusID: Int!
+    orderID: Int!
 }
 
 type Query {

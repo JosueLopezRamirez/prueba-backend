@@ -6,6 +6,7 @@ type countrieDto {
   iso3: String
   numcode: Float
   phonecode: Float
+  flag: String
   cities: [citiesDto]
 }
 

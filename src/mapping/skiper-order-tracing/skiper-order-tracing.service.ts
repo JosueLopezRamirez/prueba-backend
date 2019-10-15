@@ -26,7 +26,6 @@ export class SkiperOrderTracingService {
             orderTracing.orderStatus = await this.orderStatusService.getById(input.orderStatusID);
             if (orderTracing.order !== null && orderTracing.orderStatus !== null){
                 orderTracing = await this.repository.save(orderTracing);
-                console.log(orderTracing);
                 return orderTracing;
             }
         } catch (error) {

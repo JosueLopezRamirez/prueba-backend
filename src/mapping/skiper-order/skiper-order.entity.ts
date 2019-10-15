@@ -4,7 +4,7 @@ import { SkiperCommerce } from "../skiper-commerce/skiper-commerce.entity";
 import { SkiperOrderTracing } from "../skiper-order-tracing/skiper-order-tracing.entity";
 import { SkiperOrderDetail } from "../skiper-order-detail/skiper-order-detail.entity";
 
-@Entity()
+@Entity('skiper_order')
 export class SkiperOrder {
 
     @PrimaryGeneratedColumn() id: number;

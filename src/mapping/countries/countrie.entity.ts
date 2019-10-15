@@ -15,6 +15,8 @@ export class Countrie {
 
     @Column({length: 3,nullable:true}) iso3: string;
 
+    @Column('longtext',{nullable:true}) flag: string;
+
     @Column({type: "smallint",nullable:true}) numcode: number;
 
     @Column({type: "int",nullable:false}) phonecode: number;
