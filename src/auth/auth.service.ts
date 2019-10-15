@@ -155,14 +155,12 @@ export class AuthService {
         let ve = await createQueryBuilder("SkiperVehicleAgent").select(["SkiperVehicleAgent.skiperAgent","SkiperVehicleAgent.skiperVehicle"])
             // Hacemos el join con la tabla skiperAgent    
             .innerJoinAndSelect("SkiperVehicleAgent.skiperAgent", "SkiperAgent")
-            // Hacemos el join con la tabla user
+            .innerJoinAndSelect("SkiperVehicleAgent.skiperVehicle", "SkiperVehicle")
             .innerJoinAndSelect("SkiperAgent.user", "User")
-            // condicion con el result.id correspondiente al usuario
             .where("SkiperAgent.iduser = :userId", { userId: result.id })
-            // usamos el agent.id resultado del servicio getByUser
             .andWhere("SkiperVehicleAgent.idagent = :agentId", { agentId: agent.id })
             //Obtenemos uno
-            .getSql();
+            .getOne();
             console.log(ve);
         return ve;
     }

@@ -5,6 +5,15 @@ type SkiperOrderTracingDto {
     order: SkiperOrderDto!
 }
 
+input SkiperOrderTracingInput {
+    orderStatus: Int!
+    order: Int!
+}
+
 type Query {
     getAllOrderTracing: [SkiperOrderTracingDto!]!
+}
+
+type Mutation {
+    registerOrderTracing(input: SkiperOrderTracingInput!): SkiperOrderTracingDto!
 }

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column, BeforeInsert } from "typeorm";
 import { SkiperOrdersStatus } from "../skiper-orders-status/skiper-orders-status.entity";
 import { SkiperOrder } from "../skiper-order/skiper-order.entity";
 
@@ -6,6 +6,12 @@ import { SkiperOrder } from "../skiper-order/skiper-order.entity";
 export class SkiperOrderTracing {
 
     @PrimaryGeneratedColumn() id:number;
+
+    @BeforeInsert()
+    private defaultDate(){
+        this.datetracing = new Date();
+    }
+
     @Column('datetime', { nullable: true }) datetracing: Date;
 
     @ManyToOne(type => SkiperOrdersStatus, { nullable: false })

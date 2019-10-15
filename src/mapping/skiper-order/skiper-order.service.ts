@@ -36,7 +36,7 @@ export class SkiperOrderService {
     }
 
     async getById(id: number): Promise<SkiperOrder> {
-        return await this.repository.findOne({
+        return await this.repository.findOneOrFail({
             relations: ["user", "skiperCommerce"],
             where: { id: id }
         });
