@@ -11,15 +11,16 @@ input SkiperOrderDetailInput {
 }
 
 type SkiperOrderDetailDto {
-    id: Int!
+    idorder: Int!
+    iditem: Int!
     quantity: Int
     price: Int
     discount: Int
     size: String
     addon: String
     extraPrice: Int
-    order: SkiperOrderDto!
-    item: SkiperProductCommerceDto!
+    skiperOrder: SkiperOrderDto!
+    skiperProductCommerce: SkiperProductCommerceDto!
 }
 
 type Query {

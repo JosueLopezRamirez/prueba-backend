@@ -1,12 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 
 import { SkiperOrder } from "../skiper-order/skiper-order.entity";
 import { SkiperProductCommerce } from "../skiper-product-commerce/skiper-product-commerce.entity";
 
 @Entity()
 export class SkiperOrderDetail {
-    @PrimaryGeneratedColumn() id: number;
 
+    @PrimaryColumn("int")
+    idorder: number;
+    @PrimaryColumn("int")
+    iditem: number;
     @Column({ nullable: true}) quantity: number;
     @Column({ nullable: true}) price: number;
     @Column({ nullable: true }) discount: number;
@@ -15,9 +18,9 @@ export class SkiperOrderDetail {
     @Column({ nullable: true }) extraPrice: number;
 
     @ManyToOne( type => SkiperOrder, { nullable: false })
-    @JoinColumn({ name: 'id_order'}) skiperOrder: SkiperOrder;
+    @JoinColumn({ name: 'idorder'}) skiperOrder: SkiperOrder;
 
     @ManyToOne( type => SkiperProductCommerce,{ nullable: false })
-    @JoinColumn({ name: 'id_item' }) skiperProductCommerce: SkiperProductCommerce;
+    @JoinColumn({ name: 'iditem' }) skiperProductCommerce: SkiperProductCommerce;
 
 }

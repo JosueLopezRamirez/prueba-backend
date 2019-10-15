@@ -5,7 +5,6 @@ import { SkiperProductCommerceDto } from "../skiper-product-commerce/skiper-prod
 
 @InputType()
 export class SkiperOrderDetailInput {
-    id: number;
     quantity: number;
     price: number;
     discount: number;
@@ -18,13 +17,14 @@ export class SkiperOrderDetailInput {
 
 @ObjectType()
 export class SkiperOrderDetailDto {
-    id: number;
+    idorder: number;
+    iditem: number;
     quantity: number;
     price: number;
     discount: number;
     size: string;
     addon: string;
     extraPrice: number;
-    order: SkiperOrderDto;
-    item: SkiperProductCommerceDto;
+    skiperOrder: SkiperOrderDto;
+    skiperProductCommerce: SkiperProductCommerceDto;
 }

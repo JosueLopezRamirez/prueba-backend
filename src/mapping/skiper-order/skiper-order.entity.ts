@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne, OneToMan
 import { User } from "../users/user.entity";
 import { SkiperCommerce } from "../skiper-commerce/skiper-commerce.entity";
 import { SkiperOrderTracing } from "../skiper-order-tracing/skiper-order-tracing.entity";
+import { SkiperOrderDetail } from "../skiper-order-detail/skiper-order-detail.entity";
 
 @Entity()
 export class SkiperOrder {
@@ -19,6 +20,9 @@ export class SkiperOrder {
 
     @ManyToOne(type => SkiperCommerce, { nullable: false })
     @JoinColumn({ name: 'idcommerce' }) skiperCommerce: SkiperCommerce;
+
+    @OneToMany(type => SkiperOrderDetail, x => x.skiperOrder)
+    skiperOrderDetail:  SkiperOrderDetail[];
 
     @OneToMany(type => SkiperOrderTracing, x => x.order)
     skiperOrderTracing: SkiperOrderTracing[];
