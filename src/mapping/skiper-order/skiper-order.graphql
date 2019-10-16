@@ -33,3 +33,7 @@ type Mutation {
     registerSkiperOrder(input: SkiperOrderInput): SkiperOrderDto!
     updateSkiperOrder(input: SkiperOrderInput!): SkiperOrderDto
 }
+
+type Subscription {
+    getByCommerceIdByIdStatus: [SkiperOrderDto]
+}

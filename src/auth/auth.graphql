@@ -43,7 +43,7 @@ type Subscription {
 
 type Mutation {
   signin(input: signInDto!): SignResponse!
-  signup(user: UserInput!): SignResponse!
+  signup(input: UserInput!): SignResponse!
   send_code(sendcode: twilioDto!): ErrorResponse!
   verify_code(verifycode: twilioDto!): ErrorResponse!
   reset_password(email: String!): ErrorResponse!

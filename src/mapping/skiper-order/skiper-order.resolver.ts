@@ -1,7 +1,10 @@
-import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query, Subscription } from '@nestjs/graphql';
 import { SkiperOrderService } from './skiper-order.service';
 import { SkiperOrderInput } from './skiper-order.dto';
 import { ParseIntPipe } from '@nestjs/common';
+import { PubSub } from 'graphql-subscriptions';
+
+const pubSub = new PubSub();
 
 @Resolver('SkiperOrder')
 export class SkiperOrderResolver {
@@ -17,7 +20,9 @@ export class SkiperOrderResolver {
 
     @Query()
     async skiperOrderByCommerceIdByIdStatus(@Args('idcommerce', ParseIntPipe) idcommerce: number, @Args('idstatus', ParseIntPipe) idstatus: number){
-        return this.skiperOrderService.getByCommerceIdByIdStatus(idcommerce, idstatus);
+        let result = this.skiperOrderService.getByCommerceIdByIdStatus(idcommerce, idstatus);
+        pubSub.publish('getByCommerceIdByIdStatus',{getByCommerceIdByIdStatus:result});
+        return result;
     }
 
     @Query()
@@ -37,5 +42,10 @@ export class SkiperOrderResolver {
     @Mutation()
     async updateSkiperOrder(@Args('input') input: SkiperOrderInput) {
         return await this.skiperOrderService.update(input);
+    }
+
+    @Subscription('getByCommerceIdByIdStatus')
+    getByCommerceIdByIdStatus() {
+        return pubSub.asyncIterator('getByCommerceIdByIdStatus');
     }
 }

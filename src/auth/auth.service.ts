@@ -161,7 +161,7 @@ export class AuthService {
             .andWhere("SkiperVehicleAgent.idagent = :agentId", { agentId: agent.id })
             //Obtenemos uno
             .getOne();
-            console.log(ve);
+            // console.log(ve);
         return ve;
     }
 }

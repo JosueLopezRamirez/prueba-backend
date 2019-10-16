@@ -19,6 +19,10 @@ export class SkiperOrderTracingService {
         return await this.repository.find({ relations: ["orderStatus", "order"] });
     }
 
+    // async getByOrderStatusAndByCommerceId(idstatus: number,idcommerce:number){
+    //     let result =
+    // }
+
     async create(input: SkiperOrderTracingInput){
         let orderTracing: SkiperOrderTracing = new SkiperOrderTracing();
         try {
