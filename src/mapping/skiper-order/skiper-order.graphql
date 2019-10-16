@@ -26,7 +26,7 @@ type SkiperOrderDto {
 type Query {
     skiperorders:[SkiperOrderDto!]!
     searchSkiperOrder(id: Int): SkiperOrderDto
-    skiperOrderByCommerceIdByIdStatus(idcommerce: Int!, idstatus: Int!): [SkiperOrderDto]
+    skiperOrderByCommerceIdByIdStatus(idcommerce: Int!, idstatus: [Int!]!): [SkiperOrderDto]
 }
 
 type Mutation {

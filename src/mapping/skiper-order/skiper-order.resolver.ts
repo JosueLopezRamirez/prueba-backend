@@ -16,7 +16,8 @@ export class SkiperOrderResolver {
     }
 
     @Query()
-    async skiperOrderByCommerceIdByIdStatus(@Args('idcommerce', ParseIntPipe) idcommerce: number, @Args('idstatus', ParseIntPipe) idstatus: number){
+    async skiperOrderByCommerceIdByIdStatus(@Args('idcommerce', ParseIntPipe) idcommerce: number, @Args('idstatus') idstatus: number[]){
+        console.log(idstatus)
         return this.skiperOrderService.getByCommerceIdByIdStatus(idcommerce, idstatus);
     }
 
