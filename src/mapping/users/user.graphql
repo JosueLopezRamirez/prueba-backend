@@ -15,8 +15,8 @@ type UserDto {
 }
 
 type Mutation {
-  createUser(input: UserInput!): String!
-  updateUser(input: UserInput!): String!
+  createUser(input: UserInput!): UserDto!
+  updateUser(input: UserInput!): UserDto!
   # deleteUser(id: ID!): String!
 }
 

@@ -2,6 +2,7 @@ import { Resolver,  Mutation, Args, Query } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { UserInput } from './user.dto';
 import { ParseIntPipe } from '@nestjs/common';
+import { SignResponse } from 'src/auth/auth.dto';
 @Resolver('User')
 export class UserResolver {
 
@@ -19,17 +20,17 @@ export class UserResolver {
         return this.userService.findById(id);
     }
 
-    @Mutation(() => String)
+    @Mutation()
     async createUser(@Args('input') input: UserInput) {
         try {
             let result = await this.userService.create(input);
-            return 'Usuario registrado con exito!!';
+            return result;
         } catch (error) {
             return `Error resolver -> ${error}`
         }
     }
 
-    @Mutation(() => String)
+    @Mutation()
     async updateUser(@Args('input') input: UserInput) {
         try {
             let result = await this.userService.update(input);

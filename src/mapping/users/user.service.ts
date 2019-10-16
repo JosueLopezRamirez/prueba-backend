@@ -59,6 +59,7 @@ export class UserService {
                 let user: User = this.parseUser(input, city, country);
                 return await this.userRepository.save(user);
             }
+            return null;
         } catch (error) {
             console.log(error)
         }
