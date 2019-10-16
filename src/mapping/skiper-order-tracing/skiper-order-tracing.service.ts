@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, createQueryBuilder } from 'typeorm';
 import { SkiperOrderService } from '../skiper-order/skiper-order.service';
 import { SkiperOrdersStatusService } from '../skiper-orders-status/skiper-orders-status.service';
-import { SkiperOrderTracingInput, OrderTracingResponse } from './skiper-order-tracing.dto';
+import { SkiperOrderTracingInput, OrderTracingResponse, SkiperOrderTracingDto } from './skiper-order-tracing.dto';
 import { ErrorResponse } from '../../auth/auth.dto';
 
 @Injectable()
@@ -24,12 +24,13 @@ export class SkiperOrderTracingService {
     //     let result =
     // }
 
-    async create(input: SkiperOrderTracingInput) {
-        let result = await this.verifyOrderTracing(input.orderID, input.orderStatusID);
+    async create(input: SkiperOrderTracingInput): Promise<SkiperOrderTracing> {
+        console.log("llega aqui")
+        // let result = await this.verifyOrderTracing(input.orderID, input.orderStatusID);
         
-        if(result){
-            return new OrderTracingResponse(null,new ErrorResponse('El estado ya existe para esa orden',200,false))
-        }
+        // if(result){
+        //     return new OrderTracingResponse(null,new ErrorResponse('El estado ya existe para esa orden',200,false))
+        // }
         
         let orderTracing: SkiperOrderTracing = new SkiperOrderTracing();
         try {
@@ -37,7 +38,8 @@ export class SkiperOrderTracingService {
             orderTracing.orderStatus = await this.orderStatusService.getById(input.orderStatusID);
             if (orderTracing.order !== null && orderTracing.orderStatus !== null) {
                 orderTracing = await this.repository.save(orderTracing);
-                return new OrderTracingResponse(orderTracing,null);
+                return orderTracing
+                // return new OrderTracingResponse(orderTracing, null);
             }
         } catch (error) {
             console.log(error)
