@@ -5,6 +5,7 @@ import 'dotenv/config';
 
 import { AppService } from './app.service';
 import { AppResolver } from './app.resolver';
+import { AppController } from './app.controller';
 
 //Modulos
 import { KindTicketModule } from './mapping/kind-ticket/kind-ticket.module';
@@ -37,7 +38,7 @@ import { RolOperationModule } from './mapping/rol-operation/rol-operation.module
 import { AppsModule } from './mapping/apps/apps.module';
 import { SkiperDriverScheduleModule } from './mapping/skiper-driver-schedule/skiper-driver-schedule.module';
 import { SkiperOrderTracingModule } from './mapping/skiper-order-tracing/skiper-order-tracing.module';
-import { AppController } from './app.controller';
+import { UserCivilStatusModule } from './mapping/user-civil-status/user-civil-status.module';
 
 @Module({
   imports: [
@@ -70,6 +71,7 @@ import { AppController } from './app.controller';
     AppsModule,
     SkiperDriverScheduleModule,
     SkiperOrderTracingModule,
+    UserCivilStatusModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DATABASE_HOST,

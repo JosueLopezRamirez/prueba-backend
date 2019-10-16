@@ -18,7 +18,11 @@ export class UserService {
     ) { }
 
     async getAll(): Promise<User[]> {
-        return await this.userRepository.find({ relations: ["country", "city"] });
+        try {
+            return await this.userRepository.find({ relations: ["country", "city"] });    
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     async findById(id: number): Promise<User> {
