@@ -6,6 +6,7 @@ import { UserCivilStateResolver } from './user-civil-state.resolver';
 
 @Module({
     imports:[TypeOrmModule.forFeature([UserCivilStatus])],
-    providers: [UserCivilStatusService, UserCivilStateResolver]
+    providers: [UserCivilStatusService, UserCivilStateResolver],
+    exports:[UserCivilStatusService]
 })
 export class UserCivilStatusModule {}

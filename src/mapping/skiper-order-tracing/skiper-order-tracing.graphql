@@ -10,10 +10,15 @@ input SkiperOrderTracingInput {
     orderID: Int!
 }
 
+type OrderTracingResponse {
+    data: SkiperOrderTracingDto
+    error: ErrorResponse
+}
+
 type Query {
     getAllOrderTracing: [SkiperOrderTracingDto!]!
 }
 
 type Mutation {
-    registerOrderTracing(input: SkiperOrderTracingInput!): SkiperOrderTracingDto!
+    registerOrderTracing(input: SkiperOrderTracingInput!): OrderTracingResponse!
 }

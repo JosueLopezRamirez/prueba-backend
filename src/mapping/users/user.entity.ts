@@ -3,6 +3,7 @@ import { Min, Length, IsOptional } from 'class-validator';
 import { Countrie } from '../countries/countrie.entity';
 import { Cities } from '../cities/cities.entity';
 import * as bcrypt from 'bcryptjs';
+import { UserCivilStatus } from '../user-civil-status/user-civil-status.entity';
 
 @Entity('users')
 export class User {
@@ -52,4 +53,7 @@ export class User {
 
     @ManyToOne(type => Cities, { nullable: false })
     @JoinColumn({ name: 'idcity' }) city: Cities;
+
+    @ManyToOne(type => UserCivilStatus, { nullable: false })
+    @JoinColumn({ name: 'idcivil_status' }) civilStatus: UserCivilStatus;
 }

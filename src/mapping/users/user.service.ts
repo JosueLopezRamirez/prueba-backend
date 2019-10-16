@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserInput } from './user.dto';
 import { CitiesService } from '../cities/cities.service';
 import { CountrieService } from '../countries/countrie.service';
+import { UserCivilStatusService } from '../user-civil-status/user-civil-status.service';
 
 @Injectable()
 export class UserService {
@@ -14,7 +15,8 @@ export class UserService {
     constructor(
         @InjectRepository(User) private readonly userRepository: Repository<User>,
         private readonly city: CitiesService,
-        private readonly country: CountrieService
+        private readonly country: CountrieService,
+        private readonly civil: UserCivilStatusService
     ) { }
 
     async getAll(): Promise<User[]> {
@@ -59,8 +61,9 @@ export class UserService {
         try {
             let city = await this.city.getById(input.city_id);
             let country = await this.country.getById(input.country_id);
-            if (city !== undefined && country !== undefined) {
-                let user: User = this.parseUser(input, city, country);
+            let civil_status = await this.civil.getById(input.idcivil_status);
+            if (city !== undefined && country !== undefined && civil_status !== undefined) {
+                let user: User = this.parseUser(input, city, country,civil_status);
                 return await this.userRepository.save(user);
             }
             return null;
@@ -104,7 +107,7 @@ export class UserService {
     }
 
     // Metodo para parsear de UserInput a User
-    parseUser(input: UserInput, city?, country?): User {
+    parseUser(input: UserInput, city?, country?,civil_status?): User {
         let user: User = new User();
         user.firstname = input.firstname;
         user.lastname = input.lastname;
@@ -115,8 +118,9 @@ export class UserService {
         user.address = input.address;
         user.phone = input.phone;
         user.create_at = input.create_at;
-        user.city = city
-        user.country = country
+        user.city = city;
+        user.country = country;
+        user.civilStatus = civil_status;
         return user;
     }
 }

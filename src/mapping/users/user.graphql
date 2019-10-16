@@ -12,6 +12,7 @@ type UserDto {
   create_at: DateTime
   country: countrieDto
   city: citiesDto
+  civilStatus: UserCivilStatusDto
 }
 
 type Mutation {
@@ -38,4 +39,5 @@ input UserInput {
   create_at: DateTime
   country_id: Int!
   city_id: Int!
+  idcivil_status: Int!
 }
