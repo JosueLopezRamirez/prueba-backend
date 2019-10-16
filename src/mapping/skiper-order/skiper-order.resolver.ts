@@ -19,7 +19,7 @@ export class SkiperOrderResolver {
     }
 
     @Query()
-    async skiperOrderByCommerceIdByIdStatus(@Args('idcommerce', ParseIntPipe) idcommerce: number, @Args('idstatus', ParseIntPipe) idstatus: number){
+    async skiperOrderByCommerceIdByIdStatus(@Args('idcommerce', ParseIntPipe) idcommerce: number, @Args('idstatus') idstatus: number[]){
         let result = this.skiperOrderService.getByCommerceIdByIdStatus(idcommerce, idstatus);
         pubSub.publish('getByCommerceIdByIdStatus',{getByCommerceIdByIdStatus:result});
         return result;

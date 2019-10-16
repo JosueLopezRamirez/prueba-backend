@@ -20,12 +20,12 @@ export class SkiperOrderService {
         return await this.repository.find({ relations: ["user", "skiperCommerce", "skiperOrderTracing"] });
     }
 
-    async getByCommerceIdByIdStatus(idcommerce: number, idstatus: number): Promise<SkiperOrder[]> {
+    async getByCommerceIdByIdStatus(idcommerce: number, idstatus: number[]): Promise<SkiperOrder[]> {
         try{
             return await this.repository.createQueryBuilder("SkiperOrder")
             .innerJoinAndSelect("SkiperOrder.user", "User")
             .innerJoinAndSelect("SkiperOrder.skiperCommerce", "SkiperCommerce","SkiperCommerce.id = :idcommerce", { idcommerce })
-            .innerJoinAndSelect("SkiperOrder.skiperOrderTracing", "SkiperOrderTracing","SkiperOrderTracing.orderStatus = :idstatus", { idstatus })
+            .innerJoinAndSelect("SkiperOrder.skiperOrderTracing", "SkiperOrderTracing","SkiperOrderTracing.orderStatus IN (:idstatus)", { idstatus })
             .innerJoinAndSelect("SkiperOrder.skiperOrderDetail", "SkiperOrderDetail")
             .leftJoinAndSelect("SkiperOrderDetail.skiperProductCommerce", "SkiperProductCommerce")
             .innerJoinAndSelect(subQuery => {

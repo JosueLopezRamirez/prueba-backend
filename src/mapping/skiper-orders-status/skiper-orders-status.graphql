@@ -1,11 +1,13 @@
 input SkiperOrdersStatusInput {
     id: Int
     name: String!
+    indicador: String
 }
 
 type SkiperOrdersStatusDto {
     id: Int!
     name: String
+    indicador: String
 }
 
 type Query {

@@ -6,6 +6,7 @@ export class SkiperOrdersStatus {
 
     @PrimaryGeneratedColumn() id: number;
     @Column('varchar', { nullable: false, length: 50 }) name: string;
+    @Column('varchar', { nullable: false, length: 10 }) indicador: string;
     @OneToMany(type => SkiperOrderTracing,  x => x.orderStatus)
     skiperOrderTracing: SkiperOrderTracing[];
 }

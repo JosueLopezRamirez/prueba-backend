@@ -31,6 +31,7 @@ export class SkiperOrdersStatusService {
         try {
             let skiperorderstatusUpdate = await this.getById(input.id);
             skiperorderstatusUpdate.name = input.name;
+            skiperorderstatusUpdate.indicador = input.indicador;
             //console.log(appUpdate);
             return await this.repository.save(skiperorderstatusUpdate);
         } catch (error) {
@@ -53,6 +54,7 @@ export class SkiperOrdersStatusService {
     private parseSkiperOrdersStatus(input:SkiperOrdersStatusInput):SkiperOrdersStatus {
         let skiperorderstatus:SkiperOrdersStatus = new SkiperOrdersStatus();
         skiperorderstatus.name = input.name;
+        skiperorderstatus.indicador = input.indicador;
         return skiperorderstatus;
     }
 }
