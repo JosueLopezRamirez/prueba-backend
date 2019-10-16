@@ -1,10 +1,10 @@
-import { Field, ID, Int, InputType, ObjectType } from "type-graphql";
+import { InputType, ObjectType } from "type-graphql";
 import { citiesDto } from "../cities/cities.dto";
 import { countrieDto } from "../countries/countrie.dto";
 
 @InputType()
 export class UserInput {
-    id:number;
+    id: number;
     firstname: string;
     lastname: string;
     email: string;
@@ -20,7 +20,7 @@ export class UserInput {
 
 @ObjectType()
 export class UserDto {
-    id:number;
+    id: number;
     firstname: string;
     lastname: string;
     email: string;
