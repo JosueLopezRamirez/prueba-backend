@@ -93,13 +93,22 @@ import { UserCivilStatusModule } from './mapping/user-civil-status/user-civil-st
       introspection: true,
       // debug:true,
       installSubscriptionHandlers: true,
+      context: async ({ req, connection }) => ({
+        headers: connection ? null : req.headers
+      }),
+      subscriptions: {
+        onConnect: (connectionParams, webSocket) => {
+            console.log('Websocket CONNECTED');
+            return { hello: 'world' }
+        },
+        onDisconnect: () => console.log('Websocket DISCONNECTED'),
+      },
       formatError: (err) => {
         return ({
           message: err.extensions.exception.message,
           status: err.extensions.exception.status,
         })
       },
-      context: ({ req }) => ({ headers: req.headers }), 
     })
   ],
   providers: [AppService, AppResolver],

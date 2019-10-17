@@ -9,7 +9,7 @@ export class CitiesResolver {
 
     constructor(private citiesService: CitiesService){}
 
-    // @UseGuards(new AuthGuard())
+    @UseGuards(new AuthGuard())
     @Query(() => [citiesDto])
     async cities(){
         return await this.citiesService.getAll();
