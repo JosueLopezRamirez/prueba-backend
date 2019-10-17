@@ -5,6 +5,7 @@ import { ErrorResponse } from "../../auth/auth.dto";
 
 @ObjectType()
 export class SkiperOrderTracingDto {
+
     id: number;
     datetracing: Date;
     orderStatus: SkiperOrdersStatusDto;
@@ -19,7 +20,7 @@ export class SkiperOrderTracingInput {
 
 @ObjectType()
 export class OrderTracingResponse {
-    constructor(data,error){
+    constructor(data ,error){
         this.data = data || null;
         this.error = error || null;
     }

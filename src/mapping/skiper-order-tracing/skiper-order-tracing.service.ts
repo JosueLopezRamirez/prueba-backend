@@ -1,11 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpStatus, HttpException } from '@nestjs/common';
 import { SkiperOrderTracing } from './skiper-order-tracing.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, createQueryBuilder } from 'typeorm';
 import { SkiperOrderService } from '../skiper-order/skiper-order.service';
 import { SkiperOrdersStatusService } from '../skiper-orders-status/skiper-orders-status.service';
-import { SkiperOrderTracingInput, OrderTracingResponse } from './skiper-order-tracing.dto';
-import { ErrorResponse } from '../../auth/auth.dto';
+import { SkiperOrderTracingInput } from './skiper-order-tracing.dto';
+import { Errores } from '../apps/Errores';
 
 @Injectable()
 export class SkiperOrderTracingService {
@@ -20,15 +20,13 @@ export class SkiperOrderTracingService {
         return await this.repository.find({ relations: ["orderStatus", "order"] });
     }
 
-    // async getByOrderStatusAndByCommerceId(idstatus: number,idcommerce:number){
-    //     let result =
-    // }
-
     async create(input: SkiperOrderTracingInput) {
         let result = await this.verifyOrderTracing(input.orderID, input.orderStatusID);
-        
         if(result){
-            return new OrderTracingResponse(null,new ErrorResponse('El estado ya existe para esa orden',200,false))
+            throw new HttpException(
+                Errores.ORDER_STATUS_EXISTS.message,
+                HttpStatus.BAD_REQUEST,
+            );
         }
         
         let orderTracing: SkiperOrderTracing = new SkiperOrderTracing();
@@ -37,10 +35,13 @@ export class SkiperOrderTracingService {
             orderTracing.orderStatus = await this.orderStatusService.getById(input.orderStatusID);
             if (orderTracing.order !== null && orderTracing.orderStatus !== null) {
                 orderTracing = await this.repository.save(orderTracing);
-                return new OrderTracingResponse(orderTracing,null);
+                return orderTracing
             }
         } catch (error) {
-            console.log(error)
+            throw new HttpException(
+                error,
+                HttpStatus.BAD_REQUEST,
+            );
         }
     }
 

@@ -20,5 +20,9 @@ type Query {
 }
 
 type Mutation {
-    registerOrderTracing(input: SkiperOrderTracingInput!): OrderTracingResponse!
+    registerOrderTracing(input: SkiperOrderTracingInput!): SkiperOrderTracingDto
+}
+
+type Subscription {
+    getByCommerceIdByIdStatus: [SkiperOrderDto]
 }

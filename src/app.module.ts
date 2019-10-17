@@ -93,7 +93,13 @@ import { UserCivilStatusModule } from './mapping/user-civil-status/user-civil-st
       introspection: true,
       // debug:true,
       installSubscriptionHandlers: true,
-      context: ({ req }) => ({ headers: req.headers }),
+      formatError: (err) => {
+        return ({
+          message: err.extensions.exception.message,
+          status: err.extensions.exception.status,
+        })
+      },
+      context: ({ req }) => ({ headers: req.headers }), 
     })
   ],
   providers: [AppService, AppResolver],
