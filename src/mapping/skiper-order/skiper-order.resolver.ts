@@ -22,6 +22,12 @@ export class SkiperOrderResolver {
     }
 
     @Query()
+    async skiperOrderByCommerceIdByIdStatusCount(@Args('idcommerce', ParseIntPipe) idcommerce: number, @Args('idstatus') idstatus: number[]) {
+        let result = this.skiperOrderService.getByCommerceIdByIdStatusCount(idcommerce, idstatus);
+        return result;
+    }
+
+    @Query()
     searchSkiperOrder(@Args('id', ParseIntPipe) id: number) {
         return this.skiperOrderService.getById(id);
     }

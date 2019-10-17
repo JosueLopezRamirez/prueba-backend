@@ -24,5 +24,6 @@ type Mutation {
 }
 
 type Subscription {
-    getByCommerceIdByIdStatus: [SkiperOrderDto]
+    skiperOrderByCommerceIdByIdStatus: [SkiperOrderDto]
+    skiperOrderByCommerceIdByIdStatusCount: Int!
 }
