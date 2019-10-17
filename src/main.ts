@@ -1,24 +1,32 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { HttpExcepcionFilter } from './shared/http.exception.filter';
 import compression from 'compression';
 import helmet from 'helmet';
-// import morgan from 'morgan';
-import { HttpExcepcionFilter } from './shared/http.exception.filter';
-import { SkiperAgentService } from './mapping/skiper-agent/skiper-agent.service';
 
 async function bootstrap() {
   
   const app = await NestFactory.create(AppModule);
+  
+  //Add GlobalPipes
   app.useGlobalPipes(new ValidationPipe());
+  
+  //Add Global Filter
   app.useGlobalFilters(new HttpExcepcionFilter())
+  
+  //Add prefix to api rest
   app.setGlobalPrefix('/v1/api');
+  
+  // Add Cors universal
   app.enableCors();
+  
+  //Add Security
   app.use(helmet());
-  // if (process.env.NODE_ENV === 'development'){
-  // app.use(morgan('dev'));
-  // }
+  
+  //Add Compression
   app.use(compression());
+  
   await app.listen(process.env.PORT || 4000);
 
 }

@@ -92,7 +92,8 @@ import { UserCivilStatusModule } from './mapping/user-civil-status/user-civil-st
       playground: true,
       introspection: true,
       // debug:true,
-      installSubscriptionHandlers: true
+      installSubscriptionHandlers: true,
+      context: ({ req }) => ({ headers: req.headers }),
     })
   ],
   providers: [AppService, AppResolver],
