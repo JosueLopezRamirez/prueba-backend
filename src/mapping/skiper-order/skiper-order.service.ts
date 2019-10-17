@@ -21,26 +21,37 @@ export class SkiperOrderService {
     }
 
     async getByCommerceIdByIdStatus(idcommerce: number, idstatus: number[]): Promise<SkiperOrder[]> {
-        try{
-            return await this.repository.createQueryBuilder("SkiperOrder")
-            .innerJoinAndSelect("SkiperOrder.user", "User")
-            .innerJoinAndSelect("SkiperOrder.skiperCommerce", "SkiperCommerce","SkiperCommerce.id = :idcommerce", { idcommerce })
-            .innerJoinAndSelect("SkiperOrder.skiperOrderTracing", "SkiperOrderTracing","SkiperOrderTracing.orderStatus IN (:idstatus)", { idstatus })
-            .innerJoinAndSelect("SkiperOrder.skiperOrderDetail", "SkiperOrderDetail")
-            .leftJoinAndSelect("SkiperOrderDetail.skiperProductCommerce", "SkiperProductCommerce")
-            .innerJoinAndSelect(subQuery => {
-                return subQuery
-                .select("skiperOrderTracing.idorder", "idorder").addSelect("MAX(skiperOrderTracing.datetracing)", "fecha")
-                .from(SkiperOrderTracing, "skiperOrderTracing")
-                .groupBy("skiperOrderTracing.idorder")
-            }, "d", "SkiperOrderTracing.idorder = d.idorder and SkiperOrderTracing.datetracing = d.fecha")
-            .innerJoinAndSelect("SkiperOrderTracing.orderStatus", "SkiperOrdersStatus")
-            .getMany();
-        }
-        catch(error)
-        {
-            console.log(error)
-        }
+        return await this.repository.createQueryBuilder("SkiperOrder")
+        .innerJoinAndSelect("SkiperOrder.user", "User")
+        .innerJoinAndSelect("SkiperOrder.skiperCommerce", "SkiperCommerce","SkiperCommerce.id = :idcommerce", { idcommerce })
+        .innerJoinAndSelect("SkiperOrder.skiperOrderTracing", "SkiperOrderTracing","SkiperOrderTracing.orderStatus IN (:idstatus)", { idstatus })
+        .innerJoinAndSelect("SkiperOrder.skiperOrderDetail", "SkiperOrderDetail")
+        .leftJoinAndSelect("SkiperOrderDetail.skiperProductCommerce", "SkiperProductCommerce")
+        .innerJoinAndSelect(subQuery => {
+            return subQuery
+            .select("skiperOrderTracing.idorder", "idorder").addSelect("MAX(skiperOrderTracing.datetracing)", "fecha")
+            .from(SkiperOrderTracing, "skiperOrderTracing")
+            .groupBy("skiperOrderTracing.idorder")
+        }, "d", "SkiperOrderTracing.idorder = d.idorder and SkiperOrderTracing.datetracing = d.fecha")
+        .innerJoinAndSelect("SkiperOrderTracing.orderStatus", "SkiperOrdersStatus")
+        .getMany();
+    }
+
+    async getByCommerceIdByIdStatusCount(idcommerce: number, idstatus: number[]): Promise<number> {
+        return await this.repository.createQueryBuilder("SkiperOrder")
+        .innerJoinAndSelect("SkiperOrder.user", "User")
+        .innerJoinAndSelect("SkiperOrder.skiperCommerce", "SkiperCommerce","SkiperCommerce.id = :idcommerce", { idcommerce })
+        .innerJoinAndSelect("SkiperOrder.skiperOrderTracing", "SkiperOrderTracing","SkiperOrderTracing.orderStatus IN (:idstatus)", { idstatus })
+        .innerJoinAndSelect("SkiperOrder.skiperOrderDetail", "SkiperOrderDetail")
+        .leftJoinAndSelect("SkiperOrderDetail.skiperProductCommerce", "SkiperProductCommerce")
+        .innerJoinAndSelect(subQuery => {
+            return subQuery
+            .select("skiperOrderTracing.idorder", "idorder").addSelect("MAX(skiperOrderTracing.datetracing)", "fecha")
+            .from(SkiperOrderTracing, "skiperOrderTracing")
+            .groupBy("skiperOrderTracing.idorder")
+        }, "d", "SkiperOrderTracing.idorder = d.idorder and SkiperOrderTracing.datetracing = d.fecha")
+        .innerJoinAndSelect("SkiperOrderTracing.orderStatus", "SkiperOrdersStatus")
+        .getCount();
     }
 
     async getById(id: number): Promise<SkiperOrder> {
