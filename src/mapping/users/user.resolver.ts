@@ -1,8 +1,8 @@
 import { Resolver,  Mutation, Args, Query } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { UserInput } from './user.dto';
-import { ParseIntPipe } from '@nestjs/common';
-import { SignResponse } from 'src/auth/auth.dto';
+import { ParseIntPipe, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '../../shared/auth.guard';
 @Resolver('User')
 export class UserResolver {
 
@@ -10,11 +10,13 @@ export class UserResolver {
         private readonly userService: UserService
     ) { }
 
+    @UseGuards(new AuthGuard())
     @Query()
     async users() {
         return await this.userService.getAll();
     }
     
+    @UseGuards(new AuthGuard())
     @Query()
     searchUser(@Args('id', ParseIntPipe) id: number) {
         return this.userService.findById(id);
@@ -30,6 +32,7 @@ export class UserResolver {
         }
     }
 
+    @UseGuards(new AuthGuard())
     @Mutation()
     async updateUser(@Args('input') input: UserInput) {
         try {
@@ -39,14 +42,4 @@ export class UserResolver {
             return `Error resolver -> ${error}`
         }
     }
-
-    // @Mutation(() => String)
-    // async changeState(@Args('id',ParseIntPipe) id:number){
-    //     try {
-    //         let result = await this.userService.changeState(id);
-    //         return 'Usuario dado de baja con exito!!'
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
 }

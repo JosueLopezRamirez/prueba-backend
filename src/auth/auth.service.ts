@@ -58,7 +58,6 @@ export class AuthService {
     public async register(input: UserInput): Promise<SignResponse> {
         try {
             let result = await this.userService.create(input);
-            console.log(result);
             return new SignResponse(new SignInOk(
                 await this.tokenGenerated(result), result.firstname,
                 result.lastname, result.user,

@@ -18,7 +18,6 @@ type UserDto {
 type Mutation {
   createUser(input: UserInput!): UserDto!
   updateUser(input: UserInput!): UserDto!
-  # deleteUser(id: ID!): String!
 }
 
 type Query {
@@ -38,6 +37,6 @@ input UserInput {
   phone: String
   create_at: DateTime
   country_id: Int!
-  city_id: Int!
-  idcivil_status: Int!
+  city_id: Int
+  idcivil_status: Int
 }

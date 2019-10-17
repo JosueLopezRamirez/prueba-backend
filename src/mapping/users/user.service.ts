@@ -21,7 +21,7 @@ export class UserService {
 
     async getAll(): Promise<User[]> {
         try {
-            return await this.userRepository.find({ relations: ["country", "city"] });    
+            return await this.userRepository.find({ relations: ["country", "city"] });
         } catch (error) {
             console.log(error)
         }
@@ -58,13 +58,24 @@ export class UserService {
 
     //Create a new user
     async create(input: UserInput): Promise<User> {
+        let city;
+        let civil_status;
         try {
-            let city = await this.city.getById(input.city_id);
+            if (input.city_id !== undefined && input.idcivil_status !== undefined){
+                city = await this.city.getById(input.city_id);
+                civil_status = await this.civil.getById(input.idcivil_status);
+            }else{
+                city = null;
+                civil_status = null;
+            }
             let country = await this.country.getById(input.country_id);
-            let civil_status = await this.civil.getById(input.idcivil_status);
-            if (city !== undefined && country !== undefined && civil_status !== undefined) {
-                let user: User = this.parseUser(input, city, country,civil_status);
-                return await this.userRepository.save(user);
+            let sponsor = await this.findById(input.sponsor_id);
+            if (sponsor !== undefined) {
+                if (city !== undefined && country !== undefined && civil_status !== undefined) {
+                    let user: User = this.parseUser(input, city, country, civil_status);
+                    return await this.userRepository.save(user);
+                }
+                return null;
             }
             return null;
         } catch (error) {
@@ -87,27 +98,13 @@ export class UserService {
         }
     }
 
-    // async changeState(id:number): Promise<User>{
-    //     try {
-    //         let userUpdate = await this.findById(id);
-    //         return await this.userRepository.save(userUpdate);
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
-
-    //Delete a user
-    async delete(user: User) {
-        return this.userRepository.delete(user);
-    }
-
     async findByPayload(payload: any) {
         const { user } = payload;
         return await this.userRepository.findOne({ user })
     }
 
     // Metodo para parsear de UserInput a User
-    parseUser(input: UserInput, city?, country?,civil_status?): User {
+    parseUser(input: UserInput, city?, country?, civil_status?): User {
         let user: User = new User();
         user.firstname = input.firstname;
         user.lastname = input.lastname;

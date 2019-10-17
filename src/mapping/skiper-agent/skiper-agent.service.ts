@@ -49,6 +49,19 @@ export class SkiperAgentService {
         }
     }
 
+    async update(agent: AgentInput) {
+        try {
+            let agentUpdate = await this.getById(agent.id);
+            if(agentUpdate !== undefined){
+                agentUpdate.state = agent.state;
+                return await this.agentRepository.save(agentUpdate);
+            }    
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     private parseAgent(input:AgentInput,user?,category?):SkiperAgent{
         let agent:SkiperAgent = new SkiperAgent();
         agent.identity = input.identity;

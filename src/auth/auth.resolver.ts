@@ -16,15 +16,16 @@ export class AuthResolver {
         private readonly authService: AuthService
     ) { }
 
-    @Mutation(() => SignResponse)
-    async signin(@Args() input: signInDto) {
+    @Mutation()
+    async signin(@Args('input') input: signInDto) {
         let result = await this.authService.login(input);
         pubSub.publish('userLogged', { userLogged: result });
         return result;
     }
 
-    @Mutation(() => SignResponse)
-    async signup(@Args('user') input: UserInput) {
+    @Mutation()
+    async signup(@Args('input') input: UserInput) {
+        await console.log(input);
         return await this.authService.register(input);
     }
 

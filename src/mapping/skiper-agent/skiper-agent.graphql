@@ -13,6 +13,7 @@ type Query {
 
 type Mutation{
   registerAgent(input: AgentInput!): SkiperAgentDto!
+  updateAgent(input: AgentInput!): SkiperAgentDto!
 }
 
 input AgentInput {
