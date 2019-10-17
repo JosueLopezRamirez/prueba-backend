@@ -25,7 +25,6 @@ export class AuthResolver {
 
     @Mutation()
     async signup(@Args('input') input: UserInput) {
-        await console.log(input);
         return await this.authService.register(input);
     }
 
