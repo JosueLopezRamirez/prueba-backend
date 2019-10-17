@@ -20,7 +20,7 @@ type Query {
 }
 
 type Mutation {
-    registerOrderTracing(input: SkiperOrderTracingInput!): SkiperOrderTracingDto!
+    registerOrderTracing(input: SkiperOrderTracingInput!): SkiperOrderTracingDto
 }
 
 type Subscription {

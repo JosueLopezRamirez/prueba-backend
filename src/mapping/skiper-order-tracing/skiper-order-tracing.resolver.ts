@@ -6,6 +6,8 @@ import { SkiperOrderResolver } from '../skiper-order/skiper-order.resolver'
 import { PubSub, withFilter } from 'graphql-subscriptions';
 import { SkiperOrderService } from '../skiper-order/skiper-order.service';
 import { SkiperOrder } from '../skiper-order/skiper-order.entity';
+import { UseFilters, BadRequestException, HttpException, HttpStatus } from '@nestjs/common';
+import { HttpExcepcionFilter } from '../../shared/http.exception.filter';
 
 const pubSub = new PubSub();
 
@@ -37,7 +39,6 @@ export class SkiperOrderTracingResolver {
             )
         })
         return result
-
     }
 
     @Subscription('getByCommerceIdByIdStatus')

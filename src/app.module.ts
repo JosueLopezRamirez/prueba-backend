@@ -92,7 +92,13 @@ import { UserCivilStatusModule } from './mapping/user-civil-status/user-civil-st
       playground: true,
       introspection: true,
       // debug:true,
-      installSubscriptionHandlers: true
+      installSubscriptionHandlers: true,
+      formatError: (err) => {
+        return ({
+          message: err.extensions.exception.message,
+          status: err.extensions.exception.status,
+        })
+      } 
     })
   ],
   providers: [AppService, AppResolver],

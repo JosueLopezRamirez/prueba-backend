@@ -1,11 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpStatus, HttpException } from '@nestjs/common';
 import { SkiperOrderTracing } from './skiper-order-tracing.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, createQueryBuilder } from 'typeorm';
 import { SkiperOrderService } from '../skiper-order/skiper-order.service';
 import { SkiperOrdersStatusService } from '../skiper-orders-status/skiper-orders-status.service';
-import { SkiperOrderTracingInput, OrderTracingResponse, SkiperOrderTracingDto } from './skiper-order-tracing.dto';
-import { ErrorResponse } from '../../auth/auth.dto';
+import { SkiperOrderTracingInput } from './skiper-order-tracing.dto';
+import { Errores } from '../apps/Errores';
 
 @Injectable()
 export class SkiperOrderTracingService {
@@ -20,17 +20,14 @@ export class SkiperOrderTracingService {
         return await this.repository.find({ relations: ["orderStatus", "order"] });
     }
 
-    // async getByOrderStatusAndByCommerceId(idstatus: number,idcommerce:number){
-    //     let result =
-    // }
-
-    async create(input: SkiperOrderTracingInput): Promise<SkiperOrderTracing> {
-        console.log("llega aqui")
-        // let result = await this.verifyOrderTracing(input.orderID, input.orderStatusID);
-        
-        // if(result){
-        //     return new OrderTracingResponse(null,new ErrorResponse('El estado ya existe para esa orden',200,false))
-        // }
+    async create(input: SkiperOrderTracingInput) {
+        let result = await this.verifyOrderTracing(input.orderID, input.orderStatusID);
+        if(result){
+            throw new HttpException(
+                Errores.ORDER_STATUS_EXISTS.message,
+                HttpStatus.BAD_REQUEST,
+            );
+        }
         
         let orderTracing: SkiperOrderTracing = new SkiperOrderTracing();
         try {
@@ -39,10 +36,12 @@ export class SkiperOrderTracingService {
             if (orderTracing.order !== null && orderTracing.orderStatus !== null) {
                 orderTracing = await this.repository.save(orderTracing);
                 return orderTracing
-                // return new OrderTracingResponse(orderTracing, null);
             }
         } catch (error) {
-            console.log(error)
+            throw new HttpException(
+                error,
+                HttpStatus.BAD_REQUEST,
+            );
         }
     }
 
