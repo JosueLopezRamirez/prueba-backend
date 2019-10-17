@@ -27,13 +27,13 @@ export class SkiperOrderTracingResolver {
         let result = await this.service.create(input);
         await this.f.getById(input.orderID).then( async (res: SkiperOrder) => {
             let n = [input.orderStatusID]
-            let pedidos = await this.f.getByCommerceIdByIdStatus(res.skiperCommerce.id, n)
+            let pedido = await this.f.GetOrderByID(res.id)
             let cantidad = await this.f.getByCommerceIdByIdStatusCount(res.skiperCommerce.id, n)
-            pubSub.publish('getByCommerceIdByIdStatus', { getByCommerceIdByIdStatus: pedidos,
+            pubSub.publish('skiperOrderByCommerceIdByIdStatus', { skiperOrderByCommerceIdByIdStatus: pedido,
             Comercio: res.skiperCommerce.id })
-            pubSub.publish('skiperOrderByCommerceIdByIdStatusCount', { getByCommerceIdByIdStatus: cantidad,
+            pubSub.publish('skiperOrderByCommerceIdByIdStatusCount', { skiperOrderByCommerceIdByIdStatusCount: cantidad,
             Comercio: res.skiperCommerce.id })
-            withFilter(()=> pubSub.asyncIterator("getByCommerceIdByIdStatus"), 
+            withFilter(()=> pubSub.asyncIterator("skiperOrderByCommerceIdByIdStatus"), 
                 (payload, variable) => {
                     return Boolean(
                         variable.Comercio == payload.Comercio
@@ -58,6 +58,6 @@ export class SkiperOrderTracingResolver {
 
     @Subscription('skiperOrderByCommerceIdByIdStatusCount')
     skiperOrderByCommerceIdByIdStatusCount() {
-        return pubSub.asyncIterator('getByCommerceIdByIdStatusCount')
+        return pubSub.asyncIterator('skiperOrderByCommerceIdByIdStatusCount')
     }
 }

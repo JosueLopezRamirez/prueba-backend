@@ -37,6 +37,24 @@ export class SkiperOrderService {
         .getMany();
     }
 
+    async GetOrderByID(idorder: number): Promise<SkiperOrder> {
+        return await this.repository.createQueryBuilder("SkiperOrder")
+        .innerJoinAndSelect("SkiperOrder.user", "User")
+        .innerJoinAndSelect("SkiperOrder.skiperCommerce", "SkiperCommerce")
+        .innerJoinAndSelect("SkiperOrder.skiperOrderTracing", "SkiperOrderTracing")
+        .innerJoinAndSelect("SkiperOrder.skiperOrderDetail", "SkiperOrderDetail")
+        .leftJoinAndSelect("SkiperOrderDetail.skiperProductCommerce", "SkiperProductCommerce")
+        .innerJoinAndSelect(subQuery => {
+            return subQuery
+            .select("skiperOrderTracing.idorder", "idorder").addSelect("MAX(skiperOrderTracing.datetracing)", "fecha")
+            .from(SkiperOrderTracing, "skiperOrderTracing")
+            .groupBy("skiperOrderTracing.idorder")
+        }, "d", "SkiperOrderTracing.idorder = d.idorder and SkiperOrderTracing.datetracing = d.fecha")
+        .innerJoinAndSelect("SkiperOrderTracing.orderStatus", "SkiperOrdersStatus")
+        .where("SkiperOrder.id = :idorder", { idorder })
+        .getOne();
+    }
+
     async getByCommerceIdByIdStatusCount(idcommerce: number, idstatus: number[]): Promise<number> {
         return await this.repository.createQueryBuilder("SkiperOrder")
         .innerJoinAndSelect("SkiperOrder.user", "User")
