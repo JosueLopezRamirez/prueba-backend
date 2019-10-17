@@ -23,27 +23,24 @@ export class AuthService {
         private readonly jwtService: JwtService
     ) { }
 
+    public async validate(email: string): Promise<User> {
+        return await this.userService.findByEmail(email);
+    }
+
     public async login(sign: any): Promise<SignResponse> {
-        let result = await this.validate(sign.input.email);
+
+        let result = await this.validate(sign.email);
         if (result == undefined) {
             return new SignResponse(null, new ErrorResponse('The email or password is incorrect', 400, false));
         } else {
-            if (!bcrypt.compareSync(sign.input.password, result.password)) {
+            if (!bcrypt.compareSync(sign.password, result.password)) {
                 return new SignResponse(null, new ErrorResponse('The email or password is incorrect', 400, false));
             }
             let co, ve; //Definimos la variable commercio
             try {
-                /**
-                 * buscamos el agente por medio de el objeto usuario que corresponde a la llave foranea
-                 */
                 let agent = await this.agentService.getByUser(result);
-                /**
-                 * usamos queryBuilder
-                 * Obtenermos el objeto de tipo entity SkiperCommerce
-                 * */
                 co = this.commerceByQueryBuilder(result, agent);
                 ve = this.vehicleByQueryBuilder(result, agent);
-                // console.log(ve)
             } catch (error) {
                 console.log(error)
             }
@@ -58,23 +55,17 @@ export class AuthService {
     public async register(input: UserInput): Promise<SignResponse> {
         try {
             let result = await this.userService.create(input);
-            return new SignResponse(new SignInOk(
-                await this.tokenGenerated(result), result.firstname,
-                result.lastname, result.user,
-                result.email, result.phone
-            ), null);
+            if(result !== undefined){
+                return new SignResponse(new SignInOk(
+                    await this.tokenGenerated(result), result.firstname,
+                    result.lastname, result.user,
+                    result.email, result.phone
+                ), null);
+            }
+            return new SignResponse(null, new ErrorResponse('El sponsor id no es valido', 400, false));
         } catch (error) {
             console.log(error);
             return new SignResponse(null, new ErrorResponse('Error to create a user or user already exist!', 400, false));
-        }
-    }
-
-    public async validate(email: string): Promise<User> {
-        const result = await this.userService.findByEmail(email);
-        if (result !== undefined) {
-            return result;
-        } else {
-            return undefined;
         }
     }
 

@@ -38,7 +38,7 @@ export class ErrorResponse {
     constructor(message?,status?,ok?){
         this.message = message || null;
         this.status = status || null;;
-        this.ok = ok || null;
+        this.ok = ok || false;
     }
 
     message: string;

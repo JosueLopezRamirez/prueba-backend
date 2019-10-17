@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, HttpException, HttpStatus } from '@nestjs/common';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -57,7 +57,7 @@ export class UserService {
     }
 
     //Create a new user
-    async create(input: UserInput): Promise<User> {
+    async create(input: UserInput) {
         let city;
         let civil_status;
         try {
@@ -77,7 +77,9 @@ export class UserService {
                 }
                 return null;
             }
-            return null;
+            // throw new HttpException("El sponsor id no es valido",HttpStatus.BAD_REQUEST);
+            return sponsor;
+            
         } catch (error) {
             console.log(error)
         }

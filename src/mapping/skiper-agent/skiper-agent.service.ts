@@ -28,10 +28,13 @@ export class SkiperAgentService {
     }
 
     async getByUser(user:User):Promise<SkiperAgent>{
-        return await this.agentRepository.findOne({
-            // relations:["user","categoryAgent"],
-            where:{user:user}
-        });
+        try {
+            return await this.agentRepository.findOne({
+                where:{user:user}
+            });
+        } catch (error) {
+            console.log(error)
+        }
     }
 
 
