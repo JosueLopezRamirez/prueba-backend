@@ -49,11 +49,26 @@ export class SizeProductService {
         }
     }
 
-    private parseSizeProduct(input: SizeProductInput, product?): SizeProduct {
-        let option: SizeProduct = new SizeProduct();
-        option.description = input.description;
-        option.extraPrice = input.extraPrice;
-        option.skiperProducts = product;
-        return option;
+    async updateSizeProduct(input: SizeProductInput): Promise<SizeProduct> {
+        try {
+            let productActual = await this.getById(input.id);
+            if (productActual) {
+                productActual.description = input.description;
+                productActual.skiperProducts = await this.productService.getById(input.skiperProductsID);
+                productActual.extraPrice = input.extraPrice;
+                return await this.repository.save(productActual);
+            }
+            return null;    
+        } catch(error) {
+        console.log(error)
     }
+}
+
+    private parseSizeProduct(input: SizeProductInput, product ?): SizeProduct {
+    let option: SizeProduct = new SizeProduct();
+    option.description = input.description;
+    option.extraPrice = input.extraPrice;
+    option.skiperProducts = product;
+    return option;
+}
 }

@@ -16,3 +16,8 @@ type Query {
     getAllSizeProduct: [SizeProductDto!]!
     getSizeProductById(id:Int) :SizeProductDto!
 }
+
+type Mutation {
+    registerSizeProduct(input: SizeProductInput!): SizeProductDto!
+    updateSizeProduct(input: SizeProductInput!): SizeProductDto
+}
