@@ -51,8 +51,13 @@ export class SkiperOrderTracingResolver {
         return result
     }
 
-    @Subscription('getByCommerceIdByIdStatus')
-    getByCommerceIdByIdStatus() {
-        return pubSub.asyncIterator('getByCommerceIdByIdStatus')
+    @Subscription('skiperOrderByCommerceIdByIdStatus')
+    skiperOrderByCommerceIdByIdStatus() {
+        return pubSub.asyncIterator('skiperOrderByCommerceIdByIdStatus')
+    }
+
+    @Subscription('skiperOrderByCommerceIdByIdStatusCount')
+    skiperOrderByCommerceIdByIdStatusCount() {
+        return pubSub.asyncIterator('getByCommerceIdByIdStatusCount')
     }
 }
