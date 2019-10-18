@@ -109,7 +109,10 @@ import { UserCivilStatusModule } from './mapping/user-civil-status/user-civil-st
           status: err.extensions.exception.status,
         })
       },
-      cors:{"origin": "*"}
+      cors:{
+        "origin": "*",
+        "Access-Control-Allow-Origin":"*"
+      }
     })
   ],
   providers: [AppService, AppResolver],
