@@ -21,6 +21,7 @@ async function bootstrap() {
   // Add Cors universal
   const options = {
     "origin": "*",
+    "Access-Control-Allow-Origin":"*",
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
     "preflightContinue": false,
     "optionsSuccessStatus": 204,
