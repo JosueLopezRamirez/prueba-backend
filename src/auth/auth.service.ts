@@ -62,7 +62,7 @@ export class AuthService {
                     result.email, result.phone
                 ), null);
             }
-            return new SignResponse(null, new ErrorResponse('El sponsor id no es valido', 400, false));
+            return new SignResponse(null, new ErrorResponse('Sponsor ID is not valid!', 400, false));
         } catch (error) {
             console.log(error);
             return new SignResponse(null, new ErrorResponse('Error to create a user or user already exist!', 400, false));
