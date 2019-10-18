@@ -19,7 +19,14 @@ async function bootstrap() {
   app.setGlobalPrefix('/v1/api');
   
   // Add Cors universal
-  app.enableCors();
+  const options = {
+    "origin": "*",
+    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    "preflightContinue": false,
+    "optionsSuccessStatus": 204,
+    "credentials":true
+  }
+  app.enableCors(options);
   
   //Add Security
   app.use(helmet());
@@ -27,12 +34,12 @@ async function bootstrap() {
   //Add Compression
   app.use(compression());
 
-  app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
-    next();
-  });
+  // app.use((req, res, next) => {
+  //   res.header('Access-Control-Allow-Origin', '*');
+  //   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  //   res.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
+  //   next();
+  // });
 
   await app.listen(process.env.PORT || 4000);
 
