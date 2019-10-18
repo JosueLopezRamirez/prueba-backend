@@ -33,6 +33,7 @@ export class AuthService {
         if (result == undefined) {
             return new SignResponse(null, new ErrorResponse('The email or password is incorrect', 400, false));
         } else {
+            (result.is_online)? new SignResponse(null, new ErrorResponse('User is online in another device!', 400, false)): console.log('No esta activo');
             if (!bcrypt.compareSync(sign.password, result.password)) {
                 return new SignResponse(null, new ErrorResponse('The email or password is incorrect', 400, false));
             }
@@ -44,6 +45,8 @@ export class AuthService {
             } catch (error) {
                 console.log(error)
             }
+            let activo = await this.userService.updateOnlineStatus(result);
+            console.log('Usuario Activo : ',activo.is_online)
             return new SignResponse(new SignInOk(
                 await this.tokenGenerated(result), result.firstname,
                 result.lastname, result.user,
@@ -53,20 +56,26 @@ export class AuthService {
     }
 
     public async register(input: UserInput): Promise<SignResponse> {
-        try {
+        // try {
             let result = await this.userService.create(input);
+            // console.log(result)
+            if(result === null){
+                console.log(result)
+                return new SignResponse(null, new ErrorResponse('This email is already exist in the database!', 400, false));
+            }
             if(result !== undefined){
                 return new SignResponse(new SignInOk(
                     await this.tokenGenerated(result), result.firstname,
                     result.lastname, result.user,
                     result.email, result.phone
                 ), null);
+            } else {
+                return new SignResponse(null, new ErrorResponse('Sponsor ID is not valid!', 400, false));
             }
-            return new SignResponse(null, new ErrorResponse('Sponsor ID is not valid!', 400, false));
-        } catch (error) {
-            console.log(error);
-            return new SignResponse(null, new ErrorResponse('Error to create a user or user already exist!', 400, false));
-        }
+        // } catch (error) {
+        //     console.log(error);
+        //     return new SignResponse(null, new ErrorResponse('Error to create a user or user already exist!', 400, false));
+        // }
     }
 
     async tokenGenerated(newUser: User) {

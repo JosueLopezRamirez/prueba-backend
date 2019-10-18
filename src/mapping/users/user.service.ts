@@ -77,10 +77,10 @@ export class UserService {
                 }
                 return null;
             }
-            // throw new HttpException("El sponsor id no es valido",HttpStatus.BAD_REQUEST);
             return sponsor;
         } catch (error) {
             console.log(error)
+            return null;
         }
     }
 
@@ -94,6 +94,15 @@ export class UserService {
             userUpdate.country = await this.country.getById(input.country_id);
             userUpdate.phone = input.phone;
             return await this.userRepository.save(userUpdate);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async updateOnlineStatus(user:User){
+        try {
+            user.is_online = true;
+            return await this.userRepository.save(user)
         } catch (error) {
             console.log(error)
         }
