@@ -6,7 +6,7 @@ import { SkiperOrderResolver } from '../skiper-order/skiper-order.resolver'
 import { PubSub, withFilter } from 'graphql-subscriptions';
 import { SkiperOrderService } from '../skiper-order/skiper-order.service';
 import { SkiperOrder } from '../skiper-order/skiper-order.entity';
-import { UseFilters, BadRequestException, HttpException, HttpStatus } from '@nestjs/common';
+import { UseFilters, BadRequestException, HttpException, HttpStatus, ParseIntPipe } from '@nestjs/common';
 import { HttpExcepcionFilter } from '../../shared/http.exception.filter';
 
 const pubSub = new PubSub();
@@ -29,34 +29,30 @@ export class SkiperOrderTracingResolver {
             let n = [input.orderStatusID]
             let pedido = await this.f.GetOrderByID(res.id)
             let cantidad = await this.f.getByCommerceIdByIdStatusCount(res.skiperCommerce.id, n)
+            
             pubSub.publish('skiperOrderByCommerceIdByIdStatus', { skiperOrderByCommerceIdByIdStatus: pedido,
-            Comercio: res.skiperCommerce.id })
+            idcomercio: res.skiperCommerce.id } )
+
             pubSub.publish('skiperOrderByCommerceIdByIdStatusCount', { skiperOrderByCommerceIdByIdStatusCount: cantidad,
-            Comercio: res.skiperCommerce.id })
-            withFilter(()=> pubSub.asyncIterator("skiperOrderByCommerceIdByIdStatus"), 
-                (payload, variable) => {
-                    return Boolean(
-                        variable.Comercio == payload.Comercio
-                    )
-                }
-            )
-            withFilter(()=> pubSub.asyncIterator("skiperOrderByCommerceIdByIdStatusCount"), 
-                (payload, variable) => {
-                    return Boolean(
-                        variable.Comercio == payload.Comercio
-                    )
-                }
-            )
+            idcomercio: res.skiperCommerce.id })
         })
         return result
     }
 
-    @Subscription('skiperOrderByCommerceIdByIdStatus')
+    @Subscription('skiperOrderByCommerceIdByIdStatus',  {
+        filter(payload, variables) {
+            return payload.idcomercio === variables.idcomercio
+        }
+    })
     skiperOrderByCommerceIdByIdStatus() {
         return pubSub.asyncIterator('skiperOrderByCommerceIdByIdStatus')
     }
 
-    @Subscription('skiperOrderByCommerceIdByIdStatusCount')
+    @Subscription('skiperOrderByCommerceIdByIdStatusCount', {
+        filter(payload, variables) {
+            return payload.idcomercio === variables.idcomercio
+        }
+    })
     skiperOrderByCommerceIdByIdStatusCount() {
         return pubSub.asyncIterator('skiperOrderByCommerceIdByIdStatusCount')
     }
