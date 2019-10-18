@@ -15,6 +15,8 @@ export class UserInput {
     address: string;
     phone: string;
     create_at: Date;
+    date_birth: Date;
+    is_online: boolean;
     country_id: number;
     city_id: number;
     idcivil_status:number;
@@ -28,10 +30,12 @@ export class UserDto {
     email: string;
     user: string;
     password: string;
-    sponsor_id: number;
+    sponsor_id: number = null;
     address: string;
     phone: string;
     create_at: Date;
+    date_birth: Date;
+    is_online: boolean;
     city: citiesDto;
     country: countrieDto;
     civilStatus: UserCivilStatusDto;

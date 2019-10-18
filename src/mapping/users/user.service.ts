@@ -79,7 +79,6 @@ export class UserService {
             }
             // throw new HttpException("El sponsor id no es valido",HttpStatus.BAD_REQUEST);
             return sponsor;
-            
         } catch (error) {
             console.log(error)
         }
@@ -117,6 +116,7 @@ export class UserService {
         user.address = input.address;
         user.phone = input.phone;
         user.create_at = input.create_at;
+        user.date_birth = input.date_birth;
         user.city = city;
         user.country = country;
         user.civilStatus = civil_status;

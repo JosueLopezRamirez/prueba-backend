@@ -44,16 +44,23 @@ export class User {
         if (this.create_at == null) {
             this.create_at = new Date();
         }
+        if(this.sponsor_id == null){
+            this.sponsor_id = 1;
+        }
     }
 
     @Column('date', { nullable: true }) create_at: Date;
 
+    @Column('date', { nullable: false }) date_birth: Date;
+
+    @Column('bit', { nullable: true }) is_online: boolean;
+
     @ManyToOne(type => Countrie, { nullable: false })
     @JoinColumn({ name: 'idcountry' }) country: Countrie;
 
-    @ManyToOne(type => Cities, { nullable: false })
+    @ManyToOne(type => Cities, { nullable: true })
     @JoinColumn({ name: 'idcity' }) city: Cities;
 
-    @ManyToOne(type => UserCivilStatus, { nullable: false })
+    @ManyToOne(type => UserCivilStatus, { nullable: true })
     @JoinColumn({ name: 'idcivil_status' }) civilStatus: UserCivilStatus;
 }

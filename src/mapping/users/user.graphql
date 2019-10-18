@@ -10,6 +10,8 @@ type UserDto {
   phone: String
   address: String
   create_at: DateTime
+  date_birth: DateTime
+  is_online: Boolean
   country: countrieDto
   city: citiesDto
   civilStatus: UserCivilStatusDto
@@ -36,6 +38,8 @@ input UserInput {
   address: String
   phone: String
   create_at: DateTime
+  date_birth: DateTime
+  is_online: Boolean
   country_id: Int!
   city_id: Int
   idcivil_status: Int
