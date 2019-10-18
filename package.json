@@ -95,6 +95,6 @@
     "testEnvironment": "node"
   },
   "engines": {
-    "node": "12.10.0"
+    "node": "10.16.3"
   }
 }
