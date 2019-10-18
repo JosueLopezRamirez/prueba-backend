@@ -31,7 +31,7 @@ export class User {
     @Min(8, { message: 'the password must be have 8 characters at least' })
     @Length(255) password: string;
 
-    @Column({ nullable: true, default: -1 })
+    @Column({ nullable: true, default: 1 })
     @IsOptional() sponsor_id: number;
 
     @Column({ nullable: true, length: 255 })
@@ -53,7 +53,7 @@ export class User {
 
     @Column('date', { nullable: false }) date_birth: Date;
 
-    @Column('bit', { nullable: true }) is_online: boolean;
+    @Column('boolean', { nullable: true }) is_online: boolean;
 
     @ManyToOne(type => Countrie, { nullable: false })
     @JoinColumn({ name: 'idcountry' }) country: Countrie;

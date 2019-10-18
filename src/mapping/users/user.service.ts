@@ -50,6 +50,7 @@ export class UserService {
 
     async findByEmail(email: string): Promise<User> {
         return await this.userRepository.findOne({
+            relations: ["country","city","civilStatus"],
             where: {
                 email: email
             }
@@ -61,6 +62,7 @@ export class UserService {
         let city;
         let civil_status;
         try {
+            console.log(input.city_id,input.idcivil_status)
             if (input.city_id !== undefined && input.idcivil_status !== undefined){
                 city = await this.city.getById(input.city_id);
                 civil_status = await this.civil.getById(input.idcivil_status);
@@ -79,6 +81,7 @@ export class UserService {
             }
             return sponsor;
         } catch (error) {
+            console.log('aqui es el error baby :3')
             console.log(error)
             return null;
         }
@@ -102,7 +105,8 @@ export class UserService {
     async updateOnlineStatus(user:User){
         try {
             user.is_online = true;
-            return await this.userRepository.save(user)
+            let result =  await this.userRepository.save(user);
+            return result;
         } catch (error) {
             console.log(error)
         }

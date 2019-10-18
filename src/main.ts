@@ -20,7 +20,7 @@ async function bootstrap() {
   
   // Add Cors universal
   const options = {
-    "origin": "*",
+    "origin": "true",
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
     "preflightContinue": false,
     "optionsSuccessStatus": 204,
@@ -41,7 +41,7 @@ async function bootstrap() {
   //   next();
   // });
 
-  await app.listen(process.env.PORT || 4000);
+  await app.listen(process.env.PORT || 3000);
 
 }
 bootstrap();

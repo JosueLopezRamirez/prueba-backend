@@ -27,13 +27,14 @@ export class AuthService {
         return await this.userService.findByEmail(email);
     }
 
-    public async login(sign: any): Promise<SignResponse> {
-
+    async login(sign: any): Promise<SignResponse> {
         let result = await this.validate(sign.email);
         if (result == undefined) {
             return new SignResponse(null, new ErrorResponse('The email or password is incorrect', 400, false));
         } else {
-            (result.is_online)? new SignResponse(null, new ErrorResponse('User is online in another device!', 400, false)): console.log('No esta activo');
+            if(result.is_online)
+                return new SignResponse(null, new ErrorResponse('User is online in another device!', 400, false))
+            
             if (!bcrypt.compareSync(sign.password, result.password)) {
                 return new SignResponse(null, new ErrorResponse('The email or password is incorrect', 400, false));
             }
@@ -41,17 +42,19 @@ export class AuthService {
             try {
                 let agent = await this.agentService.getByUser(result);
                 co = this.commerceByQueryBuilder(result, agent);
-                ve = this.vehicleByQueryBuilder(result, agent);
+                // ve = this.vehicleByQueryBuilder(result, agent);
+
+                //
+                let activo = await this.userService.updateOnlineStatus(result);
+                return new SignResponse(new SignInOk(
+                    await this.tokenGenerated(result), result.firstname,
+                    result.lastname, result.user,
+                    result.email, result.phone, co
+                ), null);
             } catch (error) {
+                console.log('aqui no')
                 console.log(error)
             }
-            let activo = await this.userService.updateOnlineStatus(result);
-            console.log('Usuario Activo : ',activo.is_online)
-            return new SignResponse(new SignInOk(
-                await this.tokenGenerated(result), result.firstname,
-                result.lastname, result.user,
-                result.email, result.phone, co
-            ), null);
         }
     }
 
