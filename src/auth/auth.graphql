@@ -28,7 +28,7 @@ type SignInOk {
   email: String
   phone_number: String
   commerce: CommerceDto
-  vehicle: SkiperVehicleAgentDto
+  vehicle: SkiperVehicleDto
 }
 
 input twilioDto {

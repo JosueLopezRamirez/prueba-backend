@@ -1,6 +1,7 @@
 import { ObjectType, InputType } from "type-graphql";
 import { CommerceDto } from "src/mapping/skiper-commerce/skiper-commerce.dto";
 import { SkiperVehicleAgentDto } from "src/mapping/skiper-vehicle-agent/skiper-vehicle-agent.dto";
+import { SkiperVehicleDto } from "src/mapping/skiper-vehicle/skiper-vehicle.dto";
 
 @InputType()
 export class signInDto {
@@ -29,7 +30,7 @@ export class SignInOk {
     email: string
     phone_number: string
     commerce: CommerceDto
-    vehicle: SkiperVehicleAgentDto
+    vehicle: SkiperVehicleDto
 }
 
 @ObjectType()

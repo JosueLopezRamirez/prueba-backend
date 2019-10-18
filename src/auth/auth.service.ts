@@ -42,14 +42,13 @@ export class AuthService {
             try {
                 let agent = await this.agentService.getByUser(result);
                 co = this.commerceByQueryBuilder(result, agent);
-                // ve = this.vehicleByQueryBuilder(result, agent);
+                ve = this.vehicleByQueryBuilder(result, agent);
 
-                //
                 let activo = await this.userService.updateOnlineStatus(result);
                 return new SignResponse(new SignInOk(
                     await this.tokenGenerated(result), result.firstname,
                     result.lastname, result.user,
-                    result.email, result.phone, co
+                    result.email, result.phone, co, ve
                 ), null);
             } catch (error) {
                 console.log('aqui no')
@@ -154,14 +153,18 @@ export class AuthService {
     }
 
     private async vehicleByQueryBuilder(result, agent) {
-        let ve = await createQueryBuilder("SkiperVehicleAgent")
-            .select(["SkiperVehicleAgent.skiperAgent","SkiperVehicleAgent.skiperVehicle"])
-            .innerJoinAndSelect("SkiperVehicleAgent.skiperAgent", "SkiperAgent")
-            .innerJoinAndSelect("SkiperVehicleAgent.skiperVehicle", "SkiperVehicle")
-            .innerJoinAndSelect("SkiperAgent.user", "User")
-            .where("SkiperAgent.iduser = :userId", { userId: result.id })
-            .andWhere("SkiperVehicleAgent.idagent = :agentId", { agentId: agent.id })
-            .getOne();
+        let ve = await createQueryBuilder("SkiperVehicle")
+        .innerJoinAndSelect("SkiperVehicle.skiperCatTravel", "SkiperCatTravel")
+        .innerJoinAndSelect("SkiperVehicle.vehicleTrademark", "VehicleTrademark")
+        .innerJoinAndSelect("SkiperVehicle.vehicleModel", "VehicleModel")
+        .innerJoinAndSelect("SkiperVehicle.vehicleYear", "VehicleYear")
+        .innerJoinAndSelect("SkiperVehicle.vehicleCatalog", "VehicleCatalog")
+        .innerJoin("SkiperVehicle.skiperVehicleAgent", "SkiperVehicleAgent")
+        .innerJoin("SkiperVehicleAgent.skiperAgent", "SkiperAgent")
+        .innerJoin("SkiperAgent.user", "User")
+        .where("User.id = :userId", { userId: result.id })
+        .andWhere("SkiperAgent.id = :agentId", { agentId: agent.id })
+        .getOne();
         return ve;
     }
 }

@@ -1,6 +1,7 @@
 import { ObjectType, Field, InputType } from "type-graphql";
 import { UserDto } from "../users/user.dto";
 import { categoryDto } from "../category-agent/category-agent.dto";
+import { SkiperVehicleAgent } from "../skiper-vehicle-agent/skiper-vehicle-agent.entity";
 
 @ObjectType()
 export class SkiperAgentDto {
@@ -10,6 +11,7 @@ export class SkiperAgentDto {
     create_at:Date;
     categoryAgent:categoryDto;
     user:UserDto;
+    skiperVehicleAgent: SkiperVehicleAgent;
 }
 
 @InputType()

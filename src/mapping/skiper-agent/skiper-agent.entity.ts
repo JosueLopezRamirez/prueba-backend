@@ -1,7 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 import { IsNotEmpty, IsBoolean, IsString, IsDate } from "class-validator";
 import { CategoryAgent } from "../category-agent/categoty-agent.entity";
 import { User } from "../users/user.entity";
+import { SkiperVehicleAgent } from "../skiper-vehicle-agent/skiper-vehicle-agent.entity";
 
 @Entity()
 export class SkiperAgent {
@@ -28,4 +29,7 @@ export class SkiperAgent {
 
     @ManyToOne(type => User,{nullable:false})
     @JoinColumn({name:'iduser'}) user:User;
+
+    @OneToMany(type => SkiperVehicleAgent, x => x.skiperAgent)
+    skiperVehicleAgent: SkiperVehicleAgent[];
 }

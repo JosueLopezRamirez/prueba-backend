@@ -4,6 +4,7 @@ import { VehicleModelsDto } from "../vehicle-models/vehicle-models.dto";
 import { VehicleTrademarkDto } from "../vehicle-trademarks/vehicle-trademark.dto";
 import { VehicleCatalogDto } from "../vehicle-catalog/vehicle-catalog.dto";
 import { SkiperCatTravelDto } from "../skiper-cat-travels/skiper-cat-travel.dto";
+import { SkiperVehicleAgentDto } from "../skiper-vehicle-agent/skiper-vehicle-agent.dto";
 
 @ObjectType()
 export class SkiperVehicleDto {
@@ -16,4 +17,5 @@ export class SkiperVehicleDto {
     vehicleTrademark: VehicleTrademarkDto;
     vehicleModel: VehicleModelsDto;
     vehicleYear: VehicleYearsDto;
+    skiperVehicleAgent: SkiperVehicleAgentDto;
 }
