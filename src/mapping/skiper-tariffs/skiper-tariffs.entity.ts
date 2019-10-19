@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "t
 import { SkiperDriverSchedule } from "../skiper-driver-schedule/skiper-driver-schedule.entity";
 import { SkiperCatTravel } from "../skiper-cat-travels/skiper-cat-travel.entity";
 
-@Entity('skiper_tariffs')
+@Entity('skiper_tariffs_travels')
 export class SkiperTariffs {
 
     @PrimaryGeneratedColumn() id: number;

@@ -1,3 +1,20 @@
+input UserInput {
+  id: ID
+  firstname: String!
+  lastname: String!
+  email: String!
+  user: String
+  password: String!
+  sponsor_id: Int
+  address: String
+  phone: String
+  create_at: DateTime
+  date_birth: DateTime
+  is_online: Boolean
+  country_id: Int!
+  city_id: Int
+  idcivil_status: Int
+}
 
 type UserDto {
   id: Int!
@@ -25,22 +42,4 @@ type Mutation {
 type Query {
   users: [UserDto!]!
   searchUser(id: ID!): UserDto
-}
-
-input UserInput {
-  id: ID
-  firstname: String!
-  lastname: String!
-  email: String!
-  user: String
-  password: String!
-  sponsor_id: Int
-  address: String
-  phone: String
-  create_at: DateTime
-  date_birth: DateTime
-  is_online: Boolean
-  country_id: Int!
-  city_id: Int
-  idcivil_status: Int
 }

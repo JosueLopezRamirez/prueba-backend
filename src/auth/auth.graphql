@@ -47,4 +47,5 @@ type Mutation {
   send_code(sendcode: twilioDto!): ErrorResponse!
   verify_code(verifycode: twilioDto!): ErrorResponse!
   reset_password(email: String!): ErrorResponse!
+  logout(id: Int!): Boolean
 }

@@ -39,9 +39,11 @@ import { AppsModule } from './mapping/apps/apps.module';
 import { SkiperDriverScheduleModule } from './mapping/skiper-driver-schedule/skiper-driver-schedule.module';
 import { SkiperOrderTracingModule } from './mapping/skiper-order-tracing/skiper-order-tracing.module';
 import { UserCivilStatusModule } from './mapping/user-civil-status/user-civil-status.module';
+import { AppCitiesModule } from './mapping/app-cities/app-cities.module';
 
 @Module({
   imports: [
+    AppCitiesModule,
     KindTicketModule,
     TicketCategoryModule,
     TicketPriorityModule,

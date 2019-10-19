@@ -1,9 +1,10 @@
 import { Resolver, Args, Mutation, Subscription } from '@nestjs/graphql';
-import { Logger } from '@nestjs/common';
+import { Logger, ParseIntPipe, UseGuards } from '@nestjs/common';
 import { PubSub } from 'graphql-subscriptions';
 import { signInDto, SignResponse, ErrorResponse, twilioDto } from './auth.dto';
 import { AuthService } from './auth.service';
 import { UserInput } from '../mapping/users/user.dto';
+import { AuthGuard } from '../shared/auth.guard';
 
 const pubSub = new PubSub();
 
@@ -41,6 +42,12 @@ export class AuthResolver {
     @Mutation(() => ErrorResponse)
     async reset_password(@Args('email') email: string) {
         return this.authService.reset(email);
+    }
+
+    @UseGuards(new AuthGuard())
+    @Mutation()
+    async logout(@Args('id', ParseIntPipe) id: number) {
+        return this.authService.logout(id);
     }
 
     @Subscription('userLogged')

@@ -32,22 +32,20 @@ export class AuthService {
         if (result == undefined) {
             return new SignResponse(null, new ErrorResponse('The email or password is incorrect', 400, false));
         } else {
-            if(result.is_online)
+            if (result.is_online)
                 return new SignResponse(null, new ErrorResponse('User is online in another device!', 400, false))
-            
+
             if (!bcrypt.compareSync(sign.password, result.password)) {
                 return new SignResponse(null, new ErrorResponse('The email or password is incorrect', 400, false));
             }
             let co, ve; //Definimos la variable commercio
             try {
                 let agent = await this.agentService.getByUser(result);
-                if(agent == undefined)
-                {
+                if (agent == undefined) {
                     co = null;
                     ve = null;
                 }
-                else
-                {
+                else {
                     co = await this.commerceByQueryBuilder(result, agent);
                     ve = await this.vehicleByQueryBuilder(result, agent);
                 }
@@ -66,21 +64,21 @@ export class AuthService {
 
     public async register(input: UserInput): Promise<SignResponse> {
         // try {
-            let result = await this.userService.create(input);
-            // console.log(result)
-            if(result === null){
-                console.log(result)
-                return new SignResponse(null, new ErrorResponse('This email is already exist in the database!', 400, false));
-            }
-            if(result !== undefined){
-                return new SignResponse(new SignInOk(
-                    await this.tokenGenerated(result), result.firstname,
-                    result.lastname, result.user,
-                    result.email, result.phone
-                ), null);
-            } else {
-                return new SignResponse(null, new ErrorResponse('Sponsor ID is not valid!', 400, false));
-            }
+        let result = await this.userService.create(input);
+        // console.log(result)
+        if (result === null) {
+            console.log(result)
+            return new SignResponse(null, new ErrorResponse('This email is already exist in the database!', 400, false));
+        }
+        if (result !== undefined) {
+            return new SignResponse(new SignInOk(
+                await this.tokenGenerated(result), result.firstname,
+                result.lastname, result.user,
+                result.email, result.phone
+            ), null);
+        } else {
+            return new SignResponse(null, new ErrorResponse('Sponsor ID is not valid!', 400, false));
+        }
         // } catch (error) {
         //     console.log(error);
         //     return new SignResponse(null, new ErrorResponse('Error to create a user or user already exist!', 400, false));
@@ -108,9 +106,9 @@ export class AuthService {
         try {
             sendCode = await this.twilio.verify.services('VA95d62cf85a1cb3fc48ce6cc0551a6701')
                 .verifications
-                .create({ 
-                    to: body.phone_number, 
-                    channel: body.channel 
+                .create({
+                    to: body.phone_number,
+                    channel: body.channel
                 })
             console.log(sendCode);
             return new ErrorResponse('Code verification send successfully', 200, true)
@@ -149,6 +147,10 @@ export class AuthService {
         }
     }
 
+    async logout(id: number) {
+        return await this.userService.logout(id);
+    }
+
     private async commerceByQueryBuilder(result, agent) {
         let co = await createQueryBuilder("SkiperCommerce")
             .innerJoin("SkiperCommerce.skiperAgent", "SkiperAgent")
@@ -161,17 +163,17 @@ export class AuthService {
 
     private async vehicleByQueryBuilder(result, agent) {
         let ve = await createQueryBuilder("SkiperVehicle")
-        .innerJoinAndSelect("SkiperVehicle.skiperCatTravel", "SkiperCatTravel")
-        .innerJoinAndSelect("SkiperVehicle.vehicleTrademark", "VehicleTrademark")
-        .innerJoinAndSelect("SkiperVehicle.vehicleModel", "VehicleModel")
-        .innerJoinAndSelect("SkiperVehicle.vehicleYear", "VehicleYear")
-        .innerJoinAndSelect("SkiperVehicle.vehicleCatalog", "VehicleCatalog")
-        .innerJoin("SkiperVehicle.skiperVehicleAgent", "SkiperVehicleAgent")
-        .innerJoin("SkiperVehicleAgent.skiperAgent", "SkiperAgent")
-        .innerJoin("SkiperAgent.user", "User")
-        .where("User.id = :userId", { userId: result.id })
-        .andWhere("SkiperAgent.id = :agentId", { agentId: agent.id })
-        .getOne();
+            .innerJoinAndSelect("SkiperVehicle.skiperCatTravel", "SkiperCatTravel")
+            .innerJoinAndSelect("SkiperVehicle.vehicleTrademark", "VehicleTrademark")
+            .innerJoinAndSelect("SkiperVehicle.vehicleModel", "VehicleModel")
+            .innerJoinAndSelect("SkiperVehicle.vehicleYear", "VehicleYear")
+            .innerJoinAndSelect("SkiperVehicle.vehicleCatalog", "VehicleCatalog")
+            .innerJoin("SkiperVehicle.skiperVehicleAgent", "SkiperVehicleAgent")
+            .innerJoin("SkiperVehicleAgent.skiperAgent", "SkiperAgent")
+            .innerJoin("SkiperAgent.user", "User")
+            .where("User.id = :userId", { userId: result.id })
+            .andWhere("SkiperAgent.id = :agentId", { agentId: agent.id })
+            .getOne();
         return ve;
     }
 }
