@@ -98,9 +98,9 @@ export class AuthService {
     async sendCode(body: twilioDto): Promise<ErrorResponse> {
         let sendCode
         try {
-            // let service= await this.twilio.verify.services.create({friendlyName: 'My Verify Service'})
+            // let service= await this.twilio.verify.services.create({friendlyName: 'AlySkyper'})
             //           .then(service => console.log(service.sid));
-            sendCode = await this.twilio.verify.services('VAde2698b0f0abd37511d362a35a46c0ad')
+            sendCode = await this.twilio.verify.services('VAcd8f199ced16682a4afd0c12d8c21848')
                 .verifications
                 .create({
                     to: body.phone_number,
@@ -116,7 +116,7 @@ export class AuthService {
     async verifyCode(body: twilioDto): Promise<ErrorResponse> {
         let verifyCode
         try {
-            verifyCode = await this.twilio.verify.services('VAde2698b0f0abd37511d362a35a46c0ad')
+            verifyCode = await this.twilio.verify.services('VAcd8f199ced16682a4afd0c12d8c21848')
                 .verificationChecks
                 .create({ code: body.code, to: body.phone_number })
             if (verifyCode.status === 'approved') {
