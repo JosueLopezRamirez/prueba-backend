@@ -40,6 +40,7 @@ import { SkiperDriverScheduleModule } from './mapping/skiper-driver-schedule/ski
 import { SkiperOrderTracingModule } from './mapping/skiper-order-tracing/skiper-order-tracing.module';
 import { UserCivilStatusModule } from './mapping/user-civil-status/user-civil-status.module';
 import { AppCitiesModule } from './mapping/app-cities/app-cities.module';
+import { Base64ImageModule } from './base64-image/base64-image.module';
 
 @Module({
   imports: [
@@ -115,7 +116,8 @@ import { AppCitiesModule } from './mapping/app-cities/app-cities.module';
         "origin": "*",
         "Access-Control-Allow-Origin":"*"
       }
-    })
+    }),
+    Base64ImageModule
   ],
   providers: [AppService, AppResolver],
   controllers: [AppController],

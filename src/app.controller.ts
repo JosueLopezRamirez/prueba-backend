@@ -1,4 +1,4 @@
-import { Controller, UseInterceptors, UploadedFile, Post } from '@nestjs/common';
+import { Controller, UseInterceptors, UploadedFile, Post, Body } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer'
 import { createReadStream } from 'fs';
@@ -6,6 +6,7 @@ import path, { extname } from 'path';
 import { Storage } from '@google-cloud/storage';
 import { AppService } from './app.service';
 import { ErrorResponse } from './auth/auth.dto';
+import * as base64 from 'base64-img';
 
 @Controller('app')
 export class AppController {
@@ -44,6 +45,29 @@ export class AppController {
                 )
                 .on("finish", res)
         })
-        return new ErrorResponse(`https://storage.cloud.google.com/mi-deposito-backend/${filename}`,200,true);
+        return new ErrorResponse(`https://storage.cloud.google.com/mi-deposito-backend/${filename}`, 200, true);
+    }
+
+    @Post('/image/upload/base64')
+    async uploadBase64(@Body() imageBase64: any) {
+        try {
+            console.log(imageBase64)
+            let filePath = await base64.imgSync(imageBase64, './uploads', 'avatar');
+
+            this.imgAppSkiperCommerceBucket.upload(__dirname.slice(0, -15) + filePath, {
+                destination: 'profile-images/576dba00c1346abe12fb502a-original.jpg',
+                public: true,
+                validation: 'md5'
+            }, function (error, file) {
+
+                if (error) {
+                    console.error(error);
+                }
+
+                return 'Image uploaded';
+            });
+        } catch (error) {
+            console.log(error)
+        }
     }
 }

@@ -16,7 +16,7 @@ export class UserResolver {
         return await this.userService.getAll();
     }
     
-    @UseGuards(new AuthGuard())
+    // @UseGuards(new AuthGuard())
     @Query()
     searchUser(@Args('id', ParseIntPipe) id: number) {
         return this.userService.findById(id);
