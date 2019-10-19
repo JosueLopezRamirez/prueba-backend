@@ -160,8 +160,6 @@ export class AuthService {
     }
 
     private async vehicleByQueryBuilder(result, agent) {
-        console.log(result)
-        console.log(agent)
         let ve = await createQueryBuilder("SkiperVehicle")
         .innerJoinAndSelect("SkiperVehicle.skiperCatTravel", "SkiperCatTravel")
         .innerJoinAndSelect("SkiperVehicle.vehicleTrademark", "VehicleTrademark")
