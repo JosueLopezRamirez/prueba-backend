@@ -41,9 +41,16 @@ export class AuthService {
             let co, ve; //Definimos la variable commercio
             try {
                 let agent = await this.agentService.getByUser(result);
-                co = this.commerceByQueryBuilder(result, agent);
-                ve = this.vehicleByQueryBuilder(result, agent);
-
+                if(agent == undefined)
+                {
+                    co = null;
+                    ve = null;
+                }
+                else
+                {
+                    co = await this.commerceByQueryBuilder(result, agent);
+                    ve = await this.vehicleByQueryBuilder(result, agent);
+                }
                 let activo = await this.userService.updateOnlineStatus(result);
                 return new SignResponse(new SignInOk(
                     await this.tokenGenerated(result), result.firstname,
@@ -153,6 +160,8 @@ export class AuthService {
     }
 
     private async vehicleByQueryBuilder(result, agent) {
+        console.log(result)
+        console.log(agent)
         let ve = await createQueryBuilder("SkiperVehicle")
         .innerJoinAndSelect("SkiperVehicle.skiperCatTravel", "SkiperCatTravel")
         .innerJoinAndSelect("SkiperVehicle.vehicleTrademark", "VehicleTrademark")
