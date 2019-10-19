@@ -15,7 +15,7 @@ import { SkiperAgentService } from '../mapping/skiper-agent/skiper-agent.service
 export class AuthService {
 
     private logger = new Logger('AuthService');
-    private twilio = Twilio('AC025109cb3b97652dd56c78f6ba82217a', '6ae100725be88eab8310b19c07600c76');
+    private twilio = Twilio('AC380212e678f8f2efb650f7a963df98e6','bd5c3ab4dec94e95be051feed08484d6');
 
     constructor(
         private readonly userService: UserService,
@@ -63,9 +63,7 @@ export class AuthService {
     }
 
     public async register(input: UserInput): Promise<SignResponse> {
-        // try {
         let result = await this.userService.create(input);
-        // console.log(result)
         if (result === null) {
             console.log(result)
             return new SignResponse(null, new ErrorResponse('This email is already exist in the database!', 400, false));
@@ -79,10 +77,6 @@ export class AuthService {
         } else {
             return new SignResponse(null, new ErrorResponse('Sponsor ID is not valid!', 400, false));
         }
-        // } catch (error) {
-        //     console.log(error);
-        //     return new SignResponse(null, new ErrorResponse('Error to create a user or user already exist!', 400, false));
-        // }
     }
 
     async tokenGenerated(newUser: User) {
@@ -104,13 +98,14 @@ export class AuthService {
     async sendCode(body: twilioDto): Promise<ErrorResponse> {
         let sendCode
         try {
-            sendCode = await this.twilio.verify.services('VA95d62cf85a1cb3fc48ce6cc0551a6701')
+            // let service= await this.twilio.verify.services.create({friendlyName: 'My Verify Service'})
+            //           .then(service => console.log(service.sid));
+            sendCode = await this.twilio.verify.services('VAde2698b0f0abd37511d362a35a46c0ad')
                 .verifications
                 .create({
                     to: body.phone_number,
                     channel: body.channel
                 })
-            console.log(sendCode);
             return new ErrorResponse('Code verification send successfully', 200, true)
         } catch (error) {
             console.log(error);
@@ -121,7 +116,7 @@ export class AuthService {
     async verifyCode(body: twilioDto): Promise<ErrorResponse> {
         let verifyCode
         try {
-            verifyCode = await this.twilio.verify.services('VA95d62cf85a1cb3fc48ce6cc0551a6701')
+            verifyCode = await this.twilio.verify.services('VAde2698b0f0abd37511d362a35a46c0ad')
                 .verificationChecks
                 .create({ code: body.code, to: body.phone_number })
             if (verifyCode.status === 'approved') {
