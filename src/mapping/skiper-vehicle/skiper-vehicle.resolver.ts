@@ -7,7 +7,7 @@ export class SkiperVehicleResolver {
 
     constructor(private readonly service:SkiperVehicleService){}
 
-    @Query()
+    @Query('getAllSkiperVehicle')
     getAllSkiperVehicle(){
         return this.service.getAll();
     }
@@ -15,11 +15,6 @@ export class SkiperVehicleResolver {
     @Query()
     getSkiperVehicleById(@Args('id') id: number){
         return this.service.getById(id);
-    }
-
-    @Query()
-    getAllOrderTracing(){
-        return this.service.getAll();
     }
 
     @Mutation()

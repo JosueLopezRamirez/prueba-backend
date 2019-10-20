@@ -10,7 +10,10 @@ export class SkiperVehicleService {
 
     async getAll():Promise<SkiperVehicle[]> {
         try {
-            return await this.repository.find();
+            return await this.repository.find( {
+                relations: ["skiperCatTravel", "vehicleCatalog",
+                "vehicleTrademark", "vehicleModel", "vehicleYear"]
+            } );
         } catch (error) {
             throw new HttpException(
                 error,
