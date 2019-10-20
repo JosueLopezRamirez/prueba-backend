@@ -34,12 +34,12 @@ export class SkiperOrderTracingResolver {
         return result
     }
 
-    @Subscription('skiperNewOrders',  {
+    @Subscription('skiperOrders',  {
         filter(payload, variables) {
             return payload.idcomercio === variables.idcomercio
         }
     })
     skiperOrderByCommerceIdByIdStatus() {
-        return pubSub.asyncIterator('skiperNewOrders')
+        return pubSub.asyncIterator('skiperOrders')
     }
 }

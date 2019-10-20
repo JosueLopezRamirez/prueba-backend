@@ -34,7 +34,7 @@ export class SkiperOrderResolver {
     }
 
     @Query()
-    async skiperCountNewOrderss(@Args('idcommerce', ParseIntPipe) idcommerce: number) {
+    async skiperCountNewOrders(@Args('idcommerce', ParseIntPipe) idcommerce: number) {
         let result = this.skiperOrderService.CountOrders(idcommerce, [1,2]);
         return result;
     }
