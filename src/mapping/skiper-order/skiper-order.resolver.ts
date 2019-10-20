@@ -17,13 +17,31 @@ export class SkiperOrderResolver {
 
     @Query()
     async skiperNewOrders(@Args('idcommerce', ParseIntPipe) idcommerce: number) {
-        let result = this.skiperOrderService.GetNuevasOrdenes(idcommerce);
+        let result = this.skiperOrderService.GetOrdenes(idcommerce, [1,2]);
         return result;
     }
 
     @Query()
-    async skiperCountNewOrders(@Args('idcommerce', ParseIntPipe) idcommerce: number) {
-        let result = this.skiperOrderService.CountNewOrders(idcommerce);
+    async skiperOrdersInProcess(@Args('idcommerce', ParseIntPipe) idcommerce: number) {
+        let result = this.skiperOrderService.GetOrdenes(idcommerce, [3,4]);
+        return result;
+    }
+
+    @Query()
+    async skiperOrdersFinish(@Args('idcommerce', ParseIntPipe) idcommerce: number) {
+        let result = this.skiperOrderService.GetOrdenes(idcommerce, [5,6,7]);
+        return result;
+    }
+
+    @Query()
+    async skiperCountNewOrderss(@Args('idcommerce', ParseIntPipe) idcommerce: number) {
+        let result = this.skiperOrderService.CountOrders(idcommerce, [1,2]);
+        return result;
+    }
+
+    @Query()
+    async skiperCountOrdersInProces(@Args('idcommerce', ParseIntPipe) idcommerce: number) {
+        let result = this.skiperOrderService.CountOrders(idcommerce, [3,4]);
         return result;
     }
 

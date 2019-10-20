@@ -20,11 +20,11 @@ export class SkiperOrderService {
         return await this.repository.find({ relations: ["user", "skiperCommerce", "skiperOrderTracing"] });
     }
 
-    async GetNuevasOrdenes(idcommerce: number): Promise<SkiperOrder[]> {
+    async GetOrdenes(idcommerce: number, status: number[]): Promise<SkiperOrder[]> {
         return await this.repository.createQueryBuilder("SkiperOrder")
         .innerJoinAndSelect("SkiperOrder.user", "User")
         .innerJoinAndSelect("SkiperOrder.skiperCommerce", "SkiperCommerce","SkiperCommerce.id = :idcommerce", { idcommerce })
-        .innerJoinAndSelect("SkiperOrder.skiperOrderTracing", "SkiperOrderTracing","SkiperOrderTracing.orderStatus IN (:idstatus)", { idstatus: 1 })
+        .innerJoinAndSelect("SkiperOrder.skiperOrderTracing", "SkiperOrderTracing","SkiperOrderTracing.orderStatus IN (:idstatus)", { idstatus: status })
         .innerJoinAndSelect("SkiperOrder.skiperOrderDetail", "SkiperOrderDetail")
         .leftJoinAndSelect("SkiperOrderDetail.skiperProductCommerce", "SkiperProductCommerce")
         .innerJoinAndSelect(subQuery => {
@@ -55,11 +55,11 @@ export class SkiperOrderService {
         .getOne();
     }
 
-    async CountNewOrders(idcommerce: number): Promise<number> {
+    async CountOrders(idcommerce: number, status: number[]): Promise<number> {
         return await this.repository.createQueryBuilder("SkiperOrder")
         .innerJoinAndSelect("SkiperOrder.user", "User")
         .innerJoinAndSelect("SkiperOrder.skiperCommerce", "SkiperCommerce","SkiperCommerce.id = :idcommerce", { idcommerce })
-        .innerJoinAndSelect("SkiperOrder.skiperOrderTracing", "SkiperOrderTracing","SkiperOrderTracing.orderStatus IN (:idstatus)", { idstatus: 1 })
+        .innerJoinAndSelect("SkiperOrder.skiperOrderTracing", "SkiperOrderTracing","SkiperOrderTracing.orderStatus IN (:idstatus)", { idstatus: status })
         .innerJoinAndSelect("SkiperOrder.skiperOrderDetail", "SkiperOrderDetail")
         .leftJoinAndSelect("SkiperOrderDetail.skiperProductCommerce", "SkiperProductCommerce")
         .innerJoinAndSelect(subQuery => {

@@ -28,6 +28,9 @@ type Query {
     searchSkiperOrder(id: Int): SkiperOrderDto
     skiperNewOrders(idcommerce: Int!): [SkiperOrderDto]
     skiperCountNewOrders(idcommerce: Int!): Int!
+    skiperOrdersInProcecss(idcommerce: Int!): [SkiperOrderDto]
+    skiperCountOrdersInProcecss(idcommerce: Int!): Int!
+    skiperOrdersFinish(idcommerce: Int!): [SkiperOrderDto]
 }
 
 type Mutation {
