@@ -1,19 +1,20 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { SkiperVehicleService } from './skiper-vehicle.service';
 import { SkiperVehicleInput } from './skiper-vehicle.dto';
+import { ParseIntPipe } from '@nestjs/common';
 
 @Resolver('SkiperVehicle')
 export class SkiperVehicleResolver {
 
     constructor(private readonly service:SkiperVehicleService){}
 
-    @Query('getAllSkiperVehicle')
-    getAllSkiperVehicle(){
-        return this.service.getAll();
+    @Query('SkiperVehicle')
+    async getAllSkiperVehicle() {
+        return await this.service.getAll();
     }
 
     @Query()
-    getSkiperVehicleById(@Args('id') id: number){
+    getSkiperVehicleById(@Args('id', ParseIntPipe) id: number){
         return this.service.getById(id);
     }
 

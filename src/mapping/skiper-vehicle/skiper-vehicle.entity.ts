@@ -6,7 +6,7 @@ import { VehicleModels } from "../vehicle-models/vehicle-models.entity";
 import { VehicleYears } from "../vehicle-years/vehicle-years.entity";
 import { SkiperVehicleAgent } from "../skiper-vehicle-agent/skiper-vehicle-agent.entity";
 
-@Entity()
+@Entity('skiper_vehicle')
 export class SkiperVehicle {
 
     @PrimaryGeneratedColumn() id:number;
@@ -16,6 +16,12 @@ export class SkiperVehicle {
     @Column({nullable: true}) lat: string;
 
     @Column({nullable: true}) lon: string;
+
+    @Column({nullable: true}) id_cat_travel: number;
+    @Column({nullable: true}) id_vehicle_catalog: number;
+    @Column({nullable: true}) idtrademark: number;
+    @Column({nullable: true}) idmodel: number;
+    @Column({nullable: true}) idyear: number;
 
     @ManyToOne(type => SkiperCatTravel, {nullable: false})
     @JoinColumn({name:'id_cat_travel'}) skiperCatTravel: SkiperCatTravel;

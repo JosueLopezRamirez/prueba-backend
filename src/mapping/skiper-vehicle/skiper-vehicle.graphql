@@ -1,5 +1,5 @@
 input SkiperVehicleInput {
-    id:Int
+    id:Int!
     license_plate:String!
     lat: String
     lon: String
@@ -23,8 +23,8 @@ type SkiperVehicleDto {
 }
 
 type Query {
-    getAllSkiperVehicle: [SkiperVehicleDto!]!
-    getSkiperVehicleById(id: Int): SkiperVehicleDto
+    SkiperVehicle: [SkiperVehicleDto!]!
+    getSkiperVehicleById(id: Int!): SkiperVehicleDto
 }
 
 type Mutation {
