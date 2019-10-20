@@ -41,6 +41,7 @@ import { SkiperOrderTracingModule } from './mapping/skiper-order-tracing/skiper-
 import { UserCivilStatusModule } from './mapping/user-civil-status/user-civil-status.module';
 import { AppCitiesModule } from './mapping/app-cities/app-cities.module';
 import { SkiperVehicleModule } from './mapping/skiper-vehicle/skiper-vehicle.module';
+import { SkiperVehicleAgentModule } from './mapping/skiper-vehicle-agent/skiper-vehicle-agent.module'
 
 @Module({
   imports: [
@@ -75,6 +76,7 @@ import { SkiperVehicleModule } from './mapping/skiper-vehicle/skiper-vehicle.mod
     SkiperOrderTracingModule,
     UserCivilStatusModule,
     SkiperVehicleModule,
+    SkiperVehicleAgentModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DATABASE_HOST,

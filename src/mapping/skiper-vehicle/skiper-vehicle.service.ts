@@ -29,7 +29,7 @@ export class SkiperVehicleService {
         });
     }
 
-    async registerSkiperVehicle(input:SkiperVehicleInput):Promise<SkiperVehicle>{
+    registerSkiperVehicle(input:SkiperVehicleInput):Promise<SkiperVehicle>{
         try 
         {
             let skipervehicle = this.parseSkipeVehicle(input);
@@ -65,6 +65,7 @@ export class SkiperVehicleService {
 
     private parseSkipeVehicle(input:SkiperVehicleInput):SkiperVehicle {
         let skipervehicle:SkiperVehicle = new SkiperVehicle();
+        skipervehicle.id = input.id;
         skipervehicle.license_plate = input.license_plate;
         skipervehicle.id_cat_travel =  input.IdCatTravel;
         skipervehicle.id_vehicle_catalog = input.IdVehiclecatalog;
