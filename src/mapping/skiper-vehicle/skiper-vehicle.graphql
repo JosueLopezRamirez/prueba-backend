@@ -1,3 +1,15 @@
+input SkiperVehicleInput {
+    id:Int
+    license_plate:String!
+    lat: String
+    lon: String
+    IdCatTravel: Int!
+    IdVehiclecatalog: Int!
+    IdTrademark: Int!
+    IdModel: Int!
+    IdYear: Int!
+}
+
 type SkiperVehicleDto {
     id: Int
     license_plate: String
@@ -9,3 +21,13 @@ type SkiperVehicleDto {
     vehicleModel: VehicleModelsDto
     vehicleYear: VehicleYearsDto
 }
+
+type Query {
+    getAllSkiperVehicle: [SkiperVehicleDto!]!
+    getSkiperVehicleById(id: Int): SkiperVehicleDto
+}
+
+type Mutation {
+    registerSkiperVehicle(input: SkiperVehicleInput!): SkiperVehicleDto!
+    updateSkiperVehicle(input: SkiperVehicleInput!): SkiperVehicleDto!
+ }
