@@ -35,6 +35,7 @@ type CommerceDto {
 
 type Query {
     commerces: [CommerceDto!]!
+    CommercesIntoRadio(latitud: Float!, longitud: Float!): [CommerceDto!]!
 }
 
 type Mutation {
