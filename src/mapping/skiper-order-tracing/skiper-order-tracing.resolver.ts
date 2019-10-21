@@ -27,9 +27,8 @@ export class SkiperOrderTracingResolver {
         let result = await this.service.create(input);
         //si el estado es recibido notificamos al cliente
         await this.f.getById(input.orderID).then( async (res: SkiperOrder) => {
-            input.orderStatusID
             let pedido = await this.f.GetOrderByID(res.id)
-            pubSub.publish('skiperOrders', { skiperNewOrders: pedido, idcomercio: res.skiperCommerce.id })
+            pubSub.publish('skiperOrders', { skiperOrders: pedido, idcomercio: res.skiperCommerce.id })
         })
         return result
     }
