@@ -53,7 +53,7 @@ export class AuthService {
                 return new SignResponse(new SignInOk(
                     await this.tokenGenerated(result), result.firstname,
                     result.lastname, result.user,
-                    result.email, result.phone, co, ve
+                    result.email, result.phone,result.avatar, co, ve
                 ), null);
             } catch (error) {
                 console.log('aqui no')
@@ -72,7 +72,7 @@ export class AuthService {
             return new SignResponse(new SignInOk(
                 await this.tokenGenerated(result), result.firstname,
                 result.lastname, result.user,
-                result.email, result.phone
+                result.email, result.phone,result.avatar
             ), null);
         } else {
             return new SignResponse(null, new ErrorResponse('Sponsor ID is not valid!', 400, false));

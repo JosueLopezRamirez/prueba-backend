@@ -81,7 +81,6 @@ export class UserService {
             }
             return sponsor;
         } catch (error) {
-            console.log('aqui es el error baby :3')
             console.log(error)
             return null;
         }
@@ -112,6 +111,28 @@ export class UserService {
         }
     }
 
+    async updateAvatarImage(id:number,image:string){
+        try {
+            let user = await this.findById(id);
+            user.avatar = image;
+            return await this.userRepository.save(user);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async getAvatarImage(id:number){
+        try {
+            let user = await this.findById(id);
+            if(user){
+                return user.avatar;
+            }
+            return 'Usuario no existe'
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     async logout(id: number) {
         try {
             let user = await this.findById(id);
@@ -122,8 +143,6 @@ export class UserService {
             console.log(error);
         }
     }
-
-
 
     async findByPayload(payload: any) {
         const { user } = payload;
@@ -143,6 +162,7 @@ export class UserService {
         user.phone = input.phone;
         user.create_at = input.create_at;
         user.date_birth = input.date_birth;
+        user.avatar = input.avatar;
         user.city = city;
         user.country = country;
         user.civilStatus = civil_status;

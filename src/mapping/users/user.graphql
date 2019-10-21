@@ -11,6 +11,7 @@ input UserInput {
   create_at: DateTime
   date_birth: DateTime
   is_online: Boolean
+  avatar: String
   country_id: Int!
   city_id: Int
   idcivil_status: Int
@@ -29,14 +30,17 @@ type UserDto {
   create_at: DateTime
   date_birth: DateTime
   is_online: Boolean
+  avatar: String
   country: countrieDto
   city: citiesDto
   civilStatus: UserCivilStatusDto
 }
 
 type Mutation {
-  createUser(input: UserInput!): UserDto!
+  createUser(input: UserInput!): UserDto
   updateUser(input: UserInput!): UserDto!
+  setAvatarImage(id: Int!,image:String!): String!
+  getAvatarImage(id: Int!): String!
 }
 
 type Query {

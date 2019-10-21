@@ -12,13 +12,14 @@ export class signInDto {
 @ObjectType()
 export class SignInOk {
 
-    constructor(token,firstname,lastname,username,email,phone_number,commerce?,vehicle?){
+    constructor(token,firstname,lastname,username,email,phone_number,avatar,commerce?,vehicle?){
         this.token = token;
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;
         this.email = email;
         this.phone_number = phone_number;
+        this.avatar = avatar || "";
         this.commerce = commerce || null;
         this.vehicle = vehicle || null;
     }
@@ -29,6 +30,7 @@ export class SignInOk {
     username: string
     email: string
     phone_number: string
+    avatar: string
     commerce: CommerceDto
     vehicle: SkiperVehicleDto
 }

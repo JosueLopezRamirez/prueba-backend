@@ -27,6 +27,7 @@ type SignInOk {
   username: String
   email: String
   phone_number: String
+  avatar: String
   commerce: CommerceDto
   vehicle: SkiperVehicleDto
 }

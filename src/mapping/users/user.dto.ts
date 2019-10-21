@@ -17,6 +17,7 @@ export class UserInput {
     create_at: Date;
     date_birth: Date;
     is_online: boolean;
+    avatar:string;
     country_id: number;
     city_id: number;
     idcivil_status:number;
@@ -36,6 +37,7 @@ export class UserDto {
     create_at: Date;
     date_birth: Date;
     is_online: boolean;
+    avatar:string;
     city: citiesDto;
     country: countrieDto;
     civilStatus: UserCivilStatusDto;

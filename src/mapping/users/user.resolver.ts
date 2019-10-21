@@ -1,4 +1,4 @@
-import { Resolver,  Mutation, Args, Query } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { UserInput } from './user.dto';
 import { ParseIntPipe, UseGuards } from '@nestjs/common';
@@ -15,7 +15,7 @@ export class UserResolver {
     async users() {
         return await this.userService.getAll();
     }
-    
+
     // @UseGuards(new AuthGuard())
     @Query()
     searchUser(@Args('id', ParseIntPipe) id: number) {
@@ -30,6 +30,16 @@ export class UserResolver {
         } catch (error) {
             return `Error resolver -> ${error}`
         }
+    }
+
+    @Mutation()
+    async setAvatarImage(@Args('id', ParseIntPipe) id: number, @Args('image') image: string) {
+        return await this.userService.updateAvatarImage(id, image);
+    }
+
+    @Mutation()
+    async getAvatarImage(@Args('id', ParseIntPipe) id: number) {
+        return await this.userService.getAvatarImage(id);
     }
 
     @UseGuards(new AuthGuard())

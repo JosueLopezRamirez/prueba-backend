@@ -28,14 +28,11 @@ export class User {
     }
 
     @Column({ length: 255 })
-    @Min(8, { message: 'the password must be have 8 characters at least' })
-    @Length(255) password: string;
+    @Min(8, { message: 'the password must be have 8 characters at least' }) @Length(255) password: string;
 
-    @Column({ nullable: true, default: 1 })
-    @IsOptional() sponsor_id: number;
+    @Column({ nullable: true, default: 1 }) @IsOptional() sponsor_id: number;
 
-    @Column({ nullable: true, length: 255 })
-    @Length(255) address: string;
+    @Column({ nullable: true, length: 255 }) @Length(255) address: string;
 
     @Column({ nullable: false, length: 100 }) phone: string;
 
@@ -47,6 +44,7 @@ export class User {
         if(this.sponsor_id == null){
             this.sponsor_id = 1;
         }
+        this.date_birth = new Date();
     }
 
     @Column('date', { nullable: true }) create_at: Date;
@@ -54,6 +52,8 @@ export class User {
     @Column('date', { nullable: false }) date_birth: Date;
 
     @Column('boolean', { nullable: true }) is_online: boolean;
+
+    @Column('longtext',{ nullable: true}) avatar: string;
 
     @ManyToOne(type => Countrie, { nullable: false })
     @JoinColumn({ name: 'idcountry' }) country: Countrie;
