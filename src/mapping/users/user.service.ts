@@ -34,6 +34,13 @@ export class UserService {
         });
     }
 
+    async findBySponsorId(id: number) {
+        return await this.userRepository.find({
+            where: { sponsor_id: id },
+            relations: ["country", "city"]
+        });
+    }
+
     //Usando paginacion para cargar los usuarios
     async userPages(page: number = 1): Promise<User[]> {
         const countries = await this.userRepository.find({

@@ -46,4 +46,5 @@ type Mutation {
 type Query {
   users: [UserDto!]!
   searchUser(id: ID!): UserDto
+  searchUsersBySponsorId(id:Int):[UserDto!]!
 }

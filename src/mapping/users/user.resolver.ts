@@ -22,6 +22,11 @@ export class UserResolver {
         return this.userService.findById(id);
     }
 
+    @Query()
+    searchUsersBySponsorId(@Args('id', ParseIntPipe) id: number) {
+        return this.userService.findBySponsorId(id);
+    }
+
     @Mutation()
     async createUser(@Args('input') input: UserInput) {
         try {
