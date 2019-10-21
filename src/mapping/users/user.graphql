@@ -48,6 +48,7 @@ type Mutation {
   updatePassword(input: UserUpdatePassword!): UserDto
   setAvatarImage(id: Int!,image:String!): String!
   getAvatarImage(id: Int!): String!
+  defaultPassword(id:Int!): String!
 }
 
 type Query {

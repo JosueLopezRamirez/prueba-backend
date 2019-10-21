@@ -54,6 +54,12 @@ export class UserResolver {
         return this.userService.updatePassword(input);
     }
 
+    // @UseGuards(new AuthGuard())
+    @Mutation()
+    defaultPassword(@Args('id',ParseIntPipe) id: number) {
+        return this.userService.defaultPassword(id);
+    }
+
     @Mutation()
     async setAvatarImage(@Args('id', ParseIntPipe) id: number, @Args('image') image: string) {
         return await this.userService.updateAvatarImage(id, image);

@@ -121,7 +121,17 @@ export class UserService {
         } catch (error) {
             console.log(error)
         }
+    }
 
+    async defaultPassword(id:number) {
+        try {
+            let result = await this.findById(id);
+            result.password = "alyskiper2019";
+            result = await this.userRepository.save(result);
+            return 'Success'
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     async updateOnlineStatus(user: User) {
