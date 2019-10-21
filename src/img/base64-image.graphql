@@ -1,0 +1,4 @@
+
+type Mutation {
+    uploadBase64(imageBase64:String!): String
+}
