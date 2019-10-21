@@ -95,6 +95,7 @@ export class UserService {
 
     //Update a user
     async update(input: UserInput): Promise<User> {
+        console.log(input);
         try {
             let userUpdate = await this.findById(input.id);
             userUpdate.firstname = input.firstname;

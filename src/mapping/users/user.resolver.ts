@@ -47,13 +47,15 @@ export class UserResolver {
         return await this.userService.getAvatarImage(id);
     }
 
-    @UseGuards(new AuthGuard())
+    // @UseGuards(new AuthGuard())
     @Mutation()
     async updateUser(@Args('input') input: UserInput) {
+        console.log(input)
         try {
             let result = await this.userService.update(input);
             return 'Usuario actualizado con exito!!';
         } catch (error) {
+            console.log(error)
             return `Error resolver -> ${error}`
         }
     }

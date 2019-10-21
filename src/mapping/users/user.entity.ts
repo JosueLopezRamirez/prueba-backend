@@ -44,7 +44,10 @@ export class User {
         if(this.sponsor_id == null){
             this.sponsor_id = 1;
         }
-        this.date_birth = new Date();
+        if(this.date_birth == null){
+            this.date_birth = new Date();
+        }
+        this.is_online = false;
     }
 
     @Column('date', { nullable: true }) create_at: Date;
