@@ -9,6 +9,7 @@ type SkiperProductCommerceDto {
     discount: Int
     skiperCommerce: CommerceDto!
     skiperCatProducts: SkiperCatProductDto!
+    optionAddon: [OptionAddonDto!]
 }
 
 input ProductCommerceInput {

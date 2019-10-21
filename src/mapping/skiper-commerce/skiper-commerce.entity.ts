@@ -4,6 +4,7 @@ import { SkiperAgent } from "../skiper-agent/skiper-agent.entity";
 import { SkiperCatCommerce } from "../skiper-cat-commerce/skiper-cat-commerce.entity";
 import { Cities } from "../cities/cities.entity";
 import { SkiperOrder } from "../skiper-order/skiper-order.entity";
+import { SkiperCatProductsCommerce } from "../skiper-cat-product-commerce/skiper-cat-products-commerce.entity";
 
 @Entity('skiper_commerces')
 export class SkiperCommerce {
@@ -39,4 +40,7 @@ export class SkiperCommerce {
 
     @ManyToOne(type => Cities, { nullable: false })
     @JoinColumn({ name: 'idcity' }) city: Cities;
+
+    @OneToMany(type => SkiperCatProductsCommerce, x => x.skiperCommerce)
+    skiperCatProductsCommerce: SkiperCatProductsCommerce[];
 }

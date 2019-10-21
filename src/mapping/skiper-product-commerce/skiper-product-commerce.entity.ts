@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 import { SkiperCommerce } from "../skiper-commerce/skiper-commerce.entity";
 import { SkiperCatProductsCommerce } from "../skiper-cat-product-commerce/skiper-cat-products-commerce.entity";
+import { OptionAddon } from "../option-addon/option-addon.entity";
 
 
 @Entity('skiper_products_commerces')
@@ -27,4 +28,7 @@ export class SkiperProductCommerce {
     
     @ManyToOne(type => SkiperCatProductsCommerce, {nullable: false})
     @JoinColumn({name:'id_cat_product'}) skiperProducts: SkiperCatProductsCommerce;
+
+    @OneToMany(type => OptionAddon, x => x.skiperProducts)
+    optionAddon: OptionAddon[];
 }
