@@ -11,7 +11,7 @@ export class SkiperAgentResolver {
         private agentService :SkiperAgentService
     ){}
 
-    @Query(() => [SkiperAgentDto])
+    @Query()
     async agents(){
         return this.agentService.getAll();
     }

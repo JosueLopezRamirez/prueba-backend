@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany, BeforeInsert } from "typeorm";
 import { IsNotEmpty, IsBoolean, IsString, IsDate } from "class-validator";
 import { CategoryAgent } from "../category-agent/categoty-agent.entity";
 import { User } from "../users/user.entity";
@@ -18,6 +18,11 @@ export class SkiperAgent {
     @IsNotEmpty()
     @IsString()
     identity:string;
+
+    // @BeforeInsert()
+    // before(){
+        
+    // }
 
     @Column('date',{nullable:false})
     @IsNotEmpty()

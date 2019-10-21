@@ -9,28 +9,28 @@ import { User } from '../users/user.entity';
 
 @Injectable()
 export class SkiperAgentService {
-    
-    constructor(
-        @InjectRepository(SkiperAgent) private agentRepository:Repository<SkiperAgent>,
-        private readonly userService: UserService,
-        private readonly categoryAgentService:CategoryAgentService
-    ){}
 
-    async getAll():Promise<SkiperAgent[]>{
-        return await this.agentRepository.find({relations:["user","categoryAgent"]});
+    constructor(
+        @InjectRepository(SkiperAgent) private agentRepository: Repository<SkiperAgent>,
+        private readonly userService: UserService,
+        private readonly categoryAgentService: CategoryAgentService
+    ) { }
+
+    async getAll() {
+        return await this.agentRepository.find({ relations: ["user", "categoryAgent"] });
     }
 
-    async getById(id:number):Promise<SkiperAgent>{
+    async getById(id: number) {
         return await this.agentRepository.findOne({
-            relations:["user","categoryAgent"],
-            where:{id:id}
+            relations: ["user", "categoryAgent"],
+            where: { id: id }
         });
     }
 
-    async getByUser(user:User):Promise<SkiperAgent>{
+    async getByUser(user: User) {
         try {
             return await this.agentRepository.findOne({
-                where:{user:user}
+                where: { user: user }
             });
         } catch (error) {
             console.log(error)
@@ -38,13 +38,13 @@ export class SkiperAgentService {
     }
 
 
-    async register(agent: AgentInput):Promise<SkiperAgent>{
+    async register(agent: AgentInput) {
         try {
             console.log(agent.user_id)
             let user = await this.userService.findById(agent.user_id);
             let category = await this.categoryAgentService.getById(agent.categoryAgent_id);
-            if(user !== undefined && category !== undefined){
-                let agentInsert:SkiperAgent = this.parseAgent(agent,user,category);
+            if (user !== undefined && category !== undefined) {
+                let agentInsert: SkiperAgent = this.parseAgent(agent, user, category);
                 return await this.agentRepository.save(agentInsert);
             }
         } catch (error) {
@@ -55,18 +55,18 @@ export class SkiperAgentService {
     async update(agent: AgentInput) {
         try {
             let agentUpdate = await this.getById(agent.id);
-            if(agentUpdate !== undefined){
+            if (agentUpdate !== undefined) {
                 agentUpdate.state = agent.state;
                 return await this.agentRepository.save(agentUpdate);
-            }    
-            
+            }
+
         } catch (error) {
             console.log(error)
         }
     }
 
-    private parseAgent(input:AgentInput,user?,category?):SkiperAgent{
-        let agent:SkiperAgent = new SkiperAgent();
+    private parseAgent(input: AgentInput, user?, category?): SkiperAgent {
+        let agent: SkiperAgent = new SkiperAgent();
         agent.identity = input.identity;
         agent.state = input.state;
         agent.create_at = input.create_at;
