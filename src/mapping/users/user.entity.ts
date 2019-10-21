@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne, BeforeInsert } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne, BeforeInsert, BeforeUpdate } from 'typeorm';
 import { Min, Length, IsOptional } from 'class-validator';
 import { Countrie } from '../countries/countrie.entity';
 import { Cities } from '../cities/cities.entity';
@@ -23,6 +23,7 @@ export class User {
     @Length(50) user: string;
 
     @BeforeInsert()
+    @BeforeUpdate()
     async hashPassword() {
         this.password = await bcrypt.hash(this.password, parseInt(process.env.SALT));
     }

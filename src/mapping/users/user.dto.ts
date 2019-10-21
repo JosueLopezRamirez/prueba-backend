@@ -23,6 +23,13 @@ export class UserInput {
     idcivil_status:number;
 }
 
+@InputType()
+export class UserUpdatePassword {
+    id:number;
+    oldPassword:string;
+    newPassword:string;
+}
+
 @ObjectType()
 export class UserDto {
     id: number;

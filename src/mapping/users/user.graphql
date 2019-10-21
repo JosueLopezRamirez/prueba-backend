@@ -36,9 +36,16 @@ type UserDto {
   civilStatus: UserCivilStatusDto
 }
 
+input UserUpdatePassword {
+    id: Int!
+    oldPassword: String!
+    newPassword: String!
+}
+
 type Mutation {
   createUser(input: UserInput!): UserDto
-  updateUser(input: UserInput!): UserDto!
+  updateUser(input: UserInput!): UserDto
+  updatePassword(input: UserUpdatePassword!): UserDto
   setAvatarImage(id: Int!,image:String!): String!
   getAvatarImage(id: Int!): String!
 }

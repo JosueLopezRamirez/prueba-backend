@@ -2,10 +2,11 @@ import { Injectable, Logger, HttpException, HttpStatus } from '@nestjs/common';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserInput } from './user.dto';
+import { UserInput, UserUpdatePassword } from './user.dto';
 import { CitiesService } from '../cities/cities.service';
 import { CountrieService } from '../countries/countrie.service';
 import { UserCivilStatusService } from '../user-civil-status/user-civil-status.service';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class UserService {
@@ -95,7 +96,6 @@ export class UserService {
 
     //Update a user
     async update(input: UserInput): Promise<User> {
-        console.log(input);
         try {
             let userUpdate = await this.findById(input.id);
             userUpdate.firstname = input.firstname;
@@ -110,6 +110,20 @@ export class UserService {
         }
     }
 
+    async updatePassword(input: UserUpdatePassword) {
+        try {
+            let result = await this.findById(input.id);
+            if (!bcrypt.compareSync(input.oldPassword, result.password)) {
+                return null;
+            }
+            result.password = input.newPassword;
+            return await this.userRepository.save(result);
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
     async updateOnlineStatus(user: User) {
         try {
             user.is_online = true;
@@ -120,7 +134,7 @@ export class UserService {
         }
     }
 
-    async updateAvatarImage(id:number,image:string){
+    async updateAvatarImage(id: number, image: string) {
         try {
             let user = await this.findById(id);
             user.avatar = image;
@@ -130,10 +144,10 @@ export class UserService {
         }
     }
 
-    async getAvatarImage(id:number){
+    async getAvatarImage(id: number) {
         try {
             let user = await this.findById(id);
-            if(user){
+            if (user) {
                 return user.avatar;
             }
             return 'Usuario no existe'

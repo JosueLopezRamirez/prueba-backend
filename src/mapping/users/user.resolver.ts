@@ -1,6 +1,6 @@
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { UserService } from './user.service';
-import { UserInput } from './user.dto';
+import { UserInput, UserUpdatePassword } from './user.dto';
 import { ParseIntPipe, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../../shared/auth.guard';
 @Resolver('User')
@@ -37,6 +37,23 @@ export class UserResolver {
         }
     }
 
+    @UseGuards(new AuthGuard())
+    @Mutation()
+    async updateUser(@Args('input') input: UserInput) {
+        try {
+            return await this.userService.update(input);
+        } catch (error) {
+            console.log(error)
+            return `Error resolver -> ${error}`
+        }
+    }
+
+    @UseGuards(new AuthGuard())
+    @Mutation()
+    updatePassword(@Args('input') input: UserUpdatePassword) {
+        return this.userService.updatePassword(input);
+    }
+
     @Mutation()
     async setAvatarImage(@Args('id', ParseIntPipe) id: number, @Args('image') image: string) {
         return await this.userService.updateAvatarImage(id, image);
@@ -45,18 +62,5 @@ export class UserResolver {
     @Mutation()
     async getAvatarImage(@Args('id', ParseIntPipe) id: number) {
         return await this.userService.getAvatarImage(id);
-    }
-
-    // @UseGuards(new AuthGuard())
-    @Mutation()
-    async updateUser(@Args('input') input: UserInput) {
-        console.log(input)
-        try {
-            let result = await this.userService.update(input);
-            return 'Usuario actualizado con exito!!';
-        } catch (error) {
-            console.log(error)
-            return `Error resolver -> ${error}`
-        }
     }
 }
