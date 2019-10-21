@@ -19,7 +19,14 @@ export class SkiperCommerceService {
 
     async getAll():Promise<SkiperCommerce[]>{
         try {
-            return await this.repository.find({relations:["skiperAgent","catCommerce","country"]});
+            
+            return await this.repository.find({
+                relations:[
+                    "skiperAgent","catCommerce","country",
+                    "skiperCatProductsCommerce", "skiperCatProductsCommerce.skiperProductCommerce",
+                    "skiperCatProductsCommerce.skiperProductCommerce.optionAddon"
+                ]
+            });
         } catch (error) {
             console.error(error)
         }

@@ -1,6 +1,7 @@
 import { InputType, ObjectType } from "type-graphql";
 import { CommerceDto } from "../skiper-commerce/skiper-commerce.dto";
 import { SkiperCatProductDto } from "../skiper-cat-product-commerce/skiper-cat-product-commerce.dto";
+import { OptionAddonDto } from "../option-addon/option-addon.dto";
 
 @InputType()
 export class ProductCommerceInput {
@@ -28,5 +29,6 @@ export class SkiperProductCommerceDto {
     discount:number;
     skiperCommerce: CommerceDto;
     skiperCatProducts: SkiperCatProductDto;
+    optionAddon: OptionAddonDto;
 }
 

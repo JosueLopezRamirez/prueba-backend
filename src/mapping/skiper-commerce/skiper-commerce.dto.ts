@@ -3,6 +3,7 @@ import { SkiperAgentDto } from "../skiper-agent/skiper-agent.dto";
 import { countrieDto } from "../countries/countrie.dto";
 import { SkiperCatCommerceDto } from "../skiper-cat-commerce/skiper-cat-commerce.dto";
 import { citiesDto } from "../cities/cities.dto";
+import { SkiperCatProductDto } from "../skiper-cat-product-commerce/skiper-cat-product-commerce.dto";
 
 @InputType()
 export class CommerceInput {
@@ -38,4 +39,5 @@ export class CommerceDto{
     catCommerce: SkiperCatCommerceDto;
     country:countrieDto;
     city:citiesDto;
+    skiperCatProductsCommerce: SkiperCatProductDto
 }
