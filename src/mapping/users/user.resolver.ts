@@ -1,6 +1,6 @@
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { UserService } from './user.service';
-import { UserInput, UserUpdatePassword } from './user.dto';
+import { UserInput, UserUpdatePassword, UserUpdateInput } from './user.dto';
 import { ParseIntPipe, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../../shared/auth.guard';
 @Resolver('User')
@@ -39,7 +39,7 @@ export class UserResolver {
 
     @UseGuards(new AuthGuard())
     @Mutation()
-    async updateUser(@Args('input') input: UserInput) {
+    async updateUser(@Args('input') input: UserUpdateInput) {
         try {
             return await this.userService.update(input);
         } catch (error) {

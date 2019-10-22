@@ -30,6 +30,18 @@ export class UserUpdatePassword {
     newPassword:string;
 }
 
+@InputType()
+export class UserUpdateInput {
+    id:number;
+    firstname:string;
+    lastname:string;
+    username:string;
+    email:string;
+    phone:string;
+    country_id:number;
+    avatart:string;
+}
+
 @ObjectType()
 export class UserDto {
     id: number;

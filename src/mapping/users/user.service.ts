@@ -2,7 +2,7 @@ import { Injectable, Logger, HttpException, HttpStatus } from '@nestjs/common';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserInput, UserUpdatePassword } from './user.dto';
+import { UserInput, UserUpdatePassword, UserUpdateInput } from './user.dto';
 import { CitiesService } from '../cities/cities.service';
 import { CountrieService } from '../countries/countrie.service';
 import { UserCivilStatusService } from '../user-civil-status/user-civil-status.service';
@@ -95,13 +95,12 @@ export class UserService {
     }
 
     //Update a user
-    async update(input: UserInput): Promise<User> {
+    async update(input: UserUpdateInput): Promise<User> {
         try {
             let userUpdate = await this.findById(input.id);
             userUpdate.firstname = input.firstname;
             userUpdate.lastname = input.lastname;
             userUpdate.email = input.email;
-            userUpdate.password = await bcrypt.hash(input.password, parseInt(process.env.SALT));
             userUpdate.country = await this.country.getById(input.country_id);
             userUpdate.phone = input.phone;
             return await this.userRepository.save(userUpdate);

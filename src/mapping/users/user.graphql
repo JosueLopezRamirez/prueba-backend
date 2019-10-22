@@ -42,6 +42,17 @@ input UserUpdatePassword {
     newPassword: String!
 }
 
+input UserUpdateInput {
+    id: Int!
+    firstname: String
+    lastname: String
+    username: String
+    email: String
+    phone: String
+    country_id: Int
+    avatart: String
+}
+
 type Mutation {
   createUser(input: UserInput!): UserDto
   updateUser(input: UserInput!): UserDto
