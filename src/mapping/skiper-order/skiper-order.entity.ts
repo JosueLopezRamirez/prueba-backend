@@ -21,6 +21,7 @@ export class SkiperOrder {
     @ManyToOne(type => SkiperCommerce, { nullable: false })
     @JoinColumn({ name: 'idcommerce' }) skiperCommerce: SkiperCommerce;
 
+    //One to Many
     @OneToMany(type => SkiperOrderDetail, x => x.skiperOrder)
     skiperOrderDetail:  SkiperOrderDetail[];
 

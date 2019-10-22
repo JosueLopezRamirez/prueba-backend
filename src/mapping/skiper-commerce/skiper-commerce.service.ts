@@ -6,7 +6,7 @@ import { SkiperAgentService } from '../skiper-agent/skiper-agent.service';
 import { CountrieService } from '../countries/countrie.service';
 import { SkiperCatCommerceService } from '../skiper-cat-commerce/skiper-cat-commerce.service';
 import { CommerceInput } from './skiper-commerce.dto';
-require('isomorphic-fetch');
+// require('isomorphic-fetch');
 
 @Injectable()
 export class SkiperCommerceService {
@@ -20,7 +20,6 @@ export class SkiperCommerceService {
 
     async getAll():Promise<SkiperCommerce[]>{
         try {
-            
             return await this.repository.find({
                 relations:[
                     "skiperAgent","catCommerce","country",

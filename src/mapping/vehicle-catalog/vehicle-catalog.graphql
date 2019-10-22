@@ -3,3 +3,8 @@ type VehicleCatalogDto {
     name: String
     url_img_vehicle: String
 }
+
+type Query {
+    getAllVehicleCatalog(): [VehicleTrademarkDto!]!
+    getVehicleCatalogkById(id:Int!): VehicleTrademarkDto!
+}
