@@ -39,7 +39,7 @@ export class UserUpdateInput {
     email:string;
     phone:string;
     country_id:number;
-    avatart:string;
+    avatar:string;
 }
 
 @ObjectType()

@@ -97,12 +97,16 @@ export class UserService {
     //Update a user
     async update(input: UserUpdateInput): Promise<User> {
         try {
+            console.log(input)
             let userUpdate = await this.findById(input.id);
+            console.log(userUpdate)
             userUpdate.firstname = input.firstname;
             userUpdate.lastname = input.lastname;
+            userUpdate.user = input.username;
             userUpdate.email = input.email;
-            userUpdate.country = await this.country.getById(input.country_id);
             userUpdate.phone = input.phone;
+            userUpdate.avatar = input.avatar;
+            userUpdate.country = await this.country.getById(input.country_id);
             return await this.userRepository.save(userUpdate);
         } catch (error) {
             console.log(error)

@@ -50,16 +50,16 @@ input UserUpdateInput {
     email: String
     phone: String
     country_id: Int
-    avatart: String
+    avatar: String
 }
 
 type Mutation {
   createUser(input: UserInput!): UserDto
   updateUser(input: UserUpdateInput!): UserDto
   updatePassword(input: UserUpdatePassword!): UserDto
-  setAvatarImage(id: Int!,image:String!): String!
+  setAvatarImage(id: Int!,image: String!): String!
   getAvatarImage(id: Int!): String!
-  defaultPassword(id:Int!): String!
+  defaultPassword(id: Int!): String!
 }
 
 type Query {
