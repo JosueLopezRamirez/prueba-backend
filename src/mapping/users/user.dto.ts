@@ -55,7 +55,7 @@ export class UserDto {
     phone: string;
     create_at: Date;
     date_birth: Date;
-    is_online: boolean;
+    is_online: boolean = false;
     avatar:string;
     city: citiesDto;
     country: countrieDto;

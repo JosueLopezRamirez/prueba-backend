@@ -191,6 +191,7 @@ export class UserService {
         user.firstname = input.firstname;
         user.lastname = input.lastname;
         user.sponsor_id = input.sponsor_id;
+        user.is_online = false;
         user.email = input.email;
         user.user = input.user;
         user.password = input.password;

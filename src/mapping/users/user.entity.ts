@@ -48,7 +48,9 @@ export class User {
         if(this.date_birth == null){
             this.date_birth = new Date();
         }
-        this.is_online = false;
+        if(this.is_online == null){
+            this.is_online = false;
+        }
     }
 
     @Column('date', { nullable: true }) create_at: Date;
