@@ -23,6 +23,8 @@ export class SkiperProductCommerce {
 
     @Column({nullable:true}) discount:number;
 
+    @Column({nullable:true}) time:number;
+
     @ManyToOne(type => SkiperCommerce, {nullable: false})
     @JoinColumn({name:'id_skiper_commerce'}) skiperCommerce: SkiperCommerce;
     

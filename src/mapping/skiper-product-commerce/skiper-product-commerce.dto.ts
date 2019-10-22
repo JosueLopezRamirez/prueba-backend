@@ -27,6 +27,7 @@ export class SkiperProductCommerceDto {
     isSize:boolean;
     isAddon:boolean;
     discount:number;
+    time: number;
     skiperCommerce: CommerceDto;
     skiperCatProducts: SkiperCatProductDto;
     optionAddon: OptionAddonDto;
