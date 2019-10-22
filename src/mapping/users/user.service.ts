@@ -101,7 +101,7 @@ export class UserService {
             userUpdate.firstname = input.firstname;
             userUpdate.lastname = input.lastname;
             userUpdate.email = input.email;
-            userUpdate.password = input.password;
+            userUpdate.password = await bcrypt.hash(input.password, parseInt(process.env.SALT));
             userUpdate.country = await this.country.getById(input.country_id);
             userUpdate.phone = input.phone;
             return await this.userRepository.save(userUpdate);
@@ -116,7 +116,7 @@ export class UserService {
             if (!bcrypt.compareSync(input.oldPassword, result.password)) {
                 return null;
             }
-            result.password = input.newPassword;
+            result.password = await bcrypt.hash(input.newPassword, parseInt(process.env.SALT));
             return await this.userRepository.save(result);
         } catch (error) {
             console.log(error)
@@ -126,7 +126,7 @@ export class UserService {
     async defaultPassword(id:number) {
         try {
             let result = await this.findById(id);
-            result.password = "alyskiper2019";
+            result.password = await bcrypt.hash("alyskiper2019", parseInt(process.env.SALT));
             result = await this.userRepository.save(result);
             return 'Success'
         } catch (error) {

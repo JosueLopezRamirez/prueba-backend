@@ -23,7 +23,7 @@ export class User {
     @Length(50) user: string;
 
     @BeforeInsert()
-    @BeforeUpdate()
+    // @BeforeUpdate()
     async hashPassword() {
         this.password = await bcrypt.hash(this.password, parseInt(process.env.SALT));
     }
