@@ -18,4 +18,10 @@ export class CategoryAgentResolver {
     getByCategoryAgentIdAndCityId(@Args('id')id:number,@Args('idcity')idcity:number){
         return this.categoryServices.getByCategoryAgentIdAndCityId(id,idcity);
     }
+
+    @UseGuards(new AuthGuard())
+    @Query()
+    getByCategoryAgentIdAndSponsorId(@Args('id')id:number,@Args('id_sponsor')id_sponsor:number){
+        return this.categoryServices.getByCategoryAgentIdAndSponsorId(id,id_sponsor);
+    }
 }
