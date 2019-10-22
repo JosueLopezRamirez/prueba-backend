@@ -1,35 +1,33 @@
 import { Resolver, Query, Mutation, Args, Subscription } from '@nestjs/graphql';
 import { SkiperOrderTracingService } from './skiper-order-tracing.service';
 import { SkiperOrderTracingInput } from './skiper-order-tracing.dto';
-import { SkiperOrderResolver } from '../skiper-order/skiper-order.resolver'
-
-import { PubSub, withFilter } from 'graphql-subscriptions';
+import { PubSub } from 'graphql-subscriptions';
 import { SkiperOrderService } from '../skiper-order/skiper-order.service';
 import { SkiperOrder } from '../skiper-order/skiper-order.entity';
-import { UseFilters, BadRequestException, HttpException, HttpStatus, ParseIntPipe } from '@nestjs/common';
-import { HttpExcepcionFilter } from '../../shared/http.exception.filter';
 
 const pubSub = new PubSub();
 
 @Resolver('SkiperOrderTracing')
 export class SkiperOrderTracingResolver {
 
-    constructor(private readonly service:SkiperOrderTracingService,
-    private f: SkiperOrderService){}
+    constructor(
+        private readonly service:SkiperOrderTracingService,
+        private readonly f: SkiperOrderService){}
 
     @Query()
     getAllOrderTracing(){
         return this.service.getAll();
     }
 
+    public NotificarCambiosEnPedido(pedido){
+        pubSub.publish('skiperOrders', { skiperOrders: pedido, idcomercio: pedido.skiperCommerce.id })
+    }
+
     @Mutation()
     async registerOrderTracing(@Args('input') input: SkiperOrderTracingInput){
         let result = await this.service.create(input);
-        //si el estado es recibido notificamos al cliente
-        await this.f.getById(input.orderID).then( async (res: SkiperOrder) => {
-            let pedido = await this.f.GetOrderByID(res.id)
-            pubSub.publish('skiperOrders', { skiperOrders: pedido, idcomercio: res.skiperCommerce.id })
-        })
+        let pedido = await this.f.GetOrderByID(result.idorder)
+        this.NotificarCambiosEnPedido(pedido)
         return result
     }
 
@@ -38,7 +36,7 @@ export class SkiperOrderTracingResolver {
             return payload.idcomercio === variables.idcomercio
         }
     })
-    skiperOrderByCommerceIdByIdStatus() {
+    skiperOrders() {
         return pubSub.asyncIterator('skiperOrders')
     }
 }
