@@ -12,8 +12,6 @@ export class SkiperOrderTracingService {
 
     constructor(
         @InjectRepository(SkiperOrderTracing) private readonly repository: Repository<SkiperOrderTracing>,
-        private readonly orderService: SkiperOrderService,
-        private readonly orderStatusService: SkiperOrdersStatusService
     ) { }
 
     async getAll() {
@@ -31,12 +29,13 @@ export class SkiperOrderTracingService {
         
         let orderTracing: SkiperOrderTracing = new SkiperOrderTracing();
         try {
-            orderTracing.order = await this.orderService.getById(input.orderID);
-            orderTracing.orderStatus = await this.orderStatusService.getById(input.orderStatusID);
-            if (orderTracing.order !== null && orderTracing.orderStatus !== null) {
-                orderTracing = await this.repository.save(orderTracing);
-                return orderTracing
-            }
+            // orderTracing.order = await this.orderService.getById(input.orderID);
+            // orderTracing.orderStatus = await this.orderStatusService.getById(input.orderStatusID);
+            orderTracing.idorder = input.orderID;
+            orderTracing.idorderstatus = input.orderStatusID;
+            orderTracing = await this.repository.save(orderTracing);
+            return orderTracing;
+
         } catch (error) {
             throw new HttpException(
                 error,
