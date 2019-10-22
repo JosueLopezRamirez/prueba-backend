@@ -12,9 +12,7 @@ import { SkiperOrderDetailInput } from './skiper-order-detail.dto';
 export class SkiperOrderDetailService {
     constructor (
         @InjectRepository(SkiperOrderDetail)
-        private readonly repository: Repository<SkiperOrderDetail>,
-        private readonly skiperOrderService: SkiperOrderService,
-        private readonly skiperProductCommerceService: SkiperProductCommerceService
+        private readonly repository: Repository<SkiperOrderDetail>
     ) {}
 
     async getAll():Promise<SkiperOrderDetail[]> {
@@ -29,7 +27,6 @@ export class SkiperOrderDetailService {
     }
 
     async update(input: SkiperOrderDetailInput): Promise<SkiperOrderDetail>{
-        //console.log(input);
         try {
             let skiperorderdetailUpdate = await this.getById(input.orderID);
             skiperorderdetailUpdate.quantity = input.quantity;
@@ -38,10 +35,8 @@ export class SkiperOrderDetailService {
             skiperorderdetailUpdate.size = input.size;
             skiperorderdetailUpdate.addon = input.addon;
             skiperorderdetailUpdate.extraPrice = input.extraPrice;
-            
-            skiperorderdetailUpdate.skiperOrder = await this.skiperOrderService.getById(input.orderID);
-            skiperorderdetailUpdate.skiperProductCommerce = await this.skiperProductCommerceService.getById(input.itemID);
-            //console.log(appUpdate);
+            skiperorderdetailUpdate.iditem = input.itemID;
+            skiperorderdetailUpdate.idorder = input.orderID;
             return await this.repository.save(skiperorderdetailUpdate);
         } catch (error) {
             console.log(error)
@@ -51,13 +46,9 @@ export class SkiperOrderDetailService {
     async registerSkiperOrderDetail(input: SkiperOrderDetailInput): Promise<SkiperOrderDetail> {
         try
         {
-            let skiperorder = await this.skiperOrderService.getById(input.orderID);
-            let skiperproductcommerce = await this.skiperProductCommerceService.getById(input.itemID);
-            if (skiperorder !== undefined && skiperproductcommerce !== undefined) {
-                let skiperorderdetail = this.parseSkiperOrderDetail(input, skiperorder, skiperproductcommerce);
-                console.log(skiperorderdetail);
-                return this.repository.save(skiperorderdetail);
-            }
+            let skiperorderdetail = this.parseSkiperOrderDetail(input);
+            console.log(skiperorderdetail);
+            return this.repository.save(skiperorderdetail);
         }
         catch (error) {
             console.error(error);
@@ -65,7 +56,7 @@ export class SkiperOrderDetailService {
         return null;
     }
 
-    private parseSkiperOrderDetail (input: SkiperOrderDetailInput, skiperorder?, skiperproductcommerce?):SkiperOrderDetail {
+    public parseSkiperOrderDetail (input: SkiperOrderDetailInput):SkiperOrderDetail {
         let skiperorderdetail: SkiperOrderDetail = new SkiperOrderDetail();
         skiperorderdetail.quantity = input.quantity;
         skiperorderdetail.price = input.price;
@@ -73,8 +64,8 @@ export class SkiperOrderDetailService {
         skiperorderdetail.size = input.size;
         skiperorderdetail.addon = input.addon;
         skiperorderdetail.extraPrice = input.extraPrice;
-        skiperorderdetail.skiperOrder = skiperorder;
-        skiperorderdetail.skiperProductCommerce = skiperproductcommerce;
+        skiperorderdetail.iditem = input.itemID;
+        skiperorderdetail.idorder = input.orderID;
         return skiperorderdetail;
     }
 }

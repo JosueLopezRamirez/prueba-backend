@@ -2,12 +2,15 @@ import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { SkiperOrderService } from './skiper-order.service';
 import { SkiperOrderInput } from './skiper-order.dto';
 import { ParseIntPipe } from '@nestjs/common';
+import { SkiperOrderDetailInput } from '../skiper-order-detail/skiper-order-detail.dto';
+import { SkiperOrderTracingResolver } from '../skiper-order-tracing/skiper-order-tracing.resolver';
 
 @Resolver('SkiperOrder')
 export class SkiperOrderResolver {
 
     constructor(
-        private readonly skiperOrderService: SkiperOrderService
+        private readonly skiperOrderService: SkiperOrderService,
+        private readonly skiperOrderTracingResolver: SkiperOrderTracingResolver
     ) { }
 
     @Query('skiperorders')
@@ -54,6 +57,24 @@ export class SkiperOrderResolver {
     async registerSkiperOrder(@Args('input') input: SkiperOrderInput) {
         try {
             return this.skiperOrderService.registerSkiperOrder(input);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    @Mutation()
+    async GenereSkiperOrder(@Args('inputorder') inputorder: SkiperOrderInput,
+    @Args('inputorderdetalle') inputorderdetalle: SkiperOrderDetailInput[]) {
+        try {
+            var result = await this.skiperOrderService.GenereSkiperOrder(inputorder, inputorderdetalle);
+            if(result != null)
+            {
+                let pedido = await this.skiperOrderService.GetOrderByID (result.id)
+                this.skiperOrderTracingResolver.NotificarCambiosEnPedido(pedido)
+                return result
+            }
+            else
+                return null
         } catch (error) {
             console.error(error);
         }

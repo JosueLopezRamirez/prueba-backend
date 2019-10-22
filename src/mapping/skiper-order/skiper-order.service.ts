@@ -1,11 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus, forwardRef, Inject } from '@nestjs/common';
 import { SkiperOrder } from './skiper-order.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, getConnection, getManager } from 'typeorm';
 import { UserService } from '../users/user.service';
 import { SkiperCommerceService } from '../skiper-commerce/skiper-commerce.service';
 import { SkiperOrderInput } from './skiper-order.dto';
 import { SkiperOrderTracing } from '../skiper-order-tracing/skiper-order-tracing.entity';
+import { SkiperOrderDetailInput } from '../skiper-order-detail/skiper-order-detail.dto';
+import { SkiperOrderDetailService } from '../skiper-order-detail/skiper-order-detail.service';
+import { SkiperOrderTracingService } from '../skiper-order-tracing/skiper-order-tracing.service';
 
 @Injectable()
 export class SkiperOrderService {
@@ -14,6 +17,8 @@ export class SkiperOrderService {
         @InjectRepository(SkiperOrder) private readonly repository: Repository<SkiperOrder>,
         private readonly userService: UserService,
         private readonly skiperCommerceService: SkiperCommerceService,
+        private readonly skiperOrderDetailService: SkiperOrderDetailService,
+        private readonly skiperOrderTracingService: SkiperOrderTracingService,
     ) { }
 
     async getAll(): Promise<SkiperOrder[]> {
@@ -80,7 +85,6 @@ export class SkiperOrderService {
     }
 
     async update(input: SkiperOrderInput): Promise<SkiperOrder>{
-        //console.log(input);
         try {
             let skiperorderUpdate = await this.getById(input.id);
             skiperorderUpdate.userphone = input.userphone;
@@ -88,10 +92,8 @@ export class SkiperOrderService {
             skiperorderUpdate.orderdate = input.orderdate;
             skiperorderUpdate.totalprice = input.totalprice;
             skiperorderUpdate.numitem = input.numitem;
-            skiperorderUpdate.user = await this.userService.findById(input.userID);
-            skiperorderUpdate.skiperCommerce = await this.skiperCommerceService.getById(input.commerceID);
-            
-            //console.log(appUpdate);
+            skiperorderUpdate.iduser = input.userID;
+            skiperorderUpdate.idcommerce = input.commerceID;
             return await this.repository.save(skiperorderUpdate);
         } catch (error) {
             console.log(error)
@@ -100,13 +102,10 @@ export class SkiperOrderService {
 
     async registerSkiperOrder(input: SkiperOrderInput): Promise<SkiperOrder> {
         try {
-            let user = await this.userService.findById(input.userID);
-            let skipercommerce = await this.skiperCommerceService.getById(input.commerceID);
-            if (user !== undefined && skipercommerce !== undefined) {
-                let skiperorder = this.parseSkiperOder(input, user, skipercommerce);
-                console.log(skiperorder);
-                return this.repository.save(skiperorder);
-            }
+            
+            let skiperorder = this.parseSkiperOder(input);
+            console.log(skiperorder);
+            return this.repository.save(skiperorder);
         }
         catch (error) {
             console.error(error);
@@ -114,15 +113,44 @@ export class SkiperOrderService {
         return null;
     }
 
-    private parseSkiperOder(input: SkiperOrderInput, user?, skipercommerce?): SkiperOrder {
+    async GenereSkiperOrder(inputorder: SkiperOrderInput, 
+        inputorderdetalle: SkiperOrderDetailInput[]): Promise<SkiperOrder> {
+        try {
+            let order = new SkiperOrder();
+            await getManager().transaction(async transactionalEntityManager => {
+                order =  this.parseSkiperOder(inputorder)
+                var orderreg = await transactionalEntityManager.save(order);
+                inputorderdetalle.forEach(async x => {
+                    x.orderID = order.id
+                    var detalleorder = this.skiperOrderDetailService.parseSkiperOrderDetail(x);
+                    await transactionalEntityManager.save(detalleorder);
+                })
+                //registramos el seguimiento de la orden 1 es por defecto
+                let ordertracing = new SkiperOrderTracing();
+                ordertracing.idorder = orderreg.id;
+                ordertracing.idorderstatus = 1;
+                ordertracing.datetracing = new Date();
+                await transactionalEntityManager.save(ordertracing);
+            });
+            return order;
+        }
+        catch (error) {
+            throw new HttpException(
+                error,
+                HttpStatus.BAD_REQUEST,
+            );
+        }
+    }
+
+    private parseSkiperOder(input: SkiperOrderInput): SkiperOrder {
         let skiperorder: SkiperOrder = new SkiperOrder();
         skiperorder.userphone = input.userphone;
         skiperorder.useraddress = input.useraddress;
         skiperorder.orderdate = input.orderdate;
         skiperorder.totalprice = input.totalprice;
         skiperorder.numitem = input.numitem;
-        skiperorder.user = user;
-        skiperorder.skiperCommerce = skipercommerce;
+        skiperorder.iduser = input.userID;
+        skiperorder.idcommerce = input.commerceID;
         return skiperorder;
     }
 

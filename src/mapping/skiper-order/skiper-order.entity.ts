@@ -14,6 +14,8 @@ export class SkiperOrder {
     @Column('datetime', { nullable: true }) orderdate: Date;
     @Column('double', { nullable: true }) totalprice: number;
     @Column('int', { nullable: true }) numitem: number;
+    @Column('int', { nullable: true }) iduser: number;
+    @Column('int', { nullable: true }) idcommerce: number;
 
     @ManyToOne(type => User, { nullable: false })
     @JoinColumn({ name: 'iduser' }) user: User;

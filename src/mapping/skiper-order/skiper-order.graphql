@@ -35,5 +35,6 @@ type Query {
 
 type Mutation {
     registerSkiperOrder(input: SkiperOrderInput): SkiperOrderDto!
-    updateSkiperOrder(input: SkiperOrderInput!): SkiperOrderDto
+    updateSkiperOrder(input: SkiperOrderInput!): SkiperOrderDto!
+    GenereSkiperOrder(inputorder: SkiperOrderInput!, inputorderdetalle: [SkiperOrderDetailInput!]!): SkiperOrderDto!
 }
