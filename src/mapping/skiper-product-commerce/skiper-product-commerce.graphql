@@ -7,6 +7,7 @@ type SkiperProductCommerceDto {
     isSize: Boolean
     isAddon: Boolean
     discount: Int
+    time: Int
     skiperCommerce: CommerceDto!
     skiperCatProducts: SkiperCatProductDto!
     optionAddon: [OptionAddonDto!]
