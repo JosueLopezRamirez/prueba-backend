@@ -18,6 +18,11 @@ export class SkiperVehicleAgentResolver {
         return this.service.getById(id);
     }
 
+    @Query()
+    getBySkiperAgentId(@Args('id', ParseIntPipe) id: number){
+        return this.service.getBySkiperAgentId(id);
+    }
+
     @Mutation()
     async registerSkiperVehicleAgent(@Args('input') input: SkiperVehicleAgentInput){
         let result = await this.service.registerSkiperVehicleAgent(input);

@@ -14,6 +14,7 @@ type SkiperVehicleAgentDto {
 type Query {
     SkiperVehicleAgent: [SkiperVehicleAgentDto!]!
     getSkiperVehicleById(id: Int!): SkiperVehicleDto
+    getBySkiperAgentId(id: Int!): SkiperVehicleDto
 }
 
 type Mutation {

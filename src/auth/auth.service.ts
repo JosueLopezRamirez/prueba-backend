@@ -32,12 +32,13 @@ export class AuthService {
         if (result == undefined) {
             return new SignResponse(null, new ErrorResponse('The email or password is incorrect', 400, false));
         } else {
-            if (result.is_online)
-                return new SignResponse(null, new ErrorResponse('User is online in another device!', 400, false))
-
             if (!bcrypt.compareSync(sign.password, result.password)) {
                 return new SignResponse(null, new ErrorResponse('The email or password is incorrect', 400, false));
             }
+
+            if (result.is_online)
+                return new SignResponse(null, new ErrorResponse('User is online in another device!', 400, false));
+            
             let co, ve; //Definimos la variable commercio
             try {
                 let agent = await this.agentService.getByUser(result);
@@ -53,7 +54,7 @@ export class AuthService {
                 return new SignResponse(new SignInOk(
                     await this.tokenGenerated(result), result.firstname,
                     result.lastname, result.user,
-                    result.email, result.phone,result.avatar, co, ve
+                    result.email, result.phone,result.avatar,result.country, co, ve
                 ), null);
             } catch (error) {
                 console.log('aqui no')
@@ -72,7 +73,7 @@ export class AuthService {
             return new SignResponse(new SignInOk(
                 await this.tokenGenerated(result), result.firstname,
                 result.lastname, result.user,
-                result.email, result.phone,result.avatar
+                result.email, result.phone,result.avatar,result.country
             ), null);
         } else {
             return new SignResponse(null, new ErrorResponse('Sponsor ID is not valid!', 400, false));
