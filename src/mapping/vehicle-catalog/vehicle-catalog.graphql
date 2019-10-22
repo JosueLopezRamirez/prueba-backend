@@ -5,6 +5,6 @@ type VehicleCatalogDto {
 }
 
 type Query {
-    getAllVehicleCatalog(): [VehicleTrademarkDto!]!
-    getVehicleCatalogkById(id:Int!): VehicleTrademarkDto!
+    getAllVehicleCatalog: [VehicleTrademarkDto!]!
+    getVehicleCatalogById(id:Int!): VehicleTrademarkDto!
 }
