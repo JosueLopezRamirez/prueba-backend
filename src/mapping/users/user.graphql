@@ -55,7 +55,7 @@ input UserUpdateInput {
 
 type Mutation {
   createUser(input: UserInput!): UserDto
-  updateUser(input: UserInput!): UserDto
+  updateUser(input: UserUpdateInput!): UserDto
   updatePassword(input: UserUpdatePassword!): UserDto
   setAvatarImage(id: Int!,image:String!): String!
   getAvatarImage(id: Int!): String!
