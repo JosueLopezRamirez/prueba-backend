@@ -170,7 +170,8 @@ export class AuthService {
             .innerJoin("SkiperVehicleAgent.skiperAgent", "SkiperAgent")
             .innerJoin("SkiperAgent.user", "User")
             .where("User.id = :userId", { userId: result.id })
-            .andWhere("SkiperAgent.id = :agentId", { agentId: agent.id })
+            //comentariamos esta linea porque ocacionaba que no generara la info del comercio
+            // .andWhere("SkiperAgent.id = :agentId", { agentId: agent.id })
             .getOne();
         return ve;
     }
