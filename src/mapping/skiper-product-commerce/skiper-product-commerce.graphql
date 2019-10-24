@@ -32,3 +32,7 @@ type Query {
     productsCommerceById(id: Int): SkiperProductCommerceDto
     # productsByCommerceId
 }
+
+type Mutation {
+    changeState(id: Int!): Boolean
+}
