@@ -11,6 +11,7 @@ export class ProductCommerceInput {
     url_img_product:string;
     price:number;
     isSize:boolean;
+    state:boolean;
     isAddon:boolean;
     discount:number;
     skiperCommerceID: number;
@@ -25,6 +26,7 @@ export class SkiperProductCommerceDto {
     url_img_product:string;
     price:number;
     isSize:boolean;
+    state:boolean;
     isAddon:boolean;
     discount:number;
     time: number;

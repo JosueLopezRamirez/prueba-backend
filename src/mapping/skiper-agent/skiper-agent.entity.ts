@@ -19,11 +19,6 @@ export class SkiperAgent {
     @IsString()
     identity:string;
 
-    // @BeforeInsert()
-    // before(){
-        
-    // }
-
     @Column('date',{nullable:false})
     @IsNotEmpty()
     @IsDate()
