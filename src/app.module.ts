@@ -127,6 +127,6 @@ import { SkiperTravelsModule } from './mapping/skiper-travels/skiper-travels.mod
     SkiperTravelsModule
   ],
   providers: [AppService, AppResolver],
-  controllers: [AppController, Controller, UsersAddressController],
+  controllers: [AppController],
 })
 export class AppModule { }
