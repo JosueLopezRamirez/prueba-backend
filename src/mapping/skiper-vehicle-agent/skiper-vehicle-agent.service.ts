@@ -37,6 +37,11 @@ export class SkiperVehicleAgentService {
             // console.log(id)
             let vehicleAgent: any =  await createQueryBuilder("SkiperVehicleAgent")
                 .innerJoinAndSelect("SkiperVehicleAgent.skiperVehicle","SkiperVehicle")
+                .innerJoinAndSelect("SkiperVehicle.skiperCatTravel", "SkiperCatTravel")
+                .innerJoinAndSelect("SkiperVehicle.vehicleCatalog", "VehicleCatalog")
+                .innerJoinAndSelect("SkiperVehicle.vehicleTrademark", "VehicleTrademark")
+                .innerJoinAndSelect("SkiperVehicle.vehicleModel", "VehicleModels")
+                .innerJoinAndSelect("SkiperVehicle.vehicleYear", "VehicleYears")
                 .where("SkiperVehicleAgent.idagent = :idagent", { idagent: id })
                 .getOne();
                 return vehicleAgent.skiperVehicle;
