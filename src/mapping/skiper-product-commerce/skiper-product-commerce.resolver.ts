@@ -1,4 +1,4 @@
-import { Resolver, Query, Args } from '@nestjs/graphql';
+import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { SkiperProductCommerceService } from './skiper-product-commerce.service';
 import { ParseIntPipe } from '@nestjs/common';
 
@@ -20,5 +20,10 @@ export class SkiperProductCommerceResolver {
     @Query()
     async productsCommerceById(@Args('id',ParseIntPipe) id: number){
         return await this.service.getById(id);
+    }
+
+    @Mutation()
+    changeState(@Args('id',ParseIntPipe) id: number){
+        return this.service.changeState(id);
     }
 }
