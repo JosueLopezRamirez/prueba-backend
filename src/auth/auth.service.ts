@@ -50,7 +50,8 @@ export class AuthService {
                     co = await this.commerceByQueryBuilder(result, agent);
                     ve = await this.vehicleByQueryBuilder(result, agent);
                 }
-                let activo = await this.userService.updateOnlineStatus(result);
+                //quitamos esto mas adelante se va a manejar un historico de ingresos.
+                // let activo = await this.userService.updateOnlineStatus(result);
                 return new SignResponse(new SignInOk(
                     await this.tokenGenerated(result), result.firstname,
                     result.lastname, result.user,
@@ -152,7 +153,8 @@ export class AuthService {
             .innerJoin("SkiperCommerce.skiperAgent", "SkiperAgent")
             .innerJoin("SkiperAgent.user", "User")
             .where("SkiperAgent.iduser = :userId", { userId: result.id })
-            .andWhere("SkiperCommerce.idagent = :agentId", { agentId: agent.id })
+            //comentariamos esta linea porque ocacionaba que no generara la info del comercio
+            // .andWhere("SkiperCommerce.idagent = :agentId", { agentId: agent.id })
             .getOne();
         return co;
     }
