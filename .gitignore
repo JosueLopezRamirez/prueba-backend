@@ -35,5 +35,4 @@ lerna-debug.log*
 
 My_Project-e93f8f887af3.json
 .env.example
-package.json
 yarn.lock

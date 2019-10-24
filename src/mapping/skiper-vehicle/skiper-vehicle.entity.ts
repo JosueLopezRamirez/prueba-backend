@@ -9,36 +9,36 @@ import { SkiperVehicleAgent } from "../skiper-vehicle-agent/skiper-vehicle-agent
 @Entity('skiper_vehicle')
 export class SkiperVehicle {
 
-    @PrimaryGeneratedColumn() id:number;
+    @PrimaryGeneratedColumn() id: number;
 
-    @Column('varchar',{nullable:true,length:30}) license_plate:string;
+    @Column('varchar', { nullable: true, length: 30, unique: true }) license_plate: string;
 
-    @Column({nullable: true}) lat: string;
+    @Column({ nullable: true }) lat: string;
 
-    @Column({nullable: true}) lon: string;
+    @Column({ nullable: true }) lon: string;
 
-    @Column({nullable: true}) id_cat_travel: number;
-    @Column({nullable: true}) id_vehicle_catalog: number;
-    @Column({nullable: true}) idtrademark: number;
-    @Column({nullable: true}) idmodel: number;
-    @Column({nullable: true}) idyear: number;
+    @Column({ nullable: true }) id_cat_travel: number;
+    @Column({ nullable: true }) id_vehicle_catalog: number;
+    @Column({ nullable: true }) idtrademark: number;
+    @Column({ nullable: true }) idmodel: number;
+    @Column({ nullable: true }) idyear: number;
 
-    @ManyToOne(type => SkiperCatTravel, {nullable: false})
-    @JoinColumn({name:'id_cat_travel'}) skiperCatTravel: SkiperCatTravel;
+    @ManyToOne(type => SkiperCatTravel, { nullable: false })
+    @JoinColumn({ name: 'id_cat_travel' }) skiperCatTravel: SkiperCatTravel;
 
-    @ManyToOne(type => VehicleCatalog, {nullable: false})
-    @JoinColumn({name:'id_vehicle_catalog'}) vehicleCatalog: VehicleCatalog;
+    @ManyToOne(type => VehicleCatalog, { nullable: false })
+    @JoinColumn({ name: 'id_vehicle_catalog' }) vehicleCatalog: VehicleCatalog;
 
-    @ManyToOne(type => VehicleTrademark, {nullable: false})
-    @JoinColumn({name:'idtrademark'}) vehicleTrademark: VehicleTrademark;
+    @ManyToOne(type => VehicleTrademark, { nullable: false })
+    @JoinColumn({ name: 'idtrademark' }) vehicleTrademark: VehicleTrademark;
 
-    @ManyToOne(type => VehicleModels, {nullable: false})
-    @JoinColumn({name:'idmodel'}) vehicleModel: VehicleModels;
+    @ManyToOne(type => VehicleModels, { nullable: false })
+    @JoinColumn({ name: 'idmodel' }) vehicleModel: VehicleModels;
 
-    @ManyToOne(type => VehicleYears, {nullable: false})
-    @JoinColumn({name:'idyear'}) vehicleYear: VehicleYears;
+    @ManyToOne(type => VehicleYears, { nullable: false })
+    @JoinColumn({ name: 'idyear' }) vehicleYear: VehicleYears;
 
     @OneToMany(type => SkiperVehicleAgent, x => x.skiperVehicle)
     skiperVehicleAgent: SkiperVehicleAgent[];
-    
+
 }

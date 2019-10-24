@@ -6,7 +6,7 @@ import { ParseIntPipe } from '@nestjs/common';
 @Resolver('SkiperVehicle')
 export class SkiperVehicleResolver {
 
-    constructor(private readonly service:SkiperVehicleService){}
+    constructor(private readonly service: SkiperVehicleService) { }
 
     @Query('SkiperVehicle')
     async getAllSkiperVehicle() {
@@ -14,18 +14,23 @@ export class SkiperVehicleResolver {
     }
 
     @Query()
-    getSkiperVehicleById(@Args('id', ParseIntPipe) id: number){
+    getSkiperVehicleById(@Args('id', ParseIntPipe) id: number) {
         return this.service.getById(id);
     }
 
+    @Query()
+    getVehicleByUserId(@Args('id', ParseIntPipe) id: number) {
+        return this.service.getVehicleByUserId(id);
+    }
+
     @Mutation()
-    async registerSkiperVehicle(@Args('input') input: SkiperVehicleInput){
+    async registerSkiperVehicle(@Args('input') input: SkiperVehicleInput) {
         let result = await this.service.registerSkiperVehicle(input);
         return result
     }
 
     @Mutation()
-    async updateSkiperVehicle(@Args('input') input: SkiperVehicleInput){
+    async updateSkiperVehicle(@Args('input') input: SkiperVehicleInput) {
         let result = await this.service.updateSkiperVehicle(input);
         return result
     }

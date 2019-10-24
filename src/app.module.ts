@@ -42,6 +42,8 @@ import { UserCivilStatusModule } from './mapping/user-civil-status/user-civil-st
 import { AppCitiesModule } from './mapping/app-cities/app-cities.module';
 import { SkiperVehicleModule } from './mapping/skiper-vehicle/skiper-vehicle.module';
 import { SkiperVehicleAgentModule } from './mapping/skiper-vehicle-agent/skiper-vehicle-agent.module';
+import { UsersAddressModule } from './mapping/users-address/users-address.module';
+import { CatPlacesUsersModule } from './mapping/cat-places-users/cat-places-users.module';
 
 @Module({
   imports: [
@@ -118,7 +120,9 @@ import { SkiperVehicleAgentModule } from './mapping/skiper-vehicle-agent/skiper-
         "origin": "*",
         "Access-Control-Allow-Origin":"*"
       }
-    })
+    }),
+    UsersAddressModule,
+    CatPlacesUsersModule,
   ],
   providers: [AppService, AppResolver],
   controllers: [AppController],

@@ -6,6 +6,7 @@ type SkiperProductCommerceDto {
     price: Int
     isSize: Boolean
     isAddon: Boolean
+    state: Boolean
     discount: Int
     time: Int
     skiperCommerce: CommerceDto!
@@ -21,6 +22,7 @@ input ProductCommerceInput {
     price: Int
     isSize: Boolean
     isAddon: Boolean
+    state: Boolean
     discount: Int
     skiperCommerceID: Int!
     skiperCatProductsID: Int!
@@ -31,4 +33,8 @@ type Query {
     productsCommerceWithPagination(page: Int): [SkiperProductCommerceDto!]!
     productsCommerceById(id: Int): SkiperProductCommerceDto
     # productsByCommerceId
+}
+
+type Mutation {
+    changeState(id: Int!): Boolean
 }
