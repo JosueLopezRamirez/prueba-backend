@@ -31,7 +31,7 @@ export class SkiperOrderService {
         .innerJoinAndSelect("SkiperOrder.skiperCommerce", "SkiperCommerce","SkiperCommerce.id = :idcommerce", { idcommerce })
         .innerJoinAndSelect("SkiperOrder.skiperOrderTracing", "SkiperOrderTracing","SkiperOrderTracing.orderStatus IN (:idstatus)", { idstatus: status })
         .innerJoinAndSelect("SkiperOrder.skiperOrderDetail", "SkiperOrderDetail")
-        .leftJoinAndSelect("SkiperOrderDetail.skiperProductCommerce", "SkiperProductCommerce", "SkiperProductCommerce.id_skiper_commerce = :idcommerce", { idcommerce } )
+        .leftJoinAndSelect("SkiperOrderDetail.skiperProductCommerce", "SkiperProductCommerce")
         .innerJoinAndSelect(subQuery => {
             return subQuery
             .select("skiperOrderTracing.idorder", "idorder").addSelect("MAX(skiperOrderTracing.datetracing)", "fecha")
@@ -48,7 +48,7 @@ export class SkiperOrderService {
         .innerJoinAndSelect("SkiperOrder.skiperCommerce", "SkiperCommerce")
         .innerJoinAndSelect("SkiperOrder.skiperOrderTracing", "SkiperOrderTracing")
         .innerJoinAndSelect("SkiperOrder.skiperOrderDetail", "SkiperOrderDetail")
-        .leftJoinAndSelect("SkiperOrderDetail.skiperProductCommerce", "SkiperProductCommerce", "SkiperProductCommerce.id_skiper_commerce = :idcommerce", { idcommerce } )
+        .leftJoinAndSelect("SkiperOrderDetail.skiperProductCommerce", "SkiperProductCommerce")
         .innerJoinAndSelect(subQuery => {
             return subQuery
             .select("skiperOrderTracing.idorder", "idorder").addSelect("MAX(skiperOrderTracing.datetracing)", "fecha")
@@ -66,7 +66,7 @@ export class SkiperOrderService {
         .innerJoinAndSelect("SkiperOrder.skiperCommerce", "SkiperCommerce","SkiperCommerce.id = :idcommerce", { idcommerce })
         .innerJoinAndSelect("SkiperOrder.skiperOrderTracing", "SkiperOrderTracing","SkiperOrderTracing.orderStatus IN (:idstatus)", { idstatus: status })
         .innerJoinAndSelect("SkiperOrder.skiperOrderDetail", "SkiperOrderDetail")
-        .leftJoinAndSelect("SkiperOrderDetail.skiperProductCommerce", "SkiperProductCommerce", "SkiperProductCommerce.id_skiper_commerce = :idcommerce", { idcommerce } )
+        .leftJoinAndSelect("SkiperOrderDetail.skiperProductCommerce", "SkiperProductCommerce")
         .innerJoinAndSelect(subQuery => {
             return subQuery
             .select("skiperOrderTracing.idorder", "idorder").addSelect("MAX(skiperOrderTracing.datetracing)", "fecha")

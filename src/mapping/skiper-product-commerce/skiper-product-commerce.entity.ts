@@ -27,10 +27,6 @@ export class SkiperProductCommerce {
 
     @Column({ nullable: true }) time: number;
 
-    @Column({ nullable: false }) id_skiper_commerce: number;
-
-    @Column({ nullable: false }) id_cat_product: number;
-
     @ManyToOne(type => SkiperCommerce, { nullable: false })
     @JoinColumn({ name: 'id_skiper_commerce' }) skiperCommerce: SkiperCommerce;
 
