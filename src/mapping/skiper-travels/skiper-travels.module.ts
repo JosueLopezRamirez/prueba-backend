@@ -12,7 +12,7 @@ import {UsersModule} from '../users/users.module';
     SkiperAgentModule,
     UsersModule,
     SkiperCatTravelsModule,
-    TypeOrmModule.forFeature([SkiperTravels,])
+    TypeOrmModule.forFeature([SkiperTravels])
   ],
   providers: [SkiperTravelsService, SkiperTravelsResolver],
   exports:[SkiperTravelsService]
