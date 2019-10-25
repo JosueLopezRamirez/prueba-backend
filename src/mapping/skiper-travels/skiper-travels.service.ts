@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { SkiperTravels } from '../skiper-travels/skiper-travels.entity';
 import { Repository } from 'typeorm';
 import { SkiperTravelsInput } from '../skiper-travels/skiper-travels.dto';
-import { InputType } from 'type-graphql';
 
 @Injectable()
 export class SkiperTravelsService {
@@ -48,7 +47,7 @@ export class SkiperTravelsService {
     async updateSkiperTravels(input:SkiperTravelsInput): Promise<SkiperTravels> {
         try{
             let skipertravel = await this.getById(input.id);
-            skipertravel.iduser = input.idusers;
+            skipertravel.idusers = input.idusers;
             skipertravel.iddriver = input.iddriver;
             skipertravel.lat_initial = input.lat_initial;
             skipertravel.lng_initial = input.lng_initial;
@@ -76,7 +75,7 @@ export class SkiperTravelsService {
     private parseSkiperTravel(input:SkiperTravelsInput):SkiperTravels {
         let skipertravels:SkiperTravels = new SkiperTravels();
         skipertravels.id = input.id;
-        skipertravels.iduser = input.idusers;
+        skipertravels.idusers = input.idusers;
         skipertravels.iddriver = input.iddriver;
         skipertravels.lat_initial = input.lat_initial;
         skipertravels.lng_initial = input.lng_initial;
