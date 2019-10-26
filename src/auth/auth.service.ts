@@ -132,14 +132,15 @@ export class AuthService {
     // ------------------------------------------------------------------------------------------
     // Reset password
     // ------------------------------------------------------------------------------------------
-    async reset(email: string) {
+    async reset(phone_number: string) {
         try {
-            let result = await this.validate(email);
+            console.log(phone_number)
+            let result = await this.userService.findByPhone(phone_number);
             if (result !== undefined) {
                 let body = { phone_number: result.phone, channel: 'sms' }
                 return await this.sendCode(body);
             }
-            return new ErrorResponse('Email not exist!!', 200, true)
+            return new ErrorResponse('Phone not exist!!', 200, true)
         } catch (error) {
             return new ErrorResponse('Could not send verification code', 200, true)
         }
