@@ -23,7 +23,7 @@ export class SkiperProductCommerceResolver {
     }
 
     @Mutation()
-    changeState(@Args('id',ParseIntPipe) id: number){
+    ChangeStateProducts(@Args('id',ParseIntPipe) id: number){
         return this.service.changeState(id);
     }
 }

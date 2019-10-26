@@ -14,5 +14,6 @@ import {UsersModule} from '../users/users.module';
   ],
   providers: [SkiperTravelsService, SkiperTravelsResolver],
   exports:[SkiperTravelsService]
+
 })
 export class SkiperTravelsModule {}

@@ -140,4 +140,12 @@ export class SkiperCommerceService {
         commerce.catCommerce = catCommerce;
         return commerce;
     }
+
+    //Sp para commercios en el radio
+    async commerceIntoRadio(latitud:number,longitud:number,radio:number){
+        let result:any = await this.repository.query(`call CommerceIntoRadio(${latitud},${longitud},${radio})`);
+        result = result[0]
+        // console.log(result);
+        return result;
+    }
 }

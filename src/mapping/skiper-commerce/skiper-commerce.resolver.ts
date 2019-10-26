@@ -10,14 +10,15 @@ export class SkiperCommerceResolver {
         private readonly skiperCommerceService: SkiperCommerceService
     ){}
 
-    @Query('commerces')
+    @Query()
     async commerces() {
         return this.skiperCommerceService.getAll();
     }
 
     @Query()
-    async CommercesIntoRadio(@Args('latitud') latitud: number, @Args('longitud') longitud: number) {
-        return this.skiperCommerceService.getIntoRadio(latitud, longitud);
+    async CommercesIntoRadio(@Args('latitud') latitud: number, @Args('longitud') longitud: number,@Args('radio') radio: number) {
+        // return this.skiperCommerceService.getIntoRadio(latitud, longitud);
+        return this.skiperCommerceService.commerceIntoRadio(latitud, longitud,radio);
     }
 
     @Mutation('registerCommerce')
