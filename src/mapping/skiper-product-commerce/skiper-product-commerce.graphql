@@ -36,5 +36,5 @@ type Query {
 }
 
 type Mutation {
-    changeState(id: Int!): Boolean
+    ChangeStateProducts(id: Int!): Boolean
 }
