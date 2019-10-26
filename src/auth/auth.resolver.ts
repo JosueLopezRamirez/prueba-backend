@@ -3,7 +3,7 @@ import { Logger, ParseIntPipe, UseGuards } from '@nestjs/common';
 import { PubSub } from 'graphql-subscriptions';
 import { signInDto, SignResponse, ErrorResponse, twilioDto } from './auth.dto';
 import { AuthService } from './auth.service';
-import { UserInput } from '../mapping/users/user.dto';
+import { UserInput, UserUpdatePassword } from '../mapping/users/user.dto';
 import { AuthGuard } from '../shared/auth.guard';
 
 const pubSub = new PubSub();
@@ -42,6 +42,12 @@ export class AuthResolver {
     @Mutation(() => ErrorResponse)
     async reset_password(@Args('phone_number') phone: string) {
         return this.authService.reset(phone);
+    }
+
+    @Mutation()
+    editPassword(@Args('input') input: UserUpdatePassword) {
+        console.log(input);
+        return this.authService.editPassowrd(input);
     }
 
     @UseGuards(new AuthGuard())

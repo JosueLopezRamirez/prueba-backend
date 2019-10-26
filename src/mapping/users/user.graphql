@@ -38,7 +38,7 @@ type UserDto {
 
 input UserUpdatePassword {
     id: Int!
-    oldPassword: String!
+    oldPassword: String
     newPassword: String!
 }
 

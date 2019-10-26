@@ -53,7 +53,7 @@ export class UserService {
     }
 
     async findByPhone(phone: string): Promise<User> {
-        return await this.userRepository.findOne({ where:{phone:phone} });
+        return await this.userRepository.findOne({ where: { phone: phone } });
     }
 
     async findByEmail(email: string): Promise<User> {
@@ -126,7 +126,17 @@ export class UserService {
         }
     }
 
-    async defaultPassword(id:number) {
+    async editPassowrd(input: UserUpdatePassword) {
+        try {
+            let result = await this.findById(input.id);
+            result.password = await bcrypt.hash(input.newPassword, parseInt(process.env.SALT));
+            return await this.userRepository.save(result);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async defaultPassword(id: number) {
         try {
             let result = await this.findById(id);
             result.password = await bcrypt.hash("alyskiper2019", parseInt(process.env.SALT));

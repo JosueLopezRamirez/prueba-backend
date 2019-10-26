@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { SkiperCommerce } from './skiper-commerce.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, createQueryBuilder } from 'typeorm';
 import { SkiperAgentService } from '../skiper-agent/skiper-agent.service';
 import { CountrieService } from '../countries/countrie.service';
 import { SkiperCatCommerceService } from '../skiper-cat-commerce/skiper-cat-commerce.service';
@@ -75,21 +75,37 @@ export class SkiperCommerceService {
         return x.routes[0].legs[0].distance.value < 6000
     }
 
-    async getIntoRadio(latitud: number, longitud: number): Promise<SkiperCommerce[]> {
-        let comercios = [];
-        try {
+    private async commerceIntoRadio(latitud: number, longitud: number, radio: number) {
+        let result: any = await this.repository.query(`call CommerceIntoRadio(${latitud},${longitud},${radio})`);
+        result = result[0]
+        return result;
+    }
 
-            var x = await this.repository.find({
-                relations: [
-                    "skiperAgent", "catCommerce", "country",
-                    "skiperCatProductsCommerce", "skiperCatProductsCommerce.skiperProductCommerce",
-                    "skiperCatProductsCommerce.skiperProductCommerce.optionAddon"
-                ]
-            });
+    async getIntoRadio(latitud: number, longitud: number, radio: number): Promise<SkiperCommerce[]> {
+        let comercios = [];
+        let listCommerce = this.commerceIntoRadio(latitud,longitud,radio)
+        try {
+            // var x = await this.repository.find({
+            //     relations: [
+            //         "skiperAgent", "catCommerce", "country",
+            //         "skiperCatProductsCommerce", "skiperCatProductsCommerce.skiperProductCommerce",
+            //         "skiperCatProductsCommerce.skiperProductCommerce.optionAddon"
+            //     ]
+            // });
+
+            var x: any = await createQueryBuilder("SkiperCommerce")
+                .innerJoinAndSelect("SkiperCommerce.skiperAgent","SkiperAgent")
+                .innerJoinAndSelect("SkiperCommerce.catCommerce","SkiperCatCommerce")
+                .innerJoinAndSelect("SkiperCommerce.country","Countrie")
+                .innerJoinAndSelect("SkiperCommerce.skiperCatProductsCommerce","SkiperCatProductsCommerce")
+                .innerJoinAndSelect("SkiperCatProductsCommerce.skiperProductCommerce","SkiperProductCommerce")
+                .innerJoinAndSelect("SkiperProductCommerce.optionAddon","OptionAddon")
+                .getMany();
+
             console.log(x);
 
             var c = await Promise.all(x.map(async (x) => {
-                if(x.lat == '0' || x.lon == '0') return x;
+                if (x.lat == '0' || x.lon == '0') return x;
                 var y = await this.GetDistance(latitud.toString() + "," + longitud.toString(), x.lat.toString() + "," + x.lon.toString())
                 console.log(y.routes[0].legs[0].distance)
                 if (y.routes[0].legs[0].distance.value < 6000)
@@ -139,13 +155,5 @@ export class SkiperCommerceService {
         commerce.country = country;
         commerce.catCommerce = catCommerce;
         return commerce;
-    }
-
-    //Sp para commercios en el radio
-    async commerceIntoRadio(latitud:number,longitud:number,radio:number){
-        let result:any = await this.repository.query(`call CommerceIntoRadio(${latitud},${longitud},${radio})`);
-        result = result[0]
-        // console.log(result);
-        return result;
     }
 }

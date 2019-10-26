@@ -146,6 +146,13 @@ export class AuthService {
         }
     }
 
+    editPassowrd(input:any){
+        let result =  this.userService.editPassowrd(input);
+        if(result){
+            return new ErrorResponse('Update password successfuly!!',200,true)
+        }
+    }
+
     async logout(id: number) {
         return await this.userService.logout(id);
     }
