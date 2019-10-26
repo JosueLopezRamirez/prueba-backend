@@ -29,24 +29,23 @@ export class AuthResolver {
         return await this.authService.register(input);
     }
 
-    @Mutation(() => ErrorResponse)
+    @Mutation()
     async send_code(@Args('sendcode') sendcode: twilioDto) {
         return this.authService.sendCode(sendcode);
     }
 
-    @Mutation(() => ErrorResponse)
+    @Mutation()
     async verify_code(@Args('verifycode') verifycode: twilioDto) {
         return this.authService.verifyCode(verifycode);
     }
 
-    @Mutation(() => ErrorResponse)
-    async reset_password(@Args('phone_number') phone: string) {
-        return this.authService.reset(phone);
+    @Mutation()
+    async reset_password(@Args('phone_number') phone_number: string) {
+        return this.authService.reset(phone_number);
     }
 
     @Mutation()
     editPassword(@Args('input') input: UserUpdatePassword) {
-        console.log(input);
         return this.authService.editPassowrd(input);
     }
 

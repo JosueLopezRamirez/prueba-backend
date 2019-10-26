@@ -7,7 +7,7 @@ import moment from 'moment';
 import * as bcrypt from 'bcryptjs';
 import Twilio from 'twilio';
 import { createQueryBuilder } from 'typeorm';
-import { ErrorResponse, SignResponse, SignInOk, twilioDto } from './auth.dto';
+import { ErrorResponse, SignResponse, SignInOk, twilioDto, ResetDto } from './auth.dto';
 import { UserInput } from '../mapping/users/user.dto';
 import { SkiperAgentService } from '../mapping/skiper-agent/skiper-agent.service';
 
@@ -55,7 +55,7 @@ export class AuthService {
                 return new SignResponse(new SignInOk(
                     await this.tokenGenerated(result), result.firstname,
                     result.lastname, result.user,
-                    result.email, result.phone,result.avatar,result.country, co, ve
+                    result.email, result.phone,result.avatar,result.country, co, ve, agent.id
                 ), null);
             } catch (error) {
                 console.log('aqui no')
@@ -134,15 +134,15 @@ export class AuthService {
     // ------------------------------------------------------------------------------------------
     async reset(phone_number: string) {
         try {
-            console.log(phone_number)
             let result = await this.userService.findByPhone(phone_number);
             if (result !== undefined) {
                 let body = { phone_number: result.phone, channel: 'sms' }
-                return await this.sendCode(body);
+                let message = await this.sendCode(body);
+                return new ResetDto(result,message);    
             }
-            return new ErrorResponse('Phone not exist!!', 200, true)
+            return new ResetDto(null,new ErrorResponse('Phone not exist!!', 200, true));
         } catch (error) {
-            return new ErrorResponse('Could not send verification code', 200, true)
+            return new ResetDto(null,new ErrorResponse('Could not send verification code', 200, true));
         }
     }
 

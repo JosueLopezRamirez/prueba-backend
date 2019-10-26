@@ -3,6 +3,7 @@ import { CommerceDto } from "src/mapping/skiper-commerce/skiper-commerce.dto";
 import { SkiperVehicleAgentDto } from "src/mapping/skiper-vehicle-agent/skiper-vehicle-agent.dto";
 import { SkiperVehicleDto } from "src/mapping/skiper-vehicle/skiper-vehicle.dto";
 import { countrieDto } from "src/mapping/countries/countrie.dto";
+import { UserDto } from "src/mapping/users/user.dto";
 
 @InputType()
 export class signInDto {
@@ -13,7 +14,7 @@ export class signInDto {
 @ObjectType()
 export class SignInOk {
 
-    constructor(token,firstname,lastname,username,email,phone_number,avatar,country,commerce?,vehicle?){
+    constructor(token,firstname,lastname,username,email,phone_number,avatar,country,commerce?,vehicle?,agentID?){
         this.token = token;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -24,6 +25,7 @@ export class SignInOk {
         this.country = country || null;
         this.commerce = commerce || null;
         this.vehicle = vehicle || null;
+        this.agentID = agentID || null;
     }
 
     token: string
@@ -36,6 +38,7 @@ export class SignInOk {
     country: countrieDto
     commerce: CommerceDto
     vehicle: SkiperVehicleDto
+    agentID: number
 }
 
 @ObjectType()
@@ -70,4 +73,16 @@ export class twilioDto {
     phone_number: string;
     channel?: string;
     code?: string;
+}
+
+@ObjectType()
+export class ResetDto{
+
+    constructor(data,error){
+        this.data = data;
+        this.error = error
+    }
+
+    error:ErrorResponse;
+    data:UserDto;
 }
