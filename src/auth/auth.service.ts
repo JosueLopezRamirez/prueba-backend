@@ -139,6 +139,7 @@ export class AuthService {
                 let body = { phone_number: result.phone, channel: 'sms' }
                 return await this.sendCode(body);
             }
+            return new ErrorResponse('Email not exist!!', 200, true)
         } catch (error) {
             return new ErrorResponse('Could not send verification code', 200, true)
         }
