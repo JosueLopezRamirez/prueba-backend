@@ -1,0 +1,43 @@
+input SkiperTravelsInput {
+    id: Int
+    idusers: Int
+    iddriver: Int
+    lat_initial: Float
+    lng_initial: Float
+    lat_final_seggested: Float
+    lng_final_seggested: Float
+    lat_final: Float
+    lng_final: Float
+    date_init: DateTime
+    date_final: DateTime
+    distance: Float
+    total: Float
+    address_initial: String
+    address_final: String
+    address_suggested: String
+}
+
+
+type SkiperTravelsDto {
+    id: Int
+    idusers: UserDto
+    iddriver: SkiperAgentDto
+    lat_initial: Float
+    lng_initial: Float
+    lat_final_seggested: Float
+    lng_final_seggested: Float
+    lat_final: Float
+    lng_final: Float
+    date_init: DateTime
+    date_final: DateTime
+    distance: Float
+    total: Float
+    address_initial: String
+    address_final: String
+    address_suggested: String
+}
+
+type Query {
+    getAllSkiperTravels: [SkiperTravelsDto!]
+
+}
