@@ -40,8 +40,8 @@ export class AuthResolver {
     }
 
     @Mutation(() => ErrorResponse)
-    async reset_password(@Args('email') email: string) {
-        return this.authService.reset(email);
+    async reset_password(@Args('phone_number') phone: string) {
+        return this.authService.reset(phone);
     }
 
     @UseGuards(new AuthGuard())

@@ -53,7 +53,7 @@ export class UserService {
     }
 
     async findByPhone(phone: string): Promise<User> {
-        return await this.userRepository.findOne({ phone });
+        return await this.userRepository.findOne({ where:{phone:phone} });
     }
 
     async findByEmail(email: string): Promise<User> {
