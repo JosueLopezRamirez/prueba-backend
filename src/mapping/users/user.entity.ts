@@ -1,7 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne, BeforeInsert, BeforeUpdate } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne, BeforeInsert, BeforeUpdate, OneToMany } from 'typeorm';
 import { Min, Length, IsOptional } from 'class-validator';
 import { Countrie } from '../countries/countrie.entity';
 import { Cities } from '../cities/cities.entity';
+import { SkiperTravels } from '../skiper-travels/skiper-travels.entity';
 import * as bcrypt from 'bcryptjs';
 import { UserCivilStatus } from '../user-civil-status/user-civil-status.entity';
 
@@ -69,4 +70,5 @@ export class User {
 
     @ManyToOne(type => UserCivilStatus, { nullable: true })
     @JoinColumn({ name: 'idcivil_status' }) civilStatus: UserCivilStatus;
+
 }

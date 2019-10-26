@@ -18,6 +18,6 @@ import { VehicleYearsModule } from '../vehicle-years/vehicle-years.module';
     VehicleYearsModule,
     TypeOrmModule.forFeature([SkiperVehicle])],
   providers: [SkiperVehicleService, SkiperVehicleResolver],
-  exports:[SkiperVehicleService]
+  exports: [SkiperVehicleService]
 })
 export class SkiperVehicleModule {}

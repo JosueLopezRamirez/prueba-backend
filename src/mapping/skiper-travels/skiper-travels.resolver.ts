@@ -1,4 +1,4 @@
-import { Resolver, Query } from '@nestjs/graphql';
+import { Resolver , Query} from '@nestjs/graphql';
 import { SkiperTravelsService } from './skiper-travels.service';
 
 @Resolver('SkiperTravels')
