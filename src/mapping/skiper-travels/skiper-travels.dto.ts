@@ -1,6 +1,6 @@
-import { ObjectType, InputType } from "type-graphql";
-import { UserDto } from "../users/user.dto";
-import { SkiperAgentDto } from "../skiper-agent/skiper-agent.dto";
+import { ObjectType, InputType } from 'type-graphql';
+import { UserDto } from '../users/user.dto';
+import { SkiperAgentDto } from '../skiper-agent/skiper-agent.dto';
 
 @InputType()
 export class SkiperTravelsInput {
@@ -25,8 +25,8 @@ export class SkiperTravelsInput {
 @ObjectType()
 export class SkiperTravelsDto {
     id: number;
-    idusers: UserDto;
-    iddriver: SkiperAgentDto;
+    users: UserDto;
+    driver: SkiperAgentDto;
     lat_initial: number;
     lng_initial: number;
     lat_final_seggested: number;

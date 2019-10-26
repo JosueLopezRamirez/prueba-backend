@@ -1,0 +1,15 @@
+input SkiperTravelsStatusInput {
+    id: Int
+    name: String
+    indicator: String
+}
+
+type SkiperTravelsStatusDto {
+    id: Int
+    name: String
+    indicator: String
+}
+
+type Query {
+    getAllSkiperTravelStatus: [SkiperTravelsStatusDto!]
+}

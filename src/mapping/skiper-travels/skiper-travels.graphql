@@ -20,8 +20,8 @@ input SkiperTravelsInput {
 
 type SkiperTravelsDto {
     id: Int
-    idusers: UserDto
-    iddriver: SkiperAgentDto
+    users: UserDto
+    drivers: SkiperAgentDto
     lat_initial: Float
     lng_initial: Float
     lat_final_seggested: Float

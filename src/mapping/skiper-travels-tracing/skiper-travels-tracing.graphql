@@ -1,0 +1,17 @@
+input SkiperTravelsTracingInput {
+    id: Int
+    idtravel: Int 
+    idtravelstatus: Int
+    datetracing: DateTime 
+}
+
+type SkiperTravelsTracingDto {
+    id: Int
+    travel: SkiperTravelsDto 
+    travelstatus: SkiperTravelsStatusDto
+    datetracing: DateTime 
+}
+
+type Query {
+    skipertravelstracing: [SkiperTravelsTracingDto!]
+}

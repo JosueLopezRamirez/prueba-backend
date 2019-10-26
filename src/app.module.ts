@@ -45,6 +45,8 @@ import { SkiperVehicleAgentModule } from './mapping/skiper-vehicle-agent/skiper-
 import { UsersAddressModule } from './mapping/users-address/users-address.module';
 import { CatPlacesUsersModule } from './mapping/cat-places-users/cat-places-users.module';
 import { SkiperTravelsModule } from './mapping/skiper-travels/skiper-travels.module';
+import { SkiperTravelsTracingModule } from './mapping/skiper-travels-tracing/skiper-travels-tracing.module';
+import { SkiperTravelsStatusModule } from './mapping/skiper-travels-status/skiper-travels-status.module';
 
 @Module({
   imports: [
@@ -125,6 +127,8 @@ import { SkiperTravelsModule } from './mapping/skiper-travels/skiper-travels.mod
     UsersAddressModule,
     CatPlacesUsersModule,
     SkiperTravelsModule,
+    SkiperTravelsTracingModule,
+    SkiperTravelsStatusModule,
   ],
   providers: [AppService, AppResolver],
   controllers: [AppController],

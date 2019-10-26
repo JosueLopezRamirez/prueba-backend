@@ -5,8 +5,8 @@ import { SkiperAgent} from '../skiper-agent/skiper-agent.entity';
 @Entity('skiper_travels')
 export class SkiperTravels{
     @PrimaryGeneratedColumn() id: number;
-    @Column({nullable: true}) idusers: number;
-    @Column({nullable: true}) iddriver: number;
+    @Column('int', {nullable: true}) idusers: number;
+    @Column('int', {nullable: true}) iddriver: number;
     @Column('double', {nullable: true}) lat_initial: Double;
     @Column('double', {nullable: true}) lng_initial: Double;
     @Column('double', {nullable: true}) lat_final_seggested: Double;

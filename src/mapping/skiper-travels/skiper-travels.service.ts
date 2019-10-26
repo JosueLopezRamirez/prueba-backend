@@ -1,6 +1,6 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { SkiperTravels } from '../skiper-travels/skiper-travels.entity';
+import { SkiperTravels } from './skiper-travels.entity';
 import { Repository } from 'typeorm';
 import { SkiperTravelsInput } from '../skiper-travels/skiper-travels.dto';
 
@@ -14,7 +14,7 @@ export class SkiperTravelsService {
     async getAll():Promise<SkiperTravels[]>{
         try {
             return await this.repository.find({
-                relations: ["users","skiperagent"]
+                relations: ['users', 'skiperagent'],
             });
 
         } catch(error) {
