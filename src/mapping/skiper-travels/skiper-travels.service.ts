@@ -14,11 +14,7 @@ export class SkiperTravelsService {
     async getAll(): Promise<SkiperTravels[]> {
         try {
             return await this.repository.find({
-<<<<<<< HEAD
                 relations: ['users', 'skiperagent'],
-=======
-                relations: ["users", "skiperagent"]
->>>>>>> 4cd42b4875139c812413e6c89523e530fb610f7f
             });
 
         } catch (error) {
@@ -65,7 +61,7 @@ export class SkiperTravelsService {
 
     private parseSkiperTravel(input: SkiperTravelsInput): SkiperTravels {
         let skipertravel: SkiperTravels = new SkiperTravels();
-        skipertravel.iduser = input.idusers;
+        skipertravel.idusers = input.idusers;
         skipertravel.iddriver = input.iddriver;
         skipertravel.lat_initial = input.lat_initial;
         skipertravel.lng_initial = input.lng_initial;
