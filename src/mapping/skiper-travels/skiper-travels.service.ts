@@ -1,14 +1,22 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SkiperTravels } from './skiper-travels.entity';
-import { Repository } from 'typeorm';
-import { SkiperTravelsInput } from '../skiper-travels/skiper-travels.dto';
+import { Repository, getManager, getConnection } from 'typeorm';
+import { SkiperTravelsInput, TravelTarifaDTo } from '../skiper-travels/skiper-travels.dto';
+import { SkiperTravelsTracing } from '../skiper-travels-tracing/skiper-travels-tracing.entity';
+import { SkiperTariffs } from '../skiper-tariffs/skiper-tariffs.entity';
+import moment = require('moment');
+import momentTimeZone from 'moment-timezone'
+import { UserService } from '../users/user.service';
+import { SkiperVehicle } from '../skiper-vehicle/skiper-vehicle.entity';
+import geotz from 'geo-tz'
 
 @Injectable()
 export class SkiperTravelsService {
     constructor(
         @InjectRepository(SkiperTravels)
-        private readonly repository: Repository<SkiperTravels>
+        private readonly repository: Repository<SkiperTravels>,
+        private readonly userService: UserService
     ) { }
 
     async getAll(): Promise<SkiperTravels[]> {
@@ -22,6 +30,89 @@ export class SkiperTravelsService {
                 error,
                 HttpStatus.BAD_REQUEST
             )
+        }
+    }
+
+    private timeToDecimal(t) {
+        t = t.split(':');
+        return parseInt(t[0], 10)*1 + parseInt(t[1], 10)/60;
+    }
+
+    async CalcularTarifa(idcountry: number,
+    idcity: number, idcategoriaviaje: number, date_init: Date): Promise<TravelTarifaDTo> {
+        //vamos a obtener el precio base
+        var time = this.timeToDecimal(moment(date_init).format("HH:mm:ss a"))
+        var tarifas = await getConnection().createQueryBuilder(SkiperTariffs, "SkiperTariffs")
+        .innerJoinAndSelect("SkiperTariffs.driverShedule", "SkiperDriverSchedule")
+        .where("SkiperTariffs.idcountry = :idcountry", { idcountry })
+        .andWhere("SkiperTariffs.idcity = :idcity", { idcity })
+        .andWhere("SkiperTariffs.id_skiper_cat_travels = :idcategoriaviaje", { idcategoriaviaje })
+        .getMany()
+
+        var tarifa = tarifas.filter(x =>
+            (x.driverShedule.turn == "am-pm" &&
+            this.timeToDecimal( x.driverShedule.start_time.toString()) < time &&
+            this.timeToDecimal(x.driverShedule.final_time.toString()) > time)
+            ||
+            (x.driverShedule.turn == "pm-am" &&
+            this.timeToDecimal( x.driverShedule.start_time.toString()) < time &&
+            this.timeToDecimal(x.driverShedule.final_time.toString()) < time)
+        )[0]
+
+        var travelTarifaDTo = new TravelTarifaDTo();
+        travelTarifaDTo.pricebase = tarifa.price_base;
+        travelTarifaDTo.priceckilometer = tarifa.price_kilometer;
+        travelTarifaDTo.priceminimun = tarifa.price_minimum;
+        travelTarifaDTo.priceminute = tarifa.price_minute;
+        return travelTarifaDTo
+    }
+
+    async GenerateTravel(inputviaje: SkiperTravelsInput): Promise<SkiperTravels>{
+        try {
+            //vamos a obtener la zona horaria del solicitante del viaje
+            var zonahoraria = geotz(inputviaje.lat_initial, inputviaje.lng_initial)
+            var fecha = momentTimeZone().tz(zonahoraria.toString()).format("YYYY-MM-DD HH:mm:ss")
+            inputviaje.date_init = fecha;
+            let viaje = new SkiperTravels();
+            //vamos a calcular la tarifa del viaje
+            //vamos a obtener la categoria de drive y el pais y ciudad del drive
+            var vehiculo = await getConnection()
+            .createQueryBuilder(SkiperVehicle,"SkiperVehicle")
+            .innerJoinAndSelect("SkiperVehicle.skiperVehicleAgent", "SkiperVehicleAgent")
+            .innerJoinAndSelect("SkiperVehicleAgent.skiperAgent", "SkiperAgent")
+            .innerJoinAndSelect("SkiperAgent.user", "User")
+            .where("SkiperAgent.id = :userId", { userId: inputviaje.iddriver })
+            .getOne()
+
+            var usuario = await this.userService.findById(vehiculo.skiperVehicleAgent[0].skiperAgent.user.id)
+            var tarifa = await this.CalcularTarifa(usuario.country.id, usuario.city.id, 
+            vehiculo.id_cat_travel, inputviaje.date_init)
+
+            var ValorXKm = tarifa.priceckilometer * inputviaje.distance
+            var ValorXMin = tarifa.priceminute * inputviaje.time
+            var valorviaje = ValorXKm + ValorXMin + parseFloat(tarifa.pricebase.toString())
+            inputviaje.Total = valorviaje <= tarifa.priceminimun ? tarifa.priceminimun : valorviaje
+
+            await getManager().transaction(async transactionalEntityManager => {
+                viaje = this.parseSkiperTravel(inputviaje)
+                var viajeregistrado = await transactionalEntityManager.save(viaje)
+                let travelstracing = new SkiperTravelsTracing();
+                travelstracing.datetracing = new Date();
+                travelstracing.idtravel = viajeregistrado.id;
+                travelstracing.idtravelstatus = 1;
+                travelstracing.lat = inputviaje.lat_initial;
+                travelstracing.lng = inputviaje.lng_initial;
+                await transactionalEntityManager.save(travelstracing);
+            });
+            return viaje;
+        }
+        catch(error)
+        {
+            console.log(error)
+            throw new HttpException(
+                error,
+                HttpStatus.BAD_REQUEST,
+            );
         }
     }
 
@@ -70,13 +161,11 @@ export class SkiperTravelsService {
         skipertravel.lat_final = input.lat_final;
         skipertravel.lng_final = input.lng_final;
         skipertravel.date_init = input.date_init;
-        skipertravel.date_final = input.date_final;
         skipertravel.distance = input.distance;
-        skipertravel.total = input.total;
+        skipertravel.total = input.Total;
         skipertravel.address_initial = input.address_initial;
         skipertravel.address_final = input.address_final;
         skipertravel.address_suggested = input.address_suggested;
-
         return skipertravel;
     }
 }

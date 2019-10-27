@@ -14,9 +14,9 @@ export class SkiperTravelsInput {
     lat_final: number;
     lng_final: number;
     date_init: Date;
-    date_final: Date;
     distance: number;
-    total: number;
+    Total: number;
+    time: number;
     address_initial: string;
     address_final: string;
     address_suggested: string;
@@ -40,4 +40,12 @@ export class SkiperTravelsDto {
     address_initial: string;
     address_final: string;
     address_suggested: string;
+}
+
+@ObjectType()
+export class TravelTarifaDTo {
+    pricebase: number;
+    priceminute: number;
+    priceckilometer: number;
+    priceminimun: number;
 }
