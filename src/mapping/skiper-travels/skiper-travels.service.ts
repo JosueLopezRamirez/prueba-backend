@@ -41,10 +41,7 @@ export class SkiperTravelsService {
     async CalcularTarifa(idcountry: number,
     idcity: number, idcategoriaviaje: number, date_init: Date): Promise<TravelTarifaDTo> {
         //vamos a obtener el precio base
-        var time = this.timeToDecimal(moment(date_init).format("HH:mm:ss"))
-
-        console.log(time)
-
+        var time = this.timeToDecimal(moment(new Date(date_init)).format("HH:mm:ss"))
         var tarifas = await getConnection().createQueryBuilder(SkiperTariffs, "SkiperTariffs")
         .innerJoinAndSelect("SkiperTariffs.driverShedule", "SkiperDriverSchedule")
         .where("SkiperTariffs.idcountry = :idcountry", { idcountry })
@@ -64,7 +61,11 @@ export class SkiperTravelsService {
             this.timeToDecimal(x.driverShedule.final_time.toString()) >= time)
             ||
             (x.driverShedule.turn == "pm-am" &&
-            this.timeToDecimal( x.driverShedule.start_time.toString()) >= time &&
+            this.timeToDecimal( x.driverShedule.start_time.toString()) <= time &&
+            time < 24)
+            ||
+            (x.driverShedule.turn == "pm-am" &&
+            time >= 0 &&
             this.timeToDecimal(x.driverShedule.final_time.toString()) >= time)
         )[0]
 
