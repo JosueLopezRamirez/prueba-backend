@@ -41,7 +41,10 @@ export class SkiperTravelsService {
     async CalcularTarifa(idcountry: number,
     idcity: number, idcategoriaviaje: number, date_init: Date): Promise<TravelTarifaDTo> {
         //vamos a obtener el precio base
-        var time = this.timeToDecimal(moment(date_init).format("HH:mm:ss a"))
+        var time = this.timeToDecimal(moment(date_init).format("HH:mm:ss"))
+
+        console.log(time)
+
         var tarifas = await getConnection().createQueryBuilder(SkiperTariffs, "SkiperTariffs")
         .innerJoinAndSelect("SkiperTariffs.driverShedule", "SkiperDriverSchedule")
         .where("SkiperTariffs.idcountry = :idcountry", { idcountry })
@@ -49,14 +52,20 @@ export class SkiperTravelsService {
         .andWhere("SkiperTariffs.id_skiper_cat_travels = :idcategoriaviaje", { idcategoriaviaje })
         .getMany()
 
+        if(tarifas.length == 0)
+            throw new HttpException(
+                "No hay tarifa configurada para los parametros de entrada",
+                HttpStatus.BAD_REQUEST,
+            );
+
         var tarifa = tarifas.filter(x =>
             (x.driverShedule.turn == "am-pm" &&
-            this.timeToDecimal( x.driverShedule.start_time.toString()) < time &&
-            this.timeToDecimal(x.driverShedule.final_time.toString()) > time)
+            this.timeToDecimal( x.driverShedule.start_time.toString()) <= time &&
+            this.timeToDecimal(x.driverShedule.final_time.toString()) >= time)
             ||
             (x.driverShedule.turn == "pm-am" &&
-            this.timeToDecimal( x.driverShedule.start_time.toString()) < time &&
-            this.timeToDecimal(x.driverShedule.final_time.toString()) < time)
+            this.timeToDecimal( x.driverShedule.start_time.toString()) >= time &&
+            this.timeToDecimal(x.driverShedule.final_time.toString()) <= time)
         )[0]
 
         var travelTarifaDTo = new TravelTarifaDTo();
@@ -108,12 +117,53 @@ export class SkiperTravelsService {
         }
         catch(error)
         {
-            console.log(error)
             throw new HttpException(
                 error,
                 HttpStatus.BAD_REQUEST,
             );
         }
+    }
+
+    async GetTravels(idagent: number, status: number[]): Promise<SkiperTravels[]> {
+
+        try {
+            return await this.repository.createQueryBuilder("SkiperTravels")
+            .innerJoinAndSelect("SkiperTravels.users", "User")
+            .innerJoinAndSelect("SkiperTravels.skiperagent", "SkiperAgent", "SkiperAgent.id = :idagent", { idagent })
+            .innerJoinAndSelect("SkiperAgent.user", "AgentUser")
+            .innerJoinAndSelect("SkiperTravels.skiperTravelsTracing", "SkiperTravelsTracing","SkiperTravelsTracing.travelstatus IN (:idstatus)", { idstatus: status })
+            .innerJoinAndSelect(subQuery => {
+                return subQuery
+                .select("SkiperTravelsTracing.idtravel", "idtravel").addSelect("MAX(SkiperTravelsTracing.datetracing)", "fecha")
+                .from(SkiperTravelsTracing, "SkiperTravelsTracing")
+                .groupBy("SkiperTravelsTracing.idtravel")
+            }, "d", "SkiperTravelsTracing.idtravel = d.idtravel and SkiperTravelsTracing.datetracing = d.fecha")
+            .innerJoinAndSelect("SkiperTravelsTracing.travelstatus", "SkiperTravelsStatus")
+            .getMany();
+        }
+        catch(err)
+        {
+            throw new HttpException(
+                err,
+                HttpStatus.BAD_REQUEST,
+            );
+        }
+    }
+
+    async GetTravelByID(idtravel: number): Promise<SkiperTravels> {
+        return await this.repository.createQueryBuilder("SkiperTravels")
+        .innerJoinAndSelect("SkiperTravels.users", "User")
+        .innerJoinAndSelect("SkiperTravels.skiperagent", "Skiperagent")
+        .innerJoinAndSelect("SkiperTravels.skiperTravelsTracing", "SkiperTravelsTracing")
+        .innerJoinAndSelect(subQuery => {
+            return subQuery
+            .select("SkiperTravelsTracing.idtravel", "idtravel").addSelect("MAX(SkiperTravelsTracing.datetracing)", "fecha")
+            .from(SkiperTravelsTracing, "SkiperTravelsTracing")
+            .groupBy("SkiperTravelsTracing.idtravel")
+        }, "d", "SkiperTravelsTracing.idtravel = d.idtravel and SkiperTravelsTracing.datetracing = d.fecha")
+        .innerJoinAndSelect("SkiperTravelsTracing.travelstatus", "SkiperTravelsStatus")
+        .where("SkiperTravels.id = :idtravel", { idtravel })
+        .getOne();
     }
 
     async getById(id: number): Promise<SkiperTravels> {

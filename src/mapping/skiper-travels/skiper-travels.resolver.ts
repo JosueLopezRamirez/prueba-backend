@@ -19,6 +19,11 @@ export class SkiperTravelsResolver{
         return await this.service.getAll();
     }
 
+    @Query()
+    async getTravelsByUserId(@Args('idagent') idagent: number, @Args('idstatus') idstatus: number[]) {
+        return await this.service.GetTravels(idagent, idstatus);
+    }
+
     @Mutation()
     async GenerateTravel(@Args('inputviaje') inputviaje: SkiperTravelsInput) {
         return await this.service.GenerateTravel(inputviaje);

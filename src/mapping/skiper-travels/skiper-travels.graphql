@@ -20,8 +20,6 @@ input SkiperTravelsInput {
 
 type SkiperTravelsDto {
     id: Int
-    users: UserDto
-    drivers: SkiperAgentDto
     lat_initial: Float
     lng_initial: Float
     lat_final_seggested: Float
@@ -35,6 +33,9 @@ type SkiperTravelsDto {
     address_initial: String
     address_final: String
     address_suggested: String
+    skiperTravelsTracing: [SkiperTravelsTracingDto]
+    users: UserDto
+    skiperagent: SkiperAgentDto
 }
 
 type TravelTarifaDTo {
@@ -47,6 +48,7 @@ type TravelTarifaDTo {
 type Query {
     getAllSkiperTravels: [SkiperTravelsDto!]
     CalcularTarifa(idcountry: Int!, idcity: Int, idcategoriaviaje: Int!, date_init: DateTime!): TravelTarifaDTo!
+    getTravelsByUserId(idagent: Int!, idstatus:[Int!]!):[SkiperTravelsDto!]
 }
 
 type Mutation {

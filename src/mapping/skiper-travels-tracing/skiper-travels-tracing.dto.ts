@@ -4,10 +4,8 @@ import {SkiperTravelsStatusDto} from '../skiper-travels-status/skiper-travels-st
 
 @InputType()
 export class SkiperTravelsTracingInput {
-    id: number;
     idtravel: number;
     idtravelstatus: number;
-    datetracing: Date;
 }
 
 @ObjectType()

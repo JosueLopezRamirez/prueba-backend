@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMan
 import { User } from '../users/user.entity';
 import { SkiperAgent } from '../skiper-agent/skiper-agent.entity';
 import { SkiperTariffs } from '../skiper-tariffs/skiper-tariffs.entity';
+import { SkiperTravelsTracing } from '../skiper-travels-tracing/skiper-travels-tracing.entity';
 
 @Entity('skiper_travels')
 export class SkiperTravels {
@@ -30,4 +31,7 @@ export class SkiperTravels {
 
     @OneToMany(type => SkiperTariffs, x => x.driverShedule)
     skiperTariffs: SkiperTariffs[];
+
+    @OneToMany(type => SkiperTravelsTracing, x => x.travel)
+    skiperTravelsTracing: SkiperTravelsTracing[]
 }
