@@ -7,9 +7,11 @@ import { SkiperCommerceResolver } from './skiper-commerce.resolver';
 import { SkiperAgentModule } from '../skiper-agent/skiper-agent.module';
 import { CountriesModule } from '../countries/countries.module';
 import { SkiperCatCommerceModule } from '../skiper-cat-commerce/skiper-cat-commerce.module';
+import {SkiperSubCatCommercesModule} from '../skiper-sub-cat-commerces/skiper-sub-cat-commerces.module';
 
 @Module({
     imports:[
+        SkiperSubCatCommercesModule,
         SkiperCatCommerceModule,
         CountriesModule,
         SkiperAgentModule,

@@ -140,6 +140,15 @@ export class SkiperCommerceService {
         return null;
     }
 
+    async getByIdSubCategoryCommerce(id: number): Promise<SkiperCommerce[]> {
+        let x = await this.repository.createQueryBuilder('SkiperCommerce')
+        .innerJoinAndSelect('SkiperCommerce.catCommerce', 'SkiperCatCommerce')
+        .innerJoinAndSelect('skipersubcatcommerces.subcatcommerce', 'SkiperCatCommerce')
+        .where('skipersubcatcommerces.id = :id', {id}).getMany();
+        console.log(x);
+        return x;
+    }
+
     private parseCommerce(input: CommerceInput, agent?, country?, catCommerce?): SkiperCommerce {
         let commerce: SkiperCommerce = new SkiperCommerce;
         commerce.namecommerce = input.namecommerce;

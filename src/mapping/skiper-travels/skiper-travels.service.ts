@@ -8,7 +8,7 @@ import { SkiperTravelsInput } from '../skiper-travels/skiper-travels.dto';
 export class SkiperTravelsService {
     constructor(
         @InjectRepository(SkiperTravels)
-        private readonly repository: Repository<SkiperTravels>
+        private readonly repository: Repository<SkiperTravels>,
     ) { }
 
     async getAll(): Promise<SkiperTravels[]> {

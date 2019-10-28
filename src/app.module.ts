@@ -47,6 +47,7 @@ import { CatPlacesUsersModule } from './mapping/cat-places-users/cat-places-user
 import { SkiperTravelsModule } from './mapping/skiper-travels/skiper-travels.module';
 import { SkiperTravelsTracingModule } from './mapping/skiper-travels-tracing/skiper-travels-tracing.module';
 import { SkiperTravelsStatusModule } from './mapping/skiper-travels-status/skiper-travels-status.module';
+import { SkiperSubCatCommercesModule } from './mapping/skiper-sub-cat-commerces/skiper-sub-cat-commerces.module';
 
 @Module({
   imports: [
@@ -129,6 +130,7 @@ import { SkiperTravelsStatusModule } from './mapping/skiper-travels-status/skipe
     SkiperTravelsModule,
     SkiperTravelsTracingModule,
     SkiperTravelsStatusModule,
+    SkiperSubCatCommercesModule,
   ],
   providers: [AppService, AppResolver],
   controllers: [AppController],
