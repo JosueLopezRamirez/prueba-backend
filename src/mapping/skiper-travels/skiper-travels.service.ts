@@ -16,10 +16,7 @@ export class SkiperTravelsService {
     constructor(
         @InjectRepository(SkiperTravels)
         private readonly repository: Repository<SkiperTravels>,
-<<<<<<< HEAD
-=======
         private readonly userService: UserService
->>>>>>> 9070b6d2283f39e661c117984908b99a2571d895
     ) { }
 
     async getAll(): Promise<SkiperTravels[]> {
