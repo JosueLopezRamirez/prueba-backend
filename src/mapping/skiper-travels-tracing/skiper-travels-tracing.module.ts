@@ -12,6 +12,6 @@ import {SkiperTravelsStatusModule} from '../skiper-travels-status/skiper-travels
   SkiperTravelsModule,
   TypeOrmModule.forFeature([SkiperTravelsTracing])],
   providers: [SkiperTravelsTracingService, SkiperTravelsTracingResolver],
-  exports: [ SkiperTravelsTracingService ],
+  exports: [ SkiperTravelsTracingService, SkiperTravelsTracingResolver ],
 })
 export class SkiperTravelsTracingModule {}
