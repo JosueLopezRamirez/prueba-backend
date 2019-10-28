@@ -65,7 +65,7 @@ export class SkiperTravelsService {
             ||
             (x.driverShedule.turn == "pm-am" &&
             this.timeToDecimal( x.driverShedule.start_time.toString()) >= time &&
-            this.timeToDecimal(x.driverShedule.final_time.toString()) <= time)
+            this.timeToDecimal(x.driverShedule.final_time.toString()) >= time)
         )[0]
 
         var travelTarifaDTo = new TravelTarifaDTo();
