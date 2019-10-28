@@ -1,5 +1,5 @@
 import {TypeOrmModule} from '@nestjs/typeorm';
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import {SkiperTravelsTracing} from './skiper-travels-tracing.entity';
 import { SkiperTravelsTracingService } from './skiper-travels-tracing.service';
 import { SkiperTravelsTracingResolver } from './skiper-travels-tracing.resolver';
@@ -9,7 +9,7 @@ import {SkiperTravelsStatusModule} from '../skiper-travels-status/skiper-travels
 @Module({
   imports: [
   SkiperTravelsStatusModule,
-  SkiperTravelsModule,
+  forwardRef(() => SkiperTravelsModule),
   TypeOrmModule.forFeature([SkiperTravelsTracing])],
   providers: [SkiperTravelsTracingService, SkiperTravelsTracingResolver],
   exports: [ SkiperTravelsTracingService, SkiperTravelsTracingResolver ],
