@@ -1,10 +1,12 @@
 import { Resolver , Query, Mutation, Args} from '@nestjs/graphql';
 import { SkiperTravelsService } from './skiper-travels.service';
 import { SkiperTravelsInput } from './skiper-travels.dto';
+import { SkiperTravelsTracingResolver } from '../skiper-travels-tracing/skiper-travels-tracing.resolver';
 
 @Resolver('SkiperTravels')
 export class SkiperTravelsResolver{
-    constructor(private readonly service: SkiperTravelsService) { }
+    constructor(private readonly service: SkiperTravelsService,
+    private readonly SkiperTravelsTracingResolver: SkiperTravelsTracingResolver) { }
     // por ahora esto nada mas
     @Query()
     async CalcularTarifa(@Args('idcountry') idcountry : number,
@@ -26,6 +28,14 @@ export class SkiperTravelsResolver{
 
     @Mutation()
     async GenerateTravel(@Args('inputviaje') inputviaje: SkiperTravelsInput) {
-        return await this.service.GenerateTravel(inputviaje);
+        var result = await this.service.GenerateTravel(inputviaje);
+        if(result != null)
+        {
+            let viaje = await this.service.GetTravelByID(result.id)
+            this.SkiperTravelsTracingResolver.NotificarCambiosEnViaje(viaje, viaje.skiperagent.id)
+            return result
+        }
+        else
+            return null
     }
 }

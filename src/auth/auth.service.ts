@@ -159,8 +159,8 @@ export class AuthService {
 
     private async commerceByQueryBuilder(result, agent) {
         let co = await createQueryBuilder("SkiperCommerce")
-            .innerJoin("SkiperCommerce.skiperAgent", "SkiperAgent")
-            .innerJoin("SkiperAgent.user", "User")
+            .innerJoinAndSelect("SkiperCommerce.skiperAgent", "SkiperAgent")
+            .innerJoinAndSelect("SkiperAgent.user", "User")
             .where("SkiperAgent.iduser = :userId", { userId: result.id })
             //comentariamos esta linea porque ocacionaba que no generara la info del comercio
             // .andWhere("SkiperCommerce.idagent = :agentId", { agentId: agent.id })
@@ -175,13 +175,15 @@ export class AuthService {
             .innerJoinAndSelect("SkiperVehicle.vehicleModel", "VehicleModel")
             .innerJoinAndSelect("SkiperVehicle.vehicleYear", "VehicleYear")
             .innerJoinAndSelect("SkiperVehicle.vehicleCatalog", "VehicleCatalog")
-            .innerJoin("SkiperVehicle.skiperVehicleAgent", "SkiperVehicleAgent")
-            .innerJoin("SkiperVehicleAgent.skiperAgent", "SkiperAgent")
+            .innerJoinAndSelect("SkiperVehicle.skiperVehicleAgent", "SkiperVehicleAgent")
+            .innerJoinAndSelect("SkiperVehicleAgent.skiperAgent", "SkiperAgent")
             .innerJoin("SkiperAgent.user", "User")
             .where("User.id = :userId", { userId: result.id })
             //comentariamos esta linea porque ocacionaba que no generara la info del comercio
             // .andWhere("SkiperAgent.id = :agentId", { agentId: agent.id })
             .getOne();
+        
+        console.log(ve)    
         return ve;
     }
 }
