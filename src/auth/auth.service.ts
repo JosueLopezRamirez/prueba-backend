@@ -182,8 +182,6 @@ export class AuthService {
             //comentariamos esta linea porque ocacionaba que no generara la info del comercio
             // .andWhere("SkiperAgent.id = :agentId", { agentId: agent.id })
             .getOne();
-        
-        console.log(ve)    
         return ve;
     }
 }
