@@ -2,7 +2,7 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {SkiperTravelsTracing} from './skiper-travels-tracing.entity';
 import {SkiperTravelsTracingInput} from './skiper-travels-tracing.dto';
-import { Repository } from 'typeorm';
+import { Repository, createQueryBuilder } from 'typeorm';
 
 @Injectable()
 export class SkiperTravelsTracingService {
@@ -31,40 +31,49 @@ export class SkiperTravelsTracingService {
         });
     }
 
-    registerTravelsTracing(input: SkiperTravelsTracingInput): Promise<SkiperTravelsTracing> {
-        try {
-            let skipertravel = this.parseSkiperTravelTracing(input);
-            return this.repository.save(skipertravel);
+    async registerTravelsTracing(input: SkiperTravelsTracingInput): Promise<SkiperTravelsTracing> {
 
-        } catch(error) {
+        let result = await this.verifyTravelTracing(input.idtravel, input.idtravelstatus);
+        if(result){
             throw new HttpException(
-                error,
+                "El viaje ya existe con el estado indicado",
                 HttpStatus.BAD_REQUEST,
             );
         }
+
+        let skipertravel = this.parseSkiperTravelTracing(input);
+        return this.repository.save(skipertravel);
     }
 
-    async updateSkiperTravelsTracing(input: SkiperTravelsTracingInput): Promise<SkiperTravelsTracing> {
-        try{
-            let skipertraveltracing = await this.getById(input.id);
-            skipertraveltracing.idtravel = input.idtravel;
-            skipertraveltracing.idtravelstatus = input.idtravelstatus;
-            skipertraveltracing.datetracing = input.datetracing;
-            return this.repository.save(skipertraveltracing);
-        } catch (error) {
-            throw new HttpException(
-                error,
-                HttpStatus.BAD_REQUEST,
-            );
-        }
-    }
+    //de momento se comenta este funcionalidad
+    // async updateSkiperTravelsTracing(input: SkiperTravelsTracingInput): Promise<SkiperTravelsTracing> {
+    //     try{
+    //         let skipertraveltracing = await this.getById(input.id);
+    //         skipertraveltracing.idtravel = input.idtravel;
+    //         skipertraveltracing.idtravelstatus = input.idtravelstatus;
+    //         skipertraveltracing.datetracing = input.datetracing;
+    //         return this.repository.save(skipertraveltracing);
+    //     } catch (error) {
+    //         throw new HttpException(
+    //             error,
+    //             HttpStatus.BAD_REQUEST,
+    //         );
+    //     }
+    // }
 
     private parseSkiperTravelTracing(input: SkiperTravelsTracingInput): SkiperTravelsTracing {
         let skipertravelstracing: SkiperTravelsTracing = new SkiperTravelsTracing();
-        skipertravelstracing.id = input.id;
         skipertravelstracing.idtravel = input.idtravel;
         skipertravelstracing.idtravelstatus = input.idtravelstatus;
-        skipertravelstracing.datetracing = input.datetracing;
+        skipertravelstracing.datetracing = new Date();
         return skipertravelstracing;
+    }
+
+    private async verifyTravelTracing(idorder: number, idstatus: number) {
+        let result = await createQueryBuilder("SkiperTravelsTracing")
+            .where("SkiperTravelsTracing.idtravelstatus = :status", { status: idstatus })
+            .andWhere("SkiperTravelsTracing.idtravel = :order", { order: idorder })
+            .getOne();
+        return result;
     }
 }

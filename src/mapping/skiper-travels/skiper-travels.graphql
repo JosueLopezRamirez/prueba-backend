@@ -1,27 +1,30 @@
 input SkiperTravelsInput {
     id: Int
-    idusers: Int
-    iddriver: Int
-    lat_initial: Float
-    lng_initial: Float
+    idusers: Int!
+    iddriver: Int!
+    lat_initial: Float!
+    lng_initial: Float!
     lat_final_seggested: Float
     lng_final_seggested: Float
-    lat_final: Float
-    lng_final: Float
+    lat_final: Float!
+    lng_final: Float!
     date_init: DateTime
-    date_final: DateTime
-    distance: Float
-    total: Float
-    address_initial: String
-    address_final: String
+    distance: Float!
+    time: Float!
+    Total: Float
+    address_initial: String!
+    address_final: String!
     address_suggested: String
 }
 
 
 type SkiperTravelsDto {
     id: Int
+<<<<<<< HEAD
     users: UserDto
     skiperagent: SkiperAgentDto
+=======
+>>>>>>> 9070b6d2283f39e661c117984908b99a2571d895
     lat_initial: Float
     lng_initial: Float
     lat_final_seggested: Float
@@ -35,9 +38,24 @@ type SkiperTravelsDto {
     address_initial: String
     address_final: String
     address_suggested: String
+    skiperTravelsTracing: [SkiperTravelsTracingDto]
+    users: UserDto
+    skiperagent: SkiperAgentDto
+}
+
+type TravelTarifaDTo {
+    pricebase: Float
+    priceminute: Float
+    priceckilometer: Float
+    priceminimun: Float
 }
 
 type Query {
     getAllSkiperTravels: [SkiperTravelsDto!]
+    CalcularTarifa(idcountry: Int!, idcity: Int, idcategoriaviaje: Int!, date_init: DateTime!): TravelTarifaDTo!
+    getTravelsByUserId(idagent: Int!, idstatus:[Int!]!):[SkiperTravelsDto!]
+}
 
+type Mutation {
+    GenerateTravel(inputviaje: SkiperTravelsInput!):SkiperTravelsDto!
 }

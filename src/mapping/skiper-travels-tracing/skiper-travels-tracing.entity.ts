@@ -9,6 +9,8 @@ export class SkiperTravelsTracing{
     @Column('int', { nullable: false }) idtravel: number;
     @Column('int', {nullable: false}) idtravelstatus: number;
     @Column('datetime', { nullable: false}) datetracing: Date;
+    @Column('double', { nullable: true}) lat: number;
+    @Column('double', { nullable: true}) lng: number;
 
     @ManyToOne(type => SkiperTravels, { nullable: false })
     @JoinColumn({ name: 'idtravel'}) travel: SkiperTravels;

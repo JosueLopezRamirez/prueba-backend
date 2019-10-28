@@ -1,8 +1,6 @@
 input SkiperTravelsTracingInput {
-    id: Int
-    idtravel: Int 
-    idtravelstatus: Int
-    datetracing: DateTime 
+    idtravel: Int!
+    idtravelstatus: Int!
 }
 
 type SkiperTravelsTracingDto {
@@ -14,4 +12,12 @@ type SkiperTravelsTracingDto {
 
 type Query {
     skipertravelstracing: [SkiperTravelsTracingDto!]
+}
+
+type Mutation {
+    registerTravelsTracing(input: SkiperTravelsTracingInput!): SkiperTravelsTracingDto!
+}
+
+type Subscription {
+    skiperTravel(idusuario: Int!): SkiperTravelsDto!
 }
