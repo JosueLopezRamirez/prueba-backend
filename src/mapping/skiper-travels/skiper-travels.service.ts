@@ -6,10 +6,10 @@ import { SkiperTravelsInput, TravelTarifaDTo } from '../skiper-travels/skiper-tr
 import { SkiperTravelsTracing } from '../skiper-travels-tracing/skiper-travels-tracing.entity';
 import { SkiperTariffs } from '../skiper-tariffs/skiper-tariffs.entity';
 import moment = require('moment');
-import momentTimeZone from 'moment-timezone'
+import momentTimeZone from 'moment-timezone';
 import { UserService } from '../users/user.service';
 import { SkiperVehicle } from '../skiper-vehicle/skiper-vehicle.entity';
-import geotz from 'geo-tz'
+import geotz from 'geo-tz';
 
 @Injectable()
 export class SkiperTravelsService {
