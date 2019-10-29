@@ -65,14 +65,16 @@ export class SkiperTravelsTracingService {
         let skipertravelstracing: SkiperTravelsTracing = new SkiperTravelsTracing();
         skipertravelstracing.idtravel = input.idtravel;
         skipertravelstracing.idtravelstatus = input.idtravelstatus;
-        skipertravelstracing.datetracing = new Date();
+        skipertravelstracing.lat = input.lat;
+        skipertravelstracing.lng = input.lng;
+        skipertravelstracing.datetracing = input.fecha;
         return skipertravelstracing;
     }
 
-    private async verifyTravelTracing(idorder: number, idstatus: number) {
+    private async verifyTravelTracing(idtravel: number, idstatus: number) {
         let result = await createQueryBuilder("SkiperTravelsTracing")
             .where("SkiperTravelsTracing.idtravelstatus = :status", { status: idstatus })
-            .andWhere("SkiperTravelsTracing.idtravel = :order", { order: idorder })
+            .andWhere("SkiperTravelsTracing.idtravel = :idtravel", { idtravel })
             .getOne();
         return result;
     }

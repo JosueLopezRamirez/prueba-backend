@@ -40,6 +40,7 @@ export class SkiperTravelsDto {
     address_initial: string;
     address_final: string;
     address_suggested: string;
+    duration: number;
     users: UserDto;
     skiperagent: SkiperAgentDto;
     skiperTravelsTracing: SkiperTravelsTracingDto;

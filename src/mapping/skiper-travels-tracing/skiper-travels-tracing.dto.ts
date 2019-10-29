@@ -6,12 +6,17 @@ import {SkiperTravelsStatusDto} from '../skiper-travels-status/skiper-travels-st
 export class SkiperTravelsTracingInput {
     idtravel: number;
     idtravelstatus: number;
+    lat: number;
+    lng: number;
+    fecha: Date;
 }
 
 @ObjectType()
 export class SkiperTravelsTracingDto {
     id: number;
     travel: SkiperTravelsDto;
+    lat: number;
+    lng: number;
     travelstatus: SkiperTravelsStatusDto;
     datetracing: Date;
 }

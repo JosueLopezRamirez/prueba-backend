@@ -107,7 +107,7 @@ export class SkiperTravelsService {
                 viaje = this.parseSkiperTravel(inputviaje)
                 var viajeregistrado = await transactionalEntityManager.save(viaje)
                 let travelstracing = new SkiperTravelsTracing();
-                travelstracing.datetracing = new Date();
+                travelstracing.datetracing = fecha;
                 travelstracing.idtravel = viajeregistrado.id;
                 travelstracing.idtravelstatus = 1;
                 travelstracing.lat = inputviaje.lat_initial;
@@ -217,6 +217,7 @@ export class SkiperTravelsService {
         skipertravel.address_initial = input.address_initial;
         skipertravel.address_final = input.address_final;
         skipertravel.address_suggested = input.address_suggested;
+        skipertravel.duration = input.time
         return skipertravel;
     }
 }

@@ -1,11 +1,16 @@
 input SkiperTravelsTracingInput {
     idtravel: Int!
     idtravelstatus: Int!
+    lat: Float!
+    lng: Float!
+    fecha: DateTime!
 }
 
 type SkiperTravelsTracingDto {
     id: Int
-    travel: SkiperTravelsDto 
+    travel: SkiperTravelsDto
+    lat: Float
+    lng: Float
     travelstatus: SkiperTravelsStatusDto
     datetracing: DateTime 
 }

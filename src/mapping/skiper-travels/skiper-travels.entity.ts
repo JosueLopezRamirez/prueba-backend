@@ -22,6 +22,7 @@ export class SkiperTravels {
     @Column({nullable: true, length: 100}) address_initial: string;
     @Column({nullable: true, length: 100}) address_final: string;
     @Column({nullable: true, length: 100}) address_suggested: string;
+    @Column('double', {nullable: true}) duration: number;
 
     @ManyToOne(type => User, { nullable: true })
     @JoinColumn({ name: 'idusers' }) users: User;
