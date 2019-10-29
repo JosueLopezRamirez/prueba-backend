@@ -23,3 +23,11 @@ export class AgentInput {
     categoryAgent_id:number;
     user_id:number;
 }
+
+@InputType()
+export class AgentDriveInput {
+    iddrive:number;
+    lat:number;
+    lng:number;
+    distancia: number;
+}
