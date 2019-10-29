@@ -96,6 +96,7 @@ export class SkiperCommerceService {
             var x: any = await createQueryBuilder("SkiperCommerce")
                 .innerJoinAndSelect("SkiperCommerce.skiperAgent","SkiperAgent")
                 .innerJoinAndSelect("SkiperCommerce.catCommerce","SkiperCatCommerce")
+                .innerJoinAndSelect("SkiperCatCommerce.subcatcommerce","SkiperSubCatCommerces")
                 .innerJoinAndSelect("SkiperCommerce.country","Countrie")
                 .innerJoinAndSelect("SkiperCommerce.skiperCatProductsCommerce","SkiperCatProductsCommerce")
                 .innerJoinAndSelect("SkiperCatProductsCommerce.skiperProductCommerce","SkiperProductCommerce")
@@ -138,15 +139,6 @@ export class SkiperCommerceService {
             console.error(error)
         }
         return null;
-    }
-
-    async getByIdSubCategoryCommerce(id: number): Promise<SkiperCommerce[]> {
-        let x = await this.repository.createQueryBuilder('SkiperCommerce')
-        .innerJoinAndSelect('SkiperCommerce.catCommerce', 'SkiperCatCommerce')
-        .innerJoinAndSelect('skipersubcatcommerces.subcatcommerce', 'SkiperCatCommerce')
-        .where('skipersubcatcommerces.id = :id', {id}).getMany();
-        console.log(x);
-        return x;
     }
 
     private parseCommerce(input: CommerceInput, agent?, country?, catCommerce?): SkiperCommerce {

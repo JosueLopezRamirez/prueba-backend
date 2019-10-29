@@ -11,11 +11,6 @@ export class SkiperCommerceResolver {
     ){}
 
     @Query()
-    async getCommerceByIdSubCategoryCommerce(@Args('id', ParseIntPipe) id: number) {
-        return this.skiperCommerceService.getByIdSubCategoryCommerce(id);
-    }
-
-    @Query()
     async commerces() {
         return this.skiperCommerceService.getAll();
     }

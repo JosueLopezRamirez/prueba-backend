@@ -32,6 +32,7 @@ type CommerceDto {
     city:citiesDto!
     skiperCatProductsCommerce: [SkiperCatProductDto!]!
     
+    
 }
 
 type Query {
