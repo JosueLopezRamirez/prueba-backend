@@ -15,7 +15,7 @@ import { SkiperAgentService } from '../mapping/skiper-agent/skiper-agent.service
 export class AuthService {
 
     private logger = new Logger('AuthService');
-    private twilio = Twilio('AC380212e678f8f2efb650f7a963df98e6','bd5c3ab4dec94e95be051feed08484d6');
+    private twilio = Twilio('AC380212e678f8f2efb650f7a963df98e6', 'bd5c3ab4dec94e95be051feed08484d6');
 
     constructor(
         private readonly userService: UserService,
@@ -38,7 +38,7 @@ export class AuthService {
 
             if (result.is_online)
                 return new SignResponse(null, new ErrorResponse('User is online in another device!', 400, false));
-            
+
             let co, ve; //Definimos la variable commercio
             try {
                 let agent = await this.agentService.getByUser(result);
@@ -55,7 +55,7 @@ export class AuthService {
                 return new SignResponse(new SignInOk(
                     await this.tokenGenerated(result), result.firstname,
                     result.lastname, result.user,
-                    result.email, result.phone,result.avatar,result.country, co, ve, agent.id
+                    result.email, result.phone, result.avatar, result.country, co, ve, agent.id
                 ), null);
             } catch (error) {
                 console.log('aqui no')
@@ -74,7 +74,7 @@ export class AuthService {
             return new SignResponse(new SignInOk(
                 await this.tokenGenerated(result), result.firstname,
                 result.lastname, result.user,
-                result.email, result.phone,result.avatar,result.country
+                result.email, result.phone, result.avatar, result.country
             ), null);
         } else {
             return new SignResponse(null, new ErrorResponse('Sponsor ID is not valid!', 400, false));
@@ -98,7 +98,12 @@ export class AuthService {
     // ----------------- Metodos twilio -------------------------------------------
     // ----------------------------------------------------------------------------
     async sendCode(body: twilioDto): Promise<ErrorResponse> {
-        let sendCode
+        let sendCode;
+        let userExist = await this.userService.findByPhone(body.phone_number);
+        console.log(userExist)
+        if (userExist) {
+            return new ErrorResponse('Phone number is already exist in the database!!', 400, false)
+        }
         try {
             // let service= await this.twilio.verify.services.create({friendlyName: 'AlySkiper'})
             //           .then(service => console.log(service.sid));
@@ -138,18 +143,18 @@ export class AuthService {
             if (result !== undefined) {
                 let body = { phone_number: result.phone, channel: 'sms' }
                 let message = await this.sendCode(body);
-                return new ResetDto(result,message);    
+                return new ResetDto(result, message);
             }
-            return new ResetDto(null,new ErrorResponse('Phone not exist!!', 200, true));
+            return new ResetDto(null, new ErrorResponse('Phone not exist!!', 200, true));
         } catch (error) {
-            return new ResetDto(null,new ErrorResponse('Could not send verification code', 200, true));
+            return new ResetDto(null, new ErrorResponse('Could not send verification code', 200, true));
         }
     }
 
-    editPassowrd(input:any){
-        let result =  this.userService.editPassowrd(input);
-        if(result){
-            return new ErrorResponse('Update password successfuly!!',200,true)
+    editPassowrd(input: any) {
+        let result = this.userService.editPassowrd(input);
+        if (result) {
+            return new ErrorResponse('Update password successfuly!!', 200, true)
         }
     }
 
