@@ -14,7 +14,7 @@ export class signInDto {
 @ObjectType()
 export class SignInOk {
 
-    constructor(token,firstname,lastname,username,email,phone_number,avatar,country,commerce?,vehicle?,agentID?){
+    constructor(token,firstname,lastname,username,email,phone_number,avatar,country,commerce?,vehicle?){
         this.token = token;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -25,7 +25,6 @@ export class SignInOk {
         this.country = country || null;
         this.commerce = commerce || null;
         this.vehicle = vehicle || null;
-        this.agentID = agentID || null;
     }
 
     token: string
@@ -38,7 +37,6 @@ export class SignInOk {
     country: countrieDto
     commerce: CommerceDto
     vehicle: SkiperVehicleDto
-    agentID: number
 }
 
 @ObjectType()

@@ -36,26 +36,22 @@ export class AuthService {
                 return new SignResponse(null, new ErrorResponse('The email or password is incorrect', 400, false));
             }
 
-            if (result.is_online)
-                return new SignResponse(null, new ErrorResponse('User is online in another device!', 400, false));
-
             let co, ve; //Definimos la variable commercio
             try {
                 let agent = await this.agentService.getByUser(result);
+                console.log(agent)
                 if (agent == undefined) {
                     co = null;
                     ve = null;
                 }
                 else {
-                    co = await this.commerceByQueryBuilder(result, agent);
-                    ve = await this.vehicleByQueryBuilder(result, agent);
+                    co = await this.commerceByQueryBuilder(result);
+                    ve = await this.vehicleByQueryBuilder(result);
                 }
-                //quitamos esto mas adelante se va a manejar un historico de ingresos.
-                // let activo = await this.userService.updateOnlineStatus(result);
                 return new SignResponse(new SignInOk(
                     await this.tokenGenerated(result), result.firstname,
                     result.lastname, result.user,
-                    result.email, result.phone, result.avatar, result.country, co, ve, agent.id
+                    result.email, result.phone, result.avatar, result.country, co, ve
                 ), null);
             } catch (error) {
                 console.log('aqui no')
@@ -100,13 +96,10 @@ export class AuthService {
     async sendCode(body: twilioDto): Promise<ErrorResponse> {
         let sendCode;
         let userExist = await this.userService.findByPhone(body.phone_number);
-        console.log(userExist)
         if (userExist) {
             return new ErrorResponse('Phone number is already exist in the database!!', 400, false)
         }
         try {
-            // let service= await this.twilio.verify.services.create({friendlyName: 'AlySkiper'})
-            //           .then(service => console.log(service.sid));
             sendCode = await this.twilio.verify.services('VA3d3362d450f9260c0c6d7bee196b4d88')
                 .verifications
                 .create({
@@ -162,18 +155,16 @@ export class AuthService {
         return await this.userService.logout(id);
     }
 
-    private async commerceByQueryBuilder(result, agent) {
+    private async commerceByQueryBuilder(result) {
         let co = await createQueryBuilder("SkiperCommerce")
             .innerJoinAndSelect("SkiperCommerce.skiperAgent", "SkiperAgent")
             .innerJoinAndSelect("SkiperAgent.user", "User")
             .where("SkiperAgent.iduser = :userId", { userId: result.id })
-            //comentariamos esta linea porque ocacionaba que no generara la info del comercio
-            // .andWhere("SkiperCommerce.idagent = :agentId", { agentId: agent.id })
             .getOne();
         return co;
     }
 
-    private async vehicleByQueryBuilder(result, agent) {
+    private async vehicleByQueryBuilder(result) {
         let ve = await createQueryBuilder("SkiperVehicle")
             .innerJoinAndSelect("SkiperVehicle.skiperCatTravel", "SkiperCatTravel")
             .innerJoinAndSelect("SkiperVehicle.vehicleTrademark", "VehicleTrademark")
@@ -184,8 +175,6 @@ export class AuthService {
             .innerJoinAndSelect("SkiperVehicleAgent.skiperAgent", "SkiperAgent")
             .innerJoin("SkiperAgent.user", "User")
             .where("User.id = :userId", { userId: result.id })
-            //comentariamos esta linea porque ocacionaba que no generara la info del comercio
-            // .andWhere("SkiperAgent.id = :agentId", { agentId: agent.id })
             .getOne();
         return ve;
     }

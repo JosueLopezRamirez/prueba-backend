@@ -31,7 +31,6 @@ type SignInOk {
   country: countrieDto
   commerce: CommerceDto
   vehicle: SkiperVehicleDto
-  agentID: Int
 }
 
 input twilioDto {
