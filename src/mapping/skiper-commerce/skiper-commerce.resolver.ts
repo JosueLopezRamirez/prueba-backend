@@ -17,8 +17,7 @@ export class SkiperCommerceResolver {
 
     @Query()
     async CommercesIntoRadio(@Args('latitud') latitud: number, @Args('longitud') longitud: number,@Args('radio') radio: number) {
-        return this.skiperCommerceService.getIntoRadio(latitud, longitud, radio);
-        // return this.skiperCommerceService.commerceIntoRadio(latitud, longitud,radio);
+        return this.skiperCommerceService.commerceIntoRadio(latitud, longitud, radio);
     }
 
     @Mutation('registerCommerce')
