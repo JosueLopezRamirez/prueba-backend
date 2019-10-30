@@ -1,5 +1,10 @@
-type VehicleTrademarkDto {
+input VehicleTrademarkInput {
     id: Int
+    name: String!
+}
+
+type VehicleTrademarkDto {
+    id: Int!
     name: String
 }
 
@@ -7,3 +12,8 @@ type Query {
     getAllVehicleTrademark: [VehicleTrademarkDto!]!
     getVehicleTrademarkById(id:Int!): VehicleTrademarkDto!
 }
+
+type Mutation {
+    registerVehicleTrademark(input: VehicleTrademarkInput): VehicleTrademarkDto!
+    updateVehicleTrademark(input: VehicleTrademarkInput!): VehicleTrademarkDto
+ }
