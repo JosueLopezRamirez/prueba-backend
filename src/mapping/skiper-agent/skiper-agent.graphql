@@ -9,11 +9,19 @@ type SkiperAgentDto {
 
 type Query {
   agents: [SkiperAgentDto!]!
+  ObtenerDriveCercano(lat: Float!, lng: Float!, inputdrive: [AgentDriveInput!]!):Int
 }
 
 type Mutation{
   registerAgent(input: AgentInput!): SkiperAgentDto!
   updateAgent(input: AgentInput!): SkiperAgentDto!
+}
+
+input AgentDriveInput {
+  iddrive:Int!
+  lat:Float!
+  lng:Float!
+  distancia: Float
 }
 
 input AgentInput {

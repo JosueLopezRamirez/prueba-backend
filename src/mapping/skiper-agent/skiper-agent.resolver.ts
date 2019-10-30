@@ -1,6 +1,6 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { SkiperAgentService } from './skiper-agent.service';
-import { SkiperAgentDto, AgentInput } from './skiper-agent.dto';
+import { SkiperAgentDto, AgentInput, AgentDriveInput } from './skiper-agent.dto';
 import { AuthGuard } from '../../shared/auth.guard';
 import { UseGuards } from '@nestjs/common';
 
@@ -14,6 +14,13 @@ export class SkiperAgentResolver {
     @Query()
     async agents(){
         return this.agentService.getAll();
+    }
+
+    @Query()
+    async ObtenerDriveCercano(@Args('lat') lat: number,
+    @Args('lng') lng: number,
+    @Args('inputdrive') inputdrive: AgentDriveInput[]){
+        return this.agentService.ObtenerDriveMasCercano(lat, lng, inputdrive);
     }
 
     @Mutation()
