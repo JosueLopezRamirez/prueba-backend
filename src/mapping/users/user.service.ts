@@ -29,7 +29,7 @@ export class UserService {
     }
 
     async findById(id: number) {
-        let result:any = await createQueryBuilder("User")
+        let result: any = await createQueryBuilder("User")
             .innerJoinAndSelect("User.country", "Countrie")
             .innerJoinAndSelect("User.city", "Cities")
             .innerJoinAndSelect("User.skiperAgent", "SkiperAgent")
@@ -100,7 +100,7 @@ export class UserService {
     async update(input: UserUpdateInput): Promise<User> {
         try {
             console.log(input)
-            let userUpdate = await await this.userRepository.findOneOrFail({where:{id:input.id}});
+            let userUpdate = await await this.userRepository.findOneOrFail({ where: { id: input.id } });
             console.log(userUpdate)
             userUpdate.firstname = input.firstname;
             userUpdate.lastname = input.lastname;
@@ -117,7 +117,7 @@ export class UserService {
 
     async updatePassword(input: UserUpdatePassword) {
         try {
-            let result = await this.userRepository.findOneOrFail({where:{id:input.id}});
+            let result = await this.userRepository.findOneOrFail({ where: { id: input.id } });
             if (!bcrypt.compareSync(input.oldPassword, result.password)) {
                 return null;
             }
@@ -130,7 +130,7 @@ export class UserService {
 
     async editPassowrd(input: UserUpdatePassword) {
         try {
-            let result = await this.userRepository.findOneOrFail({where:{id:input.id}});
+            let result = await this.userRepository.findOneOrFail({ where: { id: input.id } });
             result.password = await bcrypt.hash(input.newPassword, parseInt(process.env.SALT));
             return await this.userRepository.save(result);
         } catch (error) {
@@ -140,7 +140,7 @@ export class UserService {
 
     async defaultPassword(id: number) {
         try {
-            let result = await this.userRepository.findOneOrFail({id});
+            let result = await this.userRepository.findOneOrFail({ id });
             result.password = await bcrypt.hash("alyskiper2019", parseInt(process.env.SALT));
             result = await this.userRepository.save(result);
             return 'Success'
