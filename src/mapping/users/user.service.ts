@@ -30,10 +30,10 @@ export class UserService {
 
     async findById(id: number) {
         let result: any = await createQueryBuilder("User")
-            .innerJoinAndSelect("User.country", "Countrie")
-            .innerJoinAndSelect("User.city", "Cities")
-            .innerJoinAndSelect("User.skiperAgent", "SkiperAgent")
-            .innerJoinAndSelect("SkiperAgent.categoryAgent", "CategoryAgent")
+            .leftJoinAndSelect("User.country", "Countrie")
+            .leftJoinAndSelect("User.city", "Cities")
+            .leftJoinAndSelect("User.skiperAgent", "SkiperAgent")
+            .leftJoinAndSelect("SkiperAgent.categoryAgent", "CategoryAgent")
             .where("User.id = :iduser", { iduser: id })
             .getOne();
         return result;
@@ -77,6 +77,7 @@ export class UserService {
         let city;
         let civil_status;
         try {
+
             if (input.city_id !== undefined && input.idcivil_status !== undefined) {
                 city = await this.city.getById(input.city_id);
                 civil_status = await this.civil.getById(input.idcivil_status);
@@ -97,7 +98,7 @@ export class UserService {
             // return sponsor;
         } catch (error) {
             console.log(error)
-            return null;
+            return null
         }
     }
 

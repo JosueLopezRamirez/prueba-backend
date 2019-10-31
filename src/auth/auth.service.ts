@@ -64,20 +64,19 @@ export class AuthService {
     // Metodo para registrar a un usuario
     // ------------------------------------------------------------------------------------------
     public async register(input: UserInput): Promise<SignResponse> {
-        let result = await this.userService.create(input);
-        if (result === null) {
-            console.log(result)
-            return new SignResponse(null, new ErrorResponse('This email or phone is already exist in the database!', 400, false));
-        }
-        if (result !== undefined) {
-            return new SignResponse(new SignInOk(
-                await this.tokenGenerated(result), result.firstname,
-                result.lastname, result.user,
-                result.email, result.phone, result.avatar, result.country
-            ), null);
-        } else {
+        let userbysponsor = await this.userService.findById(input.sponsor_id)
+        if(userbysponsor == undefined){
             return new SignResponse(null, new ErrorResponse('Sponsor ID is not valid!', 400, false));
         }
+        let result = await this.userService.create(input);
+        if (result === null) {
+            return new SignResponse(null, new ErrorResponse('This email or phone is already exist in the database!', 400, false));
+        }
+        return new SignResponse(new SignInOk(
+            await this.tokenGenerated(result), result.firstname,
+            result.lastname, result.user,
+            result.email, result.phone, result.avatar, result.country
+        ), null);
     }
 
     // ------------------------------------------------------------------------------------------
