@@ -54,7 +54,6 @@ export class UserResolver {
         return this.userService.updatePassword(input);
     }
 
-    // @UseGuards(new AuthGuard())
     @Mutation()
     defaultPassword(@Args('id',ParseIntPipe) id: number) {
         return this.userService.defaultPassword(id);

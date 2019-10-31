@@ -38,4 +38,9 @@ export class SkiperTravelsResolver{
         else
             return null
     }
+
+    @Query()
+    async getTravelByAgentId(@Args('idagent') idagent:number){
+        return await this.service.getTravelByAgentId(idagent);
+    }
 }

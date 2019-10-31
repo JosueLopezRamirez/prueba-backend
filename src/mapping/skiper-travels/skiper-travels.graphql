@@ -50,6 +50,7 @@ type Query {
     getAllSkiperTravels: [SkiperTravelsDto!]
     CalcularTarifa(idcountry: Int!, idcity: Int, idcategoriaviaje: Int!, date_init: DateTime!): TravelTarifaDTo!
     getTravelsByUserId(idagent: Int!, idstatus:[Int!]!):[SkiperTravelsDto!]
+    getTravelByAgentId(idagent: Int!): SkiperTravelsDto!
 }
 
 type Mutation {
