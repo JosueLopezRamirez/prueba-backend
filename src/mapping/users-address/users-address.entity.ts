@@ -9,6 +9,8 @@ export class UsersAddress {
 
     @Column('int', { nullable: false }) iduser: number;
 
+    @Column('int', { nullable: false }) id_cat_place_user: number;
+
     @Column('double', { nullable: false }) lat: number;
 
     @Column('double', { nullable: false }) lng: number;
