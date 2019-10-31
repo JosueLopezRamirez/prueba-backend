@@ -24,7 +24,7 @@ export class SkiperTravelsTracingResolver {
     async registerTravelsTracing(@Args('input') input: SkiperTravelsTracingInput) {
         var x = await this.service.registerTravelsTracing(input)
         var viaje = await this.f.GetTravelByID(x.idtravel)
-        this.NotificarCambiosEnViaje(viaje, viaje.iddriver)
+        this.NotificarCambiosEnViaje(viaje, viaje.skiperagent.id)
         return x;
     }
 

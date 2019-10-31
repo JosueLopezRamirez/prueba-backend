@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import {SkiperTravelsTracing} from './skiper-travels-tracing.entity';
 import {SkiperTravelsTracingInput} from './skiper-travels-tracing.dto';
 import { Repository, createQueryBuilder } from 'typeorm';
+import geotz from 'geo-tz';
+import momentTimeZone from 'moment-timezone';
 
 @Injectable()
 export class SkiperTravelsTracingService {
@@ -40,7 +42,9 @@ export class SkiperTravelsTracingService {
                 HttpStatus.BAD_REQUEST,
             );
         }
-
+        var zonahoraria = geotz(input.lat, input.lng)
+        var fecha = momentTimeZone().tz(zonahoraria.toString()).format("YYYY-MM-DD HH:mm:ss")
+        input.fecha = fecha;
         let skipertravel = this.parseSkiperTravelTracing(input);
         return this.repository.save(skipertravel);
     }
