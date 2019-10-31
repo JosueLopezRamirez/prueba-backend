@@ -48,6 +48,7 @@ import { SkiperTravelsModule } from './mapping/skiper-travels/skiper-travels.mod
 import { SkiperTravelsTracingModule } from './mapping/skiper-travels-tracing/skiper-travels-tracing.module';
 import { SkiperTravelsStatusModule } from './mapping/skiper-travels-status/skiper-travels-status.module';
 import { SkiperSubCatCommercesModule } from './mapping/skiper-sub-cat-commerces/skiper-sub-cat-commerces.module';
+import { SkiperCommerceFavoritesModule } from './mapping/skiper-commerce-favorites/skiper-commerce-favorites.module';
 
 @Module({
   imports: [
@@ -86,11 +87,16 @@ import { SkiperSubCatCommercesModule } from './mapping/skiper-sub-cat-commerces/
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DATABASE_HOST,
+      //extra: { socketPath: "/cloudsql/backend-alysystem:us-west2:alysystem-db" },
       port: Number.parseFloat(process.env.DATABASE_PORT),
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
+      logging: false,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
+
+
+
       // synchronize: true,
       // dropSchema: true
     }),
@@ -109,8 +115,8 @@ import { SkiperSubCatCommercesModule } from './mapping/skiper-sub-cat-commerces/
       }),
       subscriptions: {
         onConnect: (connectionParams, webSocket) => {
-            console.log('Websocket CONNECTED');
-            return { hello: 'world' }
+          console.log('Websocket CONNECTED');
+          return { hello: 'world' }
         },
         onDisconnect: () => console.log('Websocket DISCONNECTED'),
       },
@@ -120,9 +126,9 @@ import { SkiperSubCatCommercesModule } from './mapping/skiper-sub-cat-commerces/
           status: err.extensions.exception.status,
         })
       },
-      cors:{
+      cors: {
         "origin": "*",
-        "Access-Control-Allow-Origin":"*"
+        "Access-Control-Allow-Origin": "*"
       }
     }),
     UsersAddressModule,
@@ -131,6 +137,7 @@ import { SkiperSubCatCommercesModule } from './mapping/skiper-sub-cat-commerces/
     SkiperTravelsTracingModule,
     SkiperTravelsStatusModule,
     SkiperSubCatCommercesModule,
+    SkiperCommerceFavoritesModule,
   ],
   providers: [AppService, AppResolver],
   controllers: [AppController],
