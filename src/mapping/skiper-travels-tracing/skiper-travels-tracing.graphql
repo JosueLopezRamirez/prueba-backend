@@ -3,7 +3,7 @@ input SkiperTravelsTracingInput {
     idtravelstatus: Int!
     lat: Float!
     lng: Float!
-    fecha: DateTime!
+    fecha: DateTime
 }
 
 type SkiperTravelsTracingDto {
