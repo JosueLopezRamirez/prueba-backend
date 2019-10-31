@@ -85,15 +85,16 @@ export class UserService {
                 civil_status = null;
             }
             let country = await this.country.getById(input.country_id);
-            let sponsor = await this.findById(input.sponsor_id);
-            if (sponsor !== undefined) {
-                if (city !== undefined && country !== undefined && civil_status !== undefined) {
-                    let user: User = this.parseUser(input, city, country, civil_status);
-                    return await this.userRepository.save(user);
-                }
-                return null;
+            //
+            // let sponsor = await this.findById(input.sponsor_id);
+            // if (sponsor !== undefined) {
+            if (city !== undefined && country !== undefined && civil_status !== undefined) {
+                let user: User = this.parseUser(input, city, country, civil_status);
+                return await this.userRepository.save(user);
             }
-            return sponsor;
+            return null;
+            // }
+            // return sponsor;
         } catch (error) {
             console.log(error)
             return null;
