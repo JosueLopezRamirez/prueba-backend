@@ -27,6 +27,9 @@ export class AuthService {
         return await this.userService.findByEmail(email);
     }
 
+    // ------------------------------------------------------------------------------------------
+    // Metodo para el login del usuario
+    // ------------------------------------------------------------------------------------------
     async login(sign: any): Promise<SignResponse> {
         let result = await this.validate(sign.email);
         if (result == undefined) {
@@ -35,11 +38,9 @@ export class AuthService {
             if (!bcrypt.compareSync(sign.password, result.password)) {
                 return new SignResponse(null, new ErrorResponse('The email or password is incorrect', 400, false));
             }
-
             let co, ve; //Definimos la variable commercio
             try {
                 let agent = await this.agentService.getByUser(result);
-                console.log(agent)
                 if (agent == undefined) {
                     co = null;
                     ve = null;
@@ -54,17 +55,19 @@ export class AuthService {
                     result.email, result.phone, result.avatar, result.country, co, ve
                 ), null);
             } catch (error) {
-                console.log('aqui no')
                 console.log(error)
             }
         }
     }
 
+    // ------------------------------------------------------------------------------------------
+    // Metodo para registrar a un usuario
+    // ------------------------------------------------------------------------------------------
     public async register(input: UserInput): Promise<SignResponse> {
         let result = await this.userService.create(input);
         if (result === null) {
             console.log(result)
-            return new SignResponse(null, new ErrorResponse('This email is already exist in the database!', 400, false));
+            return new SignResponse(null, new ErrorResponse('This email or phone is already exist in the database!', 400, false));
         }
         if (result !== undefined) {
             return new SignResponse(new SignInOk(
@@ -77,6 +80,9 @@ export class AuthService {
         }
     }
 
+    // ------------------------------------------------------------------------------------------
+    // Generar token con expiracion de 15 dias
+    // ------------------------------------------------------------------------------------------
     async tokenGenerated(newUser: User) {
         const payload = {
             sub: newUser.id,
@@ -90,9 +96,9 @@ export class AuthService {
         return await this.userService.findByPayload(payload);
     }
 
-    // ----------------------------------------------------------------------------
-    // ----------------- Metodos twilio -------------------------------------------
-    // ----------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------
+    // Enviar codigo al numero con la api de twilio
+    // ------------------------------------------------------------------------------------------
     async sendCode(body: twilioDto): Promise<ErrorResponse> {
         let sendCode;
         let userExist = await this.userService.findByPhone(body.phone_number);
@@ -113,6 +119,9 @@ export class AuthService {
         }
     }
 
+    // ------------------------------------------------------------------------------------------
+    // Verificar codigo que se envio con twilio
+    // ------------------------------------------------------------------------------------------
     async verifyCode(body: twilioDto): Promise<ErrorResponse> {
         let verifyCode
         try {
@@ -144,6 +153,9 @@ export class AuthService {
         }
     }
 
+    // ------------------------------------------------------------------------------------------
+    // Edit password
+    // ------------------------------------------------------------------------------------------
     editPassowrd(input: any) {
         let result = this.userService.editPassowrd(input);
         if (result) {
@@ -151,10 +163,16 @@ export class AuthService {
         }
     }
 
+    // ------------------------------------------------------------------------------------------
+    // Logout
+    // ------------------------------------------------------------------------------------------
     async logout(id: number) {
         return await this.userService.logout(id);
     }
 
+    // ------------------------------------------------------------------------------------------
+    // Obtener comercio atravez del id de usuario
+    // ------------------------------------------------------------------------------------------
     private async commerceByQueryBuilder(result) {
         let co = await createQueryBuilder("SkiperCommerce")
             .innerJoinAndSelect("SkiperCommerce.skiperAgent", "SkiperAgent")
@@ -164,6 +182,9 @@ export class AuthService {
         return co;
     }
 
+    // ------------------------------------------------------------------------------------------
+    // Obtener vehiculo atravez del id de usuario
+    // ------------------------------------------------------------------------------------------
     private async vehicleByQueryBuilder(result) {
         let ve = await createQueryBuilder("SkiperVehicle")
             .innerJoinAndSelect("SkiperVehicle.skiperCatTravel", "SkiperCatTravel")

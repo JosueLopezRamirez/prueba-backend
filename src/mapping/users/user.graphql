@@ -34,6 +34,7 @@ type UserDto {
   country: countrieDto
   city: citiesDto
   civilStatus: UserCivilStatusDto
+  skiperAgent: [SkiperAgentDto]
 }
 
 input UserUpdatePassword {

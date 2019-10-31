@@ -1,6 +1,6 @@
 import { Injectable, Logger, HttpException, HttpStatus } from '@nestjs/common';
 import { User } from './user.entity';
-import { Repository } from 'typeorm';
+import { Repository, createQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserInput, UserUpdatePassword, UserUpdateInput } from './user.dto';
 import { CitiesService } from '../cities/cities.service';
@@ -28,11 +28,20 @@ export class UserService {
         }
     }
 
-    async findById(id: number): Promise<User> {
-        return await this.userRepository.findOne({
-            where: { id: id },
-            relations: ["country", "city"]
-        });
+    async findById(id: number) {
+        // return await this.userRepository.findOne({
+        //     where: { id: id },
+        //     relations: ["country", "city"]
+        // });
+        console.log(id);
+        let result:any = await createQueryBuilder("User")
+            .innerJoinAndSelect("User.country", "Countrie")
+            .innerJoinAndSelect("User.city", "Cities")
+            .innerJoinAndSelect("User.skiperAgent", "SkiperAgent")
+            .innerJoinAndSelect("SkiperAgent.categoryAgent", "CategoryAgent")
+            .where("User.id = :iduser", { iduser: id })
+            .getOne();
+        return result;
     }
 
     async findBySponsorId(id: number) {
@@ -65,12 +74,10 @@ export class UserService {
         });
     }
 
-    //Create a new user
     async create(input: UserInput) {
         let city;
         let civil_status;
         try {
-            console.log(input.city_id, input.idcivil_status)
             if (input.city_id !== undefined && input.idcivil_status !== undefined) {
                 city = await this.city.getById(input.city_id);
                 civil_status = await this.civil.getById(input.idcivil_status);

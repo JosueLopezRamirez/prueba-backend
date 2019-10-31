@@ -2,6 +2,7 @@ import { InputType, ObjectType } from "type-graphql";
 import { citiesDto } from "../cities/cities.dto";
 import { countrieDto } from "../countries/countrie.dto";
 import { UserCivilStatusDto } from "../user-civil-status/user-civil-status.dto";
+import { SkiperAgentDto } from "../skiper-agent/skiper-agent.dto";
 
 @InputType()
 export class UserInput {
@@ -60,4 +61,5 @@ export class UserDto {
     city: citiesDto;
     country: countrieDto;
     civilStatus: UserCivilStatusDto;
+    skiperAgent: SkiperAgentDto[]
 }
