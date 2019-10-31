@@ -94,8 +94,7 @@ export class SkiperAgentService {
 
     async register(agent: AgentInput) {
         try {
-            console.log(agent.user_id)
-            let user = await this.userService.findById(agent.user_id);
+            let user = await this.userService.getUserById(agent.user_id);
             let category = await this.categoryAgentService.getById(agent.categoryAgent_id);
             if (user !== undefined && category !== undefined) {
                 let agentInsert: SkiperAgent = this.parseAgent(agent, user, category);

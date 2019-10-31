@@ -39,6 +39,10 @@ export class UserService {
         return result;
     }
 
+    async getUserById(id: number){
+        return await this.userRepository.findOneOrFail({id});
+    }
+
     async findBySponsorId(id: number) {
         return await this.userRepository.find({
             where: { sponsor_id: id },
