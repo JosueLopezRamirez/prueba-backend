@@ -16,8 +16,13 @@ export class SkiperCommerceResolver {
     }
 
     @Query()
-    async CommercesIntoRadio(@Args('latitud') latitud: number, @Args('longitud') longitud: number,@Args('radio') radio: number) {
-        return this.skiperCommerceService.commerceIntoRadio(latitud, longitud, radio);
+    async CommercesIntoRadio(
+        @Args('latitud') latitud: number,
+        @Args('longitud') longitud: number,
+        @Args('radio') radio: number,
+        @Args('id_category_product') id_category_product: number = 0) {
+            // console.log(id_category_product);
+        return this.skiperCommerceService.commerceIntoRadio(latitud, longitud, radio,id_category_product);
     }
 
     @Mutation('registerCommerce')

@@ -69,25 +69,39 @@ export class SkiperCommerceService {
         return await ReturnDist()
     };
 
-    async commerceIntoRadio(latitud: number, longitud: number, radio: number) {
+    async commerceIntoRadio(latitud: number, longitud: number, radio: number, id_category_product: number) {
         try {
-
-            let comercios = await this.repository.createQueryBuilder("SkiperCommerce")
-            .innerJoinAndSelect("SkiperCommerce.skiperAgent","SkiperAgent")
-            .innerJoinAndSelect("SkiperCommerce.catCommerce","SkiperCatCommerce")
-            .innerJoinAndSelect("SkiperCommerce.country","Countrie")
-            .leftJoinAndSelect("SkiperCommerce.skiperCatProductsCommerce","SkiperCatProductsCommerce")
-            .leftJoinAndSelect("SkiperCatProductsCommerce.skiperProductCommerce","SkiperProductCommerce")
-            .leftJoinAndSelect("SkiperProductCommerce.optionAddon","OptionAddon")
-            .where("SkiperCommerce.lat <> :parametro and SkiperCommerce.lon <> :parametro", { parametro: "" })
-            .getMany();
-
+            let comercios;
+            if (id_category_product == 0) {
+                // console.log('no entre aqui');
+                comercios = await this.repository.createQueryBuilder("SkiperCommerce")
+                    .innerJoinAndSelect("SkiperCommerce.skiperAgent", "SkiperAgent")
+                    .innerJoinAndSelect("SkiperCommerce.catCommerce", "SkiperCatCommerce")
+                    .innerJoinAndSelect("SkiperCommerce.country", "Countrie")
+                    .leftJoinAndSelect("SkiperCommerce.skiperCatProductsCommerce", "SkiperCatProductsCommerce")
+                    .leftJoinAndSelect("SkiperCatProductsCommerce.skiperProductCommerce", "SkiperProductCommerce")
+                    .leftJoinAndSelect("SkiperProductCommerce.optionAddon", "OptionAddon")
+                    .where("SkiperCommerce.lat <> :parametro and SkiperCommerce.lon <> :parametro", { parametro: "" })
+                    .getMany();
+            } else {
+                // console.log('entre aqui');
+                comercios = await this.repository.createQueryBuilder("SkiperCommerce")
+                    .innerJoinAndSelect("SkiperCommerce.skiperAgent", "SkiperAgent")
+                    .innerJoinAndSelect("SkiperCommerce.catCommerce", "SkiperCatCommerce")
+                    .innerJoinAndSelect("SkiperCommerce.country", "Countrie")
+                    .leftJoinAndSelect("SkiperCommerce.skiperCatProductsCommerce", "SkiperCatProductsCommerce")
+                    .leftJoinAndSelect("SkiperCatProductsCommerce.skiperProductCommerce", "SkiperProductCommerce")
+                    .leftJoinAndSelect("SkiperProductCommerce.optionAddon", "OptionAddon")
+                    .where("SkiperCommerce.lat <> :parametro and SkiperCommerce.lon <> :parametro", { parametro: "" })
+                    .andWhere("SkiperCatProductsCommerce.id = :idcatproduct", { idcatproduct: id_category_product })
+                    .getMany();
+            }
             var Comercios = []
 
             var c = await Promise.all(comercios.map(async x => {
                 var Distancia = await this.GetDistance(latitud.toString() + "," + longitud.toString(),
-                x.lat.toString() + "," + x.lon.toString())
-                if(Distancia.routes[0].legs[0].distance.value  < radio)
+                    x.lat.toString() + "," + x.lon.toString())
+                if (Distancia.routes[0].legs[0].distance.value <= radio)
                     Comercios.push(x)
             }))
             return Comercios
