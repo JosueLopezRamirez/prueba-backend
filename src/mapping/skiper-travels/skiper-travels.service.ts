@@ -176,11 +176,11 @@ export class SkiperTravelsService {
                     return subQuery
                         .select("SkiperTravelsTracing.idtravel", "idtravel").addSelect("MAX(SkiperTravelsTracing.datetracing)", "fecha")
                         .from(SkiperTravelsTracing, "SkiperTravelsTracing")
-                        .where("SkiperTravelsTracing.idtravelstatus IN (:idstatus)", { idstatus: [1, 3, 4, 5, 6] })
                         .groupBy("SkiperTravelsTracing.idtravel")
                 }, "d", "SkiperTravelsTracing.idtravel = d.idtravel and SkiperTravelsTracing.datetracing = d.fecha")
                 .innerJoinAndSelect("SkiperTravelsTracing.travelstatus", "SkiperTravelsStatus")
                 .where("SkiperAgent.id = :idagent", { idagent })
+                .andWhere("SkiperTravelsTracing.idtravelstatus IN (:idstatus)", { idstatus: [1, 3, 4, 5, 6] })
                 .getOne();
             console.log(result);
             return result;
