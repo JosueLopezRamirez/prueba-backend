@@ -144,7 +144,6 @@ export class SkiperCommerceService {
             .where("SkiperAgent.categoryAgent = 3")
             .andWhere("SkiperCommerce.id IS NULL")
             .getMany();
-            console.log(result);
         return result;
     }
 
