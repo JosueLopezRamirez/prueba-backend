@@ -30,10 +30,10 @@ export class UserService {
 
     async findById(id: number) {
         let result: any = await createQueryBuilder("User")
-            .innerJoinAndSelect("User.country", "Countrie")
-            .innerJoinAndSelect("User.city", "Cities")
-            .innerJoinAndSelect("User.skiperAgent", "SkiperAgent")
-            .innerJoinAndSelect("SkiperAgent.categoryAgent", "CategoryAgent")
+            .leftJoinAndSelect("User.country", "Countrie")
+            .leftJoinAndSelect("User.city", "Cities")
+            .leftJoinAndSelect("User.skiperAgent", "SkiperAgent")
+            .leftJoinAndSelect("SkiperAgent.categoryAgent", "CategoryAgent")
             .where("User.id = :iduser", { iduser: id })
             .getOne();
         return result;
@@ -77,6 +77,7 @@ export class UserService {
         let city;
         let civil_status;
         try {
+
             if (input.city_id !== undefined && input.idcivil_status !== undefined) {
                 city = await this.city.getById(input.city_id);
                 civil_status = await this.civil.getById(input.idcivil_status);
@@ -85,18 +86,19 @@ export class UserService {
                 civil_status = null;
             }
             let country = await this.country.getById(input.country_id);
-            let sponsor = await this.findById(input.sponsor_id);
-            if (sponsor !== undefined) {
-                if (city !== undefined && country !== undefined && civil_status !== undefined) {
-                    let user: User = this.parseUser(input, city, country, civil_status);
-                    return await this.userRepository.save(user);
-                }
-                return null;
+            //
+            // let sponsor = await this.findById(input.sponsor_id);
+            // if (sponsor !== undefined) {
+            if (city !== undefined && country !== undefined && civil_status !== undefined) {
+                let user: User = this.parseUser(input, city, country, civil_status);
+                return await this.userRepository.save(user);
             }
-            return sponsor;
+            return null;
+            // }
+            // return sponsor;
         } catch (error) {
             console.log(error)
-            return null;
+            return null
         }
     }
 
