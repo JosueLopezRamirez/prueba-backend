@@ -30,14 +30,19 @@ type CommerceDto {
     catCommerce: SkiperCatCommerceDto!
     country:countrieDto!
     city:citiesDto!
-    skiperCatProductsCommerce: [SkiperCatProductDto!]!
-    
-    
+    skiperCatProductsCommerce: [SkiperCatProductDto!]!    
+}
+
+type UserWithoutCommerceDto {
+    firstname: String
+    lastname: String
+    skiperAgent: [SkiperAgentDto]
 }
 
 type Query {
     commerces: [CommerceDto!]!
     CommercesIntoRadio(latitud: Float!, longitud: Float!, radio: Int!,id_category_product:Int): [CommerceDto]
+    getUserWithoutCommerce: [UserWithoutCommerceDto]
 }
 
 type Mutation {

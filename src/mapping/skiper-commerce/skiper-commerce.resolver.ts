@@ -25,6 +25,11 @@ export class SkiperCommerceResolver {
         return this.skiperCommerceService.commerceIntoRadio(latitud, longitud, radio,id_category_product);
     }
 
+    @Query()
+    getUserWithoutCommerce(){
+        return this.skiperCommerceService.getUserWithoutCommerce();
+    }
+
     @Mutation('registerCommerce')
     async registerCommerce(@Args('input') input: CommerceInput){
         return this.skiperCommerceService.registerCommerce(input);

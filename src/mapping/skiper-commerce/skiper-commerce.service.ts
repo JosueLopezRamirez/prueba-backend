@@ -137,6 +137,16 @@ export class SkiperCommerceService {
         return null;
     }
 
+    async getUserWithoutCommerce(){
+        let result = await createQueryBuilder("User").select(["User.firstname","User.lastname","SkiperAgent.id"])
+            .innerJoin("User.skiperAgent","SkiperAgent")
+            .leftJoin("SkiperAgent.skiperCommerce","SkiperCommerce")
+            .where("SkiperAgent.categoryAgent = 3")
+            .andWhere("SkiperCommerce.id IS NULL")
+            .getMany();
+        return result;
+    }
+
     private parseCommerce(input: CommerceInput, agent?, country?, catCommerce?): SkiperCommerce {
         let commerce: SkiperCommerce = new SkiperCommerce;
         commerce.namecommerce = input.namecommerce;
