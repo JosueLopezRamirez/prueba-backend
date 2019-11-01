@@ -3,6 +3,7 @@ import { IsNotEmpty, IsBoolean, IsString, IsDate } from "class-validator";
 import { CategoryAgent } from "../category-agent/categoty-agent.entity";
 import { User } from "../users/user.entity";
 import { SkiperVehicleAgent } from "../skiper-vehicle-agent/skiper-vehicle-agent.entity";
+import { SkiperCommerce } from "../skiper-commerce/skiper-commerce.entity";
 
 @Entity()
 export class SkiperAgent {
@@ -32,4 +33,8 @@ export class SkiperAgent {
 
     @OneToMany(type => SkiperVehicleAgent, x => x.skiperAgent)
     skiperVehicleAgent: SkiperVehicleAgent[];
+
+    @OneToMany(type => SkiperCommerce, x => x.skiperAgent)
+    skiperCommerce: SkiperCommerce[];
+
 }
