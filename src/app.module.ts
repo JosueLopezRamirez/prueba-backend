@@ -48,6 +48,7 @@ import { SkiperTravelsModule } from './mapping/skiper-travels/skiper-travels.mod
 import { SkiperTravelsTracingModule } from './mapping/skiper-travels-tracing/skiper-travels-tracing.module';
 import { SkiperTravelsStatusModule } from './mapping/skiper-travels-status/skiper-travels-status.module';
 import { SkiperSubCatCommercesModule } from './mapping/skiper-sub-cat-commerces/skiper-sub-cat-commerces.module';
+import { SkiperCommerceFavoritesModule } from './mapping/skiper-commerce-favorites/skiper-commerce-favorites.module';
 
 const gpcloud = "/cloudsql/[prueba-de-storage-254017:us-central1:dbalyskiper]";
 
@@ -85,6 +86,7 @@ const gpcloud = "/cloudsql/[prueba-de-storage-254017:us-central1:dbalyskiper]";
     UserCivilStatusModule,
     SkiperVehicleModule,
     SkiperVehicleAgentModule,
+    SkiperCommerceFavoritesModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       // host: gpcloud,

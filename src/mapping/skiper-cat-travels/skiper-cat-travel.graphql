@@ -2,6 +2,7 @@ input SkiperCatTravelInput {
     id: Int
     name: String!
     url_img_category: String!
+    url_img_drive: String!
     mode_drive: String!
 }
 
@@ -9,6 +10,7 @@ type SkiperCatTravelDto {
     id: Int!
     name: String
     url_img_category: String
+    url_img_drive: String
     mode_drive: String
 }
 
