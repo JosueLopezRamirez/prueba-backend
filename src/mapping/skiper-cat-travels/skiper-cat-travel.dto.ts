@@ -7,6 +7,9 @@ export class SkiperCatTravelsInput {
     url_img_category: string;
     url_img_drive: string;
     mode_drive: string;
+    btaxy:boolean;
+    bdelivery:boolean;
+    btransporte:boolean;
 }
 
 @ObjectType()

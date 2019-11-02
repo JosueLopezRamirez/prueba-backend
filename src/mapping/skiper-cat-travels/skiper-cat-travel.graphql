@@ -4,6 +4,9 @@ input SkiperCatTravelInput {
     url_img_category: String!
     url_img_drive: String!
     mode_drive: String!
+    btaxy: Boolean!
+    bdelivery: Boolean!
+    btransporte: Boolean!
 }
 
 type SkiperCatTravelDto {
@@ -12,6 +15,9 @@ type SkiperCatTravelDto {
     url_img_category: String
     url_img_drive: String
     mode_drive: String
+    btaxy: Boolean
+    bdelivery: Boolean
+    btransporte: Boolean
 }
 
 type Query {
