@@ -36,7 +36,7 @@ type CommerceDto {
 type UserWithoutCommerceDto {
     firstname: String
     lastname: String
-    skiperAgent: [SkiperAgentDto]
+    skiperAgent: SkiperAgentDto
 }
 
 type Query {

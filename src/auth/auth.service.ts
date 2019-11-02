@@ -15,7 +15,7 @@ import { SkiperAgentService } from '../mapping/skiper-agent/skiper-agent.service
 export class AuthService {
 
     private logger = new Logger('AuthService');
-    private twilio = Twilio('AC380212e678f8f2efb650f7a963df98e6', 'bd5c3ab4dec94e95be051feed08484d6');
+    private twilio = Twilio('AC73bd022e60925dcb77fd1eee9ba4e7a8', 'f7072ce2913e7d84910f5b8cccd70821');
 
     constructor(
         private readonly userService: UserService,
@@ -65,7 +65,7 @@ export class AuthService {
     // ------------------------------------------------------------------------------------------
     public async register(input: UserInput): Promise<SignResponse> {
         let userbysponsor = await this.userService.findById(input.sponsor_id)
-        if(userbysponsor == undefined){
+        if (userbysponsor == undefined) {
             return new SignResponse(null, new ErrorResponse('Sponsor ID is not valid!', 400, false));
         }
         let result = await this.userService.create(input);
@@ -98,19 +98,26 @@ export class AuthService {
     // ------------------------------------------------------------------------------------------
     // Enviar codigo al numero con la api de twilio
     // ------------------------------------------------------------------------------------------
-    async sendCode(body: twilioDto): Promise<ErrorResponse> {
+    async sendCode(body: twilioDto, reset: number = 0): Promise<ErrorResponse> {
         let sendCode;
-        let userExist = await this.userService.findByPhone(body.phone_number);
-        if (userExist) {
-            return new ErrorResponse('Phone number is already exist in the database!!', 400, false)
+
+        if (reset == 0) {
+            let userExist = await this.userService.findByPhone(body.phone_number);
+            if (userExist) {
+                return new ErrorResponse('Phone number is already exist in the database!!', 400, false)
+            }
         }
+
         try {
-            sendCode = await this.twilio.verify.services('VA3d3362d450f9260c0c6d7bee196b4d88')
+            // let service= await this.twilio.verify.services.create({friendlyName: 'AlySkiper'})
+            // .then(service => console.log(service.sid));
+            sendCode = await this.twilio.verify.services('VAa6b9c85190806fea98d792c10a383394')
                 .verifications
                 .create({
                     to: body.phone_number,
                     channel: body.channel
                 })
+            // console.log(service);
             return new ErrorResponse('Code verification send successfully', 200, true)
         } catch (error) {
             console.log(error);
@@ -124,7 +131,7 @@ export class AuthService {
     async verifyCode(body: twilioDto): Promise<ErrorResponse> {
         let verifyCode
         try {
-            verifyCode = await this.twilio.verify.services('VA3d3362d450f9260c0c6d7bee196b4d88')
+            verifyCode = await this.twilio.verify.services('VAa6b9c85190806fea98d792c10a383394')
                 .verificationChecks
                 .create({ code: body.code, to: body.phone_number })
             if (verifyCode.status === 'approved') {
@@ -143,7 +150,7 @@ export class AuthService {
             let result = await this.userService.findByPhone(phone_number);
             if (result !== undefined) {
                 let body = { phone_number: result.phone, channel: 'sms' }
-                let message = await this.sendCode(body);
+                let message = await this.sendCode(body, 1);
                 return new ResetDto(result, message);
             }
             return new ResetDto(null, new ErrorResponse('Phone not exist!!', 200, true));

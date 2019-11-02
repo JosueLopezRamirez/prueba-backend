@@ -5,7 +5,8 @@ import { Repository, createQueryBuilder } from 'typeorm';
 import { SkiperAgentService } from '../skiper-agent/skiper-agent.service';
 import { CountrieService } from '../countries/countrie.service';
 import { SkiperCatCommerceService } from '../skiper-cat-commerce/skiper-cat-commerce.service';
-import { CommerceInput } from './skiper-commerce.dto';
+import { CommerceInput, UserWithoutCommerceDto } from './skiper-commerce.dto';
+import { CitiesService } from '../cities/cities.service';
 require('isomorphic-fetch');
 
 @Injectable()
@@ -15,7 +16,8 @@ export class SkiperCommerceService {
         @InjectRepository(SkiperCommerce) private readonly repository: Repository<SkiperCommerce>,
         private readonly agentService: SkiperAgentService,
         private readonly countryService: CountrieService,
-        private readonly skiperCatService: SkiperCatCommerceService
+        private readonly skiperCatService: SkiperCatCommerceService,
+        private readonly cityService:CitiesService
     ) { }
 
     async getAll(): Promise<SkiperCommerce[]> {
@@ -126,9 +128,10 @@ export class SkiperCommerceService {
             let agent = await this.agentService.getById(input.skiperAgentID);
             let country = await this.countryService.getById(input.countryID);
             let catCommerce = await this.skiperCatService.getById(input.catCommerceID);
-            if (agent !== undefined && country !== undefined && catCommerce !== undefined) {
+            let city = await this.cityService.getById(input.cityID);
+            if (agent !== undefined && country !== undefined && catCommerce !== undefined && city !== undefined) {
                 let commerce = this.parseCommerce(input, agent, country, catCommerce);
-                console.log(commerce);
+                commerce.city = city;
                 return this.repository.save(commerce);
             }
         } catch (error) {
@@ -138,13 +141,24 @@ export class SkiperCommerceService {
     }
 
     async getUserWithoutCommerce(){
-        let result = await createQueryBuilder("User").select(["User.firstname","User.lastname","SkiperAgent.id"])
+        let response = [];
+        try {
+            let result: any[] = await createQueryBuilder("User").select(["User.firstname","User.lastname","SkiperAgent.id"])
             .innerJoin("User.skiperAgent","SkiperAgent")
             .leftJoin("SkiperAgent.skiperCommerce","SkiperCommerce")
             .where("SkiperAgent.categoryAgent = 3")
             .andWhere("SkiperCommerce.id IS NULL")
             .getMany();
-        return result;
+            if(result.length > 0){
+                result.forEach(item => {
+                    response.push(new UserWithoutCommerceDto(item.firstname,item.lastname,item.skiperAgent[0]));
+                });
+                return response;
+            }
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     private parseCommerce(input: CommerceInput, agent?, country?, catCommerce?): SkiperCommerce {

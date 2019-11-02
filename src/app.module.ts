@@ -49,6 +49,8 @@ import { SkiperTravelsTracingModule } from './mapping/skiper-travels-tracing/ski
 import { SkiperTravelsStatusModule } from './mapping/skiper-travels-status/skiper-travels-status.module';
 import { SkiperSubCatCommercesModule } from './mapping/skiper-sub-cat-commerces/skiper-sub-cat-commerces.module';
 
+const gpcloud = "/cloudsql/[prueba-de-storage-254017:us-central1:dbalyskiper]";
+
 @Module({
   imports: [
     AppCitiesModule,
@@ -85,12 +87,18 @@ import { SkiperSubCatCommercesModule } from './mapping/skiper-sub-cat-commerces/
     SkiperVehicleAgentModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
+      // host: gpcloud,
       host: process.env.DATABASE_HOST,
+      // extra:{
+      //   socketPath: gpcloud
+      // },
       port: Number.parseFloat(process.env.DATABASE_PORT),
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      logger:"debug",
+      logging:true,
       // synchronize: true,
       // dropSchema: true
     }),
