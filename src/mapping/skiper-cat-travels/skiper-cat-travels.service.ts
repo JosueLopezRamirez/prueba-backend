@@ -31,6 +31,7 @@ export class SkiperCatTravelsService {
             let skiperCatTravelUpdate = await this.getById(input.id);
             skiperCatTravelUpdate.name = input.name;
             skiperCatTravelUpdate.url_img_category = input.url_img_category;
+            skiperCatTravelUpdate.mode_drive = input.mode_drive;
             //console.log(appUpdate);
             return await this.repository.save(skiperCatTravelUpdate);
         } catch (error) {
@@ -54,6 +55,7 @@ export class SkiperCatTravelsService {
         let skipercattravel:SkiperCatTravel = new SkiperCatTravel();
         skipercattravel.name = input.name;
         skipercattravel.url_img_category = input.url_img_category;
+        skipercattravel.mode_drive = input.mode_drive;
         return skipercattravel;
     }
 
