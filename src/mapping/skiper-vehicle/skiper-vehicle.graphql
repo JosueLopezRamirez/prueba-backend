@@ -27,6 +27,7 @@ type Query {
     SkiperVehicle: [SkiperVehicleDto!]!
     getSkiperVehicleById(id: Int!): SkiperVehicleDto
     getVehicleByUserId(id: Int!): SkiperVehicleDto
+    getVehicleBySponsorIdAndCategoryTravelId(id_sponsor:Int!,cat_travel_id:Int): [SkiperVehicleDto]
 }
 
 type Mutation {

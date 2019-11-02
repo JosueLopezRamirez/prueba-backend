@@ -42,11 +42,51 @@ export class SkiperVehicleService {
                 .innerJoin("SkiperAgent.user", "User")
                 .where("SkiperAgent.user = :iduser", { iduser: id })
                 .getOne();
-                console.log(vehicle.skiperVehicle)
-                return vehicle.skiperVehicle;
+            console.log(vehicle.skiperVehicle)
+            return vehicle.skiperVehicle;
         } catch (error) {
             console.log(error)
         }
+    }
+
+    /*
+            select sv.* from skiper_vehicle sv
+            inner join skiper_cat_travels sct on sct.id = sv.id_cat_travel
+            inner join skiper_vehicle_agent sva on sva.idvehicle = sv.id
+            inner join skiper_agent sa on sa.id = sva.idagent
+            inner join users u on u.id = sa.iduser
+            where u.sponsor_id = 168 and sct.id = 1;
+         */
+    async getVehicleBySponsorIdAndCategoryTravelId(id_sponsor: number, cat_travel_id: number = 0) {
+        let result;
+        if (cat_travel_id != 0) {
+            result = await createQueryBuilder("SkiperVehicle")
+                .innerJoinAndSelect("SkiperVehicle.skiperCatTravel", "SkiperCatTravel")
+                .innerJoinAndSelect("SkiperVehicle.vehicleCatalog", "VehicleCatalog")
+                .innerJoinAndSelect("SkiperVehicle.vehicleTrademark", "VehicleTrademark")
+                .innerJoinAndSelect("SkiperVehicle.vehicleModel", "VehicleModels")
+                .innerJoinAndSelect("SkiperVehicle.vehicleYear", "VehicleYears")
+                .innerJoin("SkiperVehicle.skiperVehicleAgent", "SkiperVehicleAgent")
+                .innerJoin("SkiperVehicleAgent.skiperAgent", "SkiperAgent")
+                .innerJoin("SkiperAgent.user", "User")
+                .where("User.sponsor_id = :id_sponsor", { id_sponsor })
+                .andWhere("SkiperCatTravel.id = :cat_travel_id", { cat_travel_id })
+                .getMany();
+        } else {
+            result = await createQueryBuilder("SkiperVehicle")
+                .innerJoinAndSelect("SkiperVehicle.skiperCatTravel", "SkiperCatTravel")
+                .innerJoinAndSelect("SkiperVehicle.vehicleCatalog", "VehicleCatalog")
+                .innerJoinAndSelect("SkiperVehicle.vehicleTrademark", "VehicleTrademark")
+                .innerJoinAndSelect("SkiperVehicle.vehicleModel", "VehicleModels")
+                .innerJoinAndSelect("SkiperVehicle.vehicleYear", "VehicleYears")
+                .innerJoin("SkiperVehicle.skiperVehicleAgent", "SkiperVehicleAgent")
+                .innerJoin("SkiperVehicleAgent.skiperAgent", "SkiperAgent")
+                .innerJoin("SkiperAgent.user", "User")
+                .where("User.sponsor_id = :id_sponsor", { id_sponsor })
+                // .andWhere("SkiperCatTravel.id = :cat_travel_id",{ cat_travel_id })
+                .getMany();
+        }
+        return result;
     }
 
     async registerSkiperVehicle(input: SkiperVehicleInput): Promise<SkiperVehicle> {
