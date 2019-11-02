@@ -17,7 +17,7 @@ export class SkiperCommerceService {
         private readonly agentService: SkiperAgentService,
         private readonly countryService: CountrieService,
         private readonly skiperCatService: SkiperCatCommerceService,
-        private readonly cityService:CitiesService
+        private readonly cityService: CitiesService
     ) { }
 
     async getAll(): Promise<SkiperCommerce[]> {
@@ -46,7 +46,7 @@ export class SkiperCommerceService {
         const ReturnDist = async () => {
             const options = {
                 // key: "AIzaSyD_S3b75tC_Td7aq8oQLsr5-VX9FO1v2yc", api key anterior
-                key:"AIzaSyDRc0P0ozp5BU98gDG06OXbFaGk3OiOYxw", // api key pagada
+                key: "AIzaSyDRc0P0ozp5BU98gDG06OXbFaGk3OiOYxw", // api key pagada
                 mode: "Driving"
             };
 
@@ -141,18 +141,18 @@ export class SkiperCommerceService {
         return null;
     }
 
-    async getUserWithoutCommerce(){
+    async getUserWithoutCommerce() {
         let response = [];
         try {
-            let result: any[] = await createQueryBuilder("User").select(["User.firstname","User.lastname","SkiperAgent.id"])
-            .innerJoin("User.skiperAgent","SkiperAgent")
-            .leftJoin("SkiperAgent.skiperCommerce","SkiperCommerce")
-            .where("SkiperAgent.categoryAgent = 3")
-            .andWhere("SkiperCommerce.id IS NULL")
-            .getMany();
-            if(result.length > 0){
+            let result: any[] = await createQueryBuilder("User").select(["User.firstname", "User.lastname", "SkiperAgent.id"])
+                .innerJoin("User.skiperAgent", "SkiperAgent")
+                .leftJoin("SkiperAgent.skiperCommerce", "SkiperCommerce")
+                .where("SkiperAgent.categoryAgent = 3")
+                .andWhere("SkiperCommerce.id IS NULL")
+                .getMany();
+            if (result.length > 0) {
                 result.forEach(item => {
-                    response.push(new UserWithoutCommerceDto(item.firstname,item.lastname,item.skiperAgent[0]));
+                    response.push(new UserWithoutCommerceDto(item.firstname, item.lastname, item.skiperAgent[0]));
                 });
                 return response;
             }
@@ -160,6 +160,38 @@ export class SkiperCommerceService {
         } catch (error) {
             console.log(error);
         }
+    }
+
+    /*
+        select u.id,sc.namecommerce from users u
+        inner join skiper_agent sa on sa.iduser = u.id
+        inner join skiper_commerces sc on sc.idagent = sa.id
+        inner join skiper_cat_commerces scc on scc.id = sc.id_cat_commerce
+        where scc.id = 1;
+    */
+    async getCommercesByUserId(id_user: number, id_category_commerce: number = 0) {
+        let result;
+        if (id_category_commerce != 0) {
+            result = await createQueryBuilder("SkiperCommerce")
+                .innerJoinAndSelect("SkiperCommerce.catCommerce", "SkiperCatCommerce")
+                .innerJoinAndSelect("SkiperCommerce.country", "Countrie")
+                .innerJoinAndSelect("SkiperCommerce.city", "Cities")
+                .innerJoinAndSelect("SkiperCommerce.skiperAgent", "SkiperAgent")
+                .innerJoin("SkiperAgent.user", "User")
+                .where("User.id = :id_user", { id_user })
+                .getMany();
+        } else {
+            result = await createQueryBuilder("SkiperCommerce")
+                .innerJoinAndSelect("SkiperCommerce.catCommerce", "SkiperCatCommerce")
+                .innerJoinAndSelect("SkiperCommerce.country", "Countrie")
+                .innerJoinAndSelect("SkiperCommerce.city", "Cities")
+                .innerJoinAndSelect("SkiperCommerce.skiperAgent", "SkiperAgent")
+                .innerJoin("SkiperAgent.user", "User")
+                .where("User.id = :id_user", { id_user })
+                .andWhere("SkiperCatCommerce.id", { id_category_commerce })
+                .getMany();
+        }
+        return result;
     }
 
     private parseCommerce(input: CommerceInput, agent?, country?, catCommerce?): SkiperCommerce {

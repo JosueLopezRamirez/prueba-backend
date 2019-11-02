@@ -30,6 +30,11 @@ export class SkiperCommerceResolver {
         return this.skiperCommerceService.getUserWithoutCommerce();
     }
 
+    @Query()
+    getCommercesByUserId(@Args('id_user')id_user: number,@Args('id_category_commerce') id_category_commerce: number){
+        return this.skiperCommerceService.getCommercesByUserId(id_user,id_category_commerce);
+    }
+
     @Mutation('registerCommerce')
     async registerCommerce(@Args('input') input: CommerceInput){
         return this.skiperCommerceService.registerCommerce(input);
