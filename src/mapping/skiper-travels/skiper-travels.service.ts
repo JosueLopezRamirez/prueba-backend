@@ -167,7 +167,6 @@ export class SkiperTravelsService {
 
     async getTravelByAgentId(idagent: number): Promise<SkiperTravels> {
         try {
-            console.log(idagent);
             let result = await this.repository.createQueryBuilder("SkiperTravels")
                 .innerJoinAndSelect("SkiperTravels.users", "User")
                 .innerJoinAndSelect("SkiperTravels.skiperagent", "SkiperAgent")
@@ -182,7 +181,28 @@ export class SkiperTravelsService {
                 .where("SkiperAgent.id = :idagent", { idagent })
                 .andWhere("SkiperTravelsTracing.idtravelstatus IN (:idstatus)", { idstatus: [1, 3, 4, 5, 6] })
                 .getOne();
-            console.log(result);
+            return result;
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async getTravelByUserId(iduser: number): Promise<SkiperTravels> {
+        try {
+            let result = await this.repository.createQueryBuilder("SkiperTravels")
+                .innerJoinAndSelect("SkiperTravels.users", "User")
+                .innerJoinAndSelect("SkiperTravels.skiperagent", "SkiperAgent")
+                .innerJoinAndSelect("SkiperTravels.skiperTravelsTracing", "SkiperTravelsTracing")
+                .innerJoinAndSelect(subQuery => {
+                    return subQuery
+                        .select("SkiperTravelsTracing.idtravel", "idtravel").addSelect("MAX(SkiperTravelsTracing.datetracing)", "fecha")
+                        .from(SkiperTravelsTracing, "SkiperTravelsTracing")
+                        .groupBy("SkiperTravelsTracing.idtravel")
+                }, "d", "SkiperTravelsTracing.idtravel = d.idtravel and SkiperTravelsTracing.datetracing = d.fecha")
+                .innerJoinAndSelect("SkiperTravelsTracing.travelstatus", "SkiperTravelsStatus")
+                .where("User.id = :iduser", { iduser })
+                .andWhere("SkiperTravelsTracing.idtravelstatus IN (:idstatus)", { idstatus: [1, 3, 4, 5, 6] })
+                .getOne();
             return result;
         } catch (error) {
             console.log(error)

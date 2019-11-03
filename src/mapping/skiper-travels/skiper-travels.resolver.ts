@@ -1,18 +1,18 @@
-import { Resolver , Query, Mutation, Args} from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { SkiperTravelsService } from './skiper-travels.service';
 import { SkiperTravelsInput } from './skiper-travels.dto';
 import { SkiperTravelsTracingResolver } from '../skiper-travels-tracing/skiper-travels-tracing.resolver';
 
 @Resolver('SkiperTravels')
-export class SkiperTravelsResolver{
+export class SkiperTravelsResolver {
     constructor(private readonly service: SkiperTravelsService,
-    private readonly SkiperTravelsTracingResolver: SkiperTravelsTracingResolver) { }
+        private readonly SkiperTravelsTracingResolver: SkiperTravelsTracingResolver) { }
     // por ahora esto nada mas
     @Query()
-    async CalcularTarifa(@Args('idcountry') idcountry : number,
-    @Args('idcity') idcity: number, 
-    @Args('idcategoriaviaje') idcategoriaviaje: number,
-    @Args('date_init') date_init: Date,) {
+    async CalcularTarifa(@Args('idcountry') idcountry: number,
+        @Args('idcity') idcity: number,
+        @Args('idcategoriaviaje') idcategoriaviaje: number,
+        @Args('date_init') date_init: Date, ) {
         return await this.service.CalcularTarifa(idcountry, idcity, idcategoriaviaje, date_init);
     }
 
@@ -29,8 +29,7 @@ export class SkiperTravelsResolver{
     @Mutation()
     async GenerateTravel(@Args('inputviaje') inputviaje: SkiperTravelsInput) {
         var result = await this.service.GenerateTravel(inputviaje);
-        if(result != null)
-        {
+        if (result != null) {
             let viaje = await this.service.GetTravelByID(result.id)
             this.SkiperTravelsTracingResolver.NotificarCambiosEnViaje(viaje, viaje.skiperagent.id)
             return result
@@ -40,7 +39,13 @@ export class SkiperTravelsResolver{
     }
 
     @Query()
-    async getTravelByAgentId(@Args('idagent') idagent:number){
+    async getTravelByAgentId(@Args('idagent') idagent: number) {
         return await this.service.getTravelByAgentId(idagent);
+    }
+
+
+    @Query()
+    async getTravelByUserId(@Args('iduser') iduser: number) {
+        return await this.service.getTravelByUserId(iduser);
     }
 }
