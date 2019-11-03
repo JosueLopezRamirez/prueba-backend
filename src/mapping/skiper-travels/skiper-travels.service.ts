@@ -187,13 +187,16 @@ export class SkiperTravelsService {
         }
     }
 
-    async getTravelByUserId(iduser: number) {
+    async getTravelByUserId(iduser: number): Promise<SkiperTravels> {
         try {
             let result = await this.repository.createQueryBuilder("SkiperTravels")
                 .innerJoinAndSelect("SkiperTravels.users", "User")
                 .innerJoinAndSelect("SkiperTravels.skiperagent", "SkiperAgent")
                 .innerJoinAndSelect("SkiperAgent.skiperVehicleAgent","SkiperVehicleAgent")
                 .innerJoinAndSelect("SkiperVehicleAgent.skiperVehicle","SkiperVehicle")
+                .innerJoinAndSelect("SkiperVehicle.vehicleModel","VehicleModels")
+                .innerJoinAndSelect("SkiperVehicle.vehicleTrademark","VehicleTrademark")
+                .innerJoinAndSelect("SkiperVehicle.vehicleYear","VehicleYears")
                 .innerJoinAndSelect("SkiperTravels.skiperTravelsTracing", "SkiperTravelsTracing")
                 .innerJoinAndSelect(subQuery => {
                     return subQuery
@@ -205,7 +208,6 @@ export class SkiperTravelsService {
                 .where("User.id = :iduser", { iduser })
                 .andWhere("SkiperTravelsTracing.idtravelstatus IN (:idstatus)", { idstatus: [1, 3, 4, 5, 6] })
                 .getOne();
-                console.log(result);
             return result;
         } catch (error) {
             console.log(error)
