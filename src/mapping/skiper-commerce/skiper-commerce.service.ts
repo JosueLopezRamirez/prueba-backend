@@ -201,6 +201,7 @@ export class SkiperCommerceService {
         commerce.phone = input.phone;
         commerce.address = input.address;
         commerce.manager = input.manager;
+        commerce.state = input.state;
         commerce.lat = input.lat;
         commerce.lon = input.lon;
         commerce.url_art = input.url_art;

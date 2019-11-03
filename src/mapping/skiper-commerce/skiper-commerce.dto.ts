@@ -13,39 +13,41 @@ export class CommerceInput {
     phone: string;
     address: string;
     manager: string;
+    state: boolean;
     lat: string;
     lon: string;
     url_art: string;
     url_logo: string;
     skiperAgentID: number;
     catCommerceID: number;
-    countryID:number;
-    cityID:number;
+    countryID: number;
+    cityID: number;
 }
 
 @ObjectType()
-export class CommerceDto{
+export class CommerceDto {
     id: number;
     namecommerce: string;
     identification_ruc: string;
     phone: string;
     address: string;
     manager: string;
+    state: boolean;
     lat: string;
     lon: string;
     url_art: string;
     url_logo: string;
     skiperAgent: SkiperAgentDto;
     catCommerce: SkiperCatCommerceDto;
-    country:countrieDto;
-    city:citiesDto;
+    country: countrieDto;
+    city: citiesDto;
     skiperCatProductsCommerce: SkiperCatProductDto
 }
 
 @ObjectType()
 export class UserWithoutCommerceDto {
 
-    constructor(firstname?,lastname?,skiperAgent?){
+    constructor(firstname?, lastname?, skiperAgent?) {
         this.firstname = firstname || "";
         this.lastname = lastname || "";
         this.skiperAgent = skiperAgent || null;
