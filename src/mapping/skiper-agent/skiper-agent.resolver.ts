@@ -8,29 +8,29 @@ import { UseGuards } from '@nestjs/common';
 export class SkiperAgentResolver {
 
     constructor(
-        private agentService :SkiperAgentService
-    ){}
+        private agentService: SkiperAgentService
+    ) { }
 
     @Query()
-    async agents(){
+    async agents() {
         return this.agentService.getAll();
     }
 
-    @Query()
+    @Mutation()
     async ObtenerDriveCercano(@Args('lat') lat: number,
-    @Args('lng') lng: number,
-    @Args('inputdrive') inputdrive: AgentDriveInput[]){
+        @Args('lng') lng: number,
+        @Args('inputdrive') inputdrive: AgentDriveInput[]) {
         return this.agentService.ObtenerDriveMasCercano(lat, lng, inputdrive);
     }
 
     @Mutation()
-    async registerAgent(@Args('input') input: AgentInput){
+    async registerAgent(@Args('input') input: AgentInput) {
         return this.agentService.register(input);
     }
 
     @UseGuards(new AuthGuard())
     @Mutation()
-    async updateAgent(@Args('input') input: AgentInput){
+    async updateAgent(@Args('input') input: AgentInput) {
         return this.agentService.update(input);
     }
 }
