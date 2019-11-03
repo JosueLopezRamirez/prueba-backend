@@ -5,6 +5,7 @@ type SkiperAgentDto {
     create_at:DateTime
     categoryAgent: categoryDto
     user: UserDto
+    skiperVehicleAgent: [SkiperVehicleAgentDto]
 }
 
 type Query {

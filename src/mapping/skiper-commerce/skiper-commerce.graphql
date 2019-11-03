@@ -43,7 +43,7 @@ type Query {
     commerces: [CommerceDto!]!
     CommercesIntoRadio(latitud: Float!, longitud: Float!, radio: Int!,id_category_product:Int): [CommerceDto]
     getUserWithoutCommerce: [UserWithoutCommerceDto]
-    getCommercesByUserId(id_user: Int!, id_category_commerce: Int): [CommerceDto]
+    getCommercesBySponsorId(id_user: Int!, id_category_commerce: Int): [CommerceDto]
 }
 
 type Mutation {

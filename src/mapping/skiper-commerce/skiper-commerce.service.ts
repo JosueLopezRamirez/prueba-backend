@@ -169,7 +169,7 @@ export class SkiperCommerceService {
         inner join skiper_cat_commerces scc on scc.id = sc.id_cat_commerce
         where scc.id = 1;
     */
-    async getCommercesByUserId(id_user: number, id_category_commerce: number = 0) {
+    async getCommercesBySponsorId(id_user: number, id_category_commerce: number = 0) {
         let result;
         if (id_category_commerce != 0) {
             result = await createQueryBuilder("SkiperCommerce")
@@ -178,7 +178,7 @@ export class SkiperCommerceService {
                 .innerJoinAndSelect("SkiperCommerce.city", "Cities")
                 .innerJoinAndSelect("SkiperCommerce.skiperAgent", "SkiperAgent")
                 .innerJoin("SkiperAgent.user", "User")
-                .where("User.id = :id_user", { id_user })
+                .where("User.sponsor_id = :id_user", { id_user })
                 .getMany();
         } else {
             result = await createQueryBuilder("SkiperCommerce")
@@ -187,7 +187,7 @@ export class SkiperCommerceService {
                 .innerJoinAndSelect("SkiperCommerce.city", "Cities")
                 .innerJoinAndSelect("SkiperCommerce.skiperAgent", "SkiperAgent")
                 .innerJoin("SkiperAgent.user", "User")
-                .where("User.id = :id_user", { id_user })
+                .where("User.sponsor_id = :id_user", { id_user })
                 .andWhere("SkiperCatCommerce.id", { id_category_commerce })
                 .getMany();
         }
