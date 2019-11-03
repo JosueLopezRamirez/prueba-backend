@@ -84,8 +84,10 @@ import { SkiperCommerceFavoritesModule } from './mapping/skiper-commerce-favorit
     UserCivilStatusModule,
     SkiperVehicleModule,
     SkiperVehicleAgentModule,
+    SkiperCommerceFavoritesModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
+      // host: gpcloud,
       host: process.env.DATABASE_HOST,
       //extra: { socketPath: "/cloudsql/backend-alysystem:us-west2:alysystem-db" },
       port: Number.parseFloat(process.env.DATABASE_PORT),

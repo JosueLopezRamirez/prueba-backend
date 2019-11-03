@@ -36,13 +36,14 @@ type CommerceDto {
 type UserWithoutCommerceDto {
     firstname: String
     lastname: String
-    skiperAgent: [SkiperAgentDto]
+    skiperAgent: SkiperAgentDto
 }
 
 type Query {
     commerces: [CommerceDto!]!
     CommercesIntoRadio(latitud: Float!, longitud: Float!, radio: Int!,id_category_product:Int): [CommerceDto]
     getUserWithoutCommerce: [UserWithoutCommerceDto]
+    getCommercesBySponsorId(id_user: Int!, id_category_commerce: Int): [CommerceDto]
 }
 
 type Mutation {

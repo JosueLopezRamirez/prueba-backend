@@ -41,3 +41,17 @@ export class CommerceDto{
     city:citiesDto;
     skiperCatProductsCommerce: SkiperCatProductDto
 }
+
+@ObjectType()
+export class UserWithoutCommerceDto {
+
+    constructor(firstname?,lastname?,skiperAgent?){
+        this.firstname = firstname || "";
+        this.lastname = lastname || "";
+        this.skiperAgent = skiperAgent || null;
+    }
+
+    firstname: string;
+    lastname: string;
+    skiperAgent: SkiperAgentDto;
+}

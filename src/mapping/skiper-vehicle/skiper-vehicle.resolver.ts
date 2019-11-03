@@ -23,6 +23,14 @@ export class SkiperVehicleResolver {
         return this.service.getVehicleByUserId(id);
     }
 
+    @Query()
+    getVehicleBySponsorIdAndCategoryTravelId(
+        @Args('id_sponsor') id_sponsor: number,
+        @Args('cat_travel_id') cat_travel_id: number
+    ) {
+        return this.service.getVehicleBySponsorIdAndCategoryTravelId(id_sponsor, cat_travel_id);
+    }
+
     @Mutation()
     async registerSkiperVehicle(@Args('input') input: SkiperVehicleInput) {
         let result = await this.service.registerSkiperVehicle(input);

@@ -4,10 +4,11 @@ import { CatPlacesUsersDto } from "../cat-places-users/cat-places-users.dto";
 
 @InputType()
 export class UsersAddressInput {
-    
+
     id: number;
     iduser: number;
-    id_cat_place_user:number;
+    placeid: string;
+    id_cat_place_user: number;
     lat: number;
     lng: number;
     address: string;
@@ -17,8 +18,9 @@ export class UsersAddressInput {
 
 @ObjectType()
 export class UsersAddressDto {
-    
+
     id: number;
+    placeid: string;
     lat: number;
     lng: number;
     address: string;

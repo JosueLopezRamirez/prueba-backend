@@ -2,6 +2,7 @@
 input UsersAddressInput {
     id: Int
     iduser: Int!
+    placeid: String!
     id_cat_place_user: Int!
     lat: Float!
     lng: Float!
@@ -13,6 +14,7 @@ input UsersAddressInput {
 type UsersAddressDto {
     
     id: Int
+    placeid: String
     lat: Float
     lng: Float
     address: String

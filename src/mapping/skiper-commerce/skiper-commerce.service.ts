@@ -5,7 +5,8 @@ import { Repository, createQueryBuilder } from 'typeorm';
 import { SkiperAgentService } from '../skiper-agent/skiper-agent.service';
 import { CountrieService } from '../countries/countrie.service';
 import { SkiperCatCommerceService } from '../skiper-cat-commerce/skiper-cat-commerce.service';
-import { CommerceInput } from './skiper-commerce.dto';
+import { CommerceInput, UserWithoutCommerceDto } from './skiper-commerce.dto';
+import { CitiesService } from '../cities/cities.service';
 require('isomorphic-fetch');
 
 @Injectable()
@@ -15,7 +16,8 @@ export class SkiperCommerceService {
         @InjectRepository(SkiperCommerce) private readonly repository: Repository<SkiperCommerce>,
         private readonly agentService: SkiperAgentService,
         private readonly countryService: CountrieService,
-        private readonly skiperCatService: SkiperCatCommerceService
+        private readonly skiperCatService: SkiperCatCommerceService,
+        private readonly cityService: CitiesService
     ) { }
 
     async getAll(): Promise<SkiperCommerce[]> {
@@ -43,7 +45,8 @@ export class SkiperCommerceService {
 
         const ReturnDist = async () => {
             const options = {
-                key: "AIzaSyD_S3b75tC_Td7aq8oQLsr5-VX9FO1v2yc",
+                // key: "AIzaSyD_S3b75tC_Td7aq8oQLsr5-VX9FO1v2yc", api key anterior
+                key: "AIzaSyDRc0P0ozp5BU98gDG06OXbFaGk3OiOYxw", // api key pagada
                 mode: "Driving"
             };
 
@@ -126,9 +129,10 @@ export class SkiperCommerceService {
             let agent = await this.agentService.getById(input.skiperAgentID);
             let country = await this.countryService.getById(input.countryID);
             let catCommerce = await this.skiperCatService.getById(input.catCommerceID);
-            if (agent !== undefined && country !== undefined && catCommerce !== undefined) {
+            let city = await this.cityService.getById(input.cityID);
+            if (agent !== undefined && country !== undefined && catCommerce !== undefined && city !== undefined) {
                 let commerce = this.parseCommerce(input, agent, country, catCommerce);
-                console.log(commerce);
+                commerce.city = city;
                 return this.repository.save(commerce);
             }
         } catch (error) {
@@ -137,13 +141,56 @@ export class SkiperCommerceService {
         return null;
     }
 
-    async getUserWithoutCommerce(){
-        let result = await createQueryBuilder("User").select(["User.firstname","User.lastname","SkiperAgent.id"])
-            .innerJoin("User.skiperAgent","SkiperAgent")
-            .leftJoin("SkiperAgent.skiperCommerce","SkiperCommerce")
-            .where("SkiperAgent.categoryAgent = 3")
-            .andWhere("SkiperCommerce.id IS NULL")
-            .getMany();
+    async getUserWithoutCommerce() {
+        let response = [];
+        try {
+            let result: any[] = await createQueryBuilder("User").select(["User.firstname", "User.lastname", "SkiperAgent.id"])
+                .innerJoin("User.skiperAgent", "SkiperAgent")
+                .leftJoin("SkiperAgent.skiperCommerce", "SkiperCommerce")
+                .where("SkiperAgent.categoryAgent = 3")
+                .andWhere("SkiperCommerce.id IS NULL")
+                .getMany();
+            if (result.length > 0) {
+                result.forEach(item => {
+                    response.push(new UserWithoutCommerceDto(item.firstname, item.lastname, item.skiperAgent[0]));
+                });
+                return response;
+            }
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    /*
+        select u.id,sc.namecommerce from users u
+        inner join skiper_agent sa on sa.iduser = u.id
+        inner join skiper_commerces sc on sc.idagent = sa.id
+        inner join skiper_cat_commerces scc on scc.id = sc.id_cat_commerce
+        where scc.id = 1;
+    */
+    async getCommercesBySponsorId(id_user: number, id_category_commerce: number = 0) {
+        let result;
+        if (id_category_commerce != 0) {
+            result = await createQueryBuilder("SkiperCommerce")
+                .innerJoinAndSelect("SkiperCommerce.catCommerce", "SkiperCatCommerce")
+                .innerJoinAndSelect("SkiperCommerce.country", "Countrie")
+                .innerJoinAndSelect("SkiperCommerce.city", "Cities")
+                .innerJoinAndSelect("SkiperCommerce.skiperAgent", "SkiperAgent")
+                .innerJoin("SkiperAgent.user", "User")
+                .where("User.sponsor_id = :id_user", { id_user })
+                .getMany();
+        } else {
+            result = await createQueryBuilder("SkiperCommerce")
+                .innerJoinAndSelect("SkiperCommerce.catCommerce", "SkiperCatCommerce")
+                .innerJoinAndSelect("SkiperCommerce.country", "Countrie")
+                .innerJoinAndSelect("SkiperCommerce.city", "Cities")
+                .innerJoinAndSelect("SkiperCommerce.skiperAgent", "SkiperAgent")
+                .innerJoin("SkiperAgent.user", "User")
+                .where("User.sponsor_id = :id_user", { id_user })
+                .andWhere("SkiperCatCommerce.id", { id_category_commerce })
+                .getMany();
+        }
         return result;
     }
 
