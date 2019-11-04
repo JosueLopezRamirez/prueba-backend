@@ -17,7 +17,7 @@ export class SkiperTravelsTracingResolver {
     }
 
     public NotificarCambiosEnViaje(travel, idusuario){
-        pubSub.publish('skiperTravel', { skiperTravel: travel, idusuario: idusuario })
+        pubSub.publish('skiperTravel', { skiperTravel: travel, idusuario: idusuario, idtravel: travel.id })
     }
 
     @Mutation()
@@ -30,7 +30,7 @@ export class SkiperTravelsTracingResolver {
 
     @Subscription('skiperTravel',  {
         filter(payload, variables) {
-            return payload.idusuario === variables.idusuario
+            return payload.idusuario !== variables.idusuario && payload.idtravel === variables.idtravel
         }
     })
     skiperTravel() {
