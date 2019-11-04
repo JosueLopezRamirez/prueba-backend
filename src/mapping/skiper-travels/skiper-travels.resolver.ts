@@ -31,7 +31,8 @@ export class SkiperTravelsResolver {
         var result = await this.service.GenerateTravel(inputviaje);
         if (result != null) {
             let viaje = await this.service.GetTravelByID(result.id)
-            this.SkiperTravelsTracingResolver.NotificarCambiosEnViaje(viaje, viaje.skiperagent.id)
+            await this.SkiperTravelsTracingResolver.NotificarCambiosEnViaje(viaje, viaje.skiperagent.id)
+            await this.SkiperTravelsTracingResolver.NotificarCambiosEnViaje(viaje, viaje.idusers)
             return result
         }
         else

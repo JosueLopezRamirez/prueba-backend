@@ -16,7 +16,7 @@ export class SkiperTravelsTracingResolver {
         return this.service.getAll();
     }
 
-    public NotificarCambiosEnViaje(travel, idusuario){
+    public async NotificarCambiosEnViaje(travel, idusuario){
         pubSub.publish('skiperTravel', { skiperTravel: travel, idusuario: idusuario })
     }
 
@@ -24,8 +24,8 @@ export class SkiperTravelsTracingResolver {
     async registerTravelsTracing(@Args('input') input: SkiperTravelsTracingInput) {
         var x = await this.service.registerTravelsTracing(input)
         var viaje = await this.f.GetTravelByID(x.idtravel)
-        this.NotificarCambiosEnViaje(viaje, viaje.skiperagent.id)
-        this.NotificarCambiosEnViaje(viaje, viaje.idusers)
+        await this.NotificarCambiosEnViaje(viaje, viaje.skiperagent.id)
+        await this.NotificarCambiosEnViaje(viaje, viaje.idusers)
         return x;
     }
 
