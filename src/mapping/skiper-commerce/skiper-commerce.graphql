@@ -5,6 +5,7 @@ input CommerceInput {
     phone: String
     address: String!
     manager: String!
+    state: Boolean
     lat: String!
     lon: String!
     url_art: String
@@ -22,6 +23,7 @@ type CommerceDto {
     phone: String
     address: String!
     manager: String!
+    state: Boolean
     lat: String!
     lon: String!
     url_art: String

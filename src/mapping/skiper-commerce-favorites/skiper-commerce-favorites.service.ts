@@ -37,7 +37,7 @@ export class SkiperCommerceFavoritesService {
             let favorite = await this.repository.findOneOrFail({ id });
             if (favorite) {
                 let result: any = await this.repository.delete(favorite);
-                ok.ok = (result.raw.affectedRows > 0 )? true : false;
+                ok.ok = (result.raw.affectedRows > 0) ? true : false;
                 return ok;
             }
         } catch (error) {

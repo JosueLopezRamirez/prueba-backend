@@ -9,13 +9,15 @@ export class UsersAddress {
 
     @Column('int', { nullable: false }) iduser: number;
 
+    @Column('longtext', { nullable: false }) placeid: string;
+
     @Column('int', { nullable: false }) id_cat_place_user: number;
 
     @Column('double', { nullable: false }) lat: number;
 
     @Column('double', { nullable: false }) lng: number;
 
-    @Column('varchar', { nullable: false , length: 120 }) address: string;
+    @Column('varchar', { nullable: false, length: 120 }) address: string;
 
     @Column('varchar', { nullable: false, length: 50 }) apt_house_number: string;
 
@@ -23,7 +25,7 @@ export class UsersAddress {
 
     @ManyToOne(type => CatPlacesUsers, { nullable: false })
     @JoinColumn({ name: 'id_cat_place_user' }) catplaceuser: CatPlacesUsers;
-    
+
     @ManyToOne(type => User, { nullable: false })
     @JoinColumn({ name: 'iduser' }) user: User;
 

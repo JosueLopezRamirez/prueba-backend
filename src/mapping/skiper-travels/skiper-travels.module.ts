@@ -9,7 +9,7 @@ import { SkiperTravelsTracingModule } from '../skiper-travels-tracing/skiper-tra
 
 @Module({
   imports: [
-    SkiperAgentModule,
+    forwardRef(() => SkiperAgentModule),
     UsersModule,
     forwardRef(() => SkiperTravelsTracingModule),
     TypeOrmModule.forFeature([SkiperTravels]),

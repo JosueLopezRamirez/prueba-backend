@@ -11,19 +11,21 @@ export class SkiperCommerce {
 
     @PrimaryGeneratedColumn() id: number;
 
-    @Column('varchar',{ nullable: true, length: 80 }) namecommerce: string;
+    @Column('varchar', { nullable: true, length: 80 }) namecommerce: string;
 
-    @Column('varchar',{ nullable: false, length: 100 }) identification_ruc: string;
+    @Column('varchar', { nullable: false, length: 100 }) identification_ruc: string;
 
-    @Column('varchar',{ nullable: false, length: 80 }) phone: string;
+    @Column('varchar', { nullable: false, length: 80 }) phone: string;
 
-    @Column('varchar',{ nullable: false, length: 100 }) address: string;
+    @Column('varchar', { nullable: false, length: 100 }) address: string;
 
-    @Column('varchar',{ nullable: false, length: 80 }) manager: string;
+    @Column('varchar', { nullable: false, length: 80 }) manager: string;
 
-    @Column('varchar',{ nullable: true,length:255 }) lat: string;
+    @Column('boolean', { nullable: true }) state: boolean;
 
-    @Column('varchar',{ nullable: true,length:255 }) lon: string;
+    @Column('varchar', { nullable: true, length: 255 }) lat: string;
+
+    @Column('varchar', { nullable: true, length: 255 }) lon: string;
 
     @Column('longtext', { nullable: true }) url_art: string;
 

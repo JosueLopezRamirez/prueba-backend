@@ -84,7 +84,7 @@ export class SkiperCommerceService {
                     .leftJoinAndSelect("SkiperCommerce.skiperCatProductsCommerce", "SkiperCatProductsCommerce")
                     .leftJoinAndSelect("SkiperCatProductsCommerce.skiperProductCommerce", "SkiperProductCommerce")
                     .leftJoinAndSelect("SkiperProductCommerce.optionAddon", "OptionAddon")
-                    .where("SkiperCommerce.lat <> :parametro and SkiperCommerce.lon <> :parametro", { parametro: "" })
+                    .where("SkiperCommerce.state = true and SkiperCommerce.lat <> :parametro and SkiperCommerce.lon <> :parametro", { parametro: "" })
                     .getMany();
             } else {
                 // console.log('entre aqui');
@@ -95,7 +95,7 @@ export class SkiperCommerceService {
                     .leftJoinAndSelect("SkiperCommerce.skiperCatProductsCommerce", "SkiperCatProductsCommerce")
                     .leftJoinAndSelect("SkiperCatProductsCommerce.skiperProductCommerce", "SkiperProductCommerce")
                     .leftJoinAndSelect("SkiperProductCommerce.optionAddon", "OptionAddon")
-                    .where("SkiperCommerce.lat <> :parametro and SkiperCommerce.lon <> :parametro", { parametro: "" })
+                    .where("SkiperCommerce.state = true and SkiperCommerce.lat <> :parametro and SkiperCommerce.lon <> :parametro", { parametro: "" })
                     .andWhere("SkiperCatProductsCommerce.id = :idcatproduct", { idcatproduct: id_category_product })
                     .getMany();
             }
@@ -201,6 +201,7 @@ export class SkiperCommerceService {
         commerce.phone = input.phone;
         commerce.address = input.address;
         commerce.manager = input.manager;
+        commerce.state = input.state;
         commerce.lat = input.lat;
         commerce.lon = input.lon;
         commerce.url_art = input.url_art;

@@ -25,9 +25,9 @@ export class UsersAddressService {
                 relations: ["catplaceuser", "user"],
                 where: { id: id }
             });
-            if(result){
+            if (result) {
                 return result;
-            }else{
+            } else {
                 return null;
             }
         } catch (error) {
@@ -35,7 +35,7 @@ export class UsersAddressService {
         }
     }
 
-    async create(input: UsersAddressInput){
+    async create(input: UsersAddressInput) {
         try {
             let result = this.parseUsersAddres(input);
             result = await this.repository.save(result);
@@ -46,10 +46,11 @@ export class UsersAddressService {
         }
     }
 
-    async update(input:UsersAddressInput){
+    async update(input: UsersAddressInput) {
         try {
             let result = await this.getById(input.id);
-            if(result){
+            if (result) {
+                result.placeid = input.placeid;
                 result.address = input.address;
                 result.apt_house_number = input.apt_house_number;
                 result.lat = input.lat;
@@ -61,16 +62,17 @@ export class UsersAddressService {
             console.log(error);
         }
     }
-    
-    private parseUsersAddres(input:UsersAddressInput){
+
+    private parseUsersAddres(input: UsersAddressInput) {
         let usersAddress: UsersAddress = new UsersAddress();
         usersAddress.address = input.address;
         usersAddress.apt_house_number = input.apt_house_number;
         usersAddress.id_cat_place_user = input.id_cat_place_user;
         usersAddress.iduser = input.iduser;
+        usersAddress.placeid = input.placeid;
         usersAddress.lat = input.lat;
         usersAddress.lng = input.lng;
         usersAddress.point_references = input.point_references;
-        return usersAddress; 
+        return usersAddress;
     }
 }

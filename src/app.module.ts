@@ -50,8 +50,6 @@ import { SkiperTravelsStatusModule } from './mapping/skiper-travels-status/skipe
 import { SkiperSubCatCommercesModule } from './mapping/skiper-sub-cat-commerces/skiper-sub-cat-commerces.module';
 import { SkiperCommerceFavoritesModule } from './mapping/skiper-commerce-favorites/skiper-commerce-favorites.module';
 
-const gpcloud = "/cloudsql/[prueba-de-storage-254017:us-central1:dbalyskiper]";
-
 @Module({
   imports: [
     AppCitiesModule,
@@ -91,16 +89,16 @@ const gpcloud = "/cloudsql/[prueba-de-storage-254017:us-central1:dbalyskiper]";
       type: 'mysql',
       // host: gpcloud,
       host: process.env.DATABASE_HOST,
-      // extra:{
-      //   socketPath: gpcloud
-      // },
+      //extra: { socketPath: "/cloudsql/backend-alysystem:us-west2:alysystem-db" },
       port: Number.parseFloat(process.env.DATABASE_PORT),
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
+      logging: false,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      logger:"debug",
-      logging:true,
+
+
+
       // synchronize: true,
       // dropSchema: true
     }),
@@ -119,8 +117,8 @@ const gpcloud = "/cloudsql/[prueba-de-storage-254017:us-central1:dbalyskiper]";
       }),
       subscriptions: {
         onConnect: (connectionParams, webSocket) => {
-            console.log('Websocket CONNECTED');
-            return { hello: 'world' }
+          console.log('Websocket CONNECTED');
+          return { hello: 'world' }
         },
         onDisconnect: () => console.log('Websocket DISCONNECTED'),
       },
@@ -130,9 +128,9 @@ const gpcloud = "/cloudsql/[prueba-de-storage-254017:us-central1:dbalyskiper]";
           status: err.extensions.exception.status,
         })
       },
-      cors:{
+      cors: {
         "origin": "*",
-        "Access-Control-Allow-Origin":"*"
+        "Access-Control-Allow-Origin": "*"
       }
     }),
     UsersAddressModule,
@@ -141,6 +139,7 @@ const gpcloud = "/cloudsql/[prueba-de-storage-254017:us-central1:dbalyskiper]";
     SkiperTravelsTracingModule,
     SkiperTravelsStatusModule,
     SkiperSubCatCommercesModule,
+    SkiperCommerceFavoritesModule,
   ],
   providers: [AppService, AppResolver],
   controllers: [AppController],
