@@ -200,19 +200,19 @@ export class SkiperTravelsService {
                 .innerJoinAndSelect("SkiperTravels.skiperTravelsTracing", "SkiperTravelsTracing")
                 .innerJoinAndSelect(subQuery => {
                     return subQuery
-                        .select("SkiperTravelsTracing.idtravel", "idtravel").addSelect("MAX(SkiperTravelsTracing.datetracing)", "fecha")
+                        .select("SkiperTravelsTracing.idtravel", "idtravel")
+                        .addSelect("MAX(SkiperTravelsTracing.datetracing)", "fecha")
                         .from(SkiperTravelsTracing, "SkiperTravelsTracing")
                         .groupBy("SkiperTravelsTracing.idtravel")
                 }, "d", "SkiperTravelsTracing.idtravel = d.idtravel and SkiperTravelsTracing.datetracing = d.fecha")
                 .innerJoinAndSelect("SkiperTravelsTracing.travelstatus", "SkiperTravelsStatus")
                 .where("User.id = :iduser", { iduser })
                 .andWhere("SkiperTravelsTracing.idtravelstatus IN (:idstatus)", { idstatus: [1, 3, 4, 5, 6] })
-                .addOrderBy("User.id","ASC")
                 .getOne()
                 .then(item => (item == undefined) ? null : item);
             return result;
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     }
 

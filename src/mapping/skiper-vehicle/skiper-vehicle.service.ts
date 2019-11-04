@@ -48,15 +48,7 @@ export class SkiperVehicleService {
             console.log(error)
         }
     }
-
-    /*
-            select sv.* from skiper_vehicle sv
-            inner join skiper_cat_travels sct on sct.id = sv.id_cat_travel
-            inner join skiper_vehicle_agent sva on sva.idvehicle = sv.id
-            inner join skiper_agent sa on sa.id = sva.idagent
-            inner join users u on u.id = sa.iduser
-            where u.sponsor_id = 168 and sct.id = 1;
-         */
+    
     async getVehicleBySponsorIdAndCategoryTravelId(id_sponsor: number, cat_travel_id: number = 0) {
         let result;
         if (cat_travel_id != 0) {
