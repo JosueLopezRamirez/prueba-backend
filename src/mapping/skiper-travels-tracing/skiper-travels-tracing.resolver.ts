@@ -17,7 +17,7 @@ export class SkiperTravelsTracingResolver {
     }
 
     public NotificarCambiosEnViaje(travel, idusuario){
-        pubSub.publish('skiperTravel', { skiperTravel: travel, idusuario: idusuario, idtravel: travel.id })
+        pubSub.publish('skiperTravel', { skiperTravel: travel, idusuario: idusuario })
     }
 
     @Mutation()
@@ -25,12 +25,13 @@ export class SkiperTravelsTracingResolver {
         var x = await this.service.registerTravelsTracing(input)
         var viaje = await this.f.GetTravelByID(x.idtravel)
         this.NotificarCambiosEnViaje(viaje, viaje.skiperagent.id)
+        this.NotificarCambiosEnViaje(viaje, viaje.idusers)
         return x;
     }
 
     @Subscription('skiperTravel',  {
         filter(payload, variables) {
-            return payload.idusuario !== variables.idusuario && payload.idtravel === variables.idtravel
+            return payload.idusuario === variables.idusuario
         }
     })
     skiperTravel() {
