@@ -4,6 +4,7 @@ type citiesDto {
   name: String
   country: countrieDto
   users:[UserDto]
+  appCities: [AppCitiesDto]
 }
 
 type Query {

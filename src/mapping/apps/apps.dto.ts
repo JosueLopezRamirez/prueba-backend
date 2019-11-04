@@ -1,4 +1,5 @@
 import { InputType, ObjectType } from "type-graphql";
+import { AppCitiesDto } from "../app-cities/app-cities.dto";
 
 @InputType()
 export class AppsInput {
@@ -12,4 +13,5 @@ export class AppsDto {
     id: number;
     name: string;
     description: string;
+    appCities: AppCitiesDto[];
 }

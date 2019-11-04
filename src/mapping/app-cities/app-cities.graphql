@@ -1,0 +1,6 @@
+type AppsDto {
+    idapp: Int
+    idcities: Int
+    apps: AppsDto
+    cities: citiesDto
+}
