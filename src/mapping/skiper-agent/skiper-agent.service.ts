@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SkiperAgent } from './skiper-agent.entity';
 import { Repository } from 'typeorm';
@@ -6,6 +6,7 @@ import { AgentInput, AgentDriveInput } from './skiper-agent.dto';
 import { UserService } from '../users/user.service';
 import { CategoryAgentService } from '../category-agent/category-agent.service';
 import { User } from '../users/user.entity';
+import { SkiperTravelsService } from '../skiper-travels/skiper-travels.service';
 require('isomorphic-fetch');
 
 @Injectable()
@@ -14,7 +15,8 @@ export class SkiperAgentService {
     constructor(
         @InjectRepository(SkiperAgent) private agentRepository: Repository<SkiperAgent>,
         private readonly userService: UserService,
-        private readonly categoryAgentService: CategoryAgentService
+        private readonly categoryAgentService: CategoryAgentService,
+        private readonly skiperTravelsService: SkiperTravelsService,
     ) { }
 
     async getAll() {
@@ -55,8 +57,12 @@ export class SkiperAgentService {
                 .then(response => response.json())
                 .then(json => {
                     if (json.status !== 'OK') {
+                        console.log(json.status)
                         const errorMessage = json.error_message || 'Unknown error';
-                        return Promise.reject(errorMessage);
+                        throw new HttpException(
+                            errorMessage,
+                            HttpStatus.BAD_REQUEST
+                        );
                     }
                     return json;
                 });
@@ -68,16 +74,32 @@ export class SkiperAgentService {
     async ObtenerDriveMasCercano(
         lat: number, lng: number,
         Drives: AgentDriveInput[]): Promise<number> {
+        
+        //primero vamos a sacar solos los drive que no se encuentren en ningun viaje
+        let DriverDisponibles = [];
 
-        var c = await Promise.all(Drives.map(async item => {
+        var x = await Promise.all(
+            Drives.map(async item => {
+                var x = await this.skiperTravelsService.getTravelByAgentId(item.iddrive)
+                if(x == undefined)
+                    DriverDisponibles.push(item)
+            })
+        )
+
+        if(DriverDisponibles.length == 0)
+            throw new HttpException(
+                "No hay Drivers disponibles",
+                HttpStatus.BAD_REQUEST
+            );
+
+        var t = await Promise.all(DriverDisponibles.map(async item => {
             var Distancia = await this.GetDistance(
-                lat.toString() + ',' + lng.toString(),
-                item.lat.toString() + ',' + item.lng.toString())
-            console.log(Distancia.routes[0].legs[0].distance.value)
+            lat.toString() + ',' + lng.toString(),
+            item.lat.toString() + ',' + item.lng.toString())
             item.distancia = Distancia.routes[0].legs[0].distance.value
         }))
 
-        var drive = Drives.sort(function (element1, element2) { return element1.distancia - element2.distancia })[0]
+        var drive = DriverDisponibles.sort(function (element1, element2) { return element1.distancia - element2.distancia })[0]
         return drive.iddrive
     }
 
