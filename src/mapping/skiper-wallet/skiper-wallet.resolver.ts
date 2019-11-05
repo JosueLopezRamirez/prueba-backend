@@ -17,7 +17,7 @@ export class SkiperWalletResolver {
         return this.skiperWalletService.getById(id);
     }
 
-    @Mutation('registerSkiperWallet')
+    @Mutation()
     async registerSkiperWallet(@Args('input') input: SkiperWalletInput) {
         try {
             return await this.skiperWalletService.registerSkiperwallet(input);

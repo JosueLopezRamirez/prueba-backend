@@ -6,16 +6,16 @@ import { ParseIntPipe } from '@nestjs/common';
 @Resolver('TransactionType')
 export class TransactionTypeResolver {
     constructor(
-        private readonly serviceTransactionType:TransactionTypeService
+        private readonly service:TransactionTypeService
     ){}
 
-    @Query('TransactionType')
-    async TransactionType(){
-        return await this.serviceTransactionType.getAll();
+    @Query()
+    getAllTransactionType(){
+        return this.service.getAll();
     }
 
     @Query()
-    async searchTransactionType(@Args('id', ParseIntPipe) id:number){
-        return this.serviceTransactionType.getById(id);
+    searchTransactionType(@Args('id') id:number){
+        return this.service.getById(id);
     }
 }

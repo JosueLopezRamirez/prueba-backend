@@ -54,6 +54,8 @@ import { CurrencyModule } from './mapping/currency/currency.module';
 import { SkiperWalletsHistoryModule } from './mapping/skiper-wallets-history/skiper-wallets-history.module';
 import { PaymentMethodsModule } from './mapping/payment-methods/payment-methods.module';
 import { TransactionTypeModule } from './mapping/transaction-type/transaction-type.module';
+import { UsersCommissionsModule } from './mapping/users-commissions/users-commissions.module';
+import { CategoryLevelModule } from './mapping/category-level/category-level.module';
 
 @Module({
   imports: [
@@ -90,6 +92,8 @@ import { TransactionTypeModule } from './mapping/transaction-type/transaction-ty
     SkiperVehicleModule,
     SkiperVehicleAgentModule,
     SkiperCommerceFavoritesModule,
+    UsersCommissionsModule,
+    CategoryLevelModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       // host: gpcloud,
@@ -101,9 +105,6 @@ import { TransactionTypeModule } from './mapping/transaction-type/transaction-ty
       database: process.env.DATABASE_NAME,
       logging: false,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-
-
-
       // synchronize: true,
       // dropSchema: true
     }),

@@ -13,15 +13,15 @@ export class SkiperWalletsHistory {
 
     @Column({ nullable: false }) idtransactiontype: number;
 
-    @Column('double', { nullable: false }) amount: number;
-
     @Column({ nullable: false }) idpayment_methods: number;
+
+    @Column({ nullable: false }) idcurrency: number;
+
+    @Column('double', { nullable: false }) amount: number;
 
     @Column('longtext', { nullable: true }) description: string;
 
     @Column({ nullable: false }) date_in: Date;
-
-    @Column({ nullable: false }) idcurrency: number;
 
     @ManyToOne(type => SkiperWallet, { nullable: false })
     @JoinColumn({ name: 'idskiperwallet' }) skiperwallet: SkiperWallet;
@@ -34,6 +34,4 @@ export class SkiperWalletsHistory {
 
     @ManyToOne(type => Currency, { nullable: false })
     @JoinColumn({ name: 'idcurrency' }) currency: Currency;
-
-
 }

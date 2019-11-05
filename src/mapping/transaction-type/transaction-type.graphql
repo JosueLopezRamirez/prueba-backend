@@ -8,6 +8,6 @@ type TransactionTypeDto {
     name: String!
 }
 type Query {
-    TransactionType: [TransactionTypeDto!]!
-    searchTransactionType(id:Int):TransactionTypeDto
+    getAllTransactionType: [TransactionTypeDto!]!
+    searchTransactionType(id: Int!): TransactionTypeDto
 }

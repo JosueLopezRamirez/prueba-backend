@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SkiperCommerceFavorite } from './skiper-commerce-favorites.entity';
-import { Repository } from 'typeorm';
+import { Repository, createQueryBuilder } from 'typeorm';
 import { CommerceFavoriteInput, OkDto } from './skiper-commerce-favorites.dto';
 
 @Injectable()
@@ -25,10 +25,16 @@ export class SkiperCommerceFavoritesService {
 
     async create(input: CommerceFavoriteInput) {
         let ok = new OkDto();
-        let favorite = this.parseFavorite(input);
-        let result = await this.repository.save(favorite);
-        ok.ok = (result) ? true : false;
-        return ok;
+        if (!this.validateFavoriteIfExist(input)) {
+            let favorite = this.parseFavorite(input);
+            let result = await this.repository.save(favorite);
+            ok.ok = (result) ? true : false;
+            return ok;
+        } else {
+            ok.ok = false;
+            return ok;
+        }
+
     }
 
     async delete(id: number) {
@@ -52,5 +58,15 @@ export class SkiperCommerceFavoritesService {
         favorite.idcommerce = input.commerce_id;
         favorite.iduser = input.user_id;
         return favorite;
+    }
+
+
+    //Metodo para validar si ya existe un registro de un usuario con un comercio en especifico, 
+    //para evitar redundancia de datos en la bd
+    private async validateFavoriteIfExist(input: CommerceFavoriteInput) {
+        return await createQueryBuilder("SkiperCommerceFavorite")
+            .where("SkiperCommerceFavorite.iduser = :iduser", { iduser: input.user_id })
+            .andWhere("SkiperCommerceFavorite.idcommerce = :idcommerce", { idcommerce: input.commerce_id })
+            .getOne();
     }
 }

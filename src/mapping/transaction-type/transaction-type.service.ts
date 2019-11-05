@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { TransactionType } from './transaction-type.entity';
 import { Repository } from 'typeorm';
 import { TransactionTypeInput } from './transaction-type.dto';
@@ -16,7 +16,11 @@ export class TransactionTypeService {
     }
 
     async getById(id: number): Promise<TransactionType> {
-        return this.repository.findOneOrFail()
+        try {
+            return await this.repository.findOneOrFail({ where: { id: id } });
+        } catch (error) {
+            throw new HttpException(error.message, HttpStatus.BAD_REQUEST)
+        }
     }
 
     async registerTransaction(input: TransactionTypeInput) {
