@@ -23,7 +23,7 @@ export class AppController {
     @Post('/image/upload')
     @UseInterceptors(FileInterceptor('file', {
         storage: diskStorage({
-            destination: '../dist/uploads'
+            destination: './uploads'
             , filename: (req, file, cb) => {
                 // Generating a 32 random chars long string
                 const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('')
@@ -34,7 +34,6 @@ export class AppController {
     }))
     async uploadFile(@UploadedFile('file') file) {
         const { filename, path } = await file;
-        console.log('entre aqui')
         await new Promise(res => {
             createReadStream(path)
                 .pipe(
