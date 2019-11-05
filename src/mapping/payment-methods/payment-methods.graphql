@@ -1,0 +1,14 @@
+input PaymentMethodInput {
+    id: Int
+    name:String
+}
+
+type PaymentMethodDto {
+    id: Int
+    name:String
+}
+
+type Query {
+    PaymentMethod: [PaymentMethodDto]
+    searchPaymentMethod(id:Int): PaymentMethodDto
+}

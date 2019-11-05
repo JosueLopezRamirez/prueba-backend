@@ -49,6 +49,11 @@ import { SkiperTravelsTracingModule } from './mapping/skiper-travels-tracing/ski
 import { SkiperTravelsStatusModule } from './mapping/skiper-travels-status/skiper-travels-status.module';
 import { SkiperSubCatCommercesModule } from './mapping/skiper-sub-cat-commerces/skiper-sub-cat-commerces.module';
 import { SkiperCommerceFavoritesModule } from './mapping/skiper-commerce-favorites/skiper-commerce-favorites.module';
+import { SkiperWalletModule } from './mapping/skiper-wallet/skiper-wallet.module';
+import { CurrencyModule } from './mapping/currency/currency.module';
+import { SkiperWalletsHistoryModule } from './mapping/skiper-wallets-history/skiper-wallets-history.module';
+import { PaymentMethodsModule } from './mapping/payment-methods/payment-methods.module';
+import { TransactionTypeModule } from './mapping/transaction-type/transaction-type.module';
 
 @Module({
   imports: [
@@ -140,6 +145,11 @@ import { SkiperCommerceFavoritesModule } from './mapping/skiper-commerce-favorit
     SkiperTravelsStatusModule,
     SkiperSubCatCommercesModule,
     SkiperCommerceFavoritesModule,
+    SkiperWalletModule,
+    CurrencyModule,
+    SkiperWalletsHistoryModule,
+    PaymentMethodsModule,
+    TransactionTypeModule,
   ],
   providers: [AppService, AppResolver],
   controllers: [AppController],

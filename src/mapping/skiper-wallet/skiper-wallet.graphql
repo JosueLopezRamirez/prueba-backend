@@ -1,0 +1,26 @@
+input skiperWalletInput {
+    id: Int
+    iduser: Int!
+    amount: Int!
+    idcurrency: Int!
+    idcountry: Int!
+    date_in: DateTime!
+}
+
+type SkiperWalletDto {
+    id: Int
+    user: UserDto!
+    amount: Int!
+    currency: CurrencyDto!
+    country: countrieDto!
+    date_in: DateTime!
+}
+
+type Query {
+    skiperwallets: [SkiperWalletDto]!
+    searchSkiperWallet(id:Int):SkiperWalletDto
+}
+type Mutation {
+    registerSkiperWallet(input: skiperWalletInput!):SkiperWalletDto
+    updateSkiperWallet(input: skiperWalletInput):SkiperWalletDto
+}
