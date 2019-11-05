@@ -34,6 +34,7 @@ export class PaymentMethodsService {
             let respt = await this.getById(input.id);
             if (respt) {
                 respt.name = input.name;
+                respt.pay_commissions = input.pay_commissions;
                 return await this.respository.save(respt);
             }
 
@@ -45,6 +46,7 @@ export class PaymentMethodsService {
     private parsePaymentMethods(input: PaymentMethodInput): PaymentMethods {
         let paymentmethods: PaymentMethods = new PaymentMethods();
         paymentmethods.name = input.name;
+        paymentmethods.pay_commissions = input.pay_commissions;
         return paymentmethods;
     }
 }

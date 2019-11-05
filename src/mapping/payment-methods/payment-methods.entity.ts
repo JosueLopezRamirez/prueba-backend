@@ -6,4 +6,5 @@ export class PaymentMethods {
 
     @Column('varchar', { nullable: false, length: 30 }) name: string;
 
+    @Column('boolean') pay_commissions: boolean;
 }
