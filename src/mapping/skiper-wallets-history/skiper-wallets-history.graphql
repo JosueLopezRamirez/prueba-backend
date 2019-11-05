@@ -1,0 +1,24 @@
+input skiperWalletsHistoryInput {
+    id: Int
+    idskiperwallet: Int
+    idtransactiontype: Int
+    amount: Float
+    idpayment_methods: Int
+    date_in: DateTime
+    idcurrency: Int
+}
+
+type SkiperWalletsHistoryDto {
+    id: Int
+    skiperwallet: SkiperWalletDto
+    transactiontype: TransactionTypeDto
+    amount: Float
+    paymentmethod: PaymentMethodDto
+    date_in: DateTime
+    currency: CurrencyDto
+}
+
+type Query {
+    SkiperWalletsHistory: [SkiperWalletsHistoryDto]
+    searchSkiperWalletHistory(id:Int): SkiperWalletsHistoryDto
+}

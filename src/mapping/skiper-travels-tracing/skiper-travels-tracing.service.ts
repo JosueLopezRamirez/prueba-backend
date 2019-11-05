@@ -5,12 +5,16 @@ import {SkiperTravelsTracingInput} from './skiper-travels-tracing.dto';
 import { Repository, createQueryBuilder } from 'typeorm';
 import geotz from 'geo-tz';
 import momentTimeZone from 'moment-timezone';
+import { SkiperTravelsStatusService } from '../skiper-travels-status/skiper-travels-status.service';
+import { SkiperTravelsService } from '../skiper-travels/skiper-travels.service';
 
 @Injectable()
 export class SkiperTravelsTracingService {
     constructor(
         @InjectRepository(SkiperTravelsTracing)
-        private readonly repository: Repository<SkiperTravelsTracing>
+        private readonly repository: Repository<SkiperTravelsTracing>,
+        private readonly skiperTravelsStatusService: SkiperTravelsStatusService,
+        private readonly skiperTravelsService: SkiperTravelsService
     ) {}
 
     async getAll(): Promise<SkiperTravelsTracing[]> {
@@ -42,6 +46,23 @@ export class SkiperTravelsTracingService {
                 HttpStatus.BAD_REQUEST,
             );
         }
+
+        //vamos a validar que el estado exista con el estado previo.
+        let estado =  await this.skiperTravelsStatusService.getById(input.idtravelstatus)
+        let travel = await this.skiperTravelsService.GetTravelByID(input.idtravel)
+
+        if(travel == undefined)
+            throw new HttpException(
+                "El viaje no existe",
+                HttpStatus.BAD_REQUEST,
+            );
+            
+        if(travel.skiperTravelsTracing[0].travelstatus.id != estado.prevstatus)
+            throw new HttpException(
+                estado.errorstatusprev,
+                HttpStatus.BAD_REQUEST,
+            );
+        
         var zonahoraria = geotz(input.lat, input.lng)
         var fecha = momentTimeZone().tz(zonahoraria.toString()).format("YYYY-MM-DD HH:mm:ss")
         input.fecha = fecha;

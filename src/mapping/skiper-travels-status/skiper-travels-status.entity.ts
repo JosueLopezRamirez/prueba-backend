@@ -5,4 +5,6 @@ export class SkiperTravelsStatus {
     @PrimaryGeneratedColumn() id: number;
     @Column('varchar', {nullable: false, length: 50 }) name: string;
     @Column('varchar', {nullable: true, length: 20 }) indicator: string;
+    @Column('int', {nullable: false}) prevstatus: number;
+    @Column('varchar', {nullable: true, length: 20 }) errorstatusprev: string;
 }

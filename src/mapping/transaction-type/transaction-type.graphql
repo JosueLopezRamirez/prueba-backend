@@ -1,0 +1,13 @@
+input TransactionTypeInput {
+    id: Int!
+    name: String!
+}
+
+type TransactionTypeDto {
+    id: Int!
+    name: String!
+}
+type Query {
+    TransactionType: [TransactionTypeDto!]!
+    searchTransactionType(id:Int):TransactionTypeDto
+}

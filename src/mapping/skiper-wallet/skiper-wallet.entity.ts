@@ -1,0 +1,30 @@
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { User } from '../users/user.entity';
+import { Currency } from '../currency/currency.entity';
+import { Countrie } from '../countries/countrie.entity';
+
+@Entity('skiper_wallet')
+export class SkiperWallet {
+
+    @PrimaryGeneratedColumn() id: number;
+
+    @Column({ nullable: false }) iduser: number;
+
+    @Column('double', { nullable: false }) amount: number;
+
+    @Column({ nullable: false }) idcurrency: number;
+
+    @Column({ nullable: false }) idcountry: number;
+
+    @Column('datetime', { nullable: false }) date_in: Date;
+
+    @ManyToOne(type => User, { nullable: false })
+    @JoinColumn({ name: 'iduser' }) userID: User;
+
+    @ManyToOne(type => Currency, { nullable: false })
+    @JoinColumn({ name: 'idcurrency' }) currencyID: Currency;
+
+    @ManyToOne(type => Countrie, { nullable: false })
+    @JoinColumn({ name: 'idcountry' }) countryID: Countrie;
+
+}
