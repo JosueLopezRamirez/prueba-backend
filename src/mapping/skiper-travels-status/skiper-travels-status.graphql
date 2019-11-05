@@ -1,13 +1,17 @@
 input SkiperTravelsStatusInput {
     id: Int
-    name: String
-    indicator: String
+    name: String!
+    indicator: String!
+    prevstatus: Int!
+    errorstatusprev: String!
 }
 
 type SkiperTravelsStatusDto {
     id: Int
     name: String
     indicator: String
+    prevstatus: Int
+    errorstatusprev: String
 }
 
 type Query {
