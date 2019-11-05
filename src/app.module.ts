@@ -109,7 +109,7 @@ import { CategoryLevelModule } from './mapping/category-level/category-level.mod
       // dropSchema: true
     }),
     MulterModule.register({
-      dest: './uploads'
+      dest: '../dist/uploads'
     }),
     GraphQLModule.forRoot({
       // autoSchemaFile: './schema.gql',
