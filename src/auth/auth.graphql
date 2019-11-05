@@ -31,6 +31,7 @@ type SignInOk {
   country: countrieDto
   commerce: CommerceDto
   vehicle: SkiperVehicleDto
+  active_city: Boolean
 }
 
 input twilioDto {

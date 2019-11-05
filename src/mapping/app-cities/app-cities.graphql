@@ -1,4 +1,4 @@
-type AppsDto {
+type AppCitiesDto {
     idapp: Int
     idcities: Int
     apps: AppsDto

@@ -38,7 +38,8 @@ export class AuthService {
             if (!bcrypt.compareSync(sign.password, result.password)) {
                 return new SignResponse(null, new ErrorResponse('The email or password is incorrect', 400, false));
             }
-            let co, ve; //Definimos la variable commercio
+            let co, ve;
+            let active_city = false;
             try {
                 let agent = await this.agentService.getByUser(result);
                 if (agent == undefined) {
@@ -49,10 +50,13 @@ export class AuthService {
                     co = await this.commerceByQueryBuilder(result);
                     ve = await this.vehicleByQueryBuilder(result);
                 }
+                if (await this.validateUserInActiveCity(result.id) !== undefined) {
+                    active_city = true;
+                }
                 return new SignResponse(new SignInOk(
                     await this.tokenGenerated(result), result.firstname,
                     result.lastname, result.user,
-                    result.email, result.phone, result.avatar, result.country, co, ve
+                    result.email, result.phone, result.avatar, result.country, co, ve, active_city
                 ), null);
             } catch (error) {
                 console.log(error)
@@ -204,5 +208,13 @@ export class AuthService {
             .where("User.id = :userId", { userId: result.id })
             .getOne();
         return ve;
+    }
+
+    private async validateUserInActiveCity(iduser: number) {
+        return await createQueryBuilder("User")
+            .leftJoin("User.city", "Cities")
+            .leftJoin("Cities.appCities", "AppCities")
+            .where("User.id = :iduser", { iduser })
+            .getOne();
     }
 }

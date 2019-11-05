@@ -14,7 +14,7 @@ export class signInDto {
 @ObjectType()
 export class SignInOk {
 
-    constructor(token,firstname,lastname,username,email,phone_number,avatar,country,commerce?,vehicle?){
+    constructor(token,firstname,lastname,username,email,phone_number,avatar,country,commerce?,vehicle?,active_city?){
         this.token = token;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -25,6 +25,7 @@ export class SignInOk {
         this.country = country || null;
         this.commerce = commerce || null;
         this.vehicle = vehicle || null;
+        this.active_city = active_city || false;
     }
 
     token: string
@@ -37,6 +38,7 @@ export class SignInOk {
     country: countrieDto
     commerce: CommerceDto
     vehicle: SkiperVehicleDto
+    active_city: boolean;
 }
 
 @ObjectType()
