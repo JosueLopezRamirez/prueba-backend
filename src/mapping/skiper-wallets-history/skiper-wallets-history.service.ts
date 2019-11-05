@@ -35,6 +35,7 @@ export class SkiperWalletsHistoryService {
                 result.date_in = input.date_in;
                 result.idcurrency = input.idcurrency;
                 result.idpayment_methods = input.idpayment_methods;
+                result.description = input.description;
                 result.idskiperwallet = input.idskiperwallet;
                 result.idtransactiontype = input.idtransactiontype;
                 return await this.repository.save(result);
@@ -50,6 +51,7 @@ export class SkiperWalletsHistoryService {
         skiperwallethistory.date_in = input.date_in;
         skiperwallethistory.idcurrency = input.idcurrency;
         skiperwallethistory.idpayment_methods = input.idpayment_methods;
+        skiperwallethistory.description = input.description;
         skiperwallethistory.idskiperwallet = input.idskiperwallet;
         skiperwallethistory.idtransactiontype = input.idtransactiontype;
         return skiperwallethistory;

@@ -17,6 +17,8 @@ export class SkiperWalletsHistory {
 
     @Column({ nullable: false }) idpayment_methods: number;
 
+    @Column('longtext', { nullable: true }) description: string;
+
     @Column({ nullable: false }) date_in: Date;
 
     @Column({ nullable: false }) idcurrency: number;

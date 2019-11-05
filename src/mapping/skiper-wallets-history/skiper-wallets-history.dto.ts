@@ -11,6 +11,7 @@ export class SkiperWalletsHistoryInput {
     idtransactiontype: number;
     amount: number;
     idpayment_methods: number;
+    description: string;
     date_in: Date;
     idcurrency: number;
 }
@@ -22,6 +23,7 @@ export class SkiperWalletsHistoryDto {
     transactiontype: TransactionTypeDto;
     amount: number;
     paymentmethod: PaymentMethodDto;
+    description: string;
     date_in: Date;
     currency: CurrencyDto;
 }
