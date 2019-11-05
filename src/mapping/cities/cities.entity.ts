@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMan
 import { Countrie } from "../countries/countrie.entity";
 import { Max, Length } from "class-validator";
 import { User } from "../users/user.entity";
+import { AppCities } from "../app-cities/app-cities.entity";
 
 @Entity('cities')
 export class Cities {
@@ -17,4 +18,7 @@ export class Cities {
 
     @OneToMany(type => User, x => x.city)
     users: User[];
+
+    @OneToMany(type => AppCities, x => x.cities)
+    appCities: AppCities[];
 }

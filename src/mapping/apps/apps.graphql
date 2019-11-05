@@ -8,6 +8,7 @@ type AppsDto {
     id: Int!
     name: String
     description: String
+    appCities: [AppCitiesDto]
 }
 
 type Query {
