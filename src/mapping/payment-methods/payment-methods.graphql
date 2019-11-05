@@ -1,11 +1,13 @@
 input PaymentMethodInput {
     id: Int
     name:String
+    pay_commissions:Boolean
 }
 
 type PaymentMethodDto {
     id: Int
     name:String
+    pay_commissions:Boolean
 }
 
 type Query {
