@@ -1,21 +1,21 @@
 input skiperWalletsHistoryInput {
-    id: Int;
-    idskiperwallet: Int;
-    idtransactiontype: Int;
-    amount: Float;
-    idpayment_methods: Int;
-    date_in: DateTime;
-    idcurrency: Int;
+    id: Int
+    idskiperwallet: Int
+    idtransactiontype: Int
+    amount: Float
+    idpayment_methods: Int
+    date_in: DateTime
+    idcurrency: Int
 }
 
 type SkiperWalletsHistoryDto {
-    id: Int;
-    skiperwallet: SkiperWalletDto;
-    transactiontype: TransactionTypeDto;
-    amount: Float;
-    paymentmethod: PaymentMethodsDto;
-    date_in: DateTime;
-    currency: CurrencyDto;
+    id: Int
+    skiperwallet: SkiperWalletDto
+    transactiontype: TransactionTypeDto
+    amount: Float
+    paymentmethod: PaymentMethodDto
+    date_in: DateTime
+    currency: CurrencyDto
 }
 
 type Query {

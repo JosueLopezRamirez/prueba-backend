@@ -1,7 +1,7 @@
 import { InputType, ObjectType } from "type-graphql";
 import { SkiperWalletDto } from '../skiper-wallet/skiper-wallet.dto';
 import { TransactionTypeDto } from '../transaction-type/transaction-type.dto';
-import { PaymentMethodsDto } from '../payment-methods/payment-methods.dto';
+import { PaymentMethodDto } from '../payment-methods/payment-methods.dto';
 import { CurrencyDto } from '../currency/currency.dto';
 
 @InputType()
@@ -21,7 +21,7 @@ export class SkiperWalletsHistoryDto {
     skiperwallet: SkiperWalletDto;
     transactiontype: TransactionTypeDto;
     amount: number;
-    paymentmethod: PaymentMethodsDto;
+    paymentmethod: PaymentMethodDto;
     date_in: Date;
     currency: CurrencyDto;
 }

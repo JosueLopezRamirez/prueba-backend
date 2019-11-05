@@ -4,12 +4,11 @@ import { SkiperWalletResolver } from './skiper-wallet.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SkiperWallet } from './skiper-wallet.entity';
 
-
 @Module({
-  imports:[
+  imports: [
     TypeOrmModule.forFeature([SkiperWallet])
   ],
   providers: [SkiperWalletService, SkiperWalletResolver],
-  exports:[SkiperWalletService]
+  exports: [SkiperWalletService]
 })
-export class SkiperWalletModule {}
+export class SkiperWalletModule { }

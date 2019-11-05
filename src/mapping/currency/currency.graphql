@@ -9,6 +9,6 @@ type CurrencyDto {
 }
 
 type Query {
-    skiperwallets: [CurrencyDto!]!
+    currency: [CurrencyDto!]!
     searchcurrency(id:Int): CurrencyDto
 }

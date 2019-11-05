@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PaymentMethods } from './payment-methods.entity';
 import { Repository } from 'typeorm';
-import { PaymentMethodsInput } from './payment-methods.dto';
+import { PaymentMethodInput } from './payment-methods.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 
 
@@ -20,7 +20,7 @@ export class PaymentMethodsService {
         return await this.respository.findOneOrFail({ where: { id } });
     }
 
-    async registerPaymentMethod(input: PaymentMethodsInput) {
+    async registerPaymentMethod(input: PaymentMethodInput) {
         try {
             let respt = this.parsePaymentMethods(input);
             return await this.respository.save(respt);
@@ -29,7 +29,7 @@ export class PaymentMethodsService {
         }
     }
 
-    async updatePaymentMethod(input: PaymentMethodsInput) {
+    async updatePaymentMethod(input: PaymentMethodInput) {
         try {
             let respt = await this.getById(input.id);
             if (respt) {
@@ -42,7 +42,7 @@ export class PaymentMethodsService {
         }
     }
 
-    private parsePaymentMethods(input: PaymentMethodsInput): PaymentMethods {
+    private parsePaymentMethods(input: PaymentMethodInput): PaymentMethods {
         let paymentmethods: PaymentMethods = new PaymentMethods();
         paymentmethods.name = input.name;
         return paymentmethods;

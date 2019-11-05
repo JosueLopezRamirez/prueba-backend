@@ -17,7 +17,7 @@ type SkiperWalletDto {
 }
 
 type Query {
-    skiperwallets: [SkiperWalletDto]!
+    skiperwallets: [SkiperWalletDto!]!
     searchSkiperWallet(id:Int):SkiperWalletDto
 }
 type Mutation {

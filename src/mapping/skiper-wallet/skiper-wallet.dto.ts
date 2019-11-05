@@ -1,6 +1,6 @@
 import { InputType, ObjectType } from 'type-graphql';
 import { UserDto } from '../users/user.dto';
-import { CurrencyDto, CurrencyInput } from '../currency/currency.dto';
+import { CurrencyDto } from '../currency/currency.dto';
 import { countrieDto } from '../countries/countrie.dto';
 
 @InputType()

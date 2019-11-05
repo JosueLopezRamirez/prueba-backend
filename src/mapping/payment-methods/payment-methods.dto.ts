@@ -1,13 +1,13 @@
 import { InputType, ObjectType } from "type-graphql";
 
 @InputType()
-export class PaymentMethodsInput {
+export class PaymentMethodInput {
     id: number;
-    name:string;
+    name: string;
 }
 
 @ObjectType()
-export class PaymentMethodsDto {
+export class PaymentMethodDto {
     id: number;
-    name:string;
+    name: string;
 }
