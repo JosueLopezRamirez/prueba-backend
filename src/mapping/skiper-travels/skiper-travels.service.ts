@@ -10,6 +10,7 @@ import momentTimeZone from 'moment-timezone';
 import { UserService } from '../users/user.service';
 import { SkiperVehicle } from '../skiper-vehicle/skiper-vehicle.entity';
 import geotz from 'geo-tz';
+import { error } from 'util';
 
 @Injectable()
 export class SkiperTravelsService {
@@ -31,6 +32,13 @@ export class SkiperTravelsService {
                 HttpStatus.BAD_REQUEST
             )
         }
+    }
+
+    async getTravelPayment(id: number): Promise<any>{
+        return await this.repository.findOneOrFail({
+            select: ["total"],
+            where: { id }
+        });
     }
 
     private timeToDecimal(t) {
@@ -105,6 +113,7 @@ export class SkiperTravelsService {
 
             await getManager().transaction(async transactionalEntityManager => {
                 viaje = this.parseSkiperTravel(inputviaje)
+                console.log(viaje)
                 var viajeregistrado = await transactionalEntityManager.save(viaje)
                 let travelstracing = new SkiperTravelsTracing();
                 travelstracing.datetracing = fecha;
@@ -255,6 +264,8 @@ export class SkiperTravelsService {
         let skipertravel: SkiperTravels = new SkiperTravels();
         skipertravel.idusers = input.idusers;
         skipertravel.iddriver = input.iddriver;
+        skipertravel.idcurrency = input.idcurrency;
+        skipertravel.idpayment_methods = input.idpayment_methods;
         skipertravel.lat_initial = input.lat_initial;
         skipertravel.lng_initial = input.lng_initial;
         skipertravel.lat_final_seggested = input.lat_final_seggested;
@@ -268,6 +279,7 @@ export class SkiperTravelsService {
         skipertravel.address_final = input.address_final;
         skipertravel.address_suggested = input.address_suggested;
         skipertravel.duration = input.time
+        console.log(skipertravel)
         return skipertravel;
     }
 }

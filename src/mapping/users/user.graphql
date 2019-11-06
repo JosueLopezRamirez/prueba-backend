@@ -69,4 +69,5 @@ type Query {
   searchUser(id: ID!): UserDto
   GetUserWallets(id: Int!): UserDto!
   searchUsersBySponsorId(id:Int):[UserDto!]!
+  searchUserByEmail(email: String!): UserDto
 }

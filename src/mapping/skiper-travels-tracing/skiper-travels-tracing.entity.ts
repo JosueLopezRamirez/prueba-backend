@@ -1,6 +1,7 @@
 import { PrimaryGeneratedColumn, Column, Entity, ManyToOne, JoinColumn } from 'typeorm';
 import {SkiperTravels} from '../skiper-travels/skiper-travels.entity';
 import {SkiperTravelsStatus} from '../skiper-travels-status/skiper-travels-status.entity';
+import { Currency } from '../currency/currency.entity';
 
 
 @Entity('skiper_travels_tracing')

@@ -23,6 +23,11 @@ export class UserResolver {
     }
 
     @Query()
+    searchUserByEmail(@Args('email') email: string) {
+        return this.userService.findByEmail(email);
+    }
+
+    @Query()
     searchUsersBySponsorId(@Args('id', ParseIntPipe) id: number) {
         return this.userService.findBySponsorId(id);
     }
