@@ -27,6 +27,11 @@ export class UserResolver {
         return this.userService.findBySponsorId(id);
     }
 
+    @Query()
+    GetUserWallets(@Args('id', ParseIntPipe) id: number){
+        return this.userService.GetUserWallets(id)
+    }
+
     @Mutation()
     async createUser(@Args('input') input: UserInput) {
         try {

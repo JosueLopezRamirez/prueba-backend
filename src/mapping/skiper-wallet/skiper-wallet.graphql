@@ -9,11 +9,11 @@ input skiperWalletInput {
 
 type SkiperWalletDto {
     id: Int
-    user: UserDto!
     amount: Int!
-    currency: CurrencyDto!
-    country: countrieDto!
     date_in: DateTime!
+    userID: UserDto!
+    currencyID: CurrencyDto!
+    countryID: countrieDto!
 }
 
 type Query {
