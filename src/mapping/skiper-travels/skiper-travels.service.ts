@@ -179,7 +179,7 @@ export class SkiperTravelsService {
                 }, "d", "SkiperTravelsTracing.idtravel = d.idtravel and SkiperTravelsTracing.datetracing = d.fecha")
                 .innerJoinAndSelect("SkiperTravelsTracing.travelstatus", "SkiperTravelsStatus")
                 .where("SkiperAgent.id = :idagent", { idagent })
-                .andWhere("SkiperTravelsTracing.idtravelstatus IN (:idstatus)", { idstatus: [1, 3, 4, 5, 6] })
+                .andWhere("SkiperTravelsTracing.idtravelstatus IN (:idstatus)", { idstatus: [1, 3, 4, 5, 6, 7] })
                 .getOne();
             return result;
         } catch (error) {
@@ -208,7 +208,7 @@ export class SkiperTravelsService {
                 }, "d", "SkiperTravelsTracing.idtravel = d.idtravel and SkiperTravelsTracing.datetracing = d.fecha")
                 .innerJoinAndSelect("SkiperTravelsTracing.travelstatus", "SkiperTravelsStatus")
                 .where("User.id = :iduser", { iduser })
-                .andWhere("SkiperTravelsTracing.idtravelstatus IN (:idstatus)", { idstatus: [1, 3, 4, 5, 6] })
+                .andWhere("SkiperTravelsTracing.idtravelstatus IN (:idstatus)", { idstatus: [1, 3, 4, 5, 6, 7] })
                 .getOne()
                 .then(item => (item == undefined) ? null : item);
             return result;
