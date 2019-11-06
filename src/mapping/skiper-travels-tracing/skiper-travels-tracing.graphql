@@ -1,6 +1,6 @@
 input SkiperTravelsTracingInput {
     idtravel: Int!
-    idtravelstatus: Int!
+    idtravelstatus: String!
     lat: Float!
     lng: Float!
     fecha: DateTime

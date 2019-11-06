@@ -4,6 +4,8 @@ input SkiperTravelsStatusInput {
     indicator: String!
     prevstatus: Int!
     errorstatusprev: String!
+    codigo: String!
+    bgenerafactura: Boolean!
 }
 
 type SkiperTravelsStatusDto {
@@ -12,6 +14,8 @@ type SkiperTravelsStatusDto {
     indicator: String
     prevstatus: Int
     errorstatusprev: String
+    codigo: String
+    bgenerafactura: Boolean
 }
 
 type Query {

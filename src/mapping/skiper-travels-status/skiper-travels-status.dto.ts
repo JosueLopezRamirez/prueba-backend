@@ -7,6 +7,8 @@ export class SkiperTravelsStatusInput {
     indicator: string;
     prevstatus: number;
     errorstatusprev: string;
+    codigo: string;
+    bgenerafactura: boolean;
 }
 
 @ObjectType()
@@ -16,4 +18,6 @@ export class SkiperTravelsStatusDto {
     indicator: string;
     prevstatus: number;
     errorstatusprev: string;
+    codigo: string;
+    bgenerafactura: boolean;
 }

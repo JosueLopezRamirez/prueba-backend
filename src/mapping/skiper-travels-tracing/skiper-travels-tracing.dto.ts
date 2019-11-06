@@ -5,7 +5,7 @@ import {SkiperTravelsStatusDto} from '../skiper-travels-status/skiper-travels-st
 @InputType()
 export class SkiperTravelsTracingInput {
     idtravel: number;
-    idtravelstatus: number;
+    idtravelstatus: string;
     lat: number;
     lng: number;
     fecha: Date;
