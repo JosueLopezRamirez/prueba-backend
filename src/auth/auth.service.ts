@@ -56,7 +56,8 @@ export class AuthService {
                 return new SignResponse(new SignInOk(
                     await this.tokenGenerated(result), result.firstname,
                     result.lastname, result.user,
-                    result.email, result.phone, result.avatar, result.country, co, ve, active_city
+                    result.email, result.phone, result.avatar, result.country, co, ve, active_city, 
+                    result.city
                 ), null);
             } catch (error) {
                 console.log(error)
