@@ -65,12 +65,19 @@ export class UserService {
     }
 
     async findByEmail(email: string): Promise<User> {
-        return await this.userRepository.findOne({
-            relations: ["country", "city", "civilStatus"],
-            where: {
-                email: email
-            }
-        });
+        // return await this.userRepository.findOne({
+        //     relations: ["country", "city", "civilStatus"],
+        //     where: {
+        //         email: email
+        //     }
+        // });
+
+        return await this.userRepository.createQueryBuilder("User")
+            .leftJoinAndSelect("User.country", "Countrie")
+            .leftJoinAndSelect("User.city", "Cities")
+            .leftJoinAndSelect("User.civilStatus", "CivilStatus")
+            .where("User.email = :email", { email })
+            .getOne();
     }
 
     async create(input: UserInput) {

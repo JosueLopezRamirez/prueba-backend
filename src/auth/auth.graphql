@@ -29,6 +29,7 @@ type SignInOk {
   phone_number: String
   avatar: String
   country: countrieDto
+  city: citiesDto
   commerce: CommerceDto
   vehicle: SkiperVehicleDto
   active_city: Boolean
