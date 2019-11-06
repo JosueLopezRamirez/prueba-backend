@@ -1,6 +1,7 @@
 import { ObjectType, InputType } from 'type-graphql';
 import { SkiperTravelsDto } from '../skiper-travels/skiper-travels.dto';
 import {SkiperTravelsStatusDto} from '../skiper-travels-status/skiper-travels-status.dto';
+import { CurrencyDto } from '../currency/currency.dto';
 
 @InputType()
 export class SkiperTravelsTracingInput {

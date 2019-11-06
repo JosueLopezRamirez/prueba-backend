@@ -16,9 +16,9 @@ export class SkiperWalletInput {
 @ObjectType()
 export class SkiperWalletDto {
     id: number;
-    iduser: UserDto;
     amount: number;
-    idcurrency: CurrencyDto;
-    idcountry: countrieDto;
+    user: UserDto;
+    currency: CurrencyDto;
+    country: countrieDto;
     date_in: Date;
 }

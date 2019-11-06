@@ -10,6 +10,7 @@ import momentTimeZone from 'moment-timezone';
 import { UserService } from '../users/user.service';
 import { SkiperVehicle } from '../skiper-vehicle/skiper-vehicle.entity';
 import geotz from 'geo-tz';
+import { error } from 'util';
 
 @Injectable()
 export class SkiperTravelsService {
@@ -31,6 +32,13 @@ export class SkiperTravelsService {
                 HttpStatus.BAD_REQUEST
             )
         }
+    }
+
+    async getTravelPayment(id: number): Promise<any>{
+        return await this.repository.findOneOrFail({
+            select: ["total"],
+            where: { id }
+        });
     }
 
     private timeToDecimal(t) {
@@ -255,6 +263,7 @@ export class SkiperTravelsService {
         let skipertravel: SkiperTravels = new SkiperTravels();
         skipertravel.idusers = input.idusers;
         skipertravel.iddriver = input.iddriver;
+        skipertravel.idcurrency = input.idcurrency;
         skipertravel.lat_initial = input.lat_initial;
         skipertravel.lng_initial = input.lng_initial;
         skipertravel.lat_final_seggested = input.lat_final_seggested;

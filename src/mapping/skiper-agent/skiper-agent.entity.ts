@@ -4,6 +4,7 @@ import { CategoryAgent } from "../category-agent/categoty-agent.entity";
 import { User } from "../users/user.entity";
 import { SkiperVehicleAgent } from "../skiper-vehicle-agent/skiper-vehicle-agent.entity";
 import { SkiperCommerce } from "../skiper-commerce/skiper-commerce.entity";
+import { SkiperTravels } from "../skiper-travels/skiper-travels.entity";
 
 @Entity()
 export class SkiperAgent {
@@ -36,5 +37,8 @@ export class SkiperAgent {
 
     @OneToMany(type => SkiperCommerce, x => x.skiperAgent)
     skiperCommerce: SkiperCommerce[];
+
+    @OneToMany(type => SkiperTravels, x => x.skiperagent)
+    skiperTravel: SkiperTravels[];
 
 }

@@ -3,12 +3,14 @@ import { UserDto } from '../users/user.dto';
 import { SkiperAgentDto } from '../skiper-agent/skiper-agent.dto';
 import { SkiperTravelsTracingDto } from '../skiper-travels-tracing/skiper-travels-tracing.dto';
 import { SkiperTariffsDto } from '../skiper-tariffs/skiper-tariffs.dto';
+import { CurrencyDto } from '../currency/currency.dto';
 
 @InputType()
 export class SkiperTravelsInput {
     id: number;
     idusers: number;
     iddriver: number;
+    idcurrency: number;
     lat_initial: number;
     lng_initial: number;
     lat_final_seggested: number;
@@ -44,6 +46,7 @@ export class SkiperTravelsDto {
     users: UserDto;
     skiperagent: SkiperAgentDto;
     skiperTravelsTracing: SkiperTravelsTracingDto;
+    currency: CurrencyDto;
 }
 
 @ObjectType()
