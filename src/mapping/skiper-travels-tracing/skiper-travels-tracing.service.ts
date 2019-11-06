@@ -84,7 +84,7 @@ export class SkiperTravelsTracingService {
             result.travel = await this.skiperTravelsService.getById(skiper_travel_tracing.idtravel);
             return result;
         }
-
+    }
     //de momento se comenta este funcionalidad
     // async updateSkiperTravelsTracing(input: SkiperTravelsTracingInput): Promise<SkiperTravelsTracing> {
     //     try{
