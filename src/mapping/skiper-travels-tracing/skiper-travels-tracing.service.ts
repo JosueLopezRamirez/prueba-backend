@@ -10,6 +10,8 @@ import { SkiperTravelsService } from '../skiper-travels/skiper-travels.service';
 import { SkiperTravels } from '../skiper-travels/skiper-travels.entity';
 import { User } from '../users/user.entity';
 import { SkiperWallet } from '../skiper-wallet/skiper-wallet.entity';
+import { SkiperWalletsHistory } from '../skiper-wallets-history/skiper-wallets-history.entity';
+import { TransactionType } from '../transaction-type/transaction-type.entity';
 
 @Injectable()
 export class SkiperTravelsTracingService {
@@ -73,7 +75,7 @@ export class SkiperTravelsTracingService {
         var fecha = momentTimeZone().tz(zonahoraria.toString()).format("YYYY-MM-DD HH:mm:ss")
         input.fecha = fecha;
         let skiper_travel_tracing = this.parseSkiperTravelTracing(input, estado.id);
-        if (estado.codigo == 'COBRADO') {
+        if (estado.bgenerafactura) {
             result = await this.transactionPayment(skiper_travel_tracing, travel);
             result.travel = await this.skiperTravelsService.getById(skiper_travel_tracing.idtravel);
             result.travelstatus = await this.skiperTravelsStatusService.getById(result.idtravelstatus);
@@ -84,22 +86,7 @@ export class SkiperTravelsTracingService {
             result.travel = await this.skiperTravelsService.getById(skiper_travel_tracing.idtravel);
             return result;
         }
-
-    //de momento se comenta este funcionalidad
-    // async updateSkiperTravelsTracing(input: SkiperTravelsTracingInput): Promise<SkiperTravelsTracing> {
-    //     try{
-    //         let skipertraveltracing = await this.getById(input.id);
-    //         skipertraveltracing.idtravel = input.idtravel;
-    //         skipertraveltracing.idtravelstatus = input.idtravelstatus;
-    //         skipertraveltracing.datetracing = input.datetracing;
-    //         return this.repository.save(skipertraveltracing);
-    //     } catch (error) {
-    //         throw new HttpException(
-    //             error,
-    //             HttpStatus.BAD_REQUEST,
-    //         );
-    //     }
-    // }
+    }
 
     private parseSkiperTravelTracing(input: SkiperTravelsTracingInput, idtravelstatus: number): SkiperTravelsTracing {
         let skipertravelstracing: SkiperTravelsTracing = new SkiperTravelsTracing();
@@ -144,13 +131,19 @@ export class SkiperTravelsTracingService {
         try {
             let user = await this.getUserDatafromDriver(travel.iddriver);
             let wallet = await this.getWalletFromDriver(user.id, travel.idcurrency);
-            console.log(wallet);
-            wallet.amount = wallet.amount - travel.total;
-            console.log(wallet.amount);
-
-            //Comentado para que no guarde nada la transaccion
-            // await queryRunner.manager.save(wallet);
-            // result = await queryRunner.manager.save(travel_tracing);
+            let transactiontype = await this.getTransactionType("CREDITO X VIAJE");
+            wallet.amount = wallet.amount + (travel.total * transactiontype.sign );
+            let walletHistory = new SkiperWalletsHistory();
+            walletHistory.idskiperwallet = wallet.id;
+            walletHistory.idtransactiontype = transactiontype.id;
+            walletHistory.amount = travel.total;
+            walletHistory.idpayment_methods = travel.idpayment_methods;
+            walletHistory.description = `Deduccion por el viaje ${travel.id}`;
+            walletHistory.date_in = new Date();
+            walletHistory.idcurrency = travel.idcurrency;
+            await queryRunner.manager.save(wallet);
+            await queryRunner.manager.save(walletHistory);
+            result = await queryRunner.manager.save(travel_tracing);
             await queryRunner.commitTransaction();
         } catch (error) {
             console.log(error);
@@ -168,18 +161,24 @@ export class SkiperTravelsTracingService {
         where st.iddriver = 28; 28 es el iddriver
     */
 
-    private async getUserDatafromDriver(iddriver: number): Promise<any> {
-        return await createQueryBuilder("User")
+    private async getUserDatafromDriver(iddriver: number): Promise<User> {
+        return await createQueryBuilder(User, "User")
             .leftJoin("User.skiperAgent", "SkiperAgent")
             .leftJoin("SkiperAgent.skiperTravel", "SkiperTravels")
             .where("SkiperTravels.iddriver = :iddriver", { iddriver })
             .getOne();
     }
 
-    private async getWalletFromDriver(iduser: number, idcurrency: number): Promise<any> {
-        return await createQueryBuilder("SkiperWallet")
+    private async getWalletFromDriver(iduser: number, idcurrency: number): Promise<SkiperWallet> {
+        return await createQueryBuilder(SkiperWallet,"SkiperWallet")
             .where("SkiperWallet.iduser = :iduser", { iduser })
             .andWhere("SkiperWallet.idcurrency = :idcurrency", { idcurrency })
+            .getOne();
+    }
+
+    private async getTransactionType(name: string): Promise<TransactionType> {
+        return await createQueryBuilder(TransactionType, "TransactionType")
+            .where("TransactionType.name = :name", { name })
             .getOne();
     }
 }
