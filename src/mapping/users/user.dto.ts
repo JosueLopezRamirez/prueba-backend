@@ -3,6 +3,7 @@ import { citiesDto } from "../cities/cities.dto";
 import { countrieDto } from "../countries/countrie.dto";
 import { UserCivilStatusDto } from "../user-civil-status/user-civil-status.dto";
 import { SkiperAgentDto } from "../skiper-agent/skiper-agent.dto";
+import { SkiperWalletDto } from "../skiper-wallet/skiper-wallet.dto";
 
 @InputType()
 export class UserInput {
@@ -62,4 +63,5 @@ export class UserDto {
     country: countrieDto;
     civilStatus: UserCivilStatusDto;
     skiperAgent: SkiperAgentDto[]
+    skiperWallet: SkiperWalletDto[]
 }
