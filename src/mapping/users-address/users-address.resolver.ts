@@ -17,6 +17,11 @@ export class UsersAddressResolver {
         return this.service.getById(id);
     }
 
+    @Query()
+    getUsersAddressByUser(@Args('iduser') iduser: number) {
+        return this.service.getByIdUser(iduser);
+    }
+
     @Mutation()
     registerUsersAddress(@Args('input') input: UsersAddressInput) {
         return this.service.create(input);

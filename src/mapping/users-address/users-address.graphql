@@ -27,6 +27,7 @@ type UsersAddressDto {
 type Query {
     getAllUsersAddress: [UsersAddressDto!]!
     getUsersAddressById(id:Int!): UsersAddressDto
+    getUsersAddressByUser(iduser:Int!): [UsersAddressDto]
 }
 
 type Mutation {
