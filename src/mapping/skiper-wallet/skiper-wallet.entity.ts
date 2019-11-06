@@ -19,12 +19,12 @@ export class SkiperWallet {
     @Column('datetime', { nullable: false }) date_in: Date;
 
     @ManyToOne(type => User, { nullable: false })
-    @JoinColumn({ name: 'iduser' }) user: User;
+    @JoinColumn({ name: 'iduser' }) userID: User;
 
     @ManyToOne(type => Currency, { nullable: false })
-    @JoinColumn({ name: 'idcurrency' }) currency: Currency;
+    @JoinColumn({ name: 'idcurrency' }) currencyID: Currency;
 
     @ManyToOne(type => Countrie, { nullable: false })
-    @JoinColumn({ name: 'idcountry' }) country: Countrie;
+    @JoinColumn({ name: 'idcountry' }) countryID: Countrie;
 
 }
