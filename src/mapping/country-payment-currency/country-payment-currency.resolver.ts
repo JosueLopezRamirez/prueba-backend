@@ -1,4 +1,22 @@
-import { Resolver } from '@nestjs/graphql';
+import { Resolver, Query, Args } from '@nestjs/graphql';
+import { CountryPaymentCurrencyService } from './country-payment-currency.service';
+import { ParseIntPipe } from '@nestjs/common';
+
 
 @Resolver('CountryPaymentCurrency')
-export class CountryPaymentCurrencyResolver {}
+export class CountryPaymentCurrencyResolver {
+    constructor(
+        private readonly countrypaymentcurrencyservice: CountryPaymentCurrencyService
+    ) { }
+
+    @Query('countrypaymentcurrency')
+    async countrypaymentcurrency() {
+        return this.countrypaymentcurrencyservice.getAll();
+    }
+
+    @Query()
+    async searchcountrypaymentcurrency(@Args('id') id: number) {
+        return this.countrypaymentcurrencyservice.getById(id);
+    }
+
+}
