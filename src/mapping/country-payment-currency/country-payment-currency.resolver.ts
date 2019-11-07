@@ -15,7 +15,7 @@ export class CountryPaymentCurrencyResolver {
     }
 
     @Query()
-    async searchcountrypaymentcurrency(@Args('id') id: number) {
+    async searchcountrypaymentcurrency(@Args('id', ParseIntPipe) id: number) {
         return this.countrypaymentcurrencyservice.getById(id);
     }
 
