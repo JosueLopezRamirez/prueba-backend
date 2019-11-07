@@ -41,8 +41,8 @@ export class SkiperTravelsTracingService {
     }
 
     async registerTravelsTracing(input: SkiperTravelsTracingInput): Promise<SkiperTravelsTracing> {
-        let verifyCode = await this.verifyStatusByCode(input.idtravelstatus);
-        if (verifyCode) {
+        let verifyStatus = await this.verifyStatusByCode(input.idtravelstatus);
+        if (verifyStatus) {
             let result = await this.verifyTravelTracing(input.idtravel, input.idtravelstatus);
             if (result) {
                 throw new HttpException(
@@ -51,7 +51,6 @@ export class SkiperTravelsTracingService {
                 );
             }
         }
-
         //vamos a validar que el estado exista con el estado previo.
         let estado = await this.skiperTravelsStatusService.getByStatusCode(input.idtravelstatus)
         let travel = await this.skiperTravelsService.GetTravelByID(input.idtravel)
