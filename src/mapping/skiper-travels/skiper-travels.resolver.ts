@@ -22,8 +22,8 @@ export class SkiperTravelsResolver {
     }
 
     @Query()
-    async getTravelsByUserId(@Args('idagent') idagent: number, @Args('idstatus') idstatus: number[]) {
-        return await this.service.GetTravels(idagent, idstatus);
+    async getTravels(@Args('idagent') idagent: number) {
+        return await this.service.GetTravels(idagent);
     }
 
     @Mutation()

@@ -133,14 +133,14 @@ export class SkiperTravelsService {
         }
     }
 
-    async GetTravels(idagent: number, status: number[]): Promise<SkiperTravels[]> {
+    async GetTravels(idagent: number): Promise<SkiperTravels[]> {
 
         try {
             return await this.repository.createQueryBuilder("SkiperTravels")
                 .innerJoinAndSelect("SkiperTravels.users", "User")
                 .innerJoinAndSelect("SkiperTravels.skiperagent", "SkiperAgent", "SkiperAgent.id = :idagent", { idagent })
                 .innerJoinAndSelect("SkiperAgent.user", "AgentUser")
-                .innerJoinAndSelect("SkiperTravels.skiperTravelsTracing", "SkiperTravelsTracing", "SkiperTravelsTracing.travelstatus IN (:idstatus)", { idstatus: status })
+                .innerJoinAndSelect("SkiperTravels.skiperTravelsTracing", "SkiperTravelsTracing")
                 .innerJoinAndSelect(subQuery => {
                     return subQuery
                         .select("SkiperTravelsTracing.idtravel", "idtravel").addSelect("MAX(SkiperTravelsTracing.datetracing)", "fecha")
