@@ -9,7 +9,8 @@ type SkiperAgentDto {
 }
 
 type Query {
-  agents: [SkiperAgentDto!]! 
+  agents: [SkiperAgentDto!]!
+  searchAgentsByUserId(idsponsor: Int!): [UserDto!]! 
 }
 
 type Mutation{

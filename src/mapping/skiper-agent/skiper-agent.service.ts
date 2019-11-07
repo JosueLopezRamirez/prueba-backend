@@ -1,7 +1,7 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SkiperAgent } from './skiper-agent.entity';
-import { Repository } from 'typeorm';
+import { Repository, createQueryBuilder } from 'typeorm';
 import { AgentInput, AgentDriveInput } from './skiper-agent.dto';
 import { UserService } from '../users/user.service';
 import { CategoryAgentService } from '../category-agent/category-agent.service';
@@ -74,19 +74,19 @@ export class SkiperAgentService {
     async ObtenerDriveMasCercano(
         lat: number, lng: number,
         Drives: AgentDriveInput[]): Promise<number> {
-        
+
         //primero vamos a sacar solos los drive que no se encuentren en ningun viaje
         let DriverDisponibles = [];
 
         var x = await Promise.all(
             Drives.map(async item => {
                 var x = await this.skiperTravelsService.getTravelByAgentId(item.iddrive)
-                if(x == undefined)
+                if (x == undefined)
                     DriverDisponibles.push(item)
             })
         )
 
-        if(DriverDisponibles.length == 0)
+        if (DriverDisponibles.length == 0)
             throw new HttpException(
                 "No hay Drivers disponibles",
                 HttpStatus.BAD_REQUEST
@@ -94,8 +94,8 @@ export class SkiperAgentService {
 
         var t = await Promise.all(DriverDisponibles.map(async item => {
             var Distancia = await this.GetDistance(
-            lat.toString() + ',' + lng.toString(),
-            item.lat.toString() + ',' + item.lng.toString())
+                lat.toString() + ',' + lng.toString(),
+                item.lat.toString() + ',' + item.lng.toString())
             item.distancia = Distancia.routes[0].legs[0].distance.value
         }))
 
@@ -135,6 +135,28 @@ export class SkiperAgentService {
                 return await this.agentRepository.save(agentUpdate);
             }
 
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    /*
+        SELECT ref., c., ci.* FROM users u
+        INNER JOIN users ref ON u.id = ref.sponsor_id
+        INNER JOIN countries c ON ref.idcountry = c.id
+        INNER JOIN cities ci ON ref.idcity = ci.id
+        WHERE u.id = 1
+    */
+    async searchAgentsByUserId(iduser: number) {
+        try {
+            let result = await createQueryBuilder("User")
+                .innerJoinAndSelect("User.country", "Country")
+                .innerJoinAndSelect("User.city", "City")
+                .innerJoinAndSelect("User.skiperAgent","SkiperAgent")
+                // .innerJoinAndSelect("SkiperAgent.user", "UserAgent")
+                .innerJoinAndSelect("SkiperAgent.categoryAgent", "CategoryAgent")
+                .where("User.sponsor_id = :iduser", { iduser })
+                .getMany();
+            return result;
         } catch (error) {
             console.log(error)
         }

@@ -16,6 +16,11 @@ export class SkiperAgentResolver {
         return this.agentService.getAll();
     }
 
+    @Query()
+    searchAgentsByUserId(@Args('idsponsor') iduser: number) {
+        return this.agentService.searchAgentsByUserId(iduser);
+    }
+
     @Mutation()
     async ObtenerDriveCercano(@Args('lat') lat: number,
         @Args('lng') lng: number,

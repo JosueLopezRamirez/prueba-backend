@@ -11,20 +11,14 @@ export class SkiperAgent {
 
     @PrimaryGeneratedColumn() id:number;
 
-    @Column('boolean',{nullable:false})
-    @IsNotEmpty()
-    @IsBoolean()
-    state:boolean;
+    @IsNotEmpty() @IsBoolean()
+    @Column('boolean',{nullable:false}) state:boolean;
 
-    @Column('varchar',{nullable:false,length:80})
-    @IsNotEmpty()
-    @IsString()
-    identity:string;
+    @IsNotEmpty() @IsString()
+    @Column('varchar',{nullable:false,length:80}) identity:string;
 
-    @Column('date',{nullable:false})
-    @IsNotEmpty()
-    @IsDate()
-    create_at:Date;
+    @IsNotEmpty() @IsDate()
+    @Column('date',{nullable:false}) create_at:Date;
 
     @ManyToOne(type => CategoryAgent,{nullable:false})
     @JoinColumn({name: 'idcategory_agent'}) categoryAgent:CategoryAgent;
