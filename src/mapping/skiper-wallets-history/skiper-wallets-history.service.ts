@@ -65,18 +65,20 @@ export class SkiperWalletsHistoryService {
             end.setDate(start.getDate() + 1);
             //Haciendo la busqueda
             result = await createQueryBuilder("SkiperWalletsHistory")
-                .select("SUM(SkiperWalletsHistory.amount)", "ganancia")
+                .select("IFNULL(SUM(SkiperWalletsHistory.amount), 0)", "ganancia")
                 .addSelect("COUNT(1)", "viajes")
+                .innerJoin("SkiperWalletsHistory.transactiontype", "TransactionType")
                 .where(`SkiperWalletsHistory.date_in BETWEEN '${start.toISOString()}' AND '${end.toISOString()}'`, { fecha })
                 .andWhere("SkiperWalletsHistory.idskiperwallet = :idwallet", { idwallet })
-                .andWhere("SkiperWalletsHistory.idtransactiontype = 2")
+                .andWhere("TransactionType.name = :tipotransaccion", { tipotransaccion: "CREDITO X VIAJE" })
                 .getRawOne();
         } else {
             result = await createQueryBuilder("SkiperWalletsHistory")
-                .select("SUM(SkiperWalletsHistory.amount)", "ganancia")
+                .select("IFNULL(SUM(SkiperWalletsHistory.amount), 0)", "ganancia")
                 .addSelect("COUNT(1)", "viajes")
+                .innerJoin("SkiperWalletsHistory.transactiontype", "TransactionType")
                 .where("SkiperWalletsHistory.idskiperwallet = :idwallet", { idwallet })
-                .andWhere("SkiperWalletsHistory.idtransactiontype = 2")
+                .andWhere("TransactionType.name = :tipotransaccion", { tipotransaccion: "CREDITO X VIAJE" })
                 .getRawOne();
         }
         return (result === undefined) ? null : result;
