@@ -4,6 +4,8 @@ input skiperWalletInput {
     amount: Int!
     idcurrency: Int!
     idcountry: Int!
+    minimun: Float!
+    bretirar: Boolean!
     date_in: DateTime!
 }
 
@@ -11,6 +13,8 @@ type SkiperWalletDto {
     id: Int
     amount: Int!
     date_in: DateTime!
+    minimun: Float!
+    bretirar: Boolean!
     userID: UserDto!
     currencyID: CurrencyDto!
     countryID: countrieDto!

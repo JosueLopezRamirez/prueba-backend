@@ -1,8 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { SkiperWalletsHistory } from './skiper-wallets-history.entity';
-import { Repository } from 'typeorm';
+import { Repository, createQueryBuilder } from 'typeorm';
 import { SkiperWalletsHistoryInput } from './skiper-wallets-history.dto';
 import { InjectRepository } from '@nestjs/typeorm';
+import geotz from 'geo-tz';
+import momentTimeZone from 'moment-timezone';
+import { stat } from 'fs';
 
 @Injectable()
 export class SkiperWalletsHistoryService {
@@ -43,6 +46,42 @@ export class SkiperWalletsHistoryService {
         } catch (error) {
             console.error(error);
         }
+    }
+
+    /*
+    listando ganancias del dia
+    select sum(swh.amount) ganancia from skiper_wallets_history swh
+    where swh.id = 1;
+    */
+    async getGanaciaDelDia(idwallet: number, lat: number, lng: number, flat: boolean) {
+        let result: any;
+        if (flat) {
+            let zonahoraria = geotz(lat, lng);
+            let fecha = momentTimeZone().tz(zonahoraria.toString()).format("YYYY-MM-DD HH:mm:ss");
+            //Definiendo el intervalo de un dia para otro
+            let start = new Date(fecha);
+            start.setHours(0, 0, 0, 0);
+            let end = new Date(start);
+            end.setDate(start.getDate() + 1);
+            //Haciendo la busqueda
+            result = await createQueryBuilder("SkiperWalletsHistory")
+                .select("IFNULL(SUM(SkiperWalletsHistory.amount), 0)", "ganancia")
+                .addSelect("COUNT(1)", "viajes")
+                .innerJoin("SkiperWalletsHistory.transactiontype", "TransactionType")
+                .where(`SkiperWalletsHistory.date_in BETWEEN '${start.toISOString()}' AND '${end.toISOString()}'`, { fecha })
+                .andWhere("SkiperWalletsHistory.idskiperwallet = :idwallet", { idwallet })
+                .andWhere("TransactionType.name = :tipotransaccion", { tipotransaccion: "CREDITO X VIAJE" })
+                .getRawOne();
+        } else {
+            result = await createQueryBuilder("SkiperWalletsHistory")
+                .select("IFNULL(SUM(SkiperWalletsHistory.amount), 0)", "ganancia")
+                .addSelect("COUNT(1)", "viajes")
+                .innerJoin("SkiperWalletsHistory.transactiontype", "TransactionType")
+                .where("SkiperWalletsHistory.idskiperwallet = :idwallet", { idwallet })
+                .andWhere("TransactionType.name = :tipotransaccion", { tipotransaccion: "CREDITO X VIAJE" })
+                .getRawOne();
+        }
+        return (result === undefined) ? null : result;
     }
 
     private parseSkiperWalletHistory(input: SkiperWalletsHistoryInput): SkiperWalletsHistory {

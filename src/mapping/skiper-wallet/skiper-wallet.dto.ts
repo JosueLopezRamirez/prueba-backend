@@ -10,6 +10,8 @@ export class SkiperWalletInput {
     amount: number;
     idcurrency: number;
     idcountry: number;
+    minimun: number;
+    bretirar: boolean;
     date_in: Date;
 }
 
@@ -17,6 +19,8 @@ export class SkiperWalletInput {
 export class SkiperWalletDto {
     id: number;
     amount: number;
+    minimun: number;
+    bretirar: boolean;
     date_in: Date;
     userID: UserDto;
     currencyID: CurrencyDto;

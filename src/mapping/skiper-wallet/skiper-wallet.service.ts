@@ -12,13 +12,13 @@ export class SkiperWalletService {
     ) { }
 
     async getAll(): Promise<SkiperWallet[]> {
-        return await this.repository.find({ relations: ["user", "currency", "country"] });
+        return await this.repository.find({ relations: ["userID", "currencyID", "countryID"] });
     }
 
     async getById(id: number): Promise<SkiperWallet> {
         return await this.repository.findOne(
             {
-                relations: ["user", "currency", "country"],
+                relations: ["userID", "currencyID", "countryID"],
                 where: { id }
             }
         );
@@ -48,6 +48,10 @@ export class SkiperWalletService {
         } catch (error) {
             console.error(error);
         }
+    }
+
+    async getSaldoHabilitado(idwallet:number){
+        
     }
 
     private parseSkiperWallet(input: SkiperWalletInput): SkiperWallet {

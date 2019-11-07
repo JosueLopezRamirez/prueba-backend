@@ -27,3 +27,9 @@ export class SkiperWalletsHistoryDto {
     date_in: Date;
     currency: CurrencyDto;
 }
+
+@ObjectType()
+export class GananciaDelDia {
+    ganancia: number
+    viajes: number
+}

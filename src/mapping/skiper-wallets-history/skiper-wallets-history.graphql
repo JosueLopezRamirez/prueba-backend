@@ -18,7 +18,13 @@ type SkiperWalletsHistoryDto {
     currency: CurrencyDto
 }
 
+type GananciaDelDia {
+    ganancia: Float
+    viajes: Int
+}
+
 type Query {
     SkiperWalletsHistory: [SkiperWalletsHistoryDto]
-    searchSkiperWalletHistory(id:Int): SkiperWalletsHistoryDto
+    searchSkiperWalletHistory(id: Int!): SkiperWalletsHistoryDto
+    getGanaciaDelDia(idwallet: Int!,lat: Float!,lng: Float!,flat: Boolean): GananciaDelDia
 }
