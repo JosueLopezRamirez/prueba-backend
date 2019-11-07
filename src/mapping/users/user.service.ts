@@ -50,6 +50,16 @@ export class UserService {
         });
     }
 
+    async GetUserWallets(id: number) {
+        let result : any = await createQueryBuilder("User")
+        .innerJoinAndSelect("User.skiperWallet", "SkiperWallet")
+        .innerJoinAndSelect("SkiperWallet.currencyID", "Currency")
+        .innerJoinAndSelect("SkiperWallet.countryID", "Countrie")
+        .where("User.id = :iduser", { iduser: id })
+        .getOne();
+        return result;
+    }
+
     //Usando paginacion para cargar los usuarios
     async userPages(page: number = 1): Promise<User[]> {
         const countries = await this.userRepository.find({

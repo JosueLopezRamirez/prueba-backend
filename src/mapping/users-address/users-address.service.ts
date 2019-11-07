@@ -19,6 +19,17 @@ export class UsersAddressService {
 
     }
 
+    async getByIdUser(iduser: number) {
+        try {
+            return await this.repository.find({
+                relations: ["catplaceuser", "user"],
+                where: { iduser: iduser }
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     async getById(id: number) {
         try {
             let result = await this.repository.findOneOrFail({

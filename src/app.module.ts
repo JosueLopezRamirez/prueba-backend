@@ -56,6 +56,7 @@ import { PaymentMethodsModule } from './mapping/payment-methods/payment-methods.
 import { TransactionTypeModule } from './mapping/transaction-type/transaction-type.module';
 import { UsersCommissionsModule } from './mapping/users-commissions/users-commissions.module';
 import { CategoryLevelModule } from './mapping/category-level/category-level.module';
+import { CountryPaymentCurrencyModule } from './mapping/country-payment-currency/country-payment-currency.module';
 
 @Module({
   imports: [
@@ -151,6 +152,7 @@ import { CategoryLevelModule } from './mapping/category-level/category-level.mod
     SkiperWalletsHistoryModule,
     PaymentMethodsModule,
     TransactionTypeModule,
+    //CountryPaymentCurrencyModule,
   ],
   providers: [AppService, AppResolver],
   controllers: [AppController],
