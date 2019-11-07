@@ -18,6 +18,10 @@ export class SkiperWallet {
 
     @Column('datetime', { nullable: false }) date_in: Date;
 
+    @Column('float', { nullable: false }) minimun: number;
+
+    @Column('boolean', { nullable: false }) bretirar: boolean;
+
     @ManyToOne(type => User, { nullable: false })
     @JoinColumn({ name: 'iduser' }) userID: User;
 

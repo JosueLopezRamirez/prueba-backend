@@ -16,7 +16,6 @@ export class UsersAddressService {
         } catch (error) {
             console.log(error)
         }
-
     }
 
     async getByIdUser(iduser: number) {
@@ -50,7 +49,6 @@ export class UsersAddressService {
         try {
             let result = this.parseUsersAddres(input);
             result = await this.repository.save(result);
-            console.log(result)
             return result;
         } catch (error) {
             console.log(error);

@@ -65,21 +65,19 @@ export class SkiperWalletsHistoryService {
             end.setDate(start.getDate() + 1);
             //Haciendo la busqueda
             result = await createQueryBuilder("SkiperWalletsHistory")
-                .select("SUM(SkiperWalletsHistory.amount)","ganancia")
+                .select("SUM(SkiperWalletsHistory.amount)", "ganancia")
+                .addSelect("COUNT(1)", "viajes")
                 .where(`SkiperWalletsHistory.date_in BETWEEN '${start.toISOString()}' AND '${end.toISOString()}'`, { fecha })
                 .andWhere("SkiperWalletsHistory.idskiperwallet = :idwallet", { idwallet })
+                .andWhere("SkiperWalletsHistory.idtransactiontype = 2")
                 .getRawOne();
-            result = result.ganancia;
         } else {
-            try {
-                result = await createQueryBuilder("SkiperWalletsHistory")
-                    .select("SUM(SkiperWalletsHistory.amount)", "ganancia")
-                    .where("SkiperWalletsHistory.idskiperwallet = :idwallet", { idwallet })
-                    .getRawOne();
-                result = result.ganancia;
-            } catch (error) {
-                console.log(error)
-            }
+            result = await createQueryBuilder("SkiperWalletsHistory")
+                .select("SUM(SkiperWalletsHistory.amount)", "ganancia")
+                .addSelect("COUNT(1)", "viajes")
+                .where("SkiperWalletsHistory.idskiperwallet = :idwallet", { idwallet })
+                .andWhere("SkiperWalletsHistory.idtransactiontype = 2")
+                .getRawOne();
         }
         return (result === undefined) ? null : result;
     }
