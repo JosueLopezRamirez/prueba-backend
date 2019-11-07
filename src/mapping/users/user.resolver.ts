@@ -1,7 +1,7 @@
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { UserInput, UserUpdatePassword, UserUpdateInput } from './user.dto';
-import { ParseIntPipe, UseGuards } from '@nestjs/common';
+import { ParseIntPipe, UseGuards, HttpException, HttpStatus } from '@nestjs/common';
 import { AuthGuard } from '../../shared/auth.guard';
 @Resolver('User')
 export class UserResolver {
@@ -33,17 +33,17 @@ export class UserResolver {
     }
 
     @Query()
-    GetUserWallets(@Args('id', ParseIntPipe) id: number){
+    GetUserWallets(@Args('id', ParseIntPipe) id: number) {
         return this.userService.GetUserWallets(id)
     }
 
     @Mutation()
     async createUser(@Args('input') input: UserInput) {
-        try {
-            let result = await this.userService.create(input);
+        let result = await this.userService.create(input);
+        if (result) {
             return result;
-        } catch (error) {
-            return `Error resolver -> ${error}`
+        } else {
+            return null;
         }
     }
 
@@ -65,7 +65,7 @@ export class UserResolver {
     }
 
     @Mutation()
-    defaultPassword(@Args('id',ParseIntPipe) id: number) {
+    defaultPassword(@Args('id', ParseIntPipe) id: number) {
         return this.userService.defaultPassword(id);
     }
 
