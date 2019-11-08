@@ -7,9 +7,14 @@ import { SkiperWalletInput } from './skiper-wallet.dto';
 export class SkiperWalletResolver {
     constructor(private readonly skiperWalletService: SkiperWalletService) { }
 
-    @Query('skiperwallets')
+    @Query()
     async skiperwallets() {
         return this.skiperWalletService.getAll();
+    }
+
+    @Query()
+    getAllSkiperWalletsByUserId(@Args('iduser') iduser: number) {
+        return this.skiperWalletService.getAllByUserId(iduser);
     }
 
     @Query()
@@ -32,7 +37,7 @@ export class SkiperWalletResolver {
         @Args('idtransaction') idtransaction: number,
         @Args('idpayment_method') idpayment_method: number,
         @Args('deposit') deposit: number) {
-        return this.skiperWalletService.registerDeposit(idwallet,idtransaction,idpayment_method,deposit);
+        return this.skiperWalletService.registerDeposit(idwallet, idtransaction, idpayment_method, deposit);
     }
 
     @Mutation()

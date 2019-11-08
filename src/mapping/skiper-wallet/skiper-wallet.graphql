@@ -1,7 +1,7 @@
 input SkiperWalletInput {
     id: Int
     iduser: Int!
-    amount: Int!
+    amount: Float!
     idcurrency: Int!
     idcountry: Int!
     minimun: Float!
@@ -11,7 +11,7 @@ input SkiperWalletInput {
 
 type SkiperWalletDto {
     id: Int
-    amount: Int!
+    amount: Float!
     date_in: DateTime!
     minimun: Float!
     bretirar: Boolean!
@@ -22,6 +22,7 @@ type SkiperWalletDto {
 
 type Query {
     skiperwallets: [SkiperWalletDto!]!
+    getAllSkiperWalletsByUserId(iduser: Int!): [SkiperWalletDto!]!
     searchSkiperWallet(id:Int):SkiperWalletDto
 }
 type Mutation {

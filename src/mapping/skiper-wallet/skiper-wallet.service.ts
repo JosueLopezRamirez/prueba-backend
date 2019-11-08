@@ -17,6 +17,10 @@ export class SkiperWalletService {
         return await this.repository.find({ relations: ["userID", "currencyID", "countryID"] });
     }
 
+    async getAllByUserId(id: number): Promise<SkiperWallet[]> {
+        return await this.repository.find({ relations: ["userID", "currencyID", "countryID"], where: { iduser: id } });
+    }
+
     async getById(id: number): Promise<SkiperWallet> {
         return await this.repository.findOne(
             {
