@@ -1,4 +1,4 @@
-input skiperWalletInput {
+input SkiperWalletInput {
     id: Int
     iduser: Int!
     amount: Int!
@@ -25,6 +25,6 @@ type Query {
     searchSkiperWallet(id:Int):SkiperWalletDto
 }
 type Mutation {
-    registerSkiperWallet(input: skiperWalletInput!):SkiperWalletDto
-    updateSkiperWallet(input: skiperWalletInput):SkiperWalletDto
+    registerSkiperWallet(input: SkiperWalletInput!):SkiperWalletDto
+    updateSkiperWallet(input: SkiperWalletInput):SkiperWalletDto
 }

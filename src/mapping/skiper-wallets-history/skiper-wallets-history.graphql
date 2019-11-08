@@ -1,4 +1,4 @@
-input skiperWalletsHistoryInput {
+input SkiperWalletsHistoryInput {
     id: Int
     idskiperwallet: Int
     idtransactiontype: Int
@@ -27,4 +27,8 @@ type Query {
     SkiperWalletsHistory: [SkiperWalletsHistoryDto]
     searchSkiperWalletHistory(id: Int!): SkiperWalletsHistoryDto
     getGanaciaDelDia(idwallet: Int!,lat: Float!,lng: Float!,flat: Boolean): GananciaDelDia
+}
+
+type Mutation {
+    registerSkiperWalletHistory(input: SkiperWalletsHistoryInput): SkiperWalletsHistoryDto
 }

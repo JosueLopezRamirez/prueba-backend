@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { SkiperWallet } from './skiper-wallet.entity';
@@ -28,12 +28,13 @@ export class SkiperWalletService {
         try {
             let result = this.parseSkiperWallet(input);
             result = await this.repository.save(result);
-
             return result;
         } catch (error) {
             console.error(error);
+            throw new HttpException('Error al registrar la wallet',HttpStatus.NOT_FOUND)
         }
     }
+
     async updateSkiperWallet(input: SkiperWalletInput) {
         try {
             let result = await this.getById(input.id);
@@ -62,6 +63,8 @@ export class SkiperWalletService {
         skiperwallet.date_in = input.date_in;
         skiperwallet.idcurrency = input.idcurrency;
         skiperwallet.date_in = input.date_in;
+        skiperwallet.minimun = input.minimun;
+        skiperwallet.bretirar = input.bretirar;
         return skiperwallet;
     }
 }

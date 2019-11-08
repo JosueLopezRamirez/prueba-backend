@@ -1,6 +1,7 @@
-import { Resolver, Query, Args } from '@nestjs/graphql';
+import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { SkiperWalletsHistoryService } from './skiper-wallets-history.service';
 import { ParseIntPipe } from '@nestjs/common';
+import { SkiperWalletsHistoryInput } from './skiper-wallets-history.dto';
 
 @Resolver('SkiperWalletsHistory')
 export class SkiperWalletsHistoryResolver {
@@ -26,5 +27,10 @@ export class SkiperWalletsHistoryResolver {
         @Args('flat') flat: boolean = false
     ){
         return this.skiperWalletHistoryService.getGanaciaDelDia(idwallet, lat, lng, flat);
+    }
+
+    @Mutation()
+    registerSkiperWalletHistory(@Args('input') input: SkiperWalletsHistoryInput){
+        return this.skiperWalletHistoryService.registerSkiperWalletHistory(input);
     }
 }

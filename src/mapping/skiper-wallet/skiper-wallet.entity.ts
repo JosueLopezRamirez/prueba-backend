@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, BeforeInsert } from "typeorm";
 import { User } from '../users/user.entity';
 import { Currency } from '../currency/currency.entity';
 import { Countrie } from '../countries/countrie.entity';
@@ -30,5 +30,4 @@ export class SkiperWallet {
 
     @ManyToOne(type => Countrie, { nullable: false })
     @JoinColumn({ name: 'idcountry' }) countryID: Countrie;
-
 }
