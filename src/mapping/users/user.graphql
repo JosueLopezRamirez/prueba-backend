@@ -70,4 +70,5 @@ type Query {
   GetUserWallets(id: Int!): UserDto!
   searchUsersBySponsorId(id:Int):[UserDto!]!
   searchUserByEmail(email: String!): UserDto
+  getUserWhenAddressNullAndSkiperAgentIdNull: [UserDto!]!
 }

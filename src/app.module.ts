@@ -57,6 +57,7 @@ import { TransactionTypeModule } from './mapping/transaction-type/transaction-ty
 import { UsersCommissionsModule } from './mapping/users-commissions/users-commissions.module';
 import { CategoryLevelModule } from './mapping/category-level/category-level.module';
 import { CountryPaymentCurrencyModule } from './mapping/country-payment-currency/country-payment-currency.module';
+// var multerGoogleStorage = require("multer-google-storage")
 
 @Module({
   imports: [
@@ -110,7 +111,8 @@ import { CountryPaymentCurrencyModule } from './mapping/country-payment-currency
       // dropSchema: true
     }),
     MulterModule.register({
-      dest: './uploads'
+      dest: './uploads',
+      // storage: multerGoogleStorage
     }),
     GraphQLModule.forRoot({
       // autoSchemaFile: './schema.gql',

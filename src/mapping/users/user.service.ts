@@ -201,6 +201,16 @@ export class UserService {
             console.log(error);
         }
     }
+    
+    async getUserWhenAddressNullAndSkiperAgentIdNull(){
+        let result = await createQueryBuilder("User")
+            .leftJoin("User.skiperAgent","Agent")
+            .where("Agent.id IS NULL")
+            .andWhere("User.address IS NULL")
+            .getMany();
+        console.log(result);
+        return result;
+    }
 
     async findByPayload(payload: any) {
         const { user } = payload;

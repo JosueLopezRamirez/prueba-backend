@@ -47,6 +47,11 @@ export class UserResolver {
         }
     }
 
+    @Query()
+    getUserWhenAddressNullAndSkiperAgentIdNull(){
+        return this.userService.getUserWhenAddressNullAndSkiperAgentIdNull();
+    }
+
     @UseGuards(new AuthGuard())
     @Mutation()
     async updateUser(@Args('input') input: UserUpdateInput) {

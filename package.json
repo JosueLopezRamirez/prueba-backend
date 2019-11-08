@@ -20,7 +20,7 @@
 		"generate-typings": "ts-node src/generate-typings"
 	},
 	"dependencies": {
-		"@google-cloud/storage": "^3.3.0",
+		"@google-cloud/storage": "^4.1.1",
 		"@nestjs/common": "^6.7.1",
 		"@nestjs/core": "^6.7.1",
 		"@nestjs/graphql": "^6.5.1",
