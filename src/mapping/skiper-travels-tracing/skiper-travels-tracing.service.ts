@@ -130,7 +130,7 @@ export class SkiperTravelsTracingService {
         try {
             let user = await this.getUserDatafromDriver(travel.iddriver);
             let wallet = await this.getWalletFromDriver(user.id, travel.idcurrency);
-            let transactiontype = await this.getTransactionType("CREDITO X VIAJE");
+            let transactiontype = await this.getTransactionType("DEBITO X VIAJE");
             let valorviaje = parseFloat(travel.total.toString()) * parseFloat(transactiontype.sign.toString());
             wallet.amount = parseFloat(wallet.amount.toString()) + valorviaje;
             let walletHistory = new SkiperWalletsHistory();
