@@ -27,6 +27,15 @@ export class SkiperWalletResolver {
     }
 
     @Mutation()
+    registerDepositWallet(
+        @Args('idwallet') idwallet: number,
+        @Args('idtransaction') idtransaction: number,
+        @Args('idpayment_method') idpayment_method: number,
+        @Args('deposit') deposit: number) {
+        return this.skiperWalletService.registerDeposit(idwallet,idtransaction,idpayment_method,deposit);
+    }
+
+    @Mutation()
     async updateSkiperWallet(@Args('input') input: SkiperWalletInput) {
         try {
             return await this.skiperWalletService.updateSkiperWallet(input);

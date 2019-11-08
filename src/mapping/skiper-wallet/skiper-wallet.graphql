@@ -26,5 +26,6 @@ type Query {
 }
 type Mutation {
     registerSkiperWallet(input: SkiperWalletInput!):SkiperWalletDto
-    updateSkiperWallet(input: SkiperWalletInput):SkiperWalletDto
+    updateSkiperWallet(input: SkiperWalletInput): SkiperWalletDto
+    registerDepositWallet(idwallet: Int!,idtransaction: Int!,idpayment_method:Int!, deposit:Float!): SkiperWalletDto
 }
