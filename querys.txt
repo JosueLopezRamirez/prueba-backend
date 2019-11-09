@@ -19,3 +19,7 @@ credenciales de heroku
     password: Sniper2297
 
 -- variables
+
+github
+
+password: Sk1per23031
