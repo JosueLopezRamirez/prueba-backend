@@ -74,7 +74,6 @@ export class SkiperWalletService {
         }
     }
 
-
     private async walletDepositTransaction(wallet: SkiperWallet, deposit: number, idtransaction: number, idpayment_method: number): Promise<SkiperWallet> {
         let connection = getConnection();
         let queryRunner = connection.createQueryRunner();
@@ -92,7 +91,6 @@ export class SkiperWalletService {
             walletHistory.description = "Deposito Inicial de la billetera";
             walletHistory.idtransactiontype = idtransaction;
             walletHistory.date_in = new Date();
-
             //Save entity
             wallet.amount = (parseFloat(walletHistory.amount.toString()) + parseFloat(wallet.amount.toString()));
             result = await queryRunner.manager.save(wallet);

@@ -43,6 +43,7 @@ type UserWithoutCommerceDto {
 
 type Query {
     commerces: [CommerceDto!]!
+    commerceById(id:Int!): CommerceDto
     CommercesIntoRadio(latitud: Float!, longitud: Float!, radio: Int!,id_category_product:Int): [CommerceDto]
     getUserWithoutCommerce: [UserWithoutCommerceDto]
     getCommercesBySponsorId(id_user: Int!, id_category_commerce: Int): [CommerceDto]

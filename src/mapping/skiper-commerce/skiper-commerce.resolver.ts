@@ -16,6 +16,11 @@ export class SkiperCommerceResolver {
     }
 
     @Query()
+    commerceById(@Args('id') id:number){
+        return this.skiperCommerceService.getById(id);
+    }
+
+    @Query()
     async CommercesIntoRadio(
         @Args('latitud') latitud: number,
         @Args('longitud') longitud: number,
