@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SkiperProductCommerce } from './skiper-product-commerce.entity';
-import { Repository } from 'typeorm';
+import { Repository, createQueryBuilder } from 'typeorm';
 import { SkiperCommerceService } from '../skiper-commerce/skiper-commerce.service';
 import { SkiperCatProductCommerceService } from '../skiper-cat-product-commerce/skiper-cat-product-commerce.service';
 import { ProductCommerceInput } from './skiper-product-commerce.dto';
@@ -21,7 +21,21 @@ export class SkiperProductCommerceService {
         } catch (error) {
             console.log(error)
         }
+    }
 
+    async getAllByCommerceId(id: number): Promise<SkiperProductCommerce[]> {
+        try {
+            let commerce = await createQueryBuilder("SkiperCommerce", "sc").where("sc.id = :id", { id }).getOne();
+            
+            let result =  await this.repository.find({
+                relations: ["skiperCommerce", "skiperProducts"],
+                where: { skiperCommerce: commerce }
+            });
+            console.log(result);
+            return result;
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     async getById(id: number): Promise<SkiperProductCommerce> {

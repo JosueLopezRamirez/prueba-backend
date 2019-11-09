@@ -13,6 +13,12 @@ export class SkiperProductCommerceResolver {
     }
 
     @Query()
+    productsByCommerceId(@Args('id',ParseIntPipe) id: number){
+        console.log()
+        return this.service.getAllByCommerceId(id);
+    }
+
+    @Query()
     async productsCommerceWithPagination(@Args('page',ParseIntPipe) page: number){
         return await this.service.getAllByPagination(page);
     }

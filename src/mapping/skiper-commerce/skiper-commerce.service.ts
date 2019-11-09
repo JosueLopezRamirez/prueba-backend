@@ -119,7 +119,10 @@ export class SkiperCommerceService {
 
     async getById(id: number): Promise<SkiperCommerce> {
         return await this.repository.findOne({
-            relations: ["skiperAgent", "skiperAgent.user", "skiperAgent.categoryAgent","catCommerce", "country"],
+            relations: ["skiperAgent", "skiperAgent.user",
+            "skiperAgent.categoryAgent","catCommerce", "country",
+            "skiperCatProductsCommerce","skiperCatProductsCommerce.skiperProductCommerce"
+        ],
             where: { id: id }
         });
     }

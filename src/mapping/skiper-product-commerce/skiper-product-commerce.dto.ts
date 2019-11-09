@@ -35,3 +35,20 @@ export class SkiperProductCommerceDto {
     optionAddon: OptionAddonDto;
 }
 
+@ObjectType()
+export class ProductCommerceDto {
+    id:number;
+    name:string;
+    description:string;
+    url_img_product:string;
+    price:number;
+    isSize:boolean;
+    state:boolean;
+    isAddon:boolean;
+    discount:number;
+    time: number;
+    skiperCommerce: CommerceDto;
+    skiperProducts: SkiperCatProductDto;
+    optionAddon: OptionAddonDto;
+}
+
