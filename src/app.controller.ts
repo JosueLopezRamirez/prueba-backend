@@ -1,4 +1,4 @@
-import { Controller, UseInterceptors, UploadedFile, Post, Req } from '@nestjs/common';
+import { Controller, UseInterceptors, UploadedFile, Post, Req, Res } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import path, { extname } from 'path';
 import { AppService } from './app.service';
@@ -27,7 +27,7 @@ export class AppController {
     @UseInterceptors(FileInterceptor('file', {
         storage: this.storage
     }))
-    async uploadFile(@UploadedFile('file') file,@Req() req) {
+    async uploadFile(@UploadedFile('file') file,@Req() req,@Res() res) {
         console.log(req.files);
         const { filename } = await file;
         console.log(filename);
