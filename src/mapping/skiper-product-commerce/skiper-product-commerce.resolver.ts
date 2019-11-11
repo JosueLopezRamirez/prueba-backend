@@ -1,6 +1,7 @@
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { SkiperProductCommerceService } from './skiper-product-commerce.service';
 import { ParseIntPipe } from '@nestjs/common';
+import { ProductCommerceInput } from './skiper-product-commerce.dto';
 
 @Resolver('SkiperProductCommerce')
 export class SkiperProductCommerceResolver {
@@ -32,4 +33,10 @@ export class SkiperProductCommerceResolver {
     ChangeStateProducts(@Args('id',ParseIntPipe) id: number){
         return this.service.changeState(id);
     }
+
+    @Mutation()
+    registerProductCommerce(@Args('input') input: ProductCommerceInput){
+        return this.service.registerProductCommerce(input);
+    }
+
 }

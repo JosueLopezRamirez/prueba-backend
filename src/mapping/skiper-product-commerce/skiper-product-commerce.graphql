@@ -54,4 +54,5 @@ type Query {
 
 type Mutation {
     ChangeStateProducts(id: Int!): Boolean
+    registerProductCommerce(input: ProductCommerceInput): SkiperProductCommerceDto
 }
