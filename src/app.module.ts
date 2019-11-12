@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import 'dotenv/config';
@@ -57,6 +57,7 @@ import { TransactionTypeModule } from './mapping/transaction-type/transaction-ty
 import { UsersCommissionsModule } from './mapping/users-commissions/users-commissions.module';
 import { CategoryLevelModule } from './mapping/category-level/category-level.module';
 import { CountryPaymentCurrencyModule } from './mapping/country-payment-currency/country-payment-currency.module';
+import { UploadMiddleware } from './shared/upload.middleware';
 // var multerGoogleStorage = require("multer-google-storage")
 
 @Module({
@@ -110,10 +111,7 @@ import { CountryPaymentCurrencyModule } from './mapping/country-payment-currency
       // synchronize: true,
       // dropSchema: true
     }),
-    MulterModule.register({
-      dest: './uploads',
-      // storage: multerGoogleStorage
-    }),
+    MulterModule,
     GraphQLModule.forRoot({
       // autoSchemaFile: './schema.gql',
       typePaths: ['./**/*.graphql'],
@@ -159,4 +157,10 @@ import { CountryPaymentCurrencyModule } from './mapping/country-payment-currency
   providers: [AppService, AppResolver],
   controllers: [AppController],
 })
-export class AppModule { }
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(UploadMiddleware)
+      .forRoutes(AppController);
+  }
+}
