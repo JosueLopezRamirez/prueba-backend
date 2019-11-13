@@ -7,6 +7,6 @@ type categoryDto {
 
 type Query {
   categoriesAgents: [categoryDto!]!
-  getByCategoryAgentIdAndCityId(id:Int!,idcity:Int!): [categoryDto!]!
-  getByCategoryAgentIdAndSponsorId(id:Int!,id_sponsor:Int!): [categoryDto!]!
+  getByCategoryAgentIdAndCityId(id: Int!,idcity: Int!): [categoryDto!]!
+  getByCategoryAgentIdAndSponsorId(id: Int!,id_sponsor: Int!): [categoryDto!]!
 }

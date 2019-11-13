@@ -23,7 +23,6 @@ import { UsersModule } from './mapping/users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
 import { CountriesModule } from './mapping/countries/countries.module';
-import { MulterModule } from '@nestjs/platform-express';
 import { CitiesModule } from './mapping/cities/cities.module';
 import { SkiperCatCommerceModule } from './mapping/skiper-cat-commerce/skiper-cat-commerce.module';
 import { SkiperCatProductCommerceModule } from './mapping/skiper-cat-product-commerce/skiper-cat-product-commerce.module';
@@ -57,7 +56,6 @@ import { TransactionTypeModule } from './mapping/transaction-type/transaction-ty
 import { UsersCommissionsModule } from './mapping/users-commissions/users-commissions.module';
 import { CategoryLevelModule } from './mapping/category-level/category-level.module';
 import { CountryPaymentCurrencyModule } from './mapping/country-payment-currency/country-payment-currency.module';
-import { UploadMiddleware } from './shared/upload.middleware';
 // var multerGoogleStorage = require("multer-google-storage")
 
 @Module({
@@ -111,7 +109,6 @@ import { UploadMiddleware } from './shared/upload.middleware';
       // synchronize: true,
       // dropSchema: true
     }),
-    MulterModule,
     GraphQLModule.forRoot({
       // autoSchemaFile: './schema.gql',
       typePaths: ['./**/*.graphql'],
@@ -157,10 +154,5 @@ import { UploadMiddleware } from './shared/upload.middleware';
   providers: [AppService, AppResolver],
   controllers: [AppController],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(UploadMiddleware)
-      .forRoutes(AppController);
-  }
+export class AppModule {
 }

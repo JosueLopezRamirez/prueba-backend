@@ -21,7 +21,8 @@ export class CategoryAgentResolver {
 
     @UseGuards(new AuthGuard())
     @Query()
-    getByCategoryAgentIdAndSponsorId(@Args('id')id:number,@Args('id_sponsor')id_sponsor:number){
+    getByCategoryAgentIdAndSponsorId(@Args('id') id:number,@Args('id_sponsor') id_sponsor:number){
+        console.log('entre aqui');
         return this.categoryServices.getByCategoryAgentIdAndSponsorId(id,id_sponsor);
     }
 }

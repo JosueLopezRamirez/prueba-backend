@@ -18,8 +18,6 @@ credenciales de heroku
     username: josuekuroko@gmail.com
     password: Sniper2297
 
--- variables
-
 github
 
-password: Sk1per23031
+password: j3r3m14s1.19

@@ -34,10 +34,10 @@ export class CategoryAgentService {
             let result = await createQueryBuilder("CategoryAgent")
                 .innerJoinAndSelect("CategoryAgent.agents", "SkiperAgent")
                 .innerJoinAndSelect("SkiperAgent.user", "User")
-                // .innerJoinAndSelect("User.city", "Cities")
                 .where("CategoryAgent.id = :id", { id })
                 .andWhere("User.sponsor_id = :id_sponsor", { id_sponsor })
                 .getMany();
+                // console.log(result);
             return result;
         } catch (error) {
             console.log(error);
